@@ -427,6 +427,12 @@
     var pills = field.querySelectorAll('.pf-pill');
     var ticking = false;
 
+    function depth(el) {
+      // near things travel furthest, which is what sells the depth
+      return el.classList.contains('pf-far') ? 14
+           : el.classList.contains('pf-mid') ? 28 : 46;
+    }
+
     function update() {
       ticking = false;
       var r = field.getBoundingClientRect();
@@ -436,17 +442,52 @@
       var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
       p = Math.max(-1, Math.min(1, p));
       for (var i = 0; i < pills.length; i++) {
-        var el = pills[i];
-        // near things travel furthest, which is what sells the depth
-        var d = el.classList.contains('pf-far') ? 14
-              : el.classList.contains('pf-mid') ? 28 : 46;
-        el.style.setProperty('--py', (p * d).toFixed(1) + 'px');
+        pills[i].style.setProperty('--py', (p * depth(pills[i])).toFixed(1) + 'px');
       }
     }
     function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(update); }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     update();
+
+    /* Pointer parallax. Ambient by design: the ceiling is "you notice
+       something responded, you could not say what moved", so the near layer
+       tops out at 12px. Written to the `translate` property rather than
+       `transform` so it composes with each pill's rotation instead of
+       overwriting it. Fine pointers only - on touch there is no hover to
+       parallax against, and it would just cost frames. */
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    var tx = 0, ty = 0, cx = 0, cy = 0, live = false, praf = 0;
+
+    window.addEventListener('pointermove', function (e) {
+      tx = (e.clientX / window.innerWidth - .5) * 2;
+      ty = (e.clientY / window.innerHeight - .5) * 2;
+    }, { passive: true });
+
+    function glide() {
+      if (!live) { praf = 0; return; }
+      cx += (tx - cx) * .07;
+      cy += (ty - cy) * .07;
+      for (var i = 0; i < pills.length; i++) {
+        var el = pills[i];
+        var k = depth(el) / 46 * 12;          // 12 / 7 / 4px by layer
+        el.style.translate = (cx * k).toFixed(2) + 'px ' + (cy * k).toFixed(2) + 'px';
+      }
+      praf = requestAnimationFrame(glide);
+    }
+
+    // only run the loop while the field is actually on screen
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) {
+          live = en.isIntersecting;
+          if (live && !praf) praf = requestAnimationFrame(glide);
+        });
+      }, { threshold: 0 }).observe(field);
+    } else {
+      live = true; praf = requestAnimationFrame(glide);
+    }
   })();
 
   /* ---------- one FAQ open at a time ---------- */
