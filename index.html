@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788273241">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788273241">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788273241">
-<script src="assets/js/theme.js?v=1788273241"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788274045">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788274045">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788274045">
+<script src="assets/js/theme.js?v=1788274045"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -263,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788273241"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788274045"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788273241"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788274045"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -276,10 +276,12 @@
     </div>
   </section>
 
-  <!-- ============ SOURCE STRIP ============ -->
+  <!-- ============ SOURCE STRIP ============
+       After Adaline: a single tracked label and the sources set as plain type.
+       The old bordered chips read as tags on a blog post. -->
   <section class="strip" aria-label="Where cover comes from">
     <div class="wrap strip-inner">
-      <p class="strip-label">Reads the fine print in</p>
+      <p class="strip-label mono">Reads the fine print in</p>
       <ul class="strip-list" role="list">
         <li>Manufacturer warranties</li>
         <li>Credit card benefits</li>
@@ -290,31 +292,36 @@
     </div>
   </section>
 
-  <!-- ============ PROBLEM ============ -->
+  <!-- ============ PROBLEM ============
+       After Legora: the figures carry it. The boxed cards are gone — three
+       serif numerals divided by rules, each with the sentence it belongs to. -->
   <section class="section problem">
-    <div class="wrap-narrow">
-      <p class="eyebrow">The reason this exists</p>
-      <h2 class="display section-title">The cover is real. Finding it is the&nbsp;problem.</h2>
-      <p class="lede">
-        The rules that would get your thing fixed for free are scattered across a warranty
-        booklet you threw away, a card benefit guide nobody opens, a settlement website you
-        never heard of, and a consumer law nobody told you about. So people just buy a new one,
-        and a working product goes in the bin.
-      </p>
-      <div class="problem-cards">
-        <article class="pcard">
-          <p class="pcard-big display"><span class="count" data-count-to="1" data-count-dur="700">1</span> yr</p>
-          <p class="pcard-text">is what most people think they get. Paying with the right card can quietly double it.</p>
-        </article>
-        <article class="pcard">
-          <p class="pcard-big display"><span class="count" data-count-to="90" data-count-dur="1100">90</span> days</p>
-          <p class="pcard-text">is how long some card claims stay open. Miss the window and the cover vanishes.</p>
-        </article>
-        <article class="pcard">
-          <p class="pcard-big display"><span class="count" data-count-to="6" data-count-dur="900">6</span> yrs</p>
-          <p class="pcard-text">is how long the law in England and Wales can hold a seller responsible — long after the warranty card says no.</p>
-        </article>
-      </div>
+    <div class="wrap">
+      <header class="section-head problem-head">
+        <p class="eyebrow">The reason this exists</p>
+        <h2 class="display section-title">The cover is real.<br>Finding it is the&nbsp;problem.</h2>
+        <p class="lede section-lede">
+          The rules that would get your thing fixed for free are scattered across a warranty
+          booklet you threw away, a card benefit guide nobody opens, a settlement website you
+          never heard of, and a consumer law nobody told you about. So people buy a new one,
+          and a working product goes in the bin.
+        </p>
+      </header>
+
+      <dl class="figures">
+        <div class="figure">
+          <dt class="figure-n display"><span class="count" data-count-to="1" data-count-dur="700">1</span><i>yr</i></dt>
+          <dd>is what most people think they get. Paying with the right card can quietly double it.</dd>
+        </div>
+        <div class="figure">
+          <dt class="figure-n display"><span class="count" data-count-to="90" data-count-dur="1100">90</span><i>days</i></dt>
+          <dd>is how long some card claims stay open. Miss the window and the cover vanishes.</dd>
+        </div>
+        <div class="figure">
+          <dt class="figure-n display"><span class="count" data-count-to="6" data-count-dur="900">6</span><i>yrs</i></dt>
+          <dd>is how long the law in England and Wales can hold a seller responsible &mdash; long after the warranty card says no.</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
@@ -357,7 +364,9 @@
     </div>
   </section>
 
-  <!-- ============ WHAT WE CHECK ============ -->
+  <!-- ============ WHAT WE CHECK ============
+       After Tines: a real bento. Mixed tile widths and a different tint per
+       tile, so the five places read as five different places. -->
   <section class="section checks" id="checks">
     <div class="wrap">
       <header class="section-head">
@@ -365,46 +374,36 @@
         <h2 class="display section-title">Five places cover hides.</h2>
         <p class="lede section-lede">Most people know about the first one. The other four are where the free fixes actually are.</p>
       </header>
-
-      <div class="check-grid">
-        <article class="check">
-          <span class="check-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 8.3 8 9 4.8-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
-          </span>
-          <h3 class="check-title">The maker's warranty</h3>
-          <p class="check-text">Still running more often than people think — and some brands quietly promise a lifetime.</p>
+      <div class="bento">
+        <article class="tile tile-mint wide">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.2 3.1 7.6 7.5 9 4.4-1.4 7.5-4.8 7.5-9V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <p class="tile-n mono">01</p>
+          <h3 class="tile-title">The maker&rsquo;s warranty</h3>
+          <p class="tile-text">Still running more often than people think &mdash; and some brands quietly promise a lifetime.</p>
         </article>
-
-        <article class="check">
-          <span class="check-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg>
-          </span>
-          <h3 class="check-title">The card you paid with</h3>
-          <p class="check-text">Many cards add a whole extra year on top of the maker's warranty, free, automatically.</p>
+        <article class="tile tile-blue wide">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg></span>
+          <p class="tile-n mono">02</p>
+          <h3 class="tile-title">The card you paid with</h3>
+          <p class="tile-text">Many cards add a whole extra year on top of the maker&rsquo;s warranty, free, automatically.</p>
         </article>
-
-        <article class="check">
-          <span class="check-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M7 7l-3 6a3.2 3.2 0 0 0 6 0Zm10 0-3 6a3.2 3.2 0 0 0 6 0Z"/></svg>
-          </span>
-          <h3 class="check-title">Payouts you can still claim</h3>
-          <p class="check-text">When a product turns out to be faulty, money gets set aside. Most of it is never collected.</p>
+        <article class="tile tile-sand ">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5a2.8 2.8 0 0 0-2.5-1.3c-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2 2.6.8 2.6 2-1.1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.3"/><path d="M12 6.4v11.2"/></svg></span>
+          <p class="tile-n mono">03</p>
+          <h3 class="tile-title">Payouts you can still claim</h3>
+          <p class="tile-text">When a product turns out to be faulty, money gets set aside. Most of it is never collected.</p>
         </article>
-
-        <article class="check">
-          <span class="check-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1 0 5.6l-2.1 2.1-5.6-5.6 2.1-2.1a4 4 0 0 1 5.6 0Z"/><path d="m9 12-5 5 3 3 5-5"/></svg>
-          </span>
-          <h3 class="check-title">Quiet repair programmes</h3>
-          <p class="check-text">Makers often fix a known fault for free without announcing it. You have to know to ask.</p>
+        <article class="tile tile-blush ">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg></span>
+          <p class="tile-n mono">04</p>
+          <h3 class="tile-title">Quiet repair programmes</h3>
+          <p class="tile-text">Makers often fix a known fault for free without announcing it. You have to know to ask.</p>
         </article>
-
-        <article class="check check-wide">
-          <span class="check-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M5 7h14M6.5 7 4 13.5h5L6.5 7Zm11 0L15 13.5h5L17.5 7ZM9 20h6M12 7v13"/></svg>
-          </span>
-          <h3 class="check-title">The law where you live</h3>
-          <p class="check-text">Your legal cover often outlasts the printed warranty — and in some places it lasts for years. The seller has to honour it whether or not the box says so.</p>
+        <article class="tile tile-paper ">
+          <span class="tile-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M5 8h14"/><path d="m5 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="m19 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="M8 20h8"/></svg></span>
+          <p class="tile-n mono">05</p>
+          <h3 class="tile-title">The law where you live</h3>
+          <p class="tile-text">Your legal cover often outlasts the printed warranty &mdash; and in some places it lasts for years. The seller has to honour it whether or not the box says so.</p>
         </article>
       </div>
     </div>
@@ -475,24 +474,26 @@
     </div>
   </section>
 
-  <!-- ============ LANDFILL / EARTH ============ -->
+  <!-- ============ LANDFILL / EARTH ============
+       The figure is no longer boxed off to one side; it sits under the
+       argument it belongs to. -->
   <section class="section earth">
-    <div class="wrap earth-inner">
-      <div class="earth-copy">
-        <p class="eyebrow">Why it matters beyond the money</p>
-        <h2 class="display section-title">Every claimed repair is one thing that doesn't get thrown&nbsp;away.</h2>
-        <p class="lede">
-          Broken electronics are the fastest-growing kind of household waste on the planet, and
-          most of it dies for a fixable fault while somebody, somewhere, was contractually
-          required to repair it for free. Owed makes the free repair the easy option.
-        </p>
-      </div>
-      <div class="earth-stat card">
-        <p class="eyebrow">Example shelf</p>
-        <p class="earth-num display tnum"><span class="count" data-count-to="4" data-count-dur="900">4</span> items</p>
-        <p class="earth-sub">kept out of landfill</p>
+    <div class="wrap-narrow">
+      <p class="eyebrow">Why it matters beyond the money</p>
+      <h2 class="display section-title">Every claimed repair is one thing that doesn&rsquo;t get thrown&nbsp;away.</h2>
+      <p class="lede section-lede">
+        Broken electronics are the fastest-growing kind of household waste on the planet, and
+        most of it dies for a fixable fault while somebody, somewhere, was contractually
+        required to repair it for free. Owed makes the free repair the easy option.
+      </p>
+
+      <div class="earth-meter">
+        <div class="earth-meter-head">
+          <p class="earth-num display tnum"><span class="count" data-count-to="4" data-count-dur="900">4</span> items</p>
+          <p class="earth-sub">kept out of landfill on the example shelf</p>
+        </div>
         <div class="earth-bar" style="--pct:62%" aria-hidden="true"><i></i></div>
-        <p class="earth-note muted mono">counted only when a claim is marked won</p>
+        <p class="earth-note mono">counted only when a claim is marked won</p>
       </div>
     </div>
   </section>
@@ -571,12 +572,13 @@
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
+  <!-- ============ CTA ============
+       After Kastle: an outlined pill eyebrow above a centred serif line. -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788273241"
-           width="860" height="488" aria-hidden="true"
-           muted loop playsinline preload="none" disablepictureinpicture></video>
+    <video class="cta-video" src="assets/video/ember-drift.webm" width="860" height="488"
+           aria-hidden="true" muted loop playsinline preload="none" disablepictureinpicture></video>
     <div class="wrap-narrow cta-inner">
+      <p class="cta-pill mono">Free, and it stays free</p>
       <h2 class="display cta-title">Before you buy a new one, check who owes you the old&nbsp;one.</h2>
       <div class="cta-actions">
         <a class="btn btn-accent btn-lg" href="auth.html?mode=signup">Start free</a>
@@ -628,10 +630,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788273241"></script>
-<script src="assets/js/landing.js?v=1788273241"></script>
-<script src="assets/js/scroll.js?v=1788273241"></script>
-<script src="assets/js/scene.js?v=1788273241"></script>
-<script src="assets/js/motion.js?v=1788273241"></script>
+<script src="assets/js/catalog.js?v=1788274045"></script>
+<script src="assets/js/landing.js?v=1788274045"></script>
+<script src="assets/js/scroll.js?v=1788274045"></script>
+<script src="assets/js/scene.js?v=1788274045"></script>
+<script src="assets/js/motion.js?v=1788274045"></script>
 </body>
 </html>
