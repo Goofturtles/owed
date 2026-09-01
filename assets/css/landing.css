@@ -740,106 +740,115 @@
 @media (max-width: 700px) { .stack { height: 260vh; } }
 
 /* ============================================================
-   INK — a scroll-scrubbed clip, rendered on the local GPU
-
-   A deliberately dark interlude: paper, then black, then paper.
-   The clip is black ink on white, so inverting it gives luminous
-   white ink on near-black at FULL contrast. The previous version
-   sat it on paper at 46% behind a heavy scrim, which turned a
-   crisp clip into grey mush and put a pale blob under the text.
-   Dark ground means the type is legible without washing the
-   footage out, so no scrim is needed.
+   THE CITY — an isometric skyline of everywhere cover hides,
+   drifted across on scroll. Replaces the ink clip entirely.
    ============================================================ */
-.ink {
+.city {
   position: relative;
-  height: 300vh;
-  /* fixed, not themed — this beat is dark in light mode too */
-  --ink-ground: #0A0B0A;
-  --ink-fg: #F5F4EC;
-  background: var(--ink-ground);
+  height: 320vh;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 }
-.ink-sticky {
+.city-sticky {
   position: sticky; top: 0;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: var(--ink-ground);
 }
-.ink-video {
+.city-canvas {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover;
-  filter: invert(1);          /* black ink on white -> white ink on black */
-  opacity: .92;
+  display: block;
+  opacity: 0;
+  transition: opacity .7s var(--ease);
 }
-/* just enough to seat the type — nothing like the old blob */
-.ink-sticky::after {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(62% 48% at 50% 50%,
-    rgba(10, 11, 10, .74) 0%, rgba(10, 11, 10, .40) 55%, transparent 82%);
+.city.is-live .city-canvas { opacity: 1; }
+.city.is-live .city-still { opacity: 0; }
+
+/* no WebGL / lost context / reduced motion */
+.city-still {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  transition: opacity .6s var(--ease);
+  opacity: .55;
+  background:
+    linear-gradient(to top, color-mix(in srgb, var(--il-mint) 55%, transparent) 0 12%, transparent 12%),
+    repeating-linear-gradient(90deg,
+      transparent 0 26px,
+      color-mix(in srgb, var(--il-blue) 60%, transparent) 26px 52px,
+      transparent 52px 84px,
+      color-mix(in srgb, var(--il-sand) 60%, transparent) 84px 104px);
+  -webkit-mask-image: linear-gradient(to top, #000 0 42%, transparent 78%);
+          mask-image: linear-gradient(to top, #000 0 42%, transparent 78%);
 }
 
-.ink-copy {
-  position: relative; z-index: 2;
-  width: min(760px, 100% - 2.5rem);
-  text-align: center;
-  color: var(--ink-fg);
+/* Buildings travel straight behind the headline, so the type needs a real
+   seat — a text-shadow alone was not enough (the same mistake the ink section
+   made). Soft radial, sized to the copy, so the skyline still reads around it. */
+.city-sticky::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(46% 30% at 50% 46%,
+    color-mix(in srgb, var(--paper) 93%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 72%, transparent) 52%,
+    transparent 80%);
 }
-.ink-copy .eyebrow { color: color-mix(in srgb, var(--ink-fg) 62%, transparent); }
-.js-p .ink-copy .eyebrow { opacity: calc(1 - var(--p, 0) * 1.6); }
-.ink-title {
+.city-copy {
+  position: relative; z-index: 2;
+  width: min(720px, 100% - 2.5rem);
+  text-align: center;
+}
+.city-title {
   font-size: var(--step-3);
   margin-top: .6rem;
   letter-spacing: -.022em;
-  color: var(--ink-fg);
-  display: grid;              /* the two lines stack in one cell and cross-fade */
-  place-items: center;
+  padding-bottom: .07em;
 }
-.ink-title span {
-  grid-area: 1 / 1;
-  display: block;
-  padding-bottom: .09em;
-  will-change: opacity, transform;
-}
-.ink-title em { font-style: italic; }
-
-/* --p is the scroll progress through the section, set by motion.js.
-   The handover runs word by word rather than swapping two whole lines —
-   a block of text appearing at once reads as being thrown at you. Each word
-   carries its own --i, so it rises and sharpens a beat after the one before. */
-.ink-title .iw { display: inline-block; }
-/* promoted only while the section is actually in play */
-.ink.is-near .ink-title .iw { will-change: opacity, transform, filter; }
-.js-p .ink-l2 .iw {
-  --t: clamp(0, calc((var(--p, 0) - .30 - var(--i, 0) * .035) * 9), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 20px));
-  filter: blur(calc((1 - var(--t)) * 7px));
-}
-.js-p .ink-l1 .iw {
-  /* leaves in the same order it arrived, so the two lines cross rather than cut */
-  --t: clamp(0, calc((.40 - var(--p, 0) + var(--i, 0) * .028) * 9), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * -16px));
-  filter: blur(calc((1 - var(--t)) * 6px));
-}
-.ink-sub {
-  margin-top: 1.1rem;
+.city-title em { font-style: italic; color: var(--accent); }
+.city-sub {
+  margin-top: 1rem;
   font-size: var(--step-0);
-  color: color-mix(in srgb, var(--ink-fg) 76%, transparent);
-  max-width: 46ch; margin-inline: auto;
-}
-.js-p .ink-sub {
-  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 16px));
+  color: var(--ink-2);
+  max-width: 48ch; margin-inline: auto;
 }
 
-/* no JS: show the end state rather than a blank black screen */
+/* the five sources light up one at a time as the camera travels */
+.city-tags {
+  position: absolute; z-index: 2;
+  left: 50%; bottom: clamp(1.5rem, 5vh, 3rem);
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  min-height: 2.1rem;
+  width: min(520px, 90%);
+}
+.city-tags li {
+  grid-area: 1 / 1;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .04em;
+  color: var(--ink-2);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: .42rem .95rem;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+  opacity: 0;
+}
+/* each tag owns a slice of the scroll and fades through it */
+.js-p .city-tags li {
+  --d: calc(var(--p, 0) - var(--ct));
+  opacity: clamp(0, calc((0.09 - abs(var(--d))) * 16), 1);
+}
+@supports not (width: abs(1px)) {
+  /* abs() is recent; without it just show them in sequence, no cross-fade */
+  .js-p .city-tags li { opacity: clamp(0, calc((var(--p, 0) - var(--ct)) * 22), 1); }
+  .js-p .city-tags li ~ li { background: var(--card); }
+}
 
-@media (max-width: 700px) { .ink { height: 240vh; } }
+@media (max-width: 700px) { .city { height: 260vh; } }
 
 /* ============================================================
    CTA ambient particles
@@ -870,14 +879,15 @@
   .stack-sticky::after { display: none; }
   .stack-caps { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 1.5rem; }
   .stack-cap { position: static; opacity: 1; transform: none; }
-  .ink { height: auto; }
-  .ink-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
-  .ink-video, .cta-video { display: none; }
-  .ink-sticky::after { display: none; }
-  .ink-title { display: block; }
-  .ink-l1 { display: none; }
-  .ink-l2 .iw { opacity: 1 !important; transform: none !important; filter: none !important; }
-  .ink-l2, .ink-sub, .ink-copy .eyebrow { opacity: 1 !important; transform: none !important; }
+  .city { height: auto; }
+  .city-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
+  .city-canvas, .cta-video { display: none; }
+  .city-sticky::after { display: none; }
+  .city-tags { position: static; transform: none; display: flex; flex-wrap: wrap;
+               gap: .5rem; justify-content: center; margin-top: 1.75rem; width: auto; }
+  /* .js-p .city-tags li out-specifies a bare selector here, so this has to
+     win explicitly or the five sources stay invisible under reduced motion */
+  .city-tags li { opacity: 1 !important; }
 }
 
 /* ============================================================

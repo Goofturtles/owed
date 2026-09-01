@@ -285,7 +285,7 @@
      floating cards and the ink cross-fade. Deliberately independent of
      scene.js: the cards must still work when WebGL is unavailable. */
   (function progressVars() {
-    var secs = Array.prototype.slice.call(document.querySelectorAll('#stack, #ink'));
+    var secs = Array.prototype.slice.call(document.querySelectorAll('#stack, #city'));
     if (!secs.length) return;
     var raf = null;
     function update() {
@@ -306,74 +306,11 @@
     // in an earlier IIFE here would have caused exactly that.
     document.body.classList.add('js-p');
     // promote the ink words only while that section is in play
-    var ink = document.getElementById('ink');
+    var ink = document.getElementById('city');
     if (ink && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
         es.forEach(function (e) { ink.classList.toggle('is-near', e.isIntersecting); });
       }, { rootMargin: '200px' }).observe(ink);
-    }
-  })();
-
-  /* ---------------- ink: scroll-scrubbed clip ----------------
-     The clip was rendered locally on the GPU and encoded with dense
-     keyframes (-g 8) so seeking stays responsive. preload="none" until
-     the section is close, so nobody downloads it who never scrolls here. */
-  (function ink() {
-    var sec = document.getElementById('ink');
-    var vid = document.getElementById('inkVideo');
-    if (!sec || !vid) return;
-    if (reduce) { vid.removeAttribute('src'); return; }
-
-    var loaded = false, raf = null, last = -1;
-
-    function seek() {
-      raf = null;
-      if (!loaded || !isFinite(vid.duration) || vid.duration <= 0) return;
-      var r = sec.getBoundingClientRect();
-      var travel = r.height - window.innerHeight;
-      if (travel <= 0) return;
-      var p = Math.min(1, Math.max(0, -r.top / travel));
-      var t = p * (vid.duration - 0.05);
-      // the clip is 25fps, so anything under a frame is wasted work; and a
-      // seek issued while one is in flight just queues up jank
-      if (vid.seeking) return;
-      if (Math.abs(t - last) < 0.045) return;
-      last = t;
-      try { vid.currentTime = t; } catch (e) {}
-    }
-    function onScroll() { if (raf === null) raf = requestAnimationFrame(seek); }
-
-    function load() {
-      if (loaded) return;
-      loaded = true;
-      vid.preload = 'auto';
-      vid.load();
-      vid.addEventListener('loadeddata', function () {
-        // iOS will not decode a frame for a video that has never played, so a
-        // purely scrubbed clip stays frozen on its first frame. Start it and
-        // immediately pause: muted + playsinline makes this allowed.
-        var pr = vid.play();
-        if (pr && pr.then) pr.then(function () { vid.pause(); seek(); })
-                             .catch(function () { seek(); });
-        else { try { vid.pause(); } catch (e) {} seek(); }
-      }, { once: true });
-    }
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (e.isIntersecting) {
-            load();
-            window.addEventListener('scroll', onScroll, { passive: true });
-            seek();
-          } else {
-            window.removeEventListener('scroll', onScroll);
-          }
-        });
-      }, { rootMargin: '300px' }).observe(sec);
-    } else {
-      load();
-      window.addEventListener('scroll', onScroll, { passive: true });
     }
   })();
 

@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788225992">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788225992">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788225992">
-<script src="assets/js/theme.js?v=1788225992"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788229859">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788229859">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788229859">
+<script src="assets/js/theme.js?v=1788229859"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -246,10 +246,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788225992"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788229859"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788225992"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788229859"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -418,24 +418,28 @@
     </div>
   </section>
 
-  <!-- ============ INK: scroll-scrubbed, the fine print unfurling ============ -->
-  <section class="ink" id="ink" data-guided aria-label="The fine print, unfolding">
-    <div class="ink-sticky">
-      <video class="ink-video" id="inkVideo" aria-hidden="true"
-             src="assets/video/ink-water.webm?v=1788225992"
-             width="800" height="454"
-             muted playsinline preload="none" disablepictureinpicture></video>
-      <div class="ink-copy">
-        <p class="eyebrow">Written to be skipped</p>
-        <h2 class="display ink-title">
-          <span class="ink-l1"><span class="iw" style="--i:0">Nobody</span> <span class="iw" style="--i:1">reads</span> <span class="iw" style="--i:2">it.</span></span>
-          <span class="ink-l2"><em><span class="iw" style="--i:0">Owed</span> <span class="iw" style="--i:1">reads</span> <span class="iw" style="--i:2">all</span> <span class="iw" style="--i:3">of</span> <span class="iw" style="--i:4">it.</span></em></span>
-        </h2>
-        <p class="ink-sub">
-          Four hundred and forty-five rules, so you only ever read one sentence &mdash;
-          the one that says somebody owes you a repair.
+  <!-- ============ THE CITY: everywhere cover hides ============ -->
+  <section class="city" id="city" data-guided aria-label="Everywhere cover hides">
+    <div class="city-sticky">
+      <div class="city-still" aria-hidden="true"></div>
+      <canvas class="city-canvas" aria-hidden="true"></canvas>
+
+      <div class="city-copy">
+        <p class="eyebrow">Five places, one of them yours</p>
+        <h2 class="display city-title">Cover is scattered across a city <em>you never walk through.</em></h2>
+        <p class="city-sub">
+          The maker. The card. The payouts nobody collects. The quiet repair
+          programmes. The law where you live. Owed walks all of it.
         </p>
       </div>
+
+      <ul class="city-tags" aria-hidden="true">
+        <li style="--ct:.06">The maker&rsquo;s warranty</li>
+        <li style="--ct:.22">The card you paid with</li>
+        <li style="--ct:.40">Payouts you can still claim</li>
+        <li style="--ct:.58">Quiet repair programmes</li>
+        <li style="--ct:.74">The law where you live</li>
+      </ul>
     </div>
   </section>
 
@@ -557,7 +561,7 @@
 
   <!-- ============ CTA ============ -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788225992"
+    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788229859"
            width="860" height="488" aria-hidden="true"
            muted loop playsinline preload="none" disablepictureinpicture></video>
     <div class="wrap-narrow cta-inner">
@@ -612,10 +616,11 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788225992"></script>
-<script src="assets/js/landing.js?v=1788225992"></script>
-<script src="assets/js/scroll.js?v=1788225992"></script>
-<script src="assets/js/scene.js?v=1788225992"></script>
-<script src="assets/js/motion.js?v=1788225992"></script>
+<script src="assets/js/catalog.js?v=1788229859"></script>
+<script src="assets/js/landing.js?v=1788229859"></script>
+<script src="assets/js/scroll.js?v=1788229859"></script>
+<script src="assets/js/scene.js?v=1788229859"></script>
+<script src="assets/js/city.js?v=1788229859"></script>
+<script src="assets/js/motion.js?v=1788229859"></script>
 </body>
 </html>
