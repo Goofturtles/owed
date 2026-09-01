@@ -215,7 +215,16 @@ body {
   letter-spacing: -.006em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* `overflow-x: hidden` here made <body> its own scroll container, and the
+     browser aims keyboard scrolling at the focused element's nearest
+     scrollable ancestor - which became this box, with nothing of its own to
+     scroll. Arrow keys, Page Up/Down, Home and End all did nothing, on every
+     page. `clip` does the same horizontal clipping WITHOUT creating a
+     scrollport, so the document stays the scroller and native keyboard
+     scrolling works again. overflow-y must stay visible: pairing `clip` with
+     a scrolling value would compute it back to `hidden` and undo this. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 img, svg { max-width: 100%; display: block; }
 button, input, select, textarea { font: inherit; color: inherit; }

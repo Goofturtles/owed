@@ -78,6 +78,68 @@
     kick();
   }, { passive: false });
 
+  /* Keyboard scrolling.
+
+     The wheel handler above calls preventDefault and drives the page itself,
+     so the smooth layer owns scrolling — but it only owned the wheel. That
+     left keyboard users on whatever the browser did natively, which is a
+     different motion from the rest of the page and, on a body that clips
+     horizontally, historically nothing at all. Owning the keys too makes
+     keyboard scrolling both guaranteed and identical to wheel scrolling.
+
+     Bubble phase, not capture, and bail on defaultPrevented: a control that
+     wants the key must win. The script showcase's tablist uses Home/End and
+     the arrows, and it runs first. */
+  function typingIn(el) {
+    if (!el) return false;
+    if (el.isContentEditable) return true;
+    var t = el.tagName;
+    return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || t === 'OPTION';
+  }
+  // Space activates whatever is focused, so it is only a scroll key when
+  // nothing activatable holds focus
+  function activatable(el) {
+    if (!el) return false;
+    var t = el.tagName;
+    if (t === 'BUTTON' || t === 'SUMMARY' || t === 'LABEL') return true;
+    if (t === 'A' && el.hasAttribute('href')) return true;
+    if (el.getAttribute('role') === 'button') return true;
+    // a keyboard-reachable control, but NOT a tabindex="-1" container: <main>
+    // carries one as a skip-link target and is not activatable
+    var ti = el.getAttribute('tabindex');
+    return ti !== null && parseInt(ti, 10) >= 0;
+  }
+
+  window.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented) return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    if (typingIn(e.target)) return;
+    if (e.target && e.target.closest && e.target.closest('[data-native-scroll]')) return;
+
+    var page = Math.max(120, window.innerHeight - 80);
+    var step = 72;
+    var to = null;
+
+    switch (e.key) {
+      case 'ArrowDown':  to = target + step; break;
+      case 'ArrowUp':    to = target - step; break;
+      case 'PageDown':   to = target + page; break;
+      case 'PageUp':     to = target - page; break;
+      case 'Home':       to = 0; break;
+      case 'End':        to = maxScroll(); break;
+      case ' ':
+      case 'Spacebar':
+        if (activatable(e.target)) return;
+        to = target + (e.shiftKey ? -page : page);
+        break;
+      default: return;
+    }
+
+    e.preventDefault();
+    target = clamp(to);
+    kick();
+  });
+
   // Anything that moves the page by other means — keyboard, scrollbar drag,
   // anchor jumps, find-in-page, focus — has to win. Resync to reality.
   window.addEventListener('scroll', function () {
