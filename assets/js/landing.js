@@ -139,7 +139,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.showcase-panel, .section-head, .pcard, .step, .check, .script-card, .earth-stat, .faq-item, .cta-inner'
+    '.showcase-panel, .section-head, .figure, .step, .tile, .script-card, .earth-meter, .faq-item, .cta-inner, .stat-cell, .finder-doc, .finder-note-out'
   );
 
   function revealAll() {
@@ -147,9 +147,14 @@
   }
 
   if ('IntersectionObserver' in window && revealables.length) {
-    Array.prototype.forEach.call(revealables, function (el, i) {
+    // Stagger by position WITHIN the parent, not by index across the page:
+    // a flat counter gave the fourth card in one row the same delay as the
+    // first card in the next, so rows landed out of order.
+    Array.prototype.forEach.call(revealables, function (el) {
       el.classList.add('reveal');
-      el.style.transitionDelay = Math.min(i % 5, 4) * 55 + 'ms';
+      var sibs = el.parentElement ? el.parentElement.children : [el];
+      var n = Array.prototype.indexOf.call(sibs, el);
+      el.style.transitionDelay = Math.min(n, 5) * 70 + 'ms';
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788274771">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788274771">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788274771">
-<script src="assets/js/theme.js?v=1788274771"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788280243">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788280243">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788280243">
+<script src="assets/js/theme.js?v=1788280243"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -263,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788274771"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788280243"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788274771"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788280243"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -276,36 +276,24 @@
     </div>
   </section>
 
-  <!-- ============ SOURCE STRIP ============
-       After Adaline: a single tracked label and the sources set as plain type.
-       The old bordered chips read as tags on a blog post. -->
-  <section class="strip" aria-label="Where cover comes from">
-    <div class="wrap strip-inner">
-      <p class="strip-label mono">Reads the fine print in</p>
-      <ul class="strip-list" role="list">
-        <li>Manufacturer warranties</li>
-        <li>Credit card benefits</li>
-        <li>Class action payouts</li>
-        <li>Repair programmes</li>
-        <li>Consumer law</li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ============ PROBLEM ============
        After Legora: the figures carry it. The boxed cards are gone — three
        serif numerals divided by rules, each with the sentence it belongs to. -->
   <section class="section problem">
     <div class="wrap">
-      <header class="section-head problem-head">
+      <header class="section-head problem-head split">
+        <div class="head-a">
         <p class="eyebrow">The reason this exists</p>
         <h2 class="display section-title">The cover is real.<br>Finding it is the&nbsp;problem.</h2>
+        </div>
+        <div class="head-b">
         <p class="lede section-lede">
           The rules that would get your thing fixed for free are scattered across a warranty
           booklet you threw away, a card benefit guide nobody opens, a settlement website you
           never heard of, and a consumer law nobody told you about. So people buy a new one,
           and a working product goes in the bin.
         </p>
+        </div>
       </header>
 
       <dl class="figures">
@@ -328,12 +316,16 @@
   <!-- ============ HOW IT WORKS ============
        Step cards after Clay: bracketed mono index, a short title, and the
        real product surface underneath rather than an icon. -->
-  <section class="section how" id="how">
+  <section class="section how is-dark" id="how">
     <div class="wrap">
-      <header class="section-head">
+      <header class="section-head split">
+        <div class="head-a">
         <p class="eyebrow">How it works</p>
         <h2 class="display section-title">Four answers, then a phone&nbsp;call.</h2>
+        </div>
+        <div class="head-b">
         <p class="lede section-lede">No receipt, no account, no reading. The whole thing takes about a minute.</p>
+        </div>
       </header>
       <ol class="steps" role="list">
         <li class="step" style="--si:0">
@@ -369,10 +361,14 @@
        tile, so the five places read as five different places. -->
   <section class="section checks" id="checks">
     <div class="wrap">
-      <header class="section-head">
+      <header class="section-head split">
+        <div class="head-a">
         <p class="eyebrow">What we check</p>
         <h2 class="display section-title">Five places cover hides.</h2>
+        </div>
+        <div class="head-b">
         <p class="lede section-lede">Most people know about the first one. The other four are where the free fixes actually are.</p>
+        </div>
       </header>
       <div class="bento">
         <article class="tile tile-mint wide">
@@ -481,7 +477,7 @@
     <div class="wrap-narrow">
       <p class="eyebrow">Why it matters beyond the money</p>
       <h2 class="display section-title">Every claimed repair is one thing that doesn&rsquo;t get thrown&nbsp;away.</h2>
-      <p class="lede section-lede">
+        <p class="lede section-lede">
         Broken electronics are the fastest-growing kind of household waste on the planet, and
         most of it dies for a fixable fault while somebody, somewhere, was contractually
         required to repair it for free. Owed makes the free repair the easy option.
@@ -537,10 +533,14 @@
   <!-- ============ FAQ ============ -->
   <section class="section faq" id="faq">
     <div class="wrap-narrow">
-      <header class="section-head">
+      <header class="section-head split">
+        <div class="head-a">
         <p class="eyebrow">Questions</p>
         <h2 class="display section-title">The fair ones first.</h2>
+        </div>
+        <div class="head-b">
         <p class="lede section-lede">The ones you would ask a friend who built this.</p>
+        </div>
       </header>
 
       <div class="faq-list" id="faqList">
@@ -630,10 +630,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788274771"></script>
-<script src="assets/js/landing.js?v=1788274771"></script>
-<script src="assets/js/scroll.js?v=1788274771"></script>
-<script src="assets/js/scene.js?v=1788274771"></script>
-<script src="assets/js/motion.js?v=1788274771"></script>
+<script src="assets/js/catalog.js?v=1788280243"></script>
+<script src="assets/js/landing.js?v=1788280243"></script>
+<script src="assets/js/scroll.js?v=1788280243"></script>
+<script src="assets/js/scene.js?v=1788280243"></script>
+<script src="assets/js/motion.js?v=1788280243"></script>
 </body>
 </html>
