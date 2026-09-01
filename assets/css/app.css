@@ -432,3 +432,15 @@
     color: #444;
   }
 }
+
+/* Focus targets for view changes.
+   These are focused programmatically so a screen reader announces the new
+   view. They are containers and headings, not controls, so painting a focus
+   ring on them shows the sighted user a box around a heading they never
+   navigated to. Real controls keep their rings. */
+.res-title:focus, .res-title:focus-visible,
+.welcome-title:focus, .welcome-title:focus-visible,
+.wiz-q:focus, .wiz-q:focus-visible { outline: none; }
+
+/* #appMain is deliberately NOT in that list: it is the skip-link target, and
+   a keyboard user who just used the skip link needs to see where they landed. */
