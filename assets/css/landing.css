@@ -184,8 +184,8 @@
    document with a margin annotation — which is literally what the product
    does — and a rule physically connects the marked line to the note. */
 .finder {
-  background: var(--paper-2);
-  border-block: 1px solid var(--line);
+  /* the light run is one continuous ground now; a tonal step here read as
+     a hard seam right where the page should feel continuous */
   padding: clamp(3rem, 7vw, 5rem) 0;
 }
 .finder-head { max-width: 42rem; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
@@ -982,12 +982,9 @@
    ============================================================ */
 .earth {
   position: relative;
-  background: color-mix(in srgb, var(--il-mint) 30%, var(--paper));
-  border-block: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  /* the aurora carries the colour here; the section itself stays on the
+     page ground so there is no seam to see */
   overflow: hidden;
-}
-:root[data-theme="dark"] .earth {
-  background: color-mix(in srgb, var(--accent) 7%, var(--paper));
 }
 .earth-lead { margin-bottom: clamp(1rem, 2vw, 1.75rem); }
 
@@ -1820,3 +1817,66 @@
     0 18px 34px -12px rgba(0, 0, 0, .55);
 }
 :root[data-theme="dark"] .tile { box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
+
+/* ============================================================
+   Ground transitions
+
+   The page used to switch grounds instantly - light to near-black to light
+   again - and every one of those boundaries read as a hard line cutting the
+   page in half. The light sections are one continuous colour now, and the
+   sections that genuinely need their own ground fade into it instead.
+
+   The band lives INSIDE the section, at its own top or bottom edge, running
+   from the neighbouring ground to its own. Keeping it inside means it can
+   never darken the section above it, and the sections all carry enough
+   padding that no content sits inside the band.
+   ============================================================ */
+.how, .script-sec, .city, .cta { position: relative; }
+
+/* content rides above the bands */
+.how > .wrap,
+.script-sec > .wrap,
+.cta > .cta-inner,
+.city > * { position: relative; z-index: 1; }
+
+.how::before, .how::after,
+.script-sec::after,
+.city::before,
+.cta::before, .cta::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: clamp(60px, 6vw, 110px);
+  z-index: 0;
+  pointer-events: none;
+}
+/* The band must never reach the content: light type rendered over the still-
+   light half of a fade is invisible. These sections carry enough padding to
+   clear the tallest the band can get at any width. */
+.how, .script-sec, .cta { padding-block: clamp(6.5rem, 12vw, 9.5rem); }
+
+/* how it works: paper above it, paper below it */
+.how::before { top: 0;    background: linear-gradient(to bottom, var(--paper), transparent); }
+.how::after  { bottom: 0; background: linear-gradient(to top,    var(--paper), transparent); }
+
+/* the black beat is preceded by the checks section */
+.city::before { top: 0; background: linear-gradient(to bottom, var(--paper), transparent); }
+
+/* the lit stage meets the black beat above - already the same tone - and the
+   earth section below */
+.script-sec::after { bottom: 0; background: linear-gradient(to top, var(--paper), transparent); }
+
+/* the closing field sits between the FAQ and the footer, both on paper */
+.cta::before { top: 0;    background: linear-gradient(to bottom, var(--paper), transparent); }
+.cta::after  { bottom: 0; background: linear-gradient(to top,    var(--paper), transparent); }
+
+/* The bands ARE the transition, so a hairline at the same boundary draws a
+   hard line straight through the middle of a fade. `.section.is-dark` sets
+   its own border and out-specifies a bare class, so this has to match it. */
+.section.is-dark, .earth, .cta { border-block: 0; }
+
+/* The black beat's sticky child paints an opaque ground over the whole
+   section, including the band. Lifting the band above it works because the
+   beat's copy is vertically centred in a full-height sticky - the top strip
+   it covers is empty. */
+.city::before { z-index: 2; }

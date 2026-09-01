@@ -112,17 +112,13 @@
   to   { opacity: 1; transform: none; }
 }
 
-/* ---------- cta glow ---------- */
+/* The pulsing glow that lived here is gone. This sheet loads after
+   landing.css, so its .cta::before was overriding the closing band's top
+   ground-fade and turning that seam back into a hard switch - a 174-step
+   jump in one pixel row. The reference set was also unanimous that a closing
+   field is flat: none of them put motion behind the last sentence.
+   `overflow: hidden` stays, since the fade bands are clipped to the band. */
 .cta { position: relative; overflow: hidden; isolation: isolate; }
-.cta::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: radial-gradient(60% 70% at 50% 120%, rgba(255, 255, 255, .10), transparent 70%);
-  animation: pulseGlow 8s ease-in-out infinite;
-}
-@keyframes pulseGlow {
-  0%, 100% { opacity: .6; transform: scale(1); }
-  50%      { opacity: 1;  transform: scale(1.08); }
-}
 
 /* ============================================================
    Reduced motion: strip every decorative animation. The finder
@@ -133,7 +129,6 @@
   .faq-item::after { transition: none !important; }
   .faq-item summary span { transition: none !important; transform: none !important; }
   .section.is-dark .step { opacity: 1 !important; filter: none !important; transform: none !important; }
-  .cta::before { animation: none !important; }
   .js-enter [data-enter] { opacity: 1 !important; transform: none !important; animation: none !important; }
   .split-w { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
