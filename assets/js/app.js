@@ -741,6 +741,17 @@
     if (!bar || !groups) return;
     var active = 'all';
 
+    /* A filter that matches nothing used to collapse the whole results area
+       to zero height with no message at all - the reader is left staring at
+       a blank panel wondering whether it broke. */
+    var empty = document.createElement('p');
+    empty.className = 'res-filter-empty muted';
+    empty.hidden = true;
+    empty.setAttribute('role', 'status');
+    groups.parentNode.insertBefore(empty, groups.nextSibling);
+
+    var LABEL = { strong: 'strong leads', worth: 'worth asking', longshot: 'long shots' };
+
     function apply() {
       var cards = groups.querySelectorAll('.rcard');
       Array.prototype.forEach.call(cards, function (c) {
@@ -751,6 +762,14 @@
         var any = g.querySelector('.rcard:not(.is-hidden)');
         g.hidden = !any;
       });
+      var shown = groups.querySelectorAll('.rcard:not(.is-hidden)').length;
+      var blank = active !== 'all' && cards.length > 0 && shown === 0;
+      empty.hidden = !blank;
+      if (blank) {
+        empty.textContent = 'Nothing here is filed under ' + (LABEL[active] || active) +
+          ' for this one. That is the honest answer, not a bug — try All to see the ' +
+          cards.length + ' that did match.';
+      }
     }
 
     bar.addEventListener('click', function (e) {

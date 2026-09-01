@@ -444,3 +444,16 @@
 
 /* #appMain is deliberately NOT in that list: it is the skip-link target, and
    a keyboard user who just used the skip link needs to see where they landed. */
+
+/* shown when a result filter matches nothing; without it the panel just
+   collapsed to nothing and read as a broken page */
+.res-filter-empty {
+  margin: 1.25rem 0 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
