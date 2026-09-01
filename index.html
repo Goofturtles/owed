@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788271806">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788271806">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788271806">
-<script src="assets/js/theme.js?v=1788271806"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788273241">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788273241">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788273241">
+<script src="assets/js/theme.js?v=1788273241"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -263,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788271806"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788273241"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788271806"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788273241"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -318,65 +318,40 @@
     </div>
   </section>
 
-  <!-- ============ HOW IT WORKS ============ -->
+  <!-- ============ HOW IT WORKS ============
+       Step cards after Clay: bracketed mono index, a short title, and the
+       real product surface underneath rather than an icon. -->
   <section class="section how" id="how">
     <div class="wrap">
       <header class="section-head">
         <p class="eyebrow">How it works</p>
         <h2 class="display section-title">Four answers, then a phone&nbsp;call.</h2>
+        <p class="lede section-lede">No receipt, no account, no reading. The whole thing takes about a minute.</p>
       </header>
-
       <ol class="steps" role="list">
-        <li class="step">
-          <div class="step-num mono">01</div>
-          <div class="step-body">
-            <h3 class="step-title">Tell it what broke</h3>
-            <p class="step-text">The thing, the brand, roughly when you bought it, and how you paid. Four taps. No receipt needed.</p>
-          </div>
-          <div class="step-art" aria-hidden="true">
-            <div class="mini-field"><span class="mono">Sony headphones</span></div>
-            <div class="mini-chips"><span>Headphones</span><span class="on">14 months</span><span>Visa</span></div>
-          </div>
+        <li class="step" style="--si:0">
+          <span class="step-n mono">[1]</span>
+          <h3 class="step-title">Tell it what broke</h3>
+          <p class="step-text">The thing, the brand, roughly when you bought it, and how you paid. Four taps. No receipt needed.</p>
+          <div class="sc-art"><span class="sc-field mono">Sony headphones</span><span class="sc-chips"><i>Headphones</i><i class="on">14 months</i><i>Visa</i></span></div>
         </li>
-
-        <li class="step">
-          <div class="step-num mono">02</div>
-          <div class="step-body">
-            <h3 class="step-title">It checks everyone who might owe you</h3>
-            <p class="step-text">The maker, your card, open payouts, repair programmes, and the law where you live — all at once.</p>
-          </div>
-          <div class="step-art" aria-hidden="true">
-            <ul class="mini-list">
-              <li><span class="dot ok"></span>Card adds a year<b class="mono">Strong</b></li>
-              <li><span class="dot ok"></span>Free repair programme<b class="mono">Strong</b></li>
-              <li><span class="dot maybe"></span>Open payout<b class="mono">Maybe</b></li>
-            </ul>
-          </div>
+        <li class="step" style="--si:1">
+          <span class="step-n mono">[2]</span>
+          <h3 class="step-title">It checks everyone who might owe you</h3>
+          <p class="step-text">The maker, your card, open payouts, repair programmes, and the law where you live &mdash; all at once.</p>
+          <div class="sc-art"><ul class="sc-list"><li><span class="dot ok"></span>Card adds a year<b>strong</b></li><li><span class="dot ok"></span>Free repair programme<b>strong</b></li><li><span class="dot maybe"></span>Open payout<b>maybe</b></li></ul></div>
         </li>
-
-        <li class="step">
-          <div class="step-num mono">03</div>
-          <div class="step-body">
-            <h3 class="step-title">Get the words to say</h3>
-            <p class="step-text">A short script with the rule named in it, the number to call, and the deadline. Read it out loud.</p>
-          </div>
-          <div class="step-art" aria-hidden="true">
-            <div class="mini-script mono">“I'm calling about a claim under my card's extended warranty benefit…”</div>
-          </div>
+        <li class="step" style="--si:2">
+          <span class="step-n mono">[3]</span>
+          <h3 class="step-title">Get the words to say</h3>
+          <p class="step-text">A short script with the rule named in it, the number to call, and the deadline. Read it out loud.</p>
+          <div class="sc-art"><p class="sc-script mono">&ldquo;I&rsquo;m calling about a claim under my card&rsquo;s extended warranty benefit&hellip;&rdquo;</p></div>
         </li>
-
-        <li class="step">
-          <div class="step-num mono">04</div>
-          <div class="step-body">
-            <h3 class="step-title">Keep a shelf of your stuff</h3>
-            <p class="step-text">Save what you own once. When a new payout or repair programme lands that covers it, you'll know.</p>
-          </div>
-          <div class="step-art" aria-hidden="true">
-            <div class="mini-shelf">
-              <div class="shelf-item"><span>Dishwasher</span><i class="pill pill-accent">New payout</i></div>
-              <div class="shelf-item"><span>Laptop</span><i class="pill pill-quiet">Covered</i></div>
-            </div>
-          </div>
+        <li class="step" style="--si:3">
+          <span class="step-n mono">[4]</span>
+          <h3 class="step-title">Keep a shelf of your stuff</h3>
+          <p class="step-text">Save what you own once. When a new payout or repair programme lands that covers it, you&rsquo;ll know.</p>
+          <div class="sc-art"><ul class="sc-shelf"><li>Dishwasher<b>New payout</b></li><li>Laptop<b>Covered</b></li></ul></div>
         </li>
       </ol>
     </div>
@@ -522,30 +497,40 @@
     </div>
   </section>
 
-  <!-- ============ RULEBOOK STATS ============ -->
+  <!-- ============ RULEBOOK STATS ============
+       Crop-marked cells after Spade: a mono key above, the figure below,
+       corner marks instead of a border. -->
   <section class="statband" aria-label="What is in the rulebook">
-    <div class="wrap statband-inner">
-      <div class="statband-item">
-        <b class="display count" data-count-to="445" data-count-dur="1400">445</b>
+    <div class="wrap">
+      <div class="statband-grid">
+        <div class="stat-cell" style="--si:0">
+          <p class="stat-key mono">in the book</p>
+          <b class="display count" data-count-to="445" data-count-dur="1400">445</b>
+        </div>
+        <div class="stat-cell" style="--si:1">
+          <p class="stat-key mono">places</p>
+          <b class="display count" data-count-to="5" data-count-dur="800">5</b>
+        </div>
+        <div class="stat-cell" style="--si:2">
+          <p class="stat-key mono">regions</p>
+          <b class="display count" data-count-to="4" data-count-dur="800">4</b>
+        </div>
+        <div class="stat-cell" style="--si:3">
+          <p class="stat-key mono">price</p>
+          <b class="display ">$0</b>
+        </div>
+      </div>
+      <ul class="statband-labels" role="list">
         <span>rules in the book</span>
-      </div>
-      <div class="statband-item">
-        <b class="display count" data-count-to="5" data-count-dur="800">5</b>
         <span>places cover hides</span>
-      </div>
-      <div class="statband-item">
-        <b class="display count" data-count-to="4" data-count-dur="800">4</b>
         <span>regions covered</span>
-      </div>
-      <div class="statband-item">
-        <b class="display">$0</b>
         <span>what it costs you</span>
-      </div>
+      </ul>
+      <p class="statband-note muted">
+        Every rule links to the page it came from. The book is hand-collected, so it is
+        deep rather than complete &mdash; strongest in the US and Canada right now.
+      </p>
     </div>
-    <p class="statband-note wrap muted">
-      Every rule links to the page it came from. The book is hand-collected, so it is deep
-      rather than complete — strongest in the US and Canada right now.
-    </p>
   </section>
 
   <!-- ============ FAQ ============ -->
@@ -554,6 +539,7 @@
       <header class="section-head">
         <p class="eyebrow">Questions</p>
         <h2 class="display section-title">The fair ones first.</h2>
+        <p class="lede section-lede">The ones you would ask a friend who built this.</p>
       </header>
 
       <div class="faq-list" id="faqList">
@@ -587,7 +573,7 @@
 
   <!-- ============ CTA ============ -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788271806"
+    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788273241"
            width="860" height="488" aria-hidden="true"
            muted loop playsinline preload="none" disablepictureinpicture></video>
     <div class="wrap-narrow cta-inner">
@@ -642,10 +628,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788271806"></script>
-<script src="assets/js/landing.js?v=1788271806"></script>
-<script src="assets/js/scroll.js?v=1788271806"></script>
-<script src="assets/js/scene.js?v=1788271806"></script>
-<script src="assets/js/motion.js?v=1788271806"></script>
+<script src="assets/js/catalog.js?v=1788273241"></script>
+<script src="assets/js/landing.js?v=1788273241"></script>
+<script src="assets/js/scroll.js?v=1788273241"></script>
+<script src="assets/js/scene.js?v=1788273241"></script>
+<script src="assets/js/motion.js?v=1788273241"></script>
 </body>
 </html>
