@@ -746,8 +746,11 @@
 .city {
   position: relative;
   height: 320vh;
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
+  /* fixed, not themed — this beat is black in light mode too */
+  --city-ground: #080A09;
+  --city-fg: #F5F4EC;
+  background: var(--city-ground);
+  border-bottom: 1px solid var(--city-ground);
 }
 .city-sticky {
   position: sticky; top: 0;
@@ -756,6 +759,7 @@
   overflow: hidden;
   display: grid;
   place-items: center;
+  background: var(--city-ground);
 }
 .city-canvas {
   position: absolute; inset: 0;
@@ -774,7 +778,7 @@
   transition: opacity .6s var(--ease);
   opacity: .55;
   background:
-    linear-gradient(to top, color-mix(in srgb, var(--il-mint) 55%, transparent) 0 12%, transparent 12%),
+    linear-gradient(to top, color-mix(in srgb, var(--il-mint) 45%, transparent) 0 12%, transparent 12%),
     repeating-linear-gradient(90deg,
       transparent 0 26px,
       color-mix(in srgb, var(--il-blue) 60%, transparent) 26px 52px,
@@ -789,20 +793,23 @@
    made). Soft radial, sized to the copy, so the skyline still reads around it. */
 .city-sticky::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(50% 34% at 50% 46%,
-    color-mix(in srgb, var(--paper) 96%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 86%, transparent) 55%,
-    transparent 82%);
+  background: radial-gradient(52% 36% at 50% 46%,
+    color-mix(in srgb, var(--city-ground) 88%, transparent) 0%,
+    color-mix(in srgb, var(--city-ground) 62%, transparent) 55%,
+    transparent 84%);
 }
 .city-copy {
   position: relative; z-index: 2;
   width: min(720px, 100% - 2.5rem);
   text-align: center;
+  color: var(--city-fg);
 }
+.city-copy .eyebrow { color: #9E9D95; }   /* 6.8:1 on the city ground */
 .city-title {
   font-size: var(--step-3);
   margin-top: .6rem;
   letter-spacing: -.022em;
+  color: var(--city-fg);
   display: grid;              /* both lines share one cell and cross-fade */
   place-items: center;
 }
@@ -835,7 +842,7 @@
 .city-sub {
   margin-top: 1rem;
   font-size: var(--step-0);
-  color: var(--ink-2);
+  color: #C8C7BF;                          /* 11.2:1 on the city ground */
   max-width: 48ch; margin-inline: auto;
 }
 .js-p .city-sub {

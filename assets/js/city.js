@@ -184,7 +184,7 @@
 
   /* ---------------- palette from the tokens ---------------- */
   var TONES = [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]];
-  var FOG = [.99, .99, .96];
+  var FOG = [.03, .04, .035];
   function hex(v, fb) {
     v = (v || '').trim();
     var m = /^#([0-9a-f]{6})$/i.exec(v);
@@ -194,6 +194,8 @@
   }
   function readTheme() {
     var cs = getComputedStyle(document.documentElement);
+    // the section sets its own fixed ground, so the fog reads from the host
+    var hostCs = getComputedStyle(host);
     TONES = [
       hex(cs.getPropertyValue('--il-paper'), [1, 1, 1]),
       hex(cs.getPropertyValue('--il-mint'), [.74, .91, .82]),
@@ -201,7 +203,7 @@
       hex(cs.getPropertyValue('--il-blue'), [.78, .86, .94]),
       hex(cs.getPropertyValue('--il-blush'), [.96, .83, .80])
     ];
-    FOG = hex(cs.getPropertyValue('--paper'), FOG);
+    FOG = hex(hostCs.getPropertyValue('--city-ground'), [.03, .04, .035]);
   }
   readTheme();
   new MutationObserver(function () { readTheme(); schedule(); })
