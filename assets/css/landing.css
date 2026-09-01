@@ -1061,9 +1061,8 @@
   margin-bottom: .9rem;
 }
 .earth-honest {
+  /* no rule of its own: the materials ledger above already closes with one */
   margin-top: clamp(1.25rem, 3vw, 2rem);
-  padding-top: 1.35rem;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
 }
 .earth-honest p { font-size: var(--step--1); line-height: 1.7; color: var(--ink-2); max-width: 54ch; }
 .earth-honest .pf-cap { color: var(--ink-3); }
@@ -1880,3 +1879,59 @@
    beat's copy is vertically centred in a full-height sticky - the top strip
    it covers is empty. */
 .city::before { z-index: 2; }
+
+
+/* ============================================================
+   the materials case
+
+   Two facts, each with the primary source next to it. The stats band
+   claims every rule links to the page it came from; this is where that
+   is shown rather than said, so the source is a real link and looks
+   like one.
+   ============================================================ */
+.saves {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+.saves-title {
+  font-size: var(--step-3);
+  letter-spacing: -.022em;
+  padding-bottom: .04em;
+}
+.saves-lede {
+  margin-top: .9rem;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+.saves-list { margin-top: clamp(1.5rem, 3vw, 2rem); }
+.saves-row {
+  display: grid;
+  gap: .5rem 2rem;
+  padding-block: clamp(1rem, 2vw, 1.4rem);
+  border-top: 1px solid var(--line);
+}
+.saves-row:last-child { border-bottom: 1px solid var(--line); }
+.saves-fact {
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+.saves-fact b { color: var(--ink); font-weight: 600; }
+.saves-src {
+  align-self: start;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color .15s var(--ease);
+}
+.saves-src:hover { color: var(--accent); }
+
+@media (min-width: 860px) {
+  .saves-row { grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); align-items: start; }
+}
