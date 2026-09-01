@@ -790,20 +790,23 @@
 /* The handover runs word by word: each word carries its own --i so it rises
    and sharpens a beat after the one before, rather than a whole line landing
    at once. --p is the scroll progress through the section. */
+/* Spread wide across the scroll: each word gets its own stretch rather than
+   the whole line resolving in a quarter of the section. Word five lands around
+   two thirds of the way through, so there is time to read it. */
 .js-p .city-l2 .iw {
-  --t: clamp(0, calc((var(--p, 0) - .30 - var(--i, 0) * .035) * 9), 1);
+  --t: clamp(0, calc((var(--p, 0) - .26 - var(--i, 0) * .06) * 7), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * 20px));
   filter: blur(calc((1 - var(--t)) * 7px));
 }
 .js-p .city-l1 .iw {
   /* leaves in the order it arrived, so the two lines cross rather than cut */
-  --t: clamp(0, calc((.40 - var(--p, 0) + var(--i, 0) * .028) * 9), 1);
+  --t: clamp(0, calc((.32 - var(--p, 0) + var(--i, 0) * .035) * 8), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * -16px));
   filter: blur(calc((1 - var(--t)) * 6px));
 }
-.js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.15 - var(--p, 0) * 1.7), 1); }
+.js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.2 - var(--p, 0) * 2.6), 1); }
 
 .city-sub {
   margin-top: 1rem;
@@ -812,7 +815,7 @@
   max-width: 48ch; margin-inline: auto;
 }
 .js-p .city-sub {
-  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
+  --t: clamp(0, calc((var(--p, 0) - .70) * 6), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * 16px));
 }

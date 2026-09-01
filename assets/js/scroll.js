@@ -134,8 +134,10 @@
     var dist = endY - startY;
     if (dist <= 60) return;
 
-    // kept short deliberately — this is time the visitor cannot skip forward through
-    var dur = Math.min(2400, Math.max(1500, dist * 0.55));
+    // Paced so the words can actually be read on the way through. This is time
+    // the visitor cannot skip forward through, so it stays under the WCAG 2.2.2
+    // five-second mark where it can, and scrolling up always releases it.
+    var dur = Math.min(5600, Math.max(3800, dist * 2.2));
     var t0 = null;
     guiding = true;
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
