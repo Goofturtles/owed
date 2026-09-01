@@ -313,7 +313,8 @@
   function schedule() { if (raf === null) raf = requestAnimationFrame(frame); }
   function start() { if (!running && !lost) { running = true; schedule(); } }
   function stop() { running = false; if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
-  // give the framebuffer back while off-screen — see the same note in city.js
+  // give the framebuffer back while off-screen: a full-viewport buffer held
+  // for the page lifetime is what actually risks a context loss on low-end GPUs
   function release() { stop(); if (W !== 1) { canvas.width = canvas.height = 1; W = H = 0; } }
 
   // only run while the section is actually on screen
