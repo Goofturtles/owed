@@ -301,6 +301,17 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     update();
+    // Only now is it safe for CSS to hide anything behind --p. Without this the
+    // ink section is a full-screen black panel showing one line, and any throw
+    // in an earlier IIFE here would have caused exactly that.
+    document.body.classList.add('js-p');
+    // promote the ink words only while that section is in play
+    var ink = document.getElementById('ink');
+    if (ink && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { ink.classList.toggle('is-near', e.isIntersecting); });
+      }, { rootMargin: '200px' }).observe(ink);
+    }
   })();
 
   /* ---------------- ink: scroll-scrubbed clip ----------------

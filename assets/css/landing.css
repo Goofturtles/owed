@@ -600,8 +600,9 @@
 .stack {
   position: relative;
   height: 340vh;            /* the scroll distance the flythrough consumes */
-  /* same ground as the hero above it — a tonal step plus a border read as a
-     seam right where the page should feel continuous */
+  /* same ground as the hero above it — a tonal step plus a top border read as
+     a seam right where the page should feel continuous. The bottom edge does
+     want a line: it meets the finder, which is a different surface. */
   background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
@@ -698,8 +699,9 @@
     translate(-50%, -50%)
     translate(calc(var(--sx) * 4.4), calc(var(--sy) * 4.4 + (0.5 - var(--p, 0)) * 190px / var(--sd)))
     scale(calc(1 + (var(--p, 0) - var(--sat)) * .07));
+  /* no transition: --p changes every frame, so a transition would restart
+     each time and permanently lag the scroll */
   opacity: clamp(0, calc((var(--p, 0) - var(--sat)) * 9), 1);
-  transition: opacity .25s linear;
 }
 .scard-tick {
   grid-row: 1 / span 2;
@@ -733,7 +735,7 @@
   color: var(--ink-3);
   animation: hintPulse 2.6s ease-in-out infinite;
 }
-@keyframes hintPulse { 0%,100% { opacity: .35 } 50% { opacity: .9 } }
+@keyframes hintPulse { 0%,100% { opacity: .72 } 50% { opacity: 1 } }
 
 @media (max-width: 700px) { .stack { height: 260vh; } }
 
@@ -785,11 +787,8 @@
   text-align: center;
   color: var(--ink-fg);
 }
-.ink-copy .eyebrow {
-  color: color-mix(in srgb, var(--ink-fg) 62%, transparent);
-  transition: opacity .4s var(--ease);
-  opacity: calc(1 - var(--p, 0) * 1.6);
-}
+.ink-copy .eyebrow { color: color-mix(in srgb, var(--ink-fg) 62%, transparent); }
+.js-p .ink-copy .eyebrow { opacity: calc(1 - var(--p, 0) * 1.6); }
 .ink-title {
   font-size: var(--step-3);
   margin-top: .6rem;
@@ -810,17 +809,16 @@
    The handover runs word by word rather than swapping two whole lines —
    a block of text appearing at once reads as being thrown at you. Each word
    carries its own --i, so it rises and sharpens a beat after the one before. */
-.ink-title .iw {
-  display: inline-block;
-  will-change: opacity, transform, filter;
-}
-.ink-l2 .iw {
+.ink-title .iw { display: inline-block; }
+/* promoted only while the section is actually in play */
+.ink.is-near .ink-title .iw { will-change: opacity, transform, filter; }
+.js-p .ink-l2 .iw {
   --t: clamp(0, calc((var(--p, 0) - .30 - var(--i, 0) * .035) * 9), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * 20px));
   filter: blur(calc((1 - var(--t)) * 7px));
 }
-.ink-l1 .iw {
+.js-p .ink-l1 .iw {
   /* leaves in the same order it arrived, so the two lines cross rather than cut */
   --t: clamp(0, calc((.40 - var(--p, 0) + var(--i, 0) * .028) * 9), 1);
   opacity: var(--t);
@@ -832,15 +830,14 @@
   font-size: var(--step-0);
   color: color-mix(in srgb, var(--ink-fg) 76%, transparent);
   max-width: 46ch; margin-inline: auto;
+}
+.js-p .ink-sub {
   --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * 16px));
 }
 
 /* no JS: show the end state rather than a blank black screen */
-/* no JS: --p never updates, so show the finished state */
-.no-js .ink-l1 { display: none; }
-.no-js .ink-l2 .iw, .no-js .ink-sub { opacity: 1; transform: none; filter: none; }
 
 @media (max-width: 700px) { .ink { height: 240vh; } }
 
@@ -908,7 +905,6 @@
 @keyframes haIn { to { opacity: 1; } }
 
 /* each one drifts on its own clock so the group never pulses together */
-.ha::after { content: none; }
 .ha-1 { top: 15%; left: 6%;   --had: 640;  animation-name: haIn, haFloat; animation-duration: .9s, 9s;   animation-iteration-count: 1, infinite; animation-delay: 640ms, 640ms; }
 .ha-2 { top: 58%; left: 12%;  --had: 900;  animation-name: haIn, haFloat; animation-duration: .9s, 11s;  animation-iteration-count: 1, infinite; animation-delay: 900ms, 900ms; }
 .ha-3 { top: 24%; right: 9%;  --had: 760;  animation-name: haIn, haFloat; animation-duration: .9s, 10s;  animation-iteration-count: 1, infinite; animation-delay: 760ms, 760ms; }

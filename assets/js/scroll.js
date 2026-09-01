@@ -26,19 +26,32 @@
   if (reduce || !fine) return;
 
   var docEl = document.documentElement;
-  function maxScroll() { return docEl.scrollHeight - window.innerHeight; }
+  var maxCache = -1;
+  function maxScroll() {
+    // reading scrollHeight inside the wheel handler forces a sync layout on
+    // every event; the page only changes height on resize or media load
+    if (maxCache < 0) maxCache = docEl.scrollHeight - window.innerHeight;
+    return maxCache;
+  }
   function clamp(v) { return Math.max(0, Math.min(maxScroll(), v)); }
+  // pinned sections and lazy media change the height after first paint
+  window.addEventListener('load', function () { maxCache = -1; });
+  document.addEventListener('animationend', function () { maxCache = -1; });
 
   /* ---------------- 1. smooth ---------------- */
   var target = window.scrollY;
   var current = target;
   var raf = null;
-  var programmatic = false;   // true while WE are the ones calling scrollTo
+  // NOT a boolean flag: scroll events are dispatched in the *next* rendering
+  // update, long after a synchronous flag would have been cleared, so a flag
+  // makes every one of our own writes look like an external scroll — which
+  // resynced and cancelled the rAF every frame and left the page crawling at
+  // about a seventh of normal speed. Compare positions instead.
+  var lastApplied = -1;
 
   function apply(y) {
-    programmatic = true;
+    lastApplied = Math.round(y);
     window.scrollTo(0, y);
-    programmatic = false;
   }
 
   function loop() {
@@ -68,13 +81,17 @@
   // Anything that moves the page by other means — keyboard, scrollbar drag,
   // anchor jumps, find-in-page, focus — has to win. Resync to reality.
   window.addEventListener('scroll', function () {
-    if (programmatic) return;
+    // within a couple of px of where we last put it, this is our own write
+    if (Math.abs(window.scrollY - lastApplied) <= 2) return;
     target = current = window.scrollY;
+    lastApplied = Math.round(current);
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
   }, { passive: true });
 
   window.addEventListener('resize', function () {
+    maxCache = -1;
     target = current = window.scrollY;
+    lastApplied = Math.round(current);
   }, { passive: true });
 
   api.smooth = true;
@@ -84,11 +101,12 @@
   var sections = Array.prototype.slice.call(document.querySelectorAll('[data-guided]'));
   if (!sections.length) return;
 
-  var guiding = false, gRaf = null, gDone = [], lastY = window.scrollY;
+  var guiding = false, gRaf = null, gDone = [], lastY = window.scrollY, armTimer = null;
 
   function stopGuide() {
     if (!guiding) return;
     guiding = false;
+    clearTimeout(armTimer);
     if (gRaf !== null) { cancelAnimationFrame(gRaf); gRaf = null; }
     // hand the smooth layer back exactly where the page actually is
     target = current = window.scrollY;
@@ -96,7 +114,10 @@
   api.cancelGuided = stopGuide;
 
   // Any genuine input releases it — this is what keeps it from being a trap.
-  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (evt) {
+  // focusin matters: NVDA/JAWS in browse mode swallow arrow and page keys and
+  // move the page with scrollIntoView, so keydown alone never reaches us and
+  // an AT user would have had no way out of the guide.
+  ['wheel', 'touchstart', 'keydown', 'pointerdown', 'focusin'].forEach(function (evt) {
     window.addEventListener(evt, function () { if (guiding) stopGuide(); },
       { passive: true, capture: true });
   });
@@ -133,17 +154,26 @@
     var down = y > lastY;
     lastY = y;
     if (guiding || !down) return;        // upward is always free
+    // The wheel gesture that scrolled us here is still emitting events, and
+    // trackpad momentum runs ~1s past the flick — arming immediately meant the
+    // next event cancelled the guide within a frame. Wait for actual quiet.
+    clearTimeout(armTimer);
+    armTimer = setTimeout(arm, 160);
+  }, { passive: true });
+
+  function arm() {
+    if (guiding) return;
     for (var i = 0; i < sections.length; i++) {
       if (gDone[i]) continue;
       var r = sections[i].getBoundingClientRect();
       // fire as the section pins to the top of the viewport
-      if (r.top <= 6 && r.top > -90) {
+      if (r.top <= 6 && r.top > -140) {
         gDone[i] = true;
         guide(sections[i]);
         break;
       }
     }
-  }, { passive: true });
+  }
 
   api.guided = true;
 })();
