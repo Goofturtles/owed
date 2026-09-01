@@ -249,16 +249,40 @@
     Array.prototype.forEach.call(els, function (el) { io.observe(el); });
   })();
 
-  /* ---------------- step scroll highlight ---------------- */
+  /* ---------------- steps: one lit at a time ----------------
+     After Overmind. All four sit in a row, so scroll position cannot sequence
+     them — the lit one advances on a timer while the section is on screen, and
+     hovering or focusing pins it so nothing moves under the pointer. */
   (function steps() {
-    var steps = document.querySelectorAll('.step');
-    if (reduce || !steps.length || !('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        en.target.classList.toggle('active', en.isIntersecting);
+    var list = document.querySelector('.steps');
+    if (!list) return;
+    var steps = list.querySelectorAll('.step');
+    if (!steps.length) return;
+
+    var i = 0, timer = null, held = false;
+    function light(n) {
+      i = (n + steps.length) % steps.length;
+      Array.prototype.forEach.call(steps, function (el, k) {
+        el.classList.toggle('lit', k === i);
       });
-    }, { rootMargin: '-38% 0px -38% 0px', threshold: 0 });
-    Array.prototype.forEach.call(steps, function (el) { io.observe(el); });
+    }
+    light(0);
+    // reduced motion keeps the first one lit and never advances
+    if (reduce || !('IntersectionObserver' in window)) return;
+
+    function start() { if (timer === null && !held) timer = setInterval(function () { light(i + 1); }, 2300); }
+    function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
+
+    Array.prototype.forEach.call(steps, function (el, k) {
+      el.addEventListener('pointerenter', function () { held = true; stop(); light(k); });
+      el.addEventListener('focusin', function () { held = true; stop(); light(k); });
+    });
+    list.addEventListener('pointerleave', function () { held = false; start(); });
+
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+    }, { threshold: .35 }).observe(list);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
   })();
 
   /* ---------------- spotlight on cards ---------------- */

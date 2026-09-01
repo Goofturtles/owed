@@ -5,36 +5,50 @@
    button only; we deliberately do NOT follow prefers-color-scheme,
    because the light page is the designed one.
 
-   Direction: warm paper, near-black warm ink, one high-contrast
-   display serif with a real italic, and a soft mint pill for the
-   things you press. Reference: Wispr Flow, Linear, Vercel, Craft.
+   Direction (v2, rebuilt from a survey of ~60 Mobbin sections):
+   putty paper with NO yellow cast, neutral-cool ink against it, one
+   action colour, and a grotesque display. The previous system put
+   warm ink on a warm ground, which collapses into mud, and ran two
+   different "thing you press" colours. Both are fixed here.
+   References: Square (buttons), Titan and TravelPerk (light ground),
+   Complex Law (tint ramp), Craft (type scale), Resend (dark).
    ============================================================ */
 
 :root {
   color-scheme: light;
 
-  /* ground + ink — warm paper, never sterile white */
-  --paper:   #FCFCF5;
-  --paper-2: #F5F5EA;
-  --paper-3: #EDEDE0;
+  /* ground — putty, not cream. A visible yellow cast is the loudest
+     cheap tell there is; the warmth has to be felt, not seen. */
+  --paper:   #F7F6F2;
+  --paper-2: #F1F0EB;
+  --paper-3: #E9E8E2;
   --card:    #FFFFFF;
-  --ink:     #18170F;
-  --ink-2:   #55544A;
-  --ink-3:   #6A695E;
-  --line:    #E6E5D6;
-  --line-2:  #D6D5C4;
 
-  /* accent — green as INK: "money coming back to you" */
+  /* ink — neutral-cool AGAINST the warm ground. Warm-on-warm was the
+     single biggest defect in v1. Steps are 16.7 / 7.9 / 5.3 : 1 so all
+     three are actually distinguishable. */
+  --ink:     #15161A;
+  --ink-2:   #4A4C52;
+  --ink-3:   #63666E;
+  --line:    #E2E1DB;
+  --line-2:  #BFBEB6;
+
+  /* accent — one action colour for the whole site */
   --accent:       #0B5C3A;
   --accent-hover: #084A2E;
-  --accent-soft:  #E2F2E7;
-  --accent-line:  #B9DEC8;
+  --accent-press: #063D26;
+  --accent-soft:  #E3F0E8;
+  --accent-line:  #C3DFD0;
   --accent-ink:   #FFFFFF;
 
-  /* the pressable pill — soft mint, dark ink (never a saturated slab) */
-  --cta:       #C3EDD5;
-  --cta-hover: #B0E6C7;
-  --cta-ink:   #0C3826;
+  /* v1 ran a near-black --btn AND a mint --cta, both meaning "press me".
+     They are now the same one colour; the names stay for compatibility. */
+  --cta:       var(--accent);
+  --cta-hover: var(--accent-hover);
+  --cta-ink:   var(--accent-ink);
+  --btn:       var(--accent);
+  --btn-hover: var(--accent-hover);
+  --btn-ink:   var(--accent-ink);
 
   /* semantic */
   --warn:        #8A5406;
@@ -47,45 +61,64 @@
 
   /* surfaces */
   --field:      #FFFFFF;
-  --field-line: #D9D8C7;
-  --btn:        #18170F;
-  --btn-hover:  #2C2B20;
-  --btn-ink:    #FCFCF5;
+  --field-line: #CFCEC7;
 
-  --shadow-sm: 0 1px 2px rgba(24, 23, 15, .05);
-  --shadow-md: 0 4px 14px rgba(24, 23, 15, .06), 0 1px 3px rgba(24, 23, 15, .04);
-  --shadow-lg: 0 18px 44px rgba(24, 23, 15, .09), 0 5px 12px rgba(24, 23, 15, .04);
-  --shadow-xl: 0 44px 96px rgba(24, 23, 15, .13), 0 14px 30px rgba(24, 23, 15, .06);
+  --shadow-sm: 0 1px 2px rgba(21, 22, 26, .05);
+  --shadow-md: 0 4px 14px rgba(21, 22, 26, .07), 0 1px 3px rgba(21, 22, 26, .04);
+  --shadow-lg: 0 18px 40px -10px rgba(21, 22, 26, .13), 0 4px 10px rgba(21, 22, 26, .05);
+  --shadow-xl: 0 40px 80px -20px rgba(21, 22, 26, .18), 0 12px 26px rgba(21, 22, 26, .07);
 
-  /* type — one grotesk for UI, one display serif, one mono for fine print */
-  --sans:    "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --display: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* type — a grotesque carries a functional claim; the serif is kept for
+     exactly one italic clause in the hero. Instrument Serif + Instrument
+     Sans + IBM Plex Mono is the stock free trio, which is a large part of
+     why the page read as a template. */
+  --sans:    "Geist", "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --display: var(--sans);
+  --serif:   "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --mono:    "Geist Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --step--2: .78rem;
-  --step--1: clamp(.84rem, .82rem + .1vw, .89rem);
-  --step-0:  clamp(.95rem, .92rem + .14vw, 1rem);
-  --step-1:  clamp(1.06rem, 1rem + .28vw, 1.2rem);
-  --step-2:  clamp(1.35rem, 1.15rem + .8vw, 1.85rem);
-  --step-3:  clamp(1.9rem, 1.4rem + 2.1vw, 3.1rem);
-  --step-4:  clamp(2.4rem, 1.6rem + 3.4vw, 4.4rem);
-  --step-5:  clamp(2.7rem, 1.5rem + 5vw, 5.5rem);
+  /* Nine sizes, not twenty-five. Nothing that carries a sentence goes
+     below 14px; 11px is the label tier and holds 1-3 words only. */
+  --step--2: .6875rem;                                   /* 11px labels   */
+  --step--1: .875rem;                                    /* 14px small    */
+  --step-0:  1rem;                                       /* 16px body     */
+  --step-1:  clamp(1.125rem, 1.03rem + .4vw, 1.3rem);    /* lede          */
+  --step-2:  clamp(1.25rem, 1.15rem + .5vw, 1.5rem);     /* card title    */
+  --step-3:  clamp(1.5rem, 1.35rem + .6vw, 1.875rem);    /* h3            */
+  --step-4:  clamp(2.1rem, 1.25rem + 3vw, 3.75rem);      /* section title */
+  --step-5:  clamp(3rem, 1.4rem + 5.6vw, 6.5rem);        /* hero          */
+  --step-mono: .8125rem;                                 /* 13px          */
 
-  --radius-sm: 7px;
-  --radius:    10px;
-  --radius-lg: 18px;
-  --radius-xl: 26px;
+  /* the pill only earns its place if the containers are round too */
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
   --radius-pill: 999px;
 
-  /* illustration palette — muted enough to sit on cream, but actually colour */
-  --il-ink:   #1B2320;
-  --il-paper: #FFFDF6;
-  --il-mint:  #BCE9D1;
-  --il-green: #0E6E45;
-  --il-sand:  #F2E2C0;
-  --il-amber: #E0A63A;
-  --il-blue:  #C6DCF0;
-  --il-blush: #F4D3CB;
+  /* illustration ramp — v1 spanned green/blue/yellow/pink at four
+     different lightnesses and read as a rainbow. Lightness and
+     saturation are now locked and only hue moves, a short distance,
+     so a set of cards reads as one material. The --il-sand and
+     --il-blush names are kept as aliases of the new ramp. */
+  --il-ink:   #15161A;
+  --il-paper: #FFFFFF;
+  --il-mint:  #A9DDC3;
+  --il-teal:  #A4D5D8;
+  --il-blue:  #AEC7E3;
+  --il-bone:  #E0D9C6;
+  --il-sand:  var(--il-bone);
+  --il-blush: var(--il-teal);
+  --il-green: #0B5C3A;
+  --il-amber: #8A5406;
+
+  /* the two fixed-dark sections, dark in both themes */
+  --dk-1: #0B0E0C;
+  --dk-2: #060807;
+  --dk-fg:   #F2F3F0;
+  --dk-fg-2: #A8ABA6;
+  --dk-fg-3: #888C86;
+  --dk-line: rgba(242, 243, 240, .13);
 
   --ease:     cubic-bezier(.2, .7, .3, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);
@@ -95,25 +128,31 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --paper:   #100F0B;
-  --paper-2: #17160F;
-  --paper-3: #1F1D15;
-  --card:    #1A1912;
-  --ink:     #F6F4E9;
-  --ink-2:   #ADAB9B;
-  --ink-3:   #8B8979;
-  --line:    #2A2820;
-  --line-2:  #3A382D;
+  /* the ground is retinted from brown-black to green-black so it
+     generates its own accent instead of importing a foreign one */
+  --paper:   #101312;
+  --paper-2: #171B19;
+  --paper-3: #1E2321;
+  --card:    #151917;
+  --ink:     #F2F3F0;
+  --ink-2:   #A8ABA6;
+  --ink-3:   #888C86;
+  --line:    #232825;
+  --line-2:  #323834;
 
-  --accent:       #5FDDA0;
-  --accent-hover: #7FE7B5;
-  --accent-soft:  #132A1F;
-  --accent-line:  #244936;
-  --accent-ink:   #052315;
+  --accent:       #58DDA0;
+  --accent-hover: #74E6B2;
+  --accent-press: #46C98C;
+  --accent-soft:  #123326;
+  --accent-line:  #1E4A38;
+  --accent-ink:   #05241A;
 
-  --cta:       #6FE3AE;
-  --cta-hover: #88EBBE;
-  --cta-ink:   #05281A;
+  --cta:       var(--accent);
+  --cta-hover: var(--accent-hover);
+  --cta-ink:   var(--accent-ink);
+  --btn:       var(--accent);
+  --btn-hover: var(--accent-hover);
+  --btn-ink:   var(--accent-ink);
 
   --warn:        #E2A94F;
   --warn-soft:   #251E10;
@@ -123,26 +162,23 @@
   --info:        #7EB2EF;
   --info-soft:   #111C26;
 
-  --field:      #1C1B14;
-  --field-line: #35332A;
-  --btn:        #F6F4E9;
-  --btn-hover:  #FFFFFF;
-  --btn-ink:    #100F0B;
+  --field:      #171B19;
+  --field-line: #323834;
 
-  --il-ink:   #0A0D0C;
-  --il-paper: #E6E4D8;
-  --il-mint:  #7FC9A4;
-  --il-green: #0B4F31;
-  --il-sand:  #D8C398;
+  /* the ramp is deliberately NOT re-declared for dark: these tints paint
+     objects that always carry fixed dark ink, and flipping them put dark
+     ink on a dark ground. Only the roles that are genuinely surfaces
+     (--il-paper) and the accent-as-ink change. */
+  --il-paper: #DEDCD2;
+  --il-green: #58DDA0;
   --il-amber: #C4881F;
-  --il-blue:  #9DBEDC;
-  --il-blush: #DCAFA5;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, .55);
-  --shadow-lg: 0 18px 44px rgba(0, 0, 0, .6);
-  --shadow-xl: 0 44px 96px rgba(0, 0, 0, .72);
+  --shadow-lg: 0 18px 40px -10px rgba(0, 0, 0, .62);
+  --shadow-xl: 0 40px 80px -20px rgba(0, 0, 0, .72);
 }
+
 
 /* ---------- reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -179,28 +215,37 @@ main:focus, main:focus-visible { outline: none; }
 ::selection { background: var(--cta); color: var(--cta-ink); }
 
 /* ---------- type ---------- */
-/* The display serif is set at large sizes only. line-height stays >= 1.06
-   with explicit descender room so italic j/g/p tails are never shaved. */
+/* The display face is a grotesque now. Negative tracking is a grotesque
+   mechanic and was actively damaging the serif it used to be applied to. */
 .display {
   font-family: var(--display);
-  font-weight: 400;
-  letter-spacing: -.018em;
-  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.06;
 }
+/* The serif survives in exactly one place: an italic clause inside a
+   headline. It keeps its own tracking - the display's negative tracking
+   would close up a face with sidebearings this tight. */
 .display em, .display .hl {
+  font-family: var(--serif);
   font-style: italic;
-  color: inherit;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--accent);
 }
+/* ONE eyebrow treatment. The old stylesheet ran eight different tracking
+   values for this single role, which is invisible one at a time and reads
+   as sloppiness in aggregate. */
 .eyebrow {
   font-family: var(--sans);
-  font-size: .74rem;
-  font-weight: 500;
-  letter-spacing: .11em;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
-.mono { font-family: var(--mono); font-size: .86em; letter-spacing: -.01em; }
-.lede { font-size: var(--step-1); color: var(--ink-2); line-height: 1.55; letter-spacing: -.008em; }
+.mono { font-family: var(--mono); font-size: .92em; letter-spacing: 0; }
+.lede { font-size: var(--step-1); color: var(--ink-2); line-height: 1.5; letter-spacing: -.006em; max-width: 46ch; }
 .muted { color: var(--ink-3); }
 .tnum { font-variant-numeric: tabular-nums; }
 
@@ -209,37 +254,122 @@ main:focus, main:focus-visible { outline: none; }
 .wrap-narrow { width: min(720px, 100% - 2.5rem); margin-inline: auto; }
 
 /* ---------- buttons ---------- */
+/* ============================================================
+   Buttons — after Square's pill pair.
+
+   Square's rule is that the primary and the secondary differ in
+   exactly ONE property: fill. Same height, same radius, same
+   padding, same label size and weight. Owed keeps that discipline
+   and swaps Square's black for the accent, because green already
+   carries the money meaning here.
+
+   The single inset top hairline is the only dimensional effect in
+   the system, and there is deliberately no drop shadow at rest and
+   no lift on hover: a system that rests flat cannot lift without
+   importing a material it does not own, which is the generic-SaaS
+   tell the rest of this palette exists to avoid.
+   ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .45rem;
-  padding: .66rem 1.15rem;
+  height: 44px;
+  padding: 0 26px;                 /* 0.6 x height */
+  gap: 8px;
   border-radius: var(--radius-pill);
   font-family: var(--sans);
-  font-size: var(--step--1);
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: -.012em;
+  line-height: 1.2;
+  letter-spacing: -.006em;
   border: 1px solid transparent;
-  transition: background-color .18s var(--ease), border-color .18s var(--ease),
-              color .18s var(--ease), box-shadow .18s var(--ease),
-              opacity .18s var(--ease), transform .18s var(--ease);
   white-space: nowrap;
   text-decoration: none;
+  transition: background-color .18s var(--ease), border-color .18s var(--ease),
+              color .18s var(--ease), box-shadow .18s var(--ease),
+              opacity .18s var(--ease);
 }
-.btn-primary { background: var(--btn); color: var(--btn-ink); }
-.btn-primary:hover { background: var(--btn-hover); }
-/* the mint pill — Owed's one pressable colour */
+.btn-lg { height: 52px; padding: 0 32px; font-size: 16px; }
+.btn-sm { height: 40px; padding: 0 24px; font-size: 14px; }
+.btn-block { width: 100%; }
+.btn[disabled] { opacity: .45; pointer-events: none; }
+
+/* primary and accent are the same button: one action colour site-wide */
+.btn-primary,
 .btn-accent {
-  background: var(--cta); color: var(--cta-ink);
-  border-color: color-mix(in srgb, var(--cta-ink) 12%, transparent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
 }
-.btn-accent:hover { background: var(--cta-hover); }
-.btn-ghost { border-color: var(--line-2); color: var(--ink); background: var(--card); }
-.btn-ghost:hover { border-color: var(--ink-3); background: var(--paper-2); }
-.btn-quiet { color: var(--ink-2); padding: .52rem .78rem; }
-.btn-quiet:hover { color: var(--ink); background: var(--paper-2); }
-.btn-lg { padding: .84rem 1.5rem; font-size: var(--step-0); }
+.btn-primary:hover,
+.btn-accent:hover {
+  background: var(--accent-hover);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22);
+}
+.btn-primary:active,
+.btn-accent:active {
+  background: var(--accent-press);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+/* secondary — only the fill differs */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border-color: color-mix(in srgb, var(--ink) 42%, transparent);
+}
+.btn-ghost:active { background: color-mix(in srgb, var(--ink) 9%, transparent); }
+
+/* third action — no box at all, so the primary keeps all the weight */
+.btn-quiet {
+  height: 44px; padding: 0 10px; gap: 6px;
+  background: none; border: none;
+  font-size: 15px; font-weight: 500;
+  color: var(--ink-2);
+}
+.btn-quiet:hover {
+  color: var(--ink); background: none;
+  text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px;
+}
+
+/* the one achromatic button: used only where a button sits on a
+   saturated accent field, so the field never fights a second accent */
+.btn-ink {
+  background: var(--paper); color: var(--ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+.btn-ink:hover { background: #FFFFFF; }
+
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* On the fixed-dark sections the light-mode forest green would read only
+   2.4 : 1 against the ground - the button shape would barely separate -
+   so the ink inverts while the geometry stays identical. */
+.is-dark .btn-primary,
+.is-dark .btn-accent {
+  background: #58DDA0; color: #05241A;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.is-dark .btn-primary:hover,
+.is-dark .btn-accent:hover { background: #74E6B2; }
+.is-dark .btn-ghost {
+  color: var(--dk-fg);
+  border-color: rgba(242, 243, 240, .26);
+  background: transparent;
+}
+.is-dark .btn-ghost:hover {
+  background: rgba(242, 243, 240, .07);
+  border-color: rgba(242, 243, 240, .5);
+}
+.is-dark .btn-quiet { color: var(--dk-fg-2); }
+.is-dark .btn-quiet:hover { color: var(--dk-fg); }
+.is-dark .btn:focus-visible { outline-color: #58DDA0; }
+
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
 
@@ -267,10 +397,13 @@ main:focus, main:focus-visible { outline: none; }
   background: var(--ink); color: var(--paper);
   border-radius: 7px;
 }
+/* a hairline display serif at subhead size is the specific thing that
+   reads as a word-processor heading, so the wordmark is sans now */
 .brand-name {
-  font-family: var(--display);
-  font-size: 1.35rem;
-  letter-spacing: -.015em;
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -.03em;
   line-height: 1.3;
 }
 

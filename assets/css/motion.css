@@ -147,7 +147,11 @@
    Reduced motion: strip every decorative animation. The finder
    stops cycling in motion.js and simply rests on its first example.
    ============================================================ */
+/* the lit step and the faq marker are decorative movement */
 @media (prefers-reduced-motion: reduce) {
+  .faq-item::after { transition: none !important; }
+  .faq-item summary span { transition: none !important; transform: none !important; }
+  .section.is-dark .step { opacity: 1 !important; filter: none !important; transform: none !important; }
   .cta::before { animation: none !important; }
   .js-enter [data-enter] { opacity: 1 !important; transform: none !important; animation: none !important; }
   .split-w { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
