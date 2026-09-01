@@ -101,12 +101,11 @@
   var sections = Array.prototype.slice.call(document.querySelectorAll('[data-guided]'));
   if (!sections.length) return;
 
-  var guiding = false, gRaf = null, gDone = [], lastY = window.scrollY, armTimer = null;
+  var guiding = false, gRaf = null, gDone = [], lastY = window.scrollY;
 
   function stopGuide() {
     if (!guiding) return;
     guiding = false;
-    clearTimeout(armTimer);
     if (gRaf !== null) { cancelAnimationFrame(gRaf); gRaf = null; }
     // hand the smooth layer back exactly where the page actually is
     target = current = window.scrollY;
@@ -161,11 +160,12 @@
     var down = y > lastY;
     lastY = y;
     if (guiding || !down) return;        // upward is always free
-    // The wheel gesture that scrolled us here is still emitting events, and
-    // trackpad momentum runs ~1s past the flick — arming immediately meant the
-    // next event cancelled the guide within a frame. Wait for actual quiet.
-    clearTimeout(armTimer);
-    armTimer = setTimeout(arm, 160);
+    // Arm immediately. This used to wait ~160ms for the gesture to go quiet,
+    // because an in-flight wheel would cancel the guide — but downward scroll
+    // no longer cancels, so the wait was pointless and it meant the guide
+    // needed a pause at exactly the right scroll position, which never
+    // happens in normal scrolling. That is why it almost never engaged.
+    arm();
   }, { passive: true });
 
   function arm() {
@@ -174,7 +174,7 @@
       if (gDone[i]) continue;
       var r = sections[i].getBoundingClientRect();
       // fire as the section pins to the top of the viewport
-      if (r.top <= 6 && r.top > -140) {
+      if (r.top <= 8 && r.top > -420) {
         gDone[i] = true;
         guide(sections[i]);
         break;

@@ -740,13 +740,14 @@
 @media (max-width: 700px) { .stack { height: 260vh; } }
 
 /* ============================================================
-   THE CITY — an isometric skyline of everywhere cover hides,
-   drifted across on scroll. Replaces the ink clip entirely.
+   THE BLACK BEAT — plain black, one headline handing over to the
+   next word by word, and the five places cover hides naming
+   themselves underneath. No scene behind it.
    ============================================================ */
 .city {
   position: relative;
   height: 320vh;
-  /* fixed, not themed — this beat is black in light mode too */
+  /* fixed, not themed — black in light mode too */
   --city-ground: #080A09;
   --city-fg: #F5F4EC;
   background: var(--city-ground);
@@ -761,50 +762,14 @@
   place-items: center;
   background: var(--city-ground);
 }
-.city-canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  display: block;
-  opacity: 0;
-  transition: opacity .7s var(--ease);
-}
-.city.is-live .city-canvas { opacity: 1; }
-.city.is-live .city-still { opacity: 0; }
 
-/* no WebGL / lost context / reduced motion */
-.city-still {
-  position: absolute; inset: 0;
-  pointer-events: none;
-  transition: opacity .6s var(--ease);
-  opacity: .55;
-  background:
-    linear-gradient(to top, color-mix(in srgb, var(--il-mint) 45%, transparent) 0 12%, transparent 12%),
-    repeating-linear-gradient(90deg,
-      transparent 0 26px,
-      color-mix(in srgb, var(--il-blue) 60%, transparent) 26px 52px,
-      transparent 52px 84px,
-      color-mix(in srgb, var(--il-sand) 60%, transparent) 84px 104px);
-  -webkit-mask-image: linear-gradient(to top, #000 0 42%, transparent 78%);
-          mask-image: linear-gradient(to top, #000 0 42%, transparent 78%);
-}
-
-/* Buildings travel straight behind the headline, so the type needs a real
-   seat — a text-shadow alone was not enough (the same mistake the ink section
-   made). Soft radial, sized to the copy, so the skyline still reads around it. */
-.city-sticky::after {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(52% 36% at 50% 46%,
-    color-mix(in srgb, var(--city-ground) 88%, transparent) 0%,
-    color-mix(in srgb, var(--city-ground) 62%, transparent) 55%,
-    transparent 84%);
-}
 .city-copy {
   position: relative; z-index: 2;
   width: min(720px, 100% - 2.5rem);
   text-align: center;
   color: var(--city-fg);
 }
-.city-copy .eyebrow { color: #9E9D95; }   /* 6.8:1 on the city ground */
+.city-copy .eyebrow { color: #9E9D95; }   /* 7.3:1 on the ground */
 .city-title {
   font-size: var(--step-3);
   margin-top: .6rem;
@@ -839,10 +804,11 @@
   filter: blur(calc((1 - var(--t)) * 6px));
 }
 .js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.15 - var(--p, 0) * 1.7), 1); }
+
 .city-sub {
   margin-top: 1rem;
   font-size: var(--step-0);
-  color: #C8C7BF;                          /* 11.2:1 on the city ground */
+  color: #C8C7BF;                          /* 11.7:1 on the ground */
   max-width: 48ch; margin-inline: auto;
 }
 .js-p .city-sub {
@@ -851,7 +817,7 @@
   transform: translateY(calc((1 - var(--t)) * 16px));
 }
 
-/* the five sources light up one at a time as the camera travels */
+/* the five sources light up one at a time as you travel */
 .city-tags {
   position: absolute; z-index: 2;
   left: 50%; bottom: clamp(1.5rem, 5vh, 3rem);
@@ -876,15 +842,8 @@
   opacity: 0;
 }
 /* Without JS --p never moves, so the cycle would leave all five invisible.
-   Show the first one only: a real, readable static state. A timed failsafe
-   was the wrong tool here — these are *meant* to be hidden between their
-   slices, so it lit all five at once, stacked in the same grid cell. */
+   Show the first one only: a real, readable static state. */
 .city-tags li:first-child { opacity: 1; }
-/* Each tag owns a slice of the scroll and fades in then out again. Built from
-   two one-sided clamps rather than abs(): abs() only landed in Chrome 133, and
-   the fallback for it was cumulative — every tag reached opacity 1 and stayed
-   there, so by the end all five sat stacked in the same grid cell, opaque and
-   overlapping. min() of a rise and a fall needs no fallback at all. */
 .js-p .city-tags li {
   /* window must be at least the spacing between --ct values (~.16) or the
      tags leave dead gaps where nothing is shown at all */
@@ -927,8 +886,7 @@
   .stack-cap { position: static; opacity: 1; transform: none; }
   .city { height: auto; }
   .city-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
-  .city-canvas, .cta-video { display: none; }
-  .city-sticky::after { display: none; }
+  .cta-video { display: none; }
   .city-tags { position: static; transform: none; display: flex; flex-wrap: wrap;
                gap: .5rem; justify-content: center; margin-top: 1.75rem; width: auto; }
   /* .js-p .city-tags li out-specifies a bare selector here, so this has to
