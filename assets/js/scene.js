@@ -180,7 +180,12 @@
 
   /* ---------------- the pages ---------------- */
   var COUNT = window.innerWidth < 700 ? 18 : 30;
-  var HIT = Math.floor(COUNT * 0.62);
+  var SPACING = 1.35, CAM_START = 5.0;
+  var TRAVEL = COUNT * 0.66;          // the camera stops short; fog hides it
+  // Derive the highlighted page from the travel instead of guessing a
+  // fraction of COUNT: when the travel was halved, a hard-coded 0.62 put
+  // the lit clause at progress 1.48 — the camera never reached the payoff.
+  var HIT = Math.round((CAM_START - 0.82 * TRAVEL) / -SPACING);
   var pages = [];
   (function build() {
     var r = 7;
@@ -194,7 +199,7 @@
       var hit = (i === HIT);
       if (hit) rad = 0.62;               // the one that matters comes in close
       pages.push({
-        z: -i * 1.35,
+        z: -i * SPACING,
         x: Math.cos(ang) * rad * 1.45,
         y: Math.sin(ang) * rad * 0.95,
         rot: (rnd() - 0.5) * 0.3,
@@ -281,7 +286,7 @@
     // Travel less than the full depth of the stack. Covering all 32 pages over
     // the run meant one whipped past every ~228ms, which reads as fast no
     // matter how long the scroll takes — the fog hides that we stop short.
-    var camZ = 5.0 - progress * (COUNT * 0.66);
+    var camZ = CAM_START - progress * TRAVEL;
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
