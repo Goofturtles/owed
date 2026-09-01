@@ -39,21 +39,36 @@
     var hits = wall.querySelectorAll('p[data-hit]');
     if (!hits.length) return;
 
+    // Every line here traces to a specific rule in data/coverage.json, including
+    // the caveats that rule states about itself. `doc` matters: without it the
+    // page kept showing a Sony warranty while the note talked about a MacBook.
     var CASES = [
       // coverage.json is explicit that the six years is the window to BRING a
       // claim, not a promise the product lasts that long — and that Scotland is
       // five, not six. Say it the way the rule says it.
-      { item: 'Sony WH-1000XM4 · 2 years old · England',
+      { doc: 'Sony WH-1000XM4 — limited warranty',
+        page: 'p. 14 / 22',
+        item: 'Sony WH-1000XM4 · 2 years old · England',
         verdict: 'The shop may still owe the repair',
         meta: 'Consumer Rights Act · 6 years to bring a claim' },
-      { item: 'MacBook Air · 14 months · paid by card',
+      { doc: 'Visa Signature — guide to benefits',
+        page: 'p. 31 / 48',
+        item: 'MacBook Air · 14 months · paid by card',
         verdict: 'One more year of cover',
         meta: "Card extended warranty · after Apple's ran out" },
-      { item: 'Whirlpool dishwasher · 3 years · Quebec',
-        verdict: 'Free repair, parts and labour',
-        meta: 'Legal guarantee · 3 to 6 years' }
+      // NOT the 2026 good-working-order rule: coverage.json says that one
+      // "starts 5 October 2026, and only covers new items bought or leased on
+      // or after that date", so a three-year-old machine can never use it.
+      // The durability warranty has no start date and no fixed end.
+      { doc: 'Quebec Consumer Protection Act — s. 38',
+        page: 'p. 9 / 26',
+        item: 'Whirlpool dishwasher · 3 years · Quebec',
+        verdict: 'It should still be working',
+        meta: 'Quebec legal warranty · must last a reasonable time' }
     ];
 
+    var elDoc = document.getElementById('finderDocName');
+    var elPage = document.getElementById('finderDocPage');
     var elFor = document.getElementById('finderFor');
     var elVerdict = document.getElementById('finderVerdict');
     var elMeta = document.getElementById('finderMeta');
@@ -68,11 +83,16 @@
       if (hit) {
         var grid = wall.closest('.finder-grid');
         if (grid) {
-          grid.style.setProperty('--hit-y',
-            (hit.offsetTop + wall.offsetTop + hit.offsetHeight / 2) + 'px');
+          // .finder-wall is static inside a positioned .finder-doc, so
+          // hit.offsetTop is ALREADY relative to the doc — adding wall.offsetTop
+          // double-counted the doc bar and only looked right because the
+          // -3.4rem offset happened to cancel it.
+          grid.style.setProperty('--hit-y', (hit.offsetTop + hit.offsetHeight / 2) + 'px');
         }
       }
       var c = CASES[n];
+      if (elDoc) elDoc.textContent = c.doc;
+      if (elPage) elPage.textContent = c.page;
       if (elFor) elFor.textContent = c.item;
       if (elVerdict) elVerdict.textContent = c.verdict;
       if (elMeta) elMeta.textContent = c.meta;
@@ -82,8 +102,13 @@
     // one still example is the whole story; only cycle if motion is welcome
     if (reduce) return;
 
-    var timer = null;
+    var timer = null, shown = 1;
     function step() {
+      // WCAG 2.2.2: auto-updating content needs a stop. Rather than add a
+      // control nobody would press, run one full pass and rest on the first
+      // example. Pausing off-screen is a courtesy, not compliance.
+      if (shown >= CASES.length) { stop(); return; }
+      shown++;
       out.classList.add('is-swapping');
       Array.prototype.forEach.call(hits, function (p) { p.classList.remove('is-hit'); });
       setTimeout(function () {
@@ -110,6 +135,14 @@
       var r = wall.getBoundingClientRect();
       if (r.bottom > 0 && r.top < window.innerHeight) start();
     });
+
+    // --hit-y is a pixel measurement; a reflow across a breakpoint invalidates
+    // it, and under reduced motion paint() otherwise runs exactly once
+    var rt = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { paint(i); }, 150);
+    }, { passive: true });
   })();
 
   /* ---------------- headline: split into words ----------------

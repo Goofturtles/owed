@@ -31,8 +31,9 @@
     sw.setAttribute('data-on', mode);
     tabSignup.classList.toggle('is-on', mode === 'signup');
     tabSignin.classList.toggle('is-on', mode === 'signin');
-    tabSignup.setAttribute('aria-selected', String(mode === 'signup'));
-    tabSignin.setAttribute('aria-selected', String(mode === 'signin'));
+    // these are links now, so the current one is aria-current, not aria-selected
+    if (mode === 'signup') { tabSignup.setAttribute('aria-current', 'page'); tabSignin.removeAttribute('aria-current'); }
+    else { tabSignin.setAttribute('aria-current', 'page'); tabSignup.removeAttribute('aria-current'); }
 
     if (mode === 'signup') {
       title.textContent = 'Start your shelf';
@@ -55,8 +56,9 @@
     history.replaceState(null, '', url);
   }
 
-  tabSignup.addEventListener('click', function () { setMode('signup'); });
-  tabSignin.addEventListener('click', function () { setMode('signin'); });
+  // intercept so the switch stays instant; the href is the no-JS fallback
+  tabSignup.addEventListener('click', function (e) { e.preventDefault(); setMode('signup'); });
+  tabSignin.addEventListener('click', function (e) { e.preventDefault(); setMode('signin'); });
 
   /* ---------- prefill from an existing local account ---------- */
   var existing = S.getUser();
@@ -96,6 +98,7 @@
     }
     if (!validEmail(email)) {
       showError("That doesn't look like an email address.");
+      emailInput.setAttribute('aria-invalid', 'true');
       emailInput.focus();
       return;
     }
@@ -107,7 +110,18 @@
       user = S.signUp(nameInput.value, email, regionSelect.value);
     } else {
       user = S.signIn(email);
+      // store.js returns null when this browser already holds a shelf under a
+      // different address — say so rather than quietly replacing it
+      if (!user) {
+        submit.classList.remove('is-busy');
+        showError('This browser already has a shelf under a different email. ' +
+                  'Use that address, or create a new account.');
+        emailInput.setAttribute('aria-invalid', 'true');
+        emailInput.focus();
+        return;
+      }
     }
+    emailInput.removeAttribute('aria-invalid');
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var go = function () {

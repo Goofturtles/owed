@@ -79,6 +79,12 @@
   border-radius: var(--radius); padding: .55rem .75rem;
 }
 #authSubmit { margin-top: .35rem; }
+/* auth.js adds these; without the rules, pressing submit produced 380ms of
+   nothing before the page navigated */
+#authSubmit.is-busy { opacity: .72; pointer-events: none; }
+#authSubmit.is-busy .btn-arrow { animation: authGo .7s var(--ease) infinite; }
+@keyframes authGo { 0%,100% { transform: translateX(0) } 50% { transform: translateX(4px) } }
+.auth-panel.is-done { opacity: .35; transition: opacity .3s var(--ease); }
 .btn-arrow { transition: transform .2s var(--ease); }
 #authSubmit:hover .btn-arrow { transform: translateX(2px); }
 
@@ -122,6 +128,7 @@
 .proof-kicker {
   font-size: .66rem; letter-spacing: .13em; text-transform: uppercase;
   color: var(--ink-3); margin-bottom: .8rem;
+  padding-right: 3rem;      /* clears .theme-btn-float and its focus ring at 320px */
 }
 
 .proof-card {
@@ -178,8 +185,7 @@
   margin-top: 1.4rem; line-height: 1.55;
 }
 
-/* theme button floats over the proof panel */
-.theme-btn-float { position: absolute; top: 1.1rem; right: 1.1rem; z-index: 5; }
+/* .theme-btn-float positioning lives in base.css — not redeclared here */
 
 /* ---------------- responsive ---------------- */
 @media (max-width: 920px) {
@@ -198,4 +204,23 @@
 
 @media (prefers-reduced-motion: reduce) {
   .auth-slider, .btn-arrow { transition: none !important; }
+}
+
+
+/* ============================================================
+   Windows High Contrast — the focus ring here is a box-shadow and
+   the current-tab marker is a background colour; forced-colors
+   removes both, leaving the sign-in form with no visible focus at
+   all. landing.css carries the equivalent rule but auth never
+   loads it.
+   ============================================================ */
+@media (forced-colors: active) {
+  .input:focus, .select:focus,
+  .auth-tab:focus-visible, .btn:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .auth-tab.is-on { text-decoration: underline; text-underline-offset: 4px; }
+  .auth-slider { background: Highlight; forced-color-adjust: none; }
+  .proof-card, .finder-doc { border: 1px solid CanvasText; }
 }

@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788270717">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788270717">
-<link rel="stylesheet" href="assets/css/auth.css?v=1788270717">
-<script src="assets/js/theme.js?v=1788270717"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788271806">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788271806">
+<link rel="stylesheet" href="assets/css/auth.css?v=1788271806">
+<script src="assets/js/theme.js?v=1788271806"></script>
 </head>
 <body class="auth-body">
 
@@ -34,11 +34,14 @@
       <h1 class="display auth-title" id="authTitle">Start your shelf</h1>
       <p class="auth-sub muted" id="authSub">Free, and it takes about fifteen seconds.</p>
 
-      <div class="auth-switch" role="tablist" aria-label="Sign in or create an account">
-        <button class="auth-tab is-on" id="tabSignup" role="tab" aria-selected="true" type="button">Create account</button>
-        <button class="auth-tab" id="tabSignin" role="tab" aria-selected="false" type="button">Sign in</button>
+      <!-- Not a tablist: there is no tabpanel and no roving focus, so claiming
+           the role told screen readers about a widget that does not exist.
+           These are links to a real URL that auth.js already understands. -->
+      <nav class="auth-switch" aria-label="Sign in or create an account">
+        <a class="auth-tab is-on" id="tabSignup" href="auth.html?mode=signup" aria-current="page">Create account</a>
+        <a class="auth-tab" id="tabSignin" href="auth.html?mode=signin">Sign in</a>
         <span class="auth-slider" aria-hidden="true"></span>
-      </div>
+      </nav>
 
       <form class="auth-form" id="authForm" novalidate>
         <div class="field field-name" id="fieldName">
@@ -49,7 +52,8 @@
         <div class="field">
           <label for="email">Email</label>
           <input class="input" id="email" name="email" type="email" autocomplete="email"
-                 placeholder="you@example.com" required>
+                 placeholder="you@example.com" required
+                 aria-describedby="emailHint authError">
           <p class="field-hint" id="emailHint">Used only as the name on your shelf &mdash; nothing is sent to it.</p>
         </div>
 
@@ -116,8 +120,8 @@
   </aside>
 </main>
 
-<script src="assets/js/store.js?v=1788270717"></script>
-<script src="assets/js/auth.js?v=1788270717"></script>
-<script src="assets/js/motion.js?v=1788270717"></script>
+<script src="assets/js/store.js?v=1788271806"></script>
+<script src="assets/js/auth.js?v=1788271806"></script>
+<script src="assets/js/motion.js?v=1788271806"></script>
 </body>
 </html>

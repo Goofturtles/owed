@@ -57,7 +57,11 @@
         existing.email.toLowerCase() === String(email || '').trim().toLowerCase()) {
       return existing;
     }
-    // No server to check against: treat a sign-in as adopting this browser's account.
+    // If this browser already holds a shelf under a different email, refusing is
+    // the only honest answer: the UI promises "your shelf is waiting in this
+    // browser", and silently minting a new id would orphan that shelf.
+    if (existing && existing.email) return null;
+    // Nothing stored yet — first sign-in on this browser adopts the address.
     var user = {
       id: uid(),
       name: (String(email || '').split('@')[0] || 'You').replace(/[._-]/g, ' '),

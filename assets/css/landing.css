@@ -272,7 +272,7 @@
   position: relative;
   padding-left: clamp(0px, 1.1vw, 1rem);
   /* rides down to meet the marked line; clamped so it can never run off */
-  margin-top: clamp(0px, calc(var(--hit-y, 150px) - 3.4rem), 320px);
+  margin-top: clamp(0rem, calc(var(--hit-y, 150px) - 1.05rem), 22rem);
   transition: margin-top .55s var(--ease-out);
 }
 /* the connector: what actually ties the note to the clause */
