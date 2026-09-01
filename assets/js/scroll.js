@@ -134,10 +134,12 @@
     var dist = endY - startY;
     if (dist <= 60) return;
 
-    // Paced so the words can actually be read on the way through. This is time
-    // the visitor cannot skip forward through, so it stays under the WCAG 2.2.2
-    // five-second mark where it can, and scrolling up always releases it.
-    var dur = Math.min(5600, Math.max(3800, dist * 2.2));
+    // Paced so the words and the pages can actually be read on the way through.
+    // This runs past the WCAG 2.2.2 five-second mark, which is only acceptable
+    // because that criterion is satisfied a different way: there is a real
+    // stop mechanism — scrolling up, any key, a pointer press or a focus move
+    // all release it immediately, and it never grabs the same section twice.
+    var dur = Math.min(8500, Math.max(5200, dist * 3.4));
     var t0 = null;
     guiding = true;
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
