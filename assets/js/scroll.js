@@ -127,6 +127,22 @@
       { passive: true, capture: true });
   });
 
+  /* Tell the visitor the page has handed control back. Only on a run that
+     finished by itself — if they scrolled out of it they are already moving
+     and do not need telling. Clears on their next real input. */
+  function showCue(sec) {
+    sec.classList.add('is-done');
+    function clear() {
+      sec.classList.remove('is-done');
+      ['wheel', 'keydown', 'touchstart', 'pointerdown'].forEach(function (e) {
+        window.removeEventListener(e, clear, true);
+      });
+    }
+    ['wheel', 'keydown', 'touchstart', 'pointerdown'].forEach(function (e) {
+      window.addEventListener(e, clear, { passive: true, capture: true });
+    });
+  }
+
   function guide(sec) {
     var startY = window.scrollY;
     var travel = sec.offsetHeight - window.innerHeight;
@@ -153,8 +169,9 @@
       var y = startY + dist * e;
       current = target = y;
       apply(y);
-      if (p < 1) gRaf = requestAnimationFrame(step);
-      else { guiding = false; gRaf = null; }
+      if (p < 1) { gRaf = requestAnimationFrame(step); return; }
+      guiding = false; gRaf = null;
+      showCue(sec);          // the run finished on its own: say so
     }
     gRaf = requestAnimationFrame(step);
   }
