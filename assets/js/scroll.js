@@ -139,7 +139,7 @@
     // because that criterion is satisfied a different way: there is a real
     // stop mechanism — scrolling up, any key, a pointer press or a focus move
     // all release it immediately, and it never grabs the same section twice.
-    var dur = Math.min(8500, Math.max(5200, dist * 3.4));
+    var dur = Math.min(10500, Math.max(6200, dist * 4.2));
     var t0 = null;
     guiding = true;
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }

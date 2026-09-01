@@ -278,7 +278,10 @@
     // resize, restored scroll position) instead of crawling there over seconds
     var d = target - progress;
     progress += (Math.abs(d) > 0.25) ? d : d * 0.16;
-    var camZ = 5.0 - progress * (COUNT * 1.35 + 3.0);
+    // Travel less than the full depth of the stack. Covering all 32 pages over
+    // the run meant one whipped past every ~228ms, which reads as fast no
+    // matter how long the scroll takes — the fog hides that we stop short.
+    var camZ = 5.0 - progress * (COUNT * 0.66);
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
