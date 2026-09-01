@@ -325,26 +325,6 @@
     }
   })();
 
-  /* ---------------- cta: ambient loop ---------------- */
-  (function ctaVideo() {
-    var v = document.querySelector('.cta-video');
-    if (!v) return;
-    if (reduce) { v.removeAttribute('src'); return; }
-    if (!('IntersectionObserver' in window)) return;
-    var started = false;
-    new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) {
-          if (!started) { started = true; v.preload = 'auto'; v.load(); }
-          var pr = v.play();
-          if (pr && pr.catch) pr.catch(function () {});   // autoplay refusal is fine
-        } else if (started) {
-          v.pause();
-        }
-      });
-    }, { rootMargin: '200px' }).observe(v);
-  })();
-
   /* ---------------- magnetic buttons ---------------- */
   (function magnetic() {
     if (reduce || !window.matchMedia('(hover: hover)').matches) return;

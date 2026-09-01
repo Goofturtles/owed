@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788296736">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788296736">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788296736">
-<script src="assets/js/theme.js?v=1788296736"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788296986">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788296986">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788296986">
+<script src="assets/js/theme.js?v=1788296986"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -249,30 +249,52 @@
 
 <!-- ============ THE PRODUCT ============ -->
   <section class="showcase">
-    <div class="wrap">
-      <div class="showcase-panel">
-        <div class="showcase-head">
-          <p class="eyebrow showcase-eyebrow">Your shelf</p>
-          <h2 class="display showcase-title">Everything you own, <em>watched for you.</em></h2>
-        </div>
-        <figure class="hero-shot">
-          <div class="hero-shot-frame">
-            <div class="hero-shot-bar" aria-hidden="true">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <i class="mono">your shelf</i>
-            </div>
-            <!-- both sit ~2 viewports down and only one is ever visible, so
-                 neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788296736"
-                 width="1500" height="1000" alt=""
-                 loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788296736"
-                 width="1500" height="1000" alt=""
-                 loading="lazy" decoding="async">
-          </div>
-          <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
-        </figure>
+    <div class="wrap sc-grid">
+      <div class="sc-copy">
+        <p class="eyebrow">Your shelf</p>
+        <h2 class="display sc-title">Everything you own, <em>watched for you.</em></h2>
+        <p class="lede sc-lede">
+          Save a thing once. Owed re-checks it against the whole rulebook every time the
+          book grows, so a payout that opens two years from now still finds you.
+        </p>
+
+        <!-- The index IS the shelf. After Intercom: hairline-ruled rows with
+             the current one marked by a dot in the gutter, rather than a
+             second decorative copy of the UI. Counts are the demo shelf's
+             real ones. -->
+        <ul class="sc-index" role="list">
+          <li class="sc-row is-on">
+            <span class="sc-row-dot" aria-hidden="true"></span>
+            <span class="sc-row-name">Sony WH&#8209;1000XM4 headphones</span>
+            <span class="sc-row-meta mono">58 to try</span>
+          </li>
+          <li class="sc-row">
+            <span class="sc-row-dot" aria-hidden="true"></span>
+            <span class="sc-row-name">Whirlpool dishwasher</span>
+            <span class="sc-row-meta mono">68 to try</span>
+          </li>
+          <li class="sc-row">
+            <span class="sc-row-dot" aria-hidden="true"></span>
+            <span class="sc-row-name">DeWalt cordless drill</span>
+            <span class="sc-row-meta mono">68 to try</span>
+          </li>
+          <li class="sc-row">
+            <span class="sc-row-dot" aria-hidden="true"></span>
+            <span class="sc-row-name">Lodge cast iron skillet</span>
+            <span class="sc-row-meta mono">51 to try</span>
+          </li>
+        </ul>
+
+        <a class="btn btn-accent sc-cta" href="app.html?demo=1">Open the demo shelf</a>
       </div>
+
+      <figure class="sc-shot">
+        <img class="shot-light" src="assets/img/app-shot.webp" width="1500" height="1000"
+             alt="" loading="lazy" decoding="async">
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp" width="1500" height="1000"
+             alt="" loading="lazy" decoding="async">
+        <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -743,11 +765,11 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788296736"></script>
-<script src="assets/js/landing.js?v=1788296736"></script>
-<script src="assets/js/scroll.js?v=1788296736"></script>
-<script src="assets/js/scene.js?v=1788296736"></script>
-<script src="assets/js/godray.js?v=1788296736"></script>
-<script src="assets/js/motion.js?v=1788296736"></script>
+<script src="assets/js/catalog.js?v=1788296986"></script>
+<script src="assets/js/landing.js?v=1788296986"></script>
+<script src="assets/js/scroll.js?v=1788296986"></script>
+<script src="assets/js/scene.js?v=1788296986"></script>
+<script src="assets/js/godray.js?v=1788296986"></script>
+<script src="assets/js/motion.js?v=1788296986"></script>
 </body>
 </html>

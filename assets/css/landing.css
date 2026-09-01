@@ -334,48 +334,69 @@
   .finder-doc-pp { display: none; }
 }
 
-/* ---------------- product showcase ---------------- */
-.showcase { padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5rem); }
-.showcase-panel {
-  background: var(--paper-2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem);
+/* ============================================================
+   product showcase — after Intercom
+
+   The shelf and the script were already a list beside a document, so
+   the section stops being one bordered panel and becomes exactly that:
+   a hairline-ruled index on the left, the app itself on the right,
+   cropped by the section edge so the UI stays at reading size instead
+   of being shrunk to fit a box. Losing the fake browser chrome buys
+   back the width that shrinking cost.
+   ============================================================ */
+.showcase {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5rem);
+  overflow: hidden;                 /* the panel is cropped on purpose */
+  border-top: 1px solid var(--line);
 }
-.showcase-head { text-align: center; margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
-.showcase-title {
-  font-size: var(--step-4);
-  margin-top: .55rem;
-  padding-bottom: .06em;
+.sc-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.sc-title { font-size: var(--step-4); margin-top: .55rem; padding-bottom: .06em; }
+.sc-lede { margin-top: 1rem; }
+
+.sc-index { margin: clamp(1.5rem, 3vw, 2.25rem) 0 0; }
+.sc-row {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: .6rem;
+  padding-block: .85rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--step-0);
+  color: var(--ink-3);
 }
-.hero-shot { margin: 0; width: 100%; }
-.hero-shot-frame {
+.sc-row:last-child { border-bottom: 1px solid var(--line); }
+/* the dot in the gutter is the only marker; the row itself never moves */
+.sc-row-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: transparent;
+}
+.sc-row.is-on { color: var(--ink); font-weight: 600; }
+.sc-row.is-on .sc-row-dot { background: var(--accent); }
+.sc-row-meta { font-size: var(--step--1); color: var(--ink-3); font-weight: 400; }
+.sc-cta { margin-top: clamp(1.5rem, 3vw, 2rem); }
+
+.sc-shot { margin: 0; position: relative; }
+.sc-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--card);
   box-shadow: var(--shadow-xl);
-  overflow: hidden;
 }
-.hero-shot-bar {
-  display: flex; align-items: center; gap: .4rem;
-  padding: .6rem .85rem;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-2);
-}
-.hero-shot-bar .dot {
-  width: 9px; height: 9px; border-radius: 50%; margin: 0;
-  background: var(--line-2);
-}
-.hero-shot-bar i {
-  margin-left: .6rem; font-size: var(--step--2); color: var(--ink-3); font-style: normal;
-}
-.hero-shot img { width: 100%; height: auto; display: block; }
-
 /* the shot follows the theme — a light screenshot on a dark page is the
    single most obvious "nobody looked at this" tell */
-.hero-shot .shot-dark { display: none; }
-:root[data-theme="dark"] .hero-shot .shot-light { display: none; }
-:root[data-theme="dark"] .hero-shot .shot-dark { display: block; }
+.sc-shot .shot-dark { display: none; }
+:root[data-theme="dark"] .sc-shot .shot-light { display: none; }
+:root[data-theme="dark"] .sc-shot .shot-dark { display: block; }
+
+@media (min-width: 900px) {
+  .sc-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+  /* run the panel past the container's right edge; .showcase clips it, so
+     this never reaches the document and never causes a page scrollbar */
+  .sc-shot { width: calc(100% + clamp(2rem, 9vw, 9rem)); }
+  .sc-shot img { border-radius: var(--radius-lg) 0 0 var(--radius-lg); border-right: 0; }
+}
 
 /* ---------------- source strip — after Adaline ----------------
    One tracked label and the sources as plain type. The old bordered chips
@@ -1588,24 +1609,6 @@
 
 @media (max-width: 700px) { .city { height: 260vh; } }
 
-/* ============================================================
-   CTA ambient particles
-   ============================================================ */
-.cta-video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  pointer-events: none;
-  opacity: .30;
-  mix-blend-mode: screen;
-}
-/* The clip is warm sparks on black. Inverted onto cream it reads as grey
-   speckles — like dust on a scanner — so it is dark-theme only. Light mode
-   keeps the plain radial glow, which is cleaner anyway. */
-:root:not([data-theme="dark"]) .cta-video { display: none; }
-.cta > .wrap, .cta > .wrap-narrow, .cta-inner { position: relative; z-index: 1; }
-
 @media (prefers-reduced-motion: reduce) {
   .stack { height: auto; }
   .stack-sticky { position: static; height: auto; min-height: 62vh; padding: 4rem 0; }
@@ -1619,7 +1622,6 @@
   .stack-cap { position: static; opacity: 1; transform: none; }
   .city { height: auto; }
   .city-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
-  .cta-video { display: none; }
   .city-tags { position: static; transform: none; display: flex; flex-wrap: wrap;
                gap: .5rem; justify-content: center; margin-top: 1.75rem; width: auto; }
   /* .js-p .city-tags li out-specifies a bare selector here, so this has to

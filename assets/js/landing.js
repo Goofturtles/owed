@@ -145,7 +145,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.showcase-panel, .section-head, .figure, .step, .tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .stat-cell, .finder-doc, .finder-note-out'
+    '.sc-copy, .sc-shot, .section-head, .prem-row, .step, .tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
   );
 
   function revealAll() {
