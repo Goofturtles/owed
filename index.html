@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788288577">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788288577">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788288577">
-<script src="assets/js/theme.js?v=1788288577"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788296736">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788296736">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788296736">
+<script src="assets/js/theme.js?v=1788296736"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -263,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788288577"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788296736"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788288577"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788296736"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -277,39 +277,52 @@
   </section>
 
   <!-- ============ PROBLEM ============
-       After Legora: the figures carry it. The boxed cards are gone — three
-       serif numerals divided by rules, each with the sentence it belongs to. -->
+       After Instrument: a vertical stack of full-bleed ruled rows, each
+       figure set as one display phrase rather than a numeral over a
+       caption. The ink lightens down the stack - the cover fading is the
+       argument - and a final row states the consequence, so the three
+       figures land as premises rather than as a scoreboard. -->
   <section class="section problem">
     <div class="wrap">
       <header class="section-head problem-head split">
         <div class="head-a">
-        <p class="eyebrow">The reason this exists</p>
-        <h2 class="display section-title">The cover is real.<br>Finding it is the&nbsp;problem.</h2>
+          <p class="eyebrow">The reason this exists</p>
+          <h2 class="display section-title">The cover is real.<br>Finding it is the&nbsp;problem.</h2>
         </div>
         <div class="head-b">
-        <p class="lede section-lede">
-          The rules that would get your thing fixed for free are scattered across a warranty
-          booklet you threw away, a card benefit guide nobody opens, a settlement website you
-          never heard of, and a consumer law nobody told you about. So people buy a new one,
-          and a working product goes in the bin.
-        </p>
+          <p class="lede section-lede">
+            The rules that would get your thing fixed for free are scattered across a warranty
+            booklet you threw away, a card benefit guide nobody opens, a settlement website you
+            never heard of, and a consumer law nobody told you about.
+          </p>
         </div>
       </header>
 
-      <dl class="figures">
-        <div class="figure">
-          <dt class="figure-n display"><span class="count" data-count-to="1" data-count-dur="700">1</span><i>yr</i></dt>
-          <dd>is what most people think they get. Paying with the right card can quietly double it.</dd>
-        </div>
-        <div class="figure">
-          <dt class="figure-n display"><span class="count" data-count-to="90" data-count-dur="1100">90</span><i>days</i></dt>
-          <dd>is how long some card claims stay open. Miss the window and the cover vanishes.</dd>
-        </div>
-        <div class="figure">
-          <dt class="figure-n display"><span class="count" data-count-to="6" data-count-dur="900">6</span><i>yrs</i></dt>
-          <dd>is how long the law in England and Wales can hold a seller responsible &mdash; long after the warranty card says no.</dd>
-        </div>
-      </dl>
+      <ol class="prem" role="list">
+        <li class="prem-row" style="--i:0">
+          <p class="prem-fig display">1 year</p>
+          <p class="prem-text">
+            is what most people think they get. Paying with the right card can quietly double it.
+          </p>
+        </li>
+        <li class="prem-row" style="--i:1">
+          <p class="prem-fig display">90 days</p>
+          <p class="prem-text">
+            is how long some card claims stay open. Miss the window and the cover vanishes.
+          </p>
+        </li>
+        <li class="prem-row" style="--i:2">
+          <p class="prem-fig display">6 years</p>
+          <p class="prem-text">
+            is how long the law in England and Wales can hold a seller responsible &mdash; long
+            after the warranty card says no.
+          </p>
+        </li>
+      </ol>
+
+      <p class="prem-end display">
+        So people buy a new one, and a working product <em>goes in the bin.</em>
+      </p>
     </div>
   </section>
 
@@ -575,52 +588,59 @@
   </section>
 
   <!-- ============ RULEBOOK STATS ============
-       Crop-marked cells after Spade: a mono key above, the figure below,
-       corner marks instead of a border. -->
-  <section class="statband" aria-label="What is in the rulebook">
+       After Waka Waka's furniture index: four hairline-ruled ROWS rather
+       than four cells. The section is literally "what is in the rulebook",
+       so an index page is the metaphor rather than a decoration on top of
+       it - and rows read across where .problem reads down, so the two
+       figure sections cannot be mistaken for each other.
+
+       The previous version printed each label twice and its crop marks did
+       not align to any consistent cell. -->
+  <section class="statband" aria-labelledby="regHead">
     <div class="wrap">
-      <div class="statband-grid">
-        <div class="stat-cell" style="--si:0">
-          <p class="stat-key mono">in the book</p>
-          <b class="display count" data-count-to="445" data-count-dur="1400">445</b>
+      <h2 class="reg-head" id="regHead">What is in the rulebook</h2>
+
+      <dl class="reg">
+        <div class="reg-row">
+          <dt class="reg-n mono">01</dt>
+          <dd class="reg-fig display count tnum" data-count-to="445" data-count-dur="1400">445</dd>
+          <dd class="reg-label">rules in the book</dd>
+          <dd class="reg-note">every one links to the page it came from</dd>
         </div>
-        <div class="stat-cell" style="--si:1">
-          <p class="stat-key mono">places</p>
-          <b class="display count" data-count-to="5" data-count-dur="800">5</b>
+        <div class="reg-row">
+          <dt class="reg-n mono">02</dt>
+          <dd class="reg-fig display count tnum" data-count-to="5" data-count-dur="800">5</dd>
+          <dd class="reg-label">places cover hides</dd>
+          <dd class="reg-note">the maker, your card, payouts, repair programmes, the law</dd>
         </div>
-        <div class="stat-cell" style="--si:2">
-          <p class="stat-key mono">regions</p>
-          <b class="display count" data-count-to="4" data-count-dur="800">4</b>
+        <div class="reg-row">
+          <dt class="reg-n mono">03</dt>
+          <dd class="reg-fig display count tnum" data-count-to="4" data-count-dur="800">4</dd>
+          <dd class="reg-label">regions covered</dd>
+          <dd class="reg-note">United States, Canada, United Kingdom, European Union</dd>
         </div>
-        <div class="stat-cell" style="--si:3">
-          <p class="stat-key mono">price</p>
-          <b class="display ">$0</b>
+        <div class="reg-row">
+          <dt class="reg-n mono">04</dt>
+          <dd class="reg-fig display tnum">&#36;0</dd>
+          <dd class="reg-label">what it costs you</dd>
+          <dd class="reg-note">no account needed to look, and no cut of anything you claim</dd>
         </div>
-      </div>
-      <ul class="statband-labels" role="list">
-        <li>rules in the book</li>
-        <li>places cover hides</li>
-        <li>regions covered</li>
-        <li>what it costs you</li>
-      </ul>
-      <p class="statband-note muted">
-        Every rule links to the page it came from. The book is hand-collected, so it is
-        deep rather than complete &mdash; strongest in the US and Canada right now.
+      </dl>
+
+      <p class="reg-caveat">
+        The book is hand-collected, so it is deep rather than complete &mdash; strongest in
+        the US and Canada right now.
       </p>
     </div>
   </section>
 
   <!-- ============ FAQ ============ -->
   <section class="section faq" id="faq">
-    <div class="wrap-narrow">
-      <header class="section-head split">
-        <div class="head-a">
+    <div class="wrap faq-grid">
+      <header class="faq-head">
         <p class="eyebrow">Questions</p>
-        <h2 class="display section-title">The fair ones first.</h2>
-        </div>
-        <div class="head-b">
-        <p class="lede section-lede">The ones you would ask a friend who built this.</p>
-        </div>
+        <h2 class="display section-title">The fair ones&nbsp;first.</h2>
+        <p class="lede faq-lede">The ones you would ask a friend who built this.</p>
       </header>
 
       <div class="faq-list" id="faqList">
@@ -653,68 +673,81 @@
   </section>
 
   <!-- ============ CTA ============
-       After Kastle: an outlined pill eyebrow above a centred serif line. -->
+       After Circle and MindMarket: a full-bleed accent field, the headline
+       first with nothing above it, a bone pill carrying the accent as its
+       ink, and the reassurance line close under the action rather than
+       floating off as its own band. No video: none of the strong closes
+       in the reference set put motion behind the last sentence. -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm" width="860" height="488"
-           aria-hidden="true" muted loop playsinline preload="none" disablepictureinpicture></video>
-    <div class="wrap-narrow cta-inner">
-      <p class="cta-pill mono">Free, and it stays free</p>
+    <div class="cta-inner">
       <h2 class="display cta-title">Before you buy a new one, check who owes you the old&nbsp;one.</h2>
       <div class="cta-actions">
-        <a class="btn btn-accent btn-lg" href="auth.html?mode=signup">Start free</a>
-        <a class="btn btn-ghost btn-lg" href="app.html?demo=1">See it with a demo shelf</a>
+        <a class="btn btn-lg btn-onfield-solid" href="auth.html?mode=signup">Start free</a>
+        <a class="btn btn-lg btn-onfield-line" href="app.html?demo=1">See it with a demo shelf</a>
       </div>
-      <p class="cta-note muted">No card. No email verification. Works in your browser.</p>
+      <p class="cta-note">No card. No email verification. Works in your browser.</p>
     </div>
   </section>
 </main>
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <div class="footer-brand">
-      <a class="brand" href="index.html" aria-label="Owed home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
-        <span class="brand-name">Owed</span>
-      </a>
-      <p class="footer-tag muted">Someone already owes you a fix.</p>
+    <!-- After Garden: brand and tagline hold the left, the three lists sit
+         as a block flush to the right edge. Spreading three columns evenly
+         across the full container leaves the left half empty and the
+         columns read as orphans. -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Owed home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+          <span class="brand-name">Owed</span>
+        </a>
+        <p class="footer-tag">Someone already owes you<br>a free repair. Go and ask.</p>
+      </div>
+
+      <nav class="footer-cols" aria-label="Footer">
+        <div class="footer-col">
+          <h3 class="footer-col-title">Product</h3>
+          <a href="auth.html?mode=signup">Start free</a>
+          <a href="auth.html?mode=signin">Sign in</a>
+          <a href="app.html?demo=1">Demo shelf</a>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-col-title">Learn</h3>
+          <a href="#how">How it works</a>
+          <a href="#checks">What we check</a>
+          <a href="#faq">Questions</a>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-col-title">What we read</h3>
+          <a href="#checks">Maker warranties</a>
+          <a href="#checks">Card benefits</a>
+          <a href="#checks">Consumer law</a>
+        </div>
+      </nav>
     </div>
 
-    <nav class="footer-cols" aria-label="Footer">
-      <div class="footer-col">
-        <h3 class="footer-col-title">Product</h3>
-        <a href="auth.html?mode=signup">Start free</a>
-        <a href="auth.html?mode=signin">Sign in</a>
-        <a href="app.html?demo=1">Demo shelf</a>
-      </div>
-      <div class="footer-col">
-        <h3 class="footer-col-title">Learn</h3>
-        <a href="#how">How it works</a>
-        <a href="#checks">What we check</a>
-        <a href="#faq">Questions</a>
-      </div>
-      <div class="footer-col">
-        <h3 class="footer-col-title">What we read</h3>
-        <a href="#checks">Maker warranties</a>
-        <a href="#checks">Card benefits</a>
-        <a href="#checks">Consumer law</a>
-      </div>
-    </nav>
+    <!-- After Structured, at Feather's quiet intensity: the wordmark is a
+         watermark rather than a shout, sized in vw so the crop holds at
+         every width. Decorative - the real wordmark is the brand link
+         above - so it is hidden from assistive tech. -->
+    <p class="footer-mark" aria-hidden="true">Owed</p>
 
     <div class="footer-base">
-      <p class="footer-fine muted">
-        Built for NextStep Hacks 2026. Owed is an information tool, not legal advice —
-        every rule links to its published source, and your shelf never leaves your browser.
+      <p class="footer-fine">
+        Owed is an information tool, not legal advice &mdash; every rule links to its
+        published source, and your shelf never leaves your browser.
       </p>
-      <p class="footer-fine muted mono">Earth Forward · repair before replace</p>
+      <p class="footer-fine footer-fine-r mono">NextStep Hacks 2026 &middot; repair before replace</p>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788288577"></script>
-<script src="assets/js/landing.js?v=1788288577"></script>
-<script src="assets/js/scroll.js?v=1788288577"></script>
-<script src="assets/js/scene.js?v=1788288577"></script>
-<script src="assets/js/godray.js?v=1788288577"></script>
-<script src="assets/js/motion.js?v=1788288577"></script>
+<script src="assets/js/catalog.js?v=1788296736"></script>
+<script src="assets/js/landing.js?v=1788296736"></script>
+<script src="assets/js/scroll.js?v=1788296736"></script>
+<script src="assets/js/scene.js?v=1788296736"></script>
+<script src="assets/js/godray.js?v=1788296736"></script>
+<script src="assets/js/motion.js?v=1788296736"></script>
 </body>
 </html>

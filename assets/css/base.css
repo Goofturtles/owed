@@ -112,13 +112,25 @@
   --il-green: #0B5C3A;
   --il-amber: #8A5406;
 
+  /* the closing CTA field is a brand colour, not a themed surface: it stays
+     forest green in both themes so its white ink never lands on the bright
+     dark-mode accent */
+  --field-accent:     #0B5C3A;
+  --field-accent-ink: #FFFFFF;
+
   /* the two fixed-dark sections, dark in both themes */
   --dk-1: #0B0E0C;
   --dk-2: #060807;
-  --dk-fg:   #F2F3F0;
-  --dk-fg-2: #A8ABA6;
-  --dk-fg-3: #888C86;
-  --dk-line: rgba(242, 243, 240, .13);
+  --dk-fg:     #F2F3F0;
+  --dk-fg-2:   #A8ABA6;
+  --dk-fg-3:   #888C86;
+  --dk-line:   rgba(242, 243, 240, .13);
+  /* the light-mode forest green reads 2.4:1 on these grounds, so the fixed
+     dark sections carry their own accent and its ink */
+  --dk-accent:     #58DDA0;
+  --dk-accent-2:   #74E6B2;
+  --dk-accent-ink: #05241A;
+  --dk-accent-soft:#BCE9D1;
 
   --ease:     cubic-bezier(.2, .7, .3, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);
@@ -355,11 +367,11 @@ main:focus:not(:focus-visible) { outline: none; }
    so the ink inverts while the geometry stays identical. */
 .is-dark .btn-primary,
 .is-dark .btn-accent {
-  background: #58DDA0; color: #05241A;
+  background: var(--dk-accent); color: var(--dk-accent-ink);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
 }
 .is-dark .btn-primary:hover,
-.is-dark .btn-accent:hover { background: #74E6B2; }
+.is-dark .btn-accent:hover { background: var(--dk-accent-2); }
 .is-dark .btn-ghost {
   color: var(--dk-fg);
   border-color: rgba(242, 243, 240, .26);
@@ -371,7 +383,7 @@ main:focus:not(:focus-visible) { outline: none; }
 }
 .is-dark .btn-quiet { color: var(--dk-fg-2); }
 .is-dark .btn-quiet:hover { color: var(--dk-fg); }
-.is-dark .btn:focus-visible { outline-color: #58DDA0; }
+.is-dark .btn:focus-visible { outline-color: var(--dk-accent); }
 
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
