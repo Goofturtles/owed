@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788287629">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788287629">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788287629">
-<script src="assets/js/theme.js?v=1788287629"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788288577">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788288577">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788288577">
+<script src="assets/js/theme.js?v=1788288577"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -263,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788287629"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788288577"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788287629"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788288577"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -470,8 +470,27 @@
           <i class="spot-cone spot-cone-b"></i>
           <i class="spot-pool"></i>
         </div>
+        <div class="script-tabs" role="tablist" aria-label="Kinds of claim Owed writes">
+          <button class="script-tab is-on" type="button" role="tab" id="scriptTab0"
+                  aria-selected="true" aria-controls="scriptCard" data-i="0">
+            <span class="script-tab-n mono">01</span>
+            <span class="script-tab-t">Your card&rsquo;s benefit</span>
+          </button>
+          <button class="script-tab" type="button" role="tab" id="scriptTab1" tabindex="-1"
+                  aria-selected="false" aria-controls="scriptCard" data-i="1">
+            <span class="script-tab-n mono">02</span>
+            <span class="script-tab-t">The law where you live</span>
+          </button>
+          <button class="script-tab" type="button" role="tab" id="scriptTab2" tabindex="-1"
+                  aria-selected="false" aria-controls="scriptCard" data-i="2">
+            <span class="script-tab-n mono">03</span>
+            <span class="script-tab-t">A quiet repair programme</span>
+          </button>
+          <i class="script-tab-ink" aria-hidden="true"></i>
+        </div>
+
         <figure class="script-card" id="scriptCard" role="tabpanel"
-                aria-labelledby="scriptTab0" tabindex="0">
+                aria-labelledby="scriptTab0">
           <figcaption class="script-head">
             <span class="script-to">
               <span class="script-avatar" aria-hidden="true">
@@ -500,24 +519,7 @@
           </div>
         </figure>
 
-        <div class="script-tabs" role="tablist" aria-label="Kinds of claim Owed writes">
-          <button class="script-tab is-on" type="button" role="tab" id="scriptTab0"
-                  aria-selected="true" aria-controls="scriptCard" data-i="0">
-            <span class="script-tab-n mono">01</span>
-            <span class="script-tab-t">Your card&rsquo;s benefit</span>
-          </button>
-          <button class="script-tab" type="button" role="tab" id="scriptTab1" tabindex="-1"
-                  aria-selected="false" aria-controls="scriptCard" data-i="1">
-            <span class="script-tab-n mono">02</span>
-            <span class="script-tab-t">The law where you live</span>
-          </button>
-          <button class="script-tab" type="button" role="tab" id="scriptTab2" tabindex="-1"
-                  aria-selected="false" aria-controls="scriptCard" data-i="2">
-            <span class="script-tab-n mono">03</span>
-            <span class="script-tab-t">A quiet repair programme</span>
-          </button>
-          <i class="script-tab-ink" aria-hidden="true"></i>
-        </div>
+
       </div>
     </div>
   </section>
@@ -550,16 +552,16 @@
       <div class="pf-aurora" aria-hidden="true"></div>
         <span class="pf-pill pf-far pf-mint" aria-hidden="true" style="--x:6%;--y:14%;--rot:-7deg;--i:0"><i class="pf-gloss" aria-hidden="true"></i>EU: two years of free repair or replacement, minimum</span>
         <span class="pf-pill pf-far pf-blue" aria-hidden="true" style="--x:62%;--y:8%;--rot:6deg;--i:1"><i class="pf-gloss" aria-hidden="true"></i>New York: makers must hand over parts, tools and repair manuals</span>
-        <span class="pf-pill pf-far pf-sand" aria-hidden="true" style="--x:30%;--y:74%;--rot:4deg;--i:2"><i class="pf-gloss" aria-hidden="true"></i>UK: in the first 6 months the shop has to prove it wasn't faulty</span>
+        <span class="pf-pill pf-far pf-sand" aria-hidden="true" style="--x:30%;--y:66%;--rot:4deg;--i:2"><i class="pf-gloss" aria-hidden="true"></i>UK: in the first 6 months the shop has to prove it wasn't faulty</span>
         <span class="pf-pill pf-far pf-blush" aria-hidden="true" style="--x:78%;--y:66%;--rot:-5deg;--i:3"><i class="pf-gloss" aria-hidden="true"></i>Colorado: parts, tools and manuals for your electronics</span>
         <span class="pf-pill pf-mid pf-sand" aria-hidden="true" style="--x:3%;--y:44%;--rot:5deg;--i:4"><i class="pf-gloss" aria-hidden="true"></i>US states: makers must sell you the part, the tool and the manual</span>
         <span class="pf-pill pf-mid pf-blush" aria-hidden="true" style="--x:70%;--y:36%;--rot:-6deg;--i:5"><i class="pf-gloss" aria-hidden="true"></i>EU: choosing repair adds a year to your guarantee</span>
         <span class="pf-pill pf-mid pf-blue" aria-hidden="true" style="--x:40%;--y:22%;--rot:-3deg;--i:6"><i class="pf-gloss" aria-hidden="true"></i>Minnesota: parts, tools and manuals within 60 days</span>
         <span class="pf-pill pf-near pf-mint" style="--x:8%;--y:28%;--rot:-3deg;--i:7"><i class="pf-gloss" aria-hidden="true"></i>California: makers must keep parts and repair manuals for 7 years</span>
         <span class="pf-pill pf-near pf-blue" style="--x:52%;--y:56%;--rot:4deg;--i:8"><i class="pf-gloss" aria-hidden="true"></i>Oregon: makers can't use software to block a working part</span>
-        <span class="pf-pill pf-near pf-sand" style="--x:20%;--y:84%;--rot:-2deg;--i:9"><i class="pf-gloss" aria-hidden="true"></i>EU: makers must repair it, even after the guarantee has ended</span>
+        <span class="pf-pill pf-near pf-sand" style="--x:20%;--y:70%;--rot:-2deg;--i:9"><i class="pf-gloss" aria-hidden="true"></i>EU: makers must repair it, even after the guarantee has ended</span>
         <span class="pf-pill pf-near pf-blush" style="--x:58%;--y:4%;--rot:3deg;--i:10"><i class="pf-gloss" aria-hidden="true"></i>Drifting Joy-Cons are repaired free forever in the UK and Europe</span>
-        <span class="pf-pill pf-near pf-mint" style="--x:74%;--y:86%;--rot:5deg;--i:11"><i class="pf-gloss" aria-hidden="true"></i>UK: the shop stays on the hook for up to six years</span>
+        <span class="pf-pill pf-near pf-mint" style="--x:74%;--y:72%;--rot:5deg;--i:11"><i class="pf-gloss" aria-hidden="true"></i>UK: the shop stays on the hook for up to six years</span>
     </div>
 
     <div class="wrap-narrow earth-honest">
@@ -596,10 +598,10 @@
         </div>
       </div>
       <ul class="statband-labels" role="list">
-        <span>rules in the book</span>
-        <span>places cover hides</span>
-        <span>regions covered</span>
-        <span>what it costs you</span>
+        <li>rules in the book</li>
+        <li>places cover hides</li>
+        <li>regions covered</li>
+        <li>what it costs you</li>
       </ul>
       <p class="statband-note muted">
         Every rule links to the page it came from. The book is hand-collected, so it is
@@ -708,11 +710,11 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788287629"></script>
-<script src="assets/js/landing.js?v=1788287629"></script>
-<script src="assets/js/scroll.js?v=1788287629"></script>
-<script src="assets/js/scene.js?v=1788287629"></script>
-<script src="assets/js/godray.js?v=1788287629"></script>
-<script src="assets/js/motion.js?v=1788287629"></script>
+<script src="assets/js/catalog.js?v=1788288577"></script>
+<script src="assets/js/landing.js?v=1788288577"></script>
+<script src="assets/js/scroll.js?v=1788288577"></script>
+<script src="assets/js/scene.js?v=1788288577"></script>
+<script src="assets/js/godray.js?v=1788288577"></script>
+<script src="assets/js/motion.js?v=1788288577"></script>
 </body>
 </html>

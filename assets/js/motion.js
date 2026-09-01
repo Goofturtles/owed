@@ -297,32 +297,9 @@
     }, { passive: true });
   })();
 
-  /* ---------------- script typewriter trigger ---------------- */
-  (function script() {
-    var body = document.querySelector('.script-body');
-    var card = document.querySelector('.script-card');
-    if (!body) return;
-    if (reduce || !('IntersectionObserver' in window)) {
-      body.classList.add('typed');
-      if (card) card.classList.add('typed');
-      return;
-    }
-    // opt in to being hidden only now that the reveal is guaranteed to run
-    body.classList.add('js-anim');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        body.classList.add('typed');
-        if (card) card.classList.add('typed');
-        io.disconnect();
-      });
-    }, { threshold: .3 });
-    io.observe(body);
-    // last resort: never leave the claim script blank
-    setTimeout(function () {
-      if (!body.classList.contains('typed')) body.classList.remove('js-anim');
-    }, 8000);
-  })();
+  /* The script typewriter trigger that lived here is gone: landing.js now
+     owns the reveal for .script-body, and running both meant two independent
+     hide/show systems with two different failsafes gating one element. */
 
   /* ---------------- earth bar fill ---------------- */
   (function earthBar() {

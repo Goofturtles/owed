@@ -86,31 +86,12 @@
 .check-ico { transition: transform .4s var(--ease); }
 .check:hover .check-ico { transform: translateY(-2px) rotate(-6deg) scale(1.06); }
 
-/* ---------- typewriter script ----------
-   Only ever hide this content once JS has proved it is running and will
-   reveal it again (.js-anim is set by motion.js). Hiding it from plain CSS
-   means a single JS error leaves the claim script permanently blank. */
-.script-body.js-anim p { opacity: 0; }
-.script-body.js-anim.typed p { animation: fadeLine .5s var(--ease) forwards; }
-.script-body.js-anim.typed p:nth-child(1) { animation-delay: .05s; }
-.script-body.js-anim.typed p:nth-child(2) { animation-delay: .45s; }
-.script-body.js-anim.typed p:nth-child(3) { animation-delay: .85s; }
-@keyframes fadeLine { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.script-body mark {
-  background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
-  background-repeat: no-repeat;
-  transition: background-size .5s var(--ease);
-}
-.script-body.js-anim mark { background-size: 0% 100%; }
-.script-body.js-anim.typed mark { background-size: 100% 100%; }
-.script-card { position: relative; overflow: hidden; }
-.script-card::after {
-  content: ""; position: absolute; top: 0; left: -120%;
-  width: 60%; height: 100%; pointer-events: none;
-  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--accent) 9%, transparent), transparent);
-  transition: left .9s var(--ease);
-}
-.script-card.typed::after { left: 160%; }
+/* The typewriter script block that lived here is gone. It has been replaced
+   by the word-stagger reveal in landing.js / landing.css, and because this
+   sheet loads AFTER landing.css its `.script-body mark` gradient was still
+   winning - painting a light --accent-soft pill under the dark stage's mint
+   text at 1.14:1. Two reveal systems were also stacking their delays on
+   every tab switch. */
 
 /* ---------- earth bar ----------
    Same rule: without JS the bar keeps its inline width rather than being

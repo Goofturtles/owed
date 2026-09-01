@@ -107,7 +107,7 @@
 
       result.hidden = false;
       result.innerHTML =
-        '<h4>' + t.heading + '</h4>' +
+        '<h2 class="try-h">' + t.heading + '</h2>' +
         '<p class="muted" style="font-size:.82rem">Four questions in the app narrows this to the ones that actually apply to you.</p>' +
         '<ul>' + items + '</ul>' +
         '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">Check my ' +
@@ -344,9 +344,11 @@
 
     // arrow keys, Home and End — the part that makes role="tablist" honest
     tabsWrap.addEventListener('keydown', function (e) {
+      // horizontal tablist: Left/Right only. Swallowing Up/Down would stop
+      // the page scrolling while a tab has focus.
       var k = e.key, n = current;
-      if (k === 'ArrowRight' || k === 'ArrowDown') n = current + 1;
-      else if (k === 'ArrowLeft' || k === 'ArrowUp') n = current - 1;
+      if (k === 'ArrowRight') n = current + 1;
+      else if (k === 'ArrowLeft') n = current - 1;
       else if (k === 'Home') n = 0;
       else if (k === 'End') n = SCENES.length - 1;
       else return;
@@ -465,8 +467,18 @@
       ty = (e.clientY / window.innerHeight - .5) * 2;
     }, { passive: true });
 
+    var stacked = window.matchMedia('(max-width: 760px)');
+    function clearTranslate() {
+      for (var i = 0; i < pills.length; i++) pills[i].style.translate = '';
+    }
+    // below the breakpoint the pills are a plain wrapped row; a stale inline
+    // translate from the desktop layout would leave them nudged off-grid
+    if (stacked.addEventListener) {
+      stacked.addEventListener('change', function (e) { if (e.matches) clearTranslate(); });
+    }
+
     function glide() {
-      if (!live) { praf = 0; return; }
+      if (!live || stacked.matches) { praf = 0; return; }
       cx += (tx - cx) * .07;
       cy += (ty - cy) * .07;
       for (var i = 0; i < pills.length; i++) {

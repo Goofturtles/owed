@@ -48,7 +48,6 @@
     'uniform float uTime;',
     'uniform vec3 uCool;',
     'uniform vec3 uWarm;',
-    'uniform float uAmp;',
 
     'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
 
@@ -92,7 +91,7 @@
     '    decay *= 0.962;',
     '  }',
     '  illum /= 34.0;',
-    '  illum *= 3.1 * uAmp;',
+    '  illum *= 3.1;',
 
     // the beam has to die before the section edge or it reads as a gradient
     '  illum *= smoothstep(-0.25, 0.92, uv.y);',
@@ -146,7 +145,6 @@
   var uTime = gl.getUniformLocation(prog, 'uTime');
   var uCool = gl.getUniformLocation(prog, 'uCool');
   var uWarm = gl.getUniformLocation(prog, 'uWarm');
-  var uAmp = gl.getUniformLocation(prog, 'uAmp');
 
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);   // premultiplied
@@ -189,7 +187,6 @@
     gl.uniform1f(uTime, t);
     gl.uniform3fv(uCool, cool);
     gl.uniform3fv(uWarm, warm);
-    gl.uniform1f(uAmp, 1.0);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -220,12 +217,12 @@
     return;                        // a still beam, which is the point of the section
   }
 
-  var running = false, raf = 0, t0 = 0, elapsed = 0;
+  var running = false, raf = 0, t0 = 0, elapsed = 0, dirty = false;
   function loop(now) {
     if (!running) return;
     if (!t0) t0 = now - elapsed * 1000;   // resume where it left off
     elapsed = (now - t0) / 1000;
-    resize();
+    if (dirty) { dirty = false; resize(); }
     draw(elapsed);
     raf = requestAnimationFrame(loop);
   }
@@ -243,5 +240,8 @@
     start();
   }
 
-  window.addEventListener('resize', function () { if (!running) { resize(); draw(0); } }, { passive: true });
+  window.addEventListener('resize', function () {
+    dirty = true;                       // the loop picks it up on the next frame
+    if (!running) { resize(); draw(elapsed); }
+  }, { passive: true });
 })();

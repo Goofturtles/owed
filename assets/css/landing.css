@@ -168,7 +168,7 @@
   box-shadow: var(--shadow-md);
   animation: rise .3s var(--ease-out) both;
 }
-.try-result h4 { font-size: var(--step-0); font-weight: 600; margin-bottom: .5rem; letter-spacing: -.015em; }
+.try-result .try-h { font-size: var(--step-0); font-weight: 600; margin-bottom: .5rem; letter-spacing: -.015em; }
 .try-result ul { display: flex; flex-direction: column; gap: .45rem; margin-top: .7rem; }
 .try-result li { display: flex; align-items: flex-start; gap: .55rem; font-size: var(--step--1); color: var(--ink-2); }
 .try-result .go { margin-top: 1rem; display: inline-flex; }
@@ -243,8 +243,8 @@
   font-family: var(--mono);
   font-size: var(--step--2);
   line-height: 2.1;
-  color: var(--ink-3);
-  opacity: .62;
+  color: var(--ink-2);
+  opacity: .82;
   white-space: nowrap;
   padding-inline: 1.4rem .95rem;
   transition: opacity .4s var(--ease), color .4s var(--ease);
@@ -652,6 +652,7 @@
 }
 
 .script-card {
+  order: 1;
   position: relative; z-index: 1;
   margin: 0; width: min(680px, 100%);
   background: var(--card);
@@ -746,6 +747,7 @@
 
 /* ---- tabs: a real tablist, arrow keys and all (see landing.js) ---- */
 .script-tabs {
+  order: 2;                 /* DOM order puts the tabs first for tab order */
   position: relative; z-index: 1;
   display: flex; gap: .35rem; flex-wrap: wrap; justify-content: center;
   margin-top: 1.5rem;
@@ -753,7 +755,7 @@
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 999px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
 }
 .script-tab {
   position: relative; z-index: 1;
@@ -798,7 +800,9 @@
    overlapping cones plus the pool they throw on the floor, all in
    gradients so there is nothing to download.
    ============================================================ */
-.script-sec.is-dark {
+/* .section.is-dark has equal specificity and comes later in this file, so
+   this needs the extra class to actually win. */
+.section.script-sec.is-dark {
   --ray-cool: #DCFFEE;
   --ray-warm: #B6E6CD;
   /* the deeper of the two dark grounds, so the stage reads as further in */
@@ -920,7 +924,7 @@
 
 .pillfield {
   position: relative;
-  height: clamp(320px, 40vw, 470px);
+  height: clamp(380px, 40vw, 470px);
   margin-top: clamp(1rem, 2.5vw, 2rem);
 }
 .pf-aurora {
@@ -1023,6 +1027,12 @@
 }
 
 @media (forced-colors: active) {
+  /* the selected tab is marked only by a background pill, which HCM drops */
+  .script-tab[aria-selected="true"] {
+    text-decoration: underline; text-underline-offset: 4px;
+    border: 1px solid CanvasText;
+  }
+  .script-tab-ink { display: none; }
   .spot, .pf-aurora, .pf-gloss { display: none; }
   .pf-pill { border: 1px solid CanvasText; forced-color-adjust: none; }
   .pf-far, .pf-mid { filter: none; opacity: 1; }

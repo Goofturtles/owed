@@ -206,7 +206,10 @@ h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 
-main:focus, main:focus-visible { outline: none; }
+/* <main> is a skip-link target: a keyboard user who just used the skip link
+   has to be able to see where they landed, so it keeps the global ring.
+   Only a mouse click on it should be silent. */
+main:focus:not(:focus-visible) { outline: none; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
