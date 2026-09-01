@@ -516,106 +516,87 @@
   .prem-fig { font-size: clamp(2.4rem, 12vw, 3.4rem); }
 }
 
-/* steps — after Craft Agency: four full-width ruled ROWS, not four cards.
-   The four steps are unequal (step 2 lists five checks, step 3 is a quoted
-   sentence) and each carries a real product surface; equal cards forced
-   those into one box and then ghosted three of them so only one was
-   readable at a time. Rows give every step a full line of the page and let
-   its specimen sit in the margin at natural size — and with all four
-   legible there is no "current" step, so the advance timer goes too. */
+/* ============================================================
+   how it works - copied from Railway's "How the program works"
+
+   One bordered card inset on the dark ground, a centred title, a single
+   narrow column of steps whose outlined circles are joined by a vertical
+   spine, and one centred link at the foot. Only the words and the colours
+   are ours.
+   ============================================================ */
 .how { background: var(--dk-1); }
-.steps { display: grid; }
-.step {
-  display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr) minmax(0, 26rem);
-  column-gap: clamp(1.25rem, 4vw, 4rem);
-  align-items: start;
-  padding-block: clamp(1.75rem, 4vw, 3rem);
-  border-top: 1px solid var(--dk-line);
-}
-.step:first-child { border-top: 0; }
-.step:last-child { border-bottom: 1px solid var(--dk-line); }
 
-.step-n {
-  grid-column: 1; grid-row: 1 / span 2;
-  font-size: var(--step--1);
-  color: var(--accent);          /* the only coloured thing in the section */
-  padding-top: .3em;
+.rw-card {
+  width: min(760px, 100%);
+  margin-inline: auto;
+  padding: clamp(2.25rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid rgba(242, 243, 240, .09);
+  border-radius: var(--radius-lg);
+  background: rgba(242, 243, 240, .02);
 }
-.step-title {
-  grid-column: 2; grid-row: 1;
+.rw-title {
+  text-align: center;
   font-size: var(--step-3);
-  line-height: 1.15;
   letter-spacing: -.02em;
-  max-width: 18ch;
+  color: var(--dk-fg);
+  padding-bottom: .04em;
 }
-.step-text {
-  grid-column: 2; grid-row: 2;
-  margin-top: .6rem;
+
+.rw-steps {
+  width: min(440px, 100%);
+  margin: clamp(2rem, 4vw, 2.75rem) auto 0;
+}
+.rw-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 1rem;
+  padding-bottom: 1.75rem;
+}
+.rw-step:last-child { padding-bottom: 0; }
+/* the spine runs from under one circle to the top of the next */
+.rw-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 12.5px; top: 30px; bottom: -4px;
+  width: 1px;
+  background: rgba(242, 243, 240, .16);
+}
+.rw-n {
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  border: 1px solid rgba(242, 243, 240, .28);
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: .7rem;
+  line-height: 1;
+  color: var(--dk-fg-2);
+  background: var(--dk-1);          /* so the spine passes behind, not through */
+}
+.rw-step-title {
   font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -.012em;
+  color: var(--dk-fg);
+  line-height: 1.35;
+}
+.rw-step-body {
+  margin-top: .4rem;
+  font-size: var(--step--1);
   line-height: 1.6;
-  max-width: 46ch;
+  color: var(--dk-fg-3);
 }
-.sc-art {
-  grid-column: 3; grid-row: 1 / span 2;
-  display: flex; flex-direction: column; gap: .45rem;
-  padding: .95rem 1rem;
-  background: rgba(242, 243, 240, .04);
-  border: 1px solid var(--dk-line);
-  border-radius: var(--radius);
-}
-
-
-/* the specimens that sit in each row's right margin */
-.sc-field {
-  background: rgba(242, 243, 240, .06);
-  border: 1px solid var(--dk-line);
-  border-radius: var(--radius-sm);
-  padding: .45rem .6rem;
+.rw-more {
+  display: block;
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  text-align: center;
   font-size: var(--step--1);
   color: var(--dk-fg-2);
+  text-decoration: none;
+  transition: color .15s var(--ease);
 }
-.sc-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
-.sc-chips i {
-  font-style: normal; font-size: var(--step--2);
-  padding: .22rem .55rem; border-radius: var(--radius-pill);
-  background: rgba(242, 243, 240, .06);
-  color: var(--dk-fg-2);
-  border: 1px solid var(--dk-line);
-}
-.sc-chips i.on {
-  background: color-mix(in srgb, var(--dk-accent) 18%, transparent);
-  color: var(--dk-accent-soft);
-  border-color: color-mix(in srgb, var(--dk-accent) 38%, transparent);
-}
-.sc-list, .sc-shelf { display: flex; flex-direction: column; gap: .4rem; }
-.sc-list li, .sc-shelf li {
-  display: flex; align-items: center; gap: .5rem;
-  font-size: var(--step--1); color: var(--dk-fg-2);
-}
-/* margin-left:auto is what pushes the strength label to the right edge; without
-   it the label butted straight onto the sentence */
-.sc-list b, .sc-shelf b {
-  margin-left: auto; font-size: var(--step--2); font-weight: 600;
-  text-transform: uppercase; letter-spacing: .12em; color: var(--dk-fg-3);
-}
-.sc-shelf li {
-  background: rgba(242, 243, 240, .06);
-  border: 1px solid var(--dk-line);
-  border-radius: var(--radius-sm);
-  padding: .38rem .55rem;
-}
-.sc-script { font-size: var(--step-mono); color: var(--dk-fg-2); line-height: 1.65; }
-.step .dot { margin-top: 0; flex: none; }
-
-@media (max-width: 900px) {
-  .step {
-    grid-template-columns: 2.5rem minmax(0, 1fr);
-    row-gap: .35rem;
-  }
-  .step-title, .step-text { grid-column: 2; }
-  .sc-art { grid-column: 2; grid-row: auto; margin-top: .9rem; }
-}
+.rw-more:hover { color: var(--dk-fg); }
+.rw-more:focus-visible { outline: 2px solid var(--dk-accent); outline-offset: 3px; border-radius: 4px; }
 
 /* checks — Tines' bento, but committed to the colour. At 42% mix the tints
    read as white on a cream page, which is why the tiles looked like five
@@ -688,48 +669,67 @@
 @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } }
 
 /* ============================================================
-   script showcase - after Descript's "Edit for Clarity"
-   One document on a stage, and tabs beneath it that switch which
-   kind of claim it is writing. The words fade up in sequence when
-   the card lands so it reads as being written, not pasted.
+   script showcase - copied from Charma
+
+   A very large headline breaking into short lines down the left, a
+   paragraph and an arrow link beneath it, and on the right one big
+   rounded colour panel with a white card floating inside it. Only the
+   words and the colours are ours; Charma's panel is red.
    ============================================================ */
-.script-sec {
-  background: var(--paper-2);
-  border-block: 1px solid var(--line);
+.script-sec { overflow: hidden; }
+
+.ch-grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+.ch-title {
+  font-size: clamp(2.3rem, 4.6vw, 3.9rem);
+  line-height: 1.06;
+  letter-spacing: -.032em;
+  /* Charma's column is narrow enough that the headline breaks every two or
+     three words; that broken column IS the look */
+  max-width: 11ch;
+  padding-bottom: .04em;
+}
+.ch-text {
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 42ch;
+}
+.ch-link {
+  display: inline-block;
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color .15s var(--ease);
+}
+.ch-link:hover { color: var(--accent); }
+.ch-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* the colour panel, and the card floating inside it */
+.ch-panel {
+  background: var(--field-accent);
+  border-radius: clamp(20px, 2.4vw, 30px);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+.ch-panel .script-card {
+  margin: 0;
+  background: #FFFFFF;
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px -12px rgba(8, 40, 26, .35);
   overflow: hidden;
 }
-.script-sec .head-b { display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-
-.script-stage {
-  position: relative;
-  margin-top: clamp(2.25rem, 4vw, 3.25rem);
-  display: flex; flex-direction: column; align-items: center;
-}
-/* one soft pool of light under the card, so it reads as lifted off the ground */
-.script-stage::before {
-  content: ""; position: absolute; z-index: 0;
-  inset: 8% -6% 22%;
-  background: radial-gradient(60% 60% at 50% 45%,
-    color-mix(in srgb, var(--dk-accent) 11%, transparent), transparent 72%);
-  filter: blur(28px); pointer-events: none;
-}
-
-.script-card {
-  order: 1;
-  position: relative; z-index: 1;
-  margin: 0; width: min(680px, 100%);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  overflow: hidden;
-}
-.script-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
 .script-head {
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; flex-wrap: wrap;
-  padding: .8rem 1.15rem;
+  padding: .8rem 1.05rem;
   border-bottom: 1px solid var(--line);
   background: var(--paper-2);
 }
@@ -740,14 +740,9 @@
   background: var(--accent-soft); color: var(--accent);
 }
 .script-to-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
-.script-who {
-  font-size: var(--step--1); font-weight: 600; color: var(--ink);
-  line-height: 1.35;
-}
+.script-who { font-size: .8rem; font-weight: 600; color: var(--ink); line-height: 1.35; }
 .script-rule { font-size: var(--step--2); color: var(--ink-3); line-height: 1.4; }
 
-/* the deadline is the one thing that must not be missed, so it gets the
-   only warm colour in the card and a small live dot */
 .script-due {
   display: inline-flex; align-items: center; gap: .42rem;
   padding: .3rem .6rem; border-radius: 999px;
@@ -755,17 +750,9 @@
   background: color-mix(in srgb, var(--warn) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--warn) 28%, transparent);
 }
-.script-due i {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: currentColor; flex: none;
-}
-.script-card.is-swapping .script-due i { animation: dueBlink .9s var(--ease) 2; }
-@keyframes dueBlink { 50% { opacity: .25; transform: scale(.7) } }
+.script-due i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; }
 
-.script-body {
-  margin: 0; padding: 1.35rem 1.3rem;
-  display: flex; flex-direction: column; gap: .9rem;
-}
+.script-body { margin: 0; padding: 1.25rem 1.2rem; display: flex; flex-direction: column; gap: .85rem; }
 .script-body p {
   position: relative; isolation: isolate;
   font-family: var(--mono);
@@ -774,11 +761,8 @@
 .script-body mark {
   position: relative;
   background: none; color: var(--accent);
-  font-weight: 500; padding: .05em .3em;
-  border-radius: 4px;
+  font-weight: 500; padding: .05em .3em; border-radius: 4px;
 }
-/* the highlight draws itself in behind the words rather than being there
-   from the start */
 .script-body mark::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: var(--accent-soft); border-radius: 4px;
@@ -786,9 +770,7 @@
   transition: transform .42s var(--ease) var(--mark-delay, 0ms);
 }
 .script-body.is-lit mark::before { transform: scaleX(1); }
-
-/* word-by-word arrival. Set by JS only: without it every word is simply
-   visible, which is the state that must survive a script failure. */
+/* word arrival; set by JS only, so a script failure leaves the text visible */
 .script-body .w {
   display: inline-block;
   opacity: 0; transform: translateY(.42em);
@@ -800,175 +782,54 @@
 .script-foot {
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; flex-wrap: wrap;
-  padding: .7rem .8rem .7rem 1.3rem;
+  padding: .65rem .7rem .65rem 1.2rem;
   border-top: 1px solid var(--line);
   background: var(--paper-2);
 }
-.script-src { font-size: var(--step-mono); color: var(--ink-3); }
-.script-copy-btn { gap: .4rem; }
+.script-src { font-size: var(--step--2); color: var(--ink-3); }
+.script-copy-btn { gap: .4rem; height: 36px; padding: 0 16px; font-size: 13px; }
 .script-copy-btn.is-copied { color: var(--accent); border-color: var(--accent); }
 
-/* ---- tabs: a real tablist, arrow keys and all (see landing.js) ---- */
+/* the one addition to Charma's frame: the three scripts are real sourced
+   scenarios, and dropping two of them to match the reference exactly would
+   have deleted content */
 .script-tabs {
-  order: 2;                 /* DOM order puts the tabs first for tab order */
-  position: relative; z-index: 1;
-  display: flex; gap: .35rem; flex-wrap: wrap; justify-content: center;
-  margin-top: 1.5rem;
-  padding: .3rem;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: var(--shadow-md);
+  position: relative;
+  display: flex; gap: .25rem; flex-wrap: wrap; justify-content: center;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  padding: .28rem;
+  background: rgba(255, 255, 255, .14);
+  border-radius: var(--radius-lg);
 }
 .script-tab {
   position: relative; z-index: 1;
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .55rem 1rem;
-  border-radius: 999px;
-  font-size: var(--step--1); font-weight: 500; color: var(--ink-3);
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .45rem .7rem;
+  border-radius: var(--radius);
+  font-size: var(--step--1); font-weight: 500;
+  color: rgba(255, 255, 255, .84);
   white-space: nowrap;
   transition: color .25s var(--ease);
 }
-.script-tab-n { font-size: var(--step--2); opacity: .65; }
-.script-tab.is-on { color: var(--paper); }
-.script-tab:hover:not(.is-on) { color: var(--ink); }
-.script-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* the pill slides between tabs; JS writes width and x */
-.script-tab-ink {
-  position: absolute; z-index: 0; top: .3rem; left: 0;
-  height: calc(100% - .6rem);
-  width: var(--w, 0px);
-  transform: translateX(var(--x, 0px));
-  background: var(--ink);
-  border-radius: 999px;
-  transition: transform .42s var(--ease), width .42s var(--ease);
-}
-.script-tabs:not(.is-armed) .script-tab-ink { display: none; }
-.script-tabs:not(.is-armed) .script-tab.is-on {
-  color: var(--paper); background: var(--ink);
-}
+.script-tab-n { font-size: var(--step--2); opacity: .7; }
+/* The active tab carries its own fill. A sliding pill measured its width
+   and x from the tab row, which breaks the moment three tabs wrap to two
+   lines inside the panel - it ended up oversized and sitting across the
+   wrong tabs. Charma has no tab row to copy here, so there is nothing lost
+   in using the simpler state. */
+.script-tab.is-on { color: var(--field-accent); background: #FFFFFF; }
+.script-tab:hover:not(.is-on) { color: #FFFFFF; }
+.script-tab:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
+.script-tab-ink { display: none; }
 
+@media (min-width: 900px) {
+  .ch-grid { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); }
+}
 @media (max-width: 700px) {
-  .script-tabs { border-radius: var(--radius-lg); }
-  .script-tab { padding: .5rem .8rem; font-size: var(--step--1); }
-  .script-tab-ink { border-radius: var(--radius); }
-  .script-head, .script-foot { padding-inline: 1rem; }
-  .script-body { padding: 1.1rem 1rem; }
+  .script-head, .script-foot { padding-inline: .9rem; }
+  .script-body { padding: 1.05rem .95rem; }
+  .script-tab { padding: .45rem .7rem; }
 }
-
-/* ============================================================
-   the lit stage - after Curater and Tines
-
-   The card is not on a coloured panel, it is under a light. Two
-   overlapping cones plus the pool they throw on the floor, all in
-   gradients so there is nothing to download.
-   ============================================================ */
-/* .section.is-dark has equal specificity and comes later in this file, so
-   this needs the extra class to actually win. */
-.section.script-sec.is-dark {
-  --ray-cool: #DCFFEE;
-  --ray-warm: #B6E6CD;
-  /* the deeper of the two dark grounds, so the stage reads as further in */
-  --dk: var(--dk-2);
-  background: var(--dk-2);
-  border-block-color: var(--dk-2);
-}
-.script-stage {
-  position: relative; isolation: isolate;
-  /* headroom for the beam, so the light lives above the card rather than
-     over the section header */
-  padding-top: clamp(3rem, 7vw, 6rem);
-  padding-bottom: 2.5rem;
-}
-
-.spot { position: absolute; inset: 0 -2rem 0; z-index: 0; pointer-events: none; overflow: hidden; }
-/* the shader canvas; godray.js appends it and adds .has-gl only once it has
-   a live context and has drawn, so the CSS cones below stay as the fallback */
-.spot-gl {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  display: block; opacity: 0;
-  transition: opacity .6s var(--ease);
-}
-.spot.has-gl .spot-gl { opacity: 1; }
-.spot.has-gl .spot-cone,
-.spot.has-gl .spot-pool,
-.spot.has-gl::before { display: none; }
-/* the lamp itself, a hot spot at the apex */
-.spot::before {
-  content: ""; position: absolute; left: 50%; top: 1rem;
-  width: 190px; height: 60px; transform: translateX(-50%);
-  background: radial-gradient(50% 50% at 50% 50%, rgba(232,255,243,.5), transparent 70%);
-  filter: blur(20px); mix-blend-mode: screen;
-}
-.spot-cone {
-  position: absolute; left: 50%; top: 0;
-  width: min(1180px, 138%); height: 100%;
-  transform: translateX(-50%);
-  clip-path: polygon(47.4% 0, 52.6% 0, 93% 100%, 7% 100%);
-  background: linear-gradient(180deg,
-    rgba(255,255,255,.19), rgba(255,255,255,.05) 46%, rgba(255,255,255,0) 88%);
-  filter: blur(24px);
-  mix-blend-mode: screen;
-}
-.spot-cone-b {
-  width: min(780px, 96%);
-  clip-path: polygon(48.7% 0, 51.3% 0, 76% 100%, 24% 100%);
-  background: linear-gradient(180deg,
-    rgba(214,255,233,.26), rgba(188,233,209,.06) 52%, transparent 86%);
-  filter: blur(32px);
-}
-.spot-pool {
-  position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%);
-  width: min(860px, 94%); height: 200px;
-  background: radial-gradient(50% 50% at 50% 50%,
-    rgba(226,255,240,.17), rgba(226,255,240,.05) 46%, transparent 72%);
-  filter: blur(18px); mix-blend-mode: screen;
-}
-
-/* ---- the card, lit rather than filled ---- */
-.is-dark .script-card {
-  background: rgba(255, 255, 255, .055);
-  border-color: rgba(255, 255, 255, .14);
-  box-shadow: 0 44px 90px -34px rgba(0,0,0,.92),
-              inset 0 1px 0 rgba(255,255,255,.17);
-  -webkit-backdrop-filter: blur(18px) saturate(1.1);
-          backdrop-filter: blur(18px) saturate(1.1);
-}
-.is-dark .script-head,
-.is-dark .script-foot {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.10);
-}
-.is-dark .script-who { color: #F5F4EC; }
-.is-dark .script-rule,
-.is-dark .script-src { color: #ABAA9E; }
-.is-dark .script-body p { color: #D4D3CA; }
-.is-dark .script-body mark { color: var(--dk-accent-soft); }
-.is-dark .script-body mark::before { background: rgba(95,221,160,.17); }
-.is-dark .script-avatar { background: rgba(95,221,160,.16); color: var(--dk-accent-soft); }
-.is-dark .script-due {
-  color: #F2CE95;
-  background: rgba(242,206,149,.12);
-  border-color: rgba(242,206,149,.32);
-}
-.is-dark .script-copy-btn { color: #D4D3CA; border-color: rgba(255,255,255,.20); }
-.is-dark .script-copy-btn:hover { color: #F5F4EC; border-color: rgba(255,255,255,.4); }
-.is-dark .script-copy-btn.is-copied { color: var(--dk-accent-soft); border-color: var(--dk-accent-soft); }
-.is-dark .script-tabs {
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.12);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  box-shadow: none;
-}
-.is-dark .script-tab { color: #ABAA9E; }
-.is-dark .script-tab:hover:not(.is-on) { color: #F5F4EC; }
-.is-dark .script-tab-ink { background: #F5F4EC; }
-.is-dark .script-tab.is-on { color: #101208; }
-.is-dark .script-tabs:not(.is-armed) .script-tab.is-on {
-  color: #101208; background: #F5F4EC;
-}
-.is-dark .script-card:focus-visible { outline-color: var(--dk-accent-soft); }
-.is-dark .script-tab:focus-visible { outline-color: var(--dk-accent-soft); }
 
 /* ============================================================
    earth - the laws as objects
@@ -1088,7 +949,6 @@
      not motion - and drop only the movement */
   .pf-pill { transition: none !important; translate: none !important; }
   .pf-pill:hover { scale: 1; }
-  .spot-cone, .spot-pool { animation: none !important; }
 }
 
 @media (forced-colors: active) {
@@ -1098,7 +958,7 @@
     border: 1px solid CanvasText;
   }
   .script-tab-ink { display: none; }
-  .spot, .pf-aurora, .pf-gloss { display: none; }
+  .pf-aurora, .pf-gloss { display: none; }
   .pf-pill { border: 1px solid CanvasText; forced-color-adjust: none; }
   .pf-far, .pf-mid { filter: none; opacity: 1; }
 }

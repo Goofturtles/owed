@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788305040">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788305040">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788305040">
-<script src="assets/js/theme.js?v=1788305040"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788306557">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788306557">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788306557">
+<script src="assets/js/theme.js?v=1788306557"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -289,9 +289,9 @@
       </div>
 
       <figure class="sc-shot">
-        <img class="shot-light" src="assets/img/app-shot.webp?v=1788305040" width="1500" height="1000"
+        <img class="shot-light" src="assets/img/app-shot.webp?v=1788306557" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
-        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788305040" width="1500" height="1000"
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788306557" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
         <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
       </figure>
@@ -349,45 +349,49 @@
   </section>
 
   <!-- ============ HOW IT WORKS ============
-       Step cards after Clay: bracketed mono index, a short title, and the
-       real product surface underneath rather than an icon. -->
+       Copied from Railway's "How the program works": one bordered card
+       inset on the dark ground, a centred title, a single narrow column of
+       numbered steps whose outlined circles are joined by a vertical spine,
+       and one centred link at the foot. Only the words and the colours are
+       ours. -->
   <section class="section how is-dark" id="how">
     <div class="wrap">
-      <header class="section-head split">
-        <div class="head-a">
-        <p class="eyebrow">How it works</p>
-        <h2 class="display section-title">Four answers, then a phone&nbsp;call.</h2>
-        </div>
-        <div class="head-b">
-        <p class="lede section-lede">No receipt, no account, no reading. The whole thing takes about a minute.</p>
-        </div>
-      </header>
-      <ol class="steps" role="list">
-        <li class="step" style="--si:0">
-          <span class="step-n mono">[1]</span>
-          <h3 class="step-title">Tell it what broke</h3>
-          <p class="step-text">The thing, the brand, roughly when you bought it, and how you paid. Four taps. No receipt needed.</p>
-          <div class="sc-art"><span class="sc-field mono">Sony headphones</span><span class="sc-chips"><i>Headphones</i><i class="on">14 months</i><i>Visa</i></span></div>
-        </li>
-        <li class="step" style="--si:1">
-          <span class="step-n mono">[2]</span>
-          <h3 class="step-title">It checks everyone who might owe you</h3>
-          <p class="step-text">The maker, your card, open payouts, repair programmes, and the law where you live &mdash; all at once.</p>
-          <div class="sc-art"><ul class="sc-list"><li><span class="dot ok"></span>Card adds a year<b>strong</b></li><li><span class="dot ok"></span>Free repair programme<b>strong</b></li><li><span class="dot maybe"></span>Open payout<b>maybe</b></li></ul></div>
-        </li>
-        <li class="step" style="--si:2">
-          <span class="step-n mono">[3]</span>
-          <h3 class="step-title">Get the words to say</h3>
-          <p class="step-text">A short script with the rule named in it, the number to call, and the deadline. Read it out loud.</p>
-          <div class="sc-art"><p class="sc-script mono">&ldquo;I&rsquo;m calling about a claim under my card&rsquo;s extended warranty benefit&hellip;&rdquo;</p></div>
-        </li>
-        <li class="step" style="--si:3">
-          <span class="step-n mono">[4]</span>
-          <h3 class="step-title">Keep a shelf of your stuff</h3>
-          <p class="step-text">Save what you own once. When a new payout or repair programme lands that covers it, you&rsquo;ll know.</p>
-          <div class="sc-art"><ul class="sc-shelf"><li>Dishwasher<b>New payout</b></li><li>Laptop<b>Covered</b></li></ul></div>
-        </li>
-      </ol>
+      <div class="rw-card">
+        <h2 class="display rw-title">How Owed works</h2>
+
+        <ol class="rw-steps" role="list">
+          <li class="rw-step">
+            <span class="rw-n" aria-hidden="true">1</span>
+            <div class="rw-text">
+              <h3 class="rw-step-title">Tell it what broke</h3>
+              <p class="rw-step-body">The thing, the brand, roughly when you bought it, and how you paid. Four taps, and no receipt needed.</p>
+            </div>
+          </li>
+          <li class="rw-step">
+            <span class="rw-n" aria-hidden="true">2</span>
+            <div class="rw-text">
+              <h3 class="rw-step-title">It checks everyone who might owe you</h3>
+              <p class="rw-step-body">The maker, your card, open payouts, repair programmes and the law where you live &mdash; all at once, against 445 rules.</p>
+            </div>
+          </li>
+          <li class="rw-step">
+            <span class="rw-n" aria-hidden="true">3</span>
+            <div class="rw-text">
+              <h3 class="rw-step-title">Get the words to say</h3>
+              <p class="rw-step-body">A short script with the rule named in it, the number to call and the deadline on top. Read it out loud.</p>
+            </div>
+          </li>
+          <li class="rw-step">
+            <span class="rw-n" aria-hidden="true">4</span>
+            <div class="rw-text">
+              <h3 class="rw-step-title">Keep a shelf of your stuff</h3>
+              <p class="rw-step-body">Save what you own once. When a new payout or repair programme lands that covers it, you&rsquo;ll know.</p>
+            </div>
+          </li>
+        </ol>
+
+        <a class="rw-more" href="app.html?demo=1">See it with a demo shelf &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -475,57 +479,30 @@
   </section>
 
   <!-- ============ SCRIPT SHOWCASE ============
-       After Descript: the copy sits above one live document, and the tabs
-       under it switch which kind of claim you are watching Owed write.
-       The three scenarios are real rules from data/coverage.json -
-       cards-us-amex-extended-warranty, uk-six-year-claim-window and
-       elec-nintendo-joycon-drift-free-repair. -->
-  <section class="section script-sec is-dark" id="script">
-    <div class="wrap">
-      <header class="section-head split">
-        <div class="head-a">
-          <p class="eyebrow">The part that actually helps</p>
-          <h2 class="display section-title">Knowing you&rsquo;re covered isn&rsquo;t&nbsp;enough.</h2>
-        </div>
-        <div class="head-b">
-          <p class="lede section-lede">
-            People give up at the phone call. So Owed writes it &mdash; the rule named out
-            loud, the deadline on top, in the order that gets a yes.
-          </p>
-          <a class="btn btn-accent" href="auth.html?mode=signup">Write mine</a>
-        </div>
-      </header>
+       Copied from Charma: a very large headline breaking into short lines
+       down the left, a paragraph and an arrow link beneath it, and on the
+       right one big rounded colour panel with a white card floating inside
+       it. Only the words and the colours are ours - Charma's panel is red,
+       this one is the accent.
 
-      <div class="script-stage">
-        <!-- the light itself: two overlapping cones and the pool they throw
-             on the floor. After Curater and Tines - the subject is lit
-             rather than sitting on a coloured panel. -->
-        <div class="spot" aria-hidden="true">
-          <i class="spot-cone"></i>
-          <i class="spot-cone spot-cone-b"></i>
-          <i class="spot-pool"></i>
-        </div>
-        <div class="script-tabs" role="tablist" aria-label="Kinds of claim Owed writes">
-          <button class="script-tab is-on" type="button" role="tab" id="scriptTab0"
-                  aria-selected="true" aria-controls="scriptCard" data-i="0">
-            <span class="script-tab-n mono">01</span>
-            <span class="script-tab-t">Your card&rsquo;s benefit</span>
-          </button>
-          <button class="script-tab" type="button" role="tab" id="scriptTab1" tabindex="-1"
-                  aria-selected="false" aria-controls="scriptCard" data-i="1">
-            <span class="script-tab-n mono">02</span>
-            <span class="script-tab-t">The law where you live</span>
-          </button>
-          <button class="script-tab" type="button" role="tab" id="scriptTab2" tabindex="-1"
-                  aria-selected="false" aria-controls="scriptCard" data-i="2">
-            <span class="script-tab-n mono">03</span>
-            <span class="script-tab-t">A quiet repair programme</span>
-          </button>
-          <i class="script-tab-ink" aria-hidden="true"></i>
-        </div>
+       The one addition is the tab row under the panel. Charma has nothing
+       there, but the three scripts are real sourced scenarios and dropping
+       two of them to match the reference exactly would delete content. -->
+  <section class="section script-sec" id="script">
+    <div class="wrap ch-grid">
+      <div class="ch-copy">
+        <h2 class="display ch-title">Knowing you&rsquo;re covered isn&rsquo;t enough.</h2>
+        <p class="ch-text">
+          The reason people give up is the phone call. So Owed writes it for you &mdash; the
+          rule named out loud, the deadline on top, and the sentences in the order that gets
+          a yes. Read it down the phone, or paste it into an email. Every line of it comes
+          from a rule in the book, with the page it came from attached.
+        </p>
+        <a class="ch-link" href="auth.html?mode=signup">Get my script &rarr;</a>
+      </div>
 
-        <figure class="script-card" id="scriptCard" role="tabpanel"
-                aria-labelledby="scriptTab0">
+      <div class="ch-panel">
+        <figure class="script-card" id="scriptCard" role="tabpanel" aria-labelledby="scriptTab0">
           <figcaption class="script-head">
             <span class="script-to">
               <span class="script-avatar" aria-hidden="true">
@@ -554,7 +531,24 @@
           </div>
         </figure>
 
-
+        <div class="script-tabs" role="tablist" aria-label="Kinds of claim Owed writes">
+          <button class="script-tab is-on" type="button" role="tab" id="scriptTab0"
+                  aria-selected="true" aria-controls="scriptCard" data-i="0">
+            <span class="script-tab-n mono">01</span>
+            <span class="script-tab-t">Your card&rsquo;s benefit</span>
+          </button>
+          <button class="script-tab" type="button" role="tab" id="scriptTab1" tabindex="-1"
+                  aria-selected="false" aria-controls="scriptCard" data-i="1">
+            <span class="script-tab-n mono">02</span>
+            <span class="script-tab-t">The law where you live</span>
+          </button>
+          <button class="script-tab" type="button" role="tab" id="scriptTab2" tabindex="-1"
+                  aria-selected="false" aria-controls="scriptCard" data-i="2">
+            <span class="script-tab-n mono">03</span>
+            <span class="script-tab-t">A quiet repair programme</span>
+          </button>
+          <i class="script-tab-ink" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   </section>
@@ -805,11 +799,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788305040"></script>
-<script src="assets/js/landing.js?v=1788305040"></script>
-<script src="assets/js/scroll.js?v=1788305040"></script>
-<script src="assets/js/scene.js?v=1788305040"></script>
-<script src="assets/js/godray.js?v=1788305040"></script>
-<script src="assets/js/motion.js?v=1788305040"></script>
+<script src="assets/js/catalog.js?v=1788306557"></script>
+<script src="assets/js/landing.js?v=1788306557"></script>
+<script src="assets/js/scroll.js?v=1788306557"></script>
+<script src="assets/js/scene.js?v=1788306557"></script>
+<script src="assets/js/motion.js?v=1788306557"></script>
 </body>
 </html>
