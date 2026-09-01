@@ -789,10 +789,10 @@
    made). Soft radial, sized to the copy, so the skyline still reads around it. */
 .city-sticky::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(46% 30% at 50% 46%,
-    color-mix(in srgb, var(--paper) 93%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 72%, transparent) 52%,
-    transparent 80%);
+  background: radial-gradient(50% 34% at 50% 46%,
+    color-mix(in srgb, var(--paper) 96%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 86%, transparent) 55%,
+    transparent 82%);
 }
 .city-copy {
   position: relative; z-index: 2;
@@ -803,14 +803,45 @@
   font-size: var(--step-3);
   margin-top: .6rem;
   letter-spacing: -.022em;
-  padding-bottom: .07em;
+  display: grid;              /* both lines share one cell and cross-fade */
+  place-items: center;
 }
-.city-title em { font-style: italic; color: var(--accent); }
+.city-title > span {
+  grid-area: 1 / 1;
+  display: block;
+  padding-bottom: .09em;      /* descender room inside the sticky overflow box */
+}
+.city-title em { font-style: italic; }
+.city-title .iw { display: inline-block; }
+.city.is-near .city-title .iw { will-change: opacity, transform, filter; }
+
+/* The handover runs word by word: each word carries its own --i so it rises
+   and sharpens a beat after the one before, rather than a whole line landing
+   at once. --p is the scroll progress through the section. */
+.js-p .city-l2 .iw {
+  --t: clamp(0, calc((var(--p, 0) - .30 - var(--i, 0) * .035) * 9), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 20px));
+  filter: blur(calc((1 - var(--t)) * 7px));
+}
+.js-p .city-l1 .iw {
+  /* leaves in the order it arrived, so the two lines cross rather than cut */
+  --t: clamp(0, calc((.40 - var(--p, 0) + var(--i, 0) * .028) * 9), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * -16px));
+  filter: blur(calc((1 - var(--t)) * 6px));
+}
+.js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.15 - var(--p, 0) * 1.7), 1); }
 .city-sub {
   margin-top: 1rem;
   font-size: var(--step-0);
   color: var(--ink-2);
   max-width: 48ch; margin-inline: auto;
+}
+.js-p .city-sub {
+  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 16px));
 }
 
 /* the five sources light up one at a time as the camera travels */
@@ -837,15 +868,23 @@
   white-space: nowrap;
   opacity: 0;
 }
-/* each tag owns a slice of the scroll and fades through it */
+/* Without JS --p never moves, so the cycle would leave all five invisible.
+   Show the first one only: a real, readable static state. A timed failsafe
+   was the wrong tool here — these are *meant* to be hidden between their
+   slices, so it lit all five at once, stacked in the same grid cell. */
+.city-tags li:first-child { opacity: 1; }
+/* Each tag owns a slice of the scroll and fades in then out again. Built from
+   two one-sided clamps rather than abs(): abs() only landed in Chrome 133, and
+   the fallback for it was cumulative — every tag reached opacity 1 and stayed
+   there, so by the end all five sat stacked in the same grid cell, opaque and
+   overlapping. min() of a rise and a fall needs no fallback at all. */
 .js-p .city-tags li {
-  --d: calc(var(--p, 0) - var(--ct));
-  opacity: clamp(0, calc((0.09 - abs(var(--d))) * 16), 1);
-}
-@supports not (width: abs(1px)) {
-  /* abs() is recent; without it just show them in sequence, no cross-fade */
-  .js-p .city-tags li { opacity: clamp(0, calc((var(--p, 0) - var(--ct)) * 22), 1); }
-  .js-p .city-tags li ~ li { background: var(--card); }
+  /* window must be at least the spacing between --ct values (~.16) or the
+     tags leave dead gaps where nothing is shown at all */
+  opacity: min(
+    clamp(0, calc((var(--p, 0) - var(--ct)) * 26), 1),
+    clamp(0, calc((var(--ct) + 0.17 - var(--p, 0)) * 26), 1)
+  );
 }
 
 @media (max-width: 700px) { .city { height: 260vh; } }
@@ -888,6 +927,10 @@
   /* .js-p .city-tags li out-specifies a bare selector here, so this has to
      win explicitly or the five sources stay invisible under reduced motion */
   .city-tags li { opacity: 1 !important; }
+  .city-title { display: block; }
+  .city-l1 { display: none; }
+  .city-l2 .iw, .city-sub, .city-copy .eyebrow {
+    opacity: 1 !important; transform: none !important; filter: none !important; }
 }
 
 /* ============================================================

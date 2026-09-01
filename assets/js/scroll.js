@@ -113,11 +113,17 @@
   }
   api.cancelGuided = stopGuide;
 
-  // Any genuine input releases it — this is what keeps it from being a trap.
-  // focusin matters: NVDA/JAWS in browse mode swallow arrow and page keys and
-  // move the page with scrollIntoView, so keydown alone never reaches us and
-  // an AT user would have had no way out of the guide.
-  ['wheel', 'touchstart', 'keydown', 'pointerdown', 'focusin'].forEach(function (evt) {
+  // Scrolling DOWN does not interrupt: the run is short and it is meant to play
+  // through. Scrolling UP is the deliberate "let me out" gesture and releases
+  // immediately. Keyboard, pointer and focus always release too — a run nobody
+  // can escape is a trap, and focusin is the one that matters for NVDA/JAWS in
+  // browse mode, which swallow arrow keys and move the page with scrollIntoView
+  // so keydown alone would never reach us.
+  window.addEventListener('wheel', function (e) {
+    if (guiding && e.deltaY < 0) stopGuide();
+  }, { passive: true, capture: true });
+
+  ['touchstart', 'keydown', 'pointerdown', 'focusin'].forEach(function (evt) {
     window.addEventListener(evt, function () { if (guiding) stopGuide(); },
       { passive: true, capture: true });
   });
@@ -129,7 +135,8 @@
     var dist = endY - startY;
     if (dist <= 60) return;
 
-    var dur = Math.min(4200, Math.max(2000, dist * 0.9));
+    // kept short deliberately — this is time the visitor cannot skip forward through
+    var dur = Math.min(2400, Math.max(1500, dist * 0.55));
     var t0 = null;
     guiding = true;
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }

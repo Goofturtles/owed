@@ -59,8 +59,13 @@
     return [xx, yx, zx, 0, xy, yy, zy, 0, xz, yz, zz, 0,
             -(xx * ex + xy * ey + xz * ez), -(yx * ex + yy * ey + yz * ez), -(zx * ex + zy * ey + zz * ez), 1];
   }
-  function boxMatrix(x, y, z, sx, sy, sz) {
-    return [sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, x, y, z, 1];
+  // writes in place: a fresh Array per block per frame is ~7000 allocations/sec
+  function boxMatrix(out, x, y, z, sx, sy, sz) {
+    out[0] = sx; out[1] = 0;  out[2] = 0;  out[3] = 0;
+    out[4] = 0;  out[5] = sy; out[6] = 0;  out[7] = 0;
+    out[8] = 0;  out[9] = 0;  out[10] = sz; out[11] = 0;
+    out[12] = x; out[13] = y; out[14] = z;  out[15] = 1;
+    return out;
   }
 
   /* ---------------- geometry: one unit box ----------------
@@ -74,7 +79,7 @@
     }
     var p = [[-.5,0,-.5],[.5,0,-.5],[.5,0,.5],[-.5,0,.5],
              [-.5,1,-.5],[.5,1,-.5],[.5,1,.5],[-.5,1,.5]];
-    quad(p[4], p[5], p[6], p[7], 1.00);   // roof
+    quad(p[7], p[6], p[5], p[4], 1.00);   // roof (CCW from above)
     quad(p[3], p[2], p[6], p[7], 0.82);   // front
     quad(p[2], p[1], p[5], p[6], 0.62);   // right
     quad(p[0], p[3], p[7], p[4], 0.70);   // left
@@ -147,11 +152,14 @@
   });
 
   gl.enable(gl.DEPTH_TEST);
+  gl.enable(gl.CULL_FACE);          // every face is CCW-outward; saves ~40% of fragments
   gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  // separate alpha, or the destination alpha resolves low on a transparent canvas
+  gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
   /* ---------------- the city ---------------- */
-  var COLS = 9, ROWS = 22, GAP = 2.15;
+  var small = window.innerWidth < 700;
+  var COLS = small ? 6 : 9, ROWS = small ? 15 : 22, GAP = 2.15;
   var blocks = [];
   (function build() {
     var r = 20250831;
@@ -203,7 +211,7 @@
   var W = 0, H = 0, proj = null;
   var mVP = new Float32Array(16), mModel = new Float32Array(16);
   function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     var r = stage.getBoundingClientRect();
     var w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
     if (w === W && h === H) return;
@@ -249,7 +257,7 @@
       if (b.z > ez + 4 || b.z < ez - 46) continue;    // behind, or past the fog
       gl.uniform3fv(U.uColor, TONES[b.tone]);
       gl.uniform1f(U.uAccent, b.accent);
-      mModel.set(boxMatrix(b.x, 0, b.z, b.w, b.h, b.d));
+      boxMatrix(mModel, b.x, 0, b.z, b.w, b.h, b.d);
       gl.uniformMatrix4fv(U.uModel, false, mModel);
       gl.drawArrays(gl.TRIANGLES, 0, box.count);
     }
@@ -259,10 +267,14 @@
   function schedule() { if (raf === null && !lost) raf = requestAnimationFrame(frame); }
   function start() { if (!running && !lost) { running = true; schedule(); } }
   function stop() { running = false; if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
+  // hand the framebuffer back: full-viewport MSAA + depth is tens of MB, and
+  // holding two of those for the page lifetime is what actually risks a
+  // context loss on low-end hardware
+  function release() { stop(); if (W !== 1) { canvas.width = canvas.height = 1; W = H = 0; } }
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
-      es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      es.forEach(function (e) { e.isIntersecting ? start() : release(); });
     }, { rootMargin: '150px' }).observe(host);
   } else { start(); }
   window.addEventListener('scroll', function () { if (running) schedule(); }, { passive: true });

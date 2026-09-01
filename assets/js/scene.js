@@ -29,8 +29,10 @@
 
   var gl = null;
   try {
-    gl = canvas.getContext('webgl', { antialias: true, alpha: true })
-      || canvas.getContext('experimental-webgl', { antialias: true, alpha: true });
+    // no MSAA: the pages are soft blended quads, so it costs framebuffer for
+    // almost no visible gain, and two full-viewport buffers is the real risk here
+    gl = canvas.getContext('webgl', { antialias: false, alpha: true })
+      || canvas.getContext('experimental-webgl', { antialias: false, alpha: true });
   } catch (e) { gl = null; }
   if (!gl) return;
 
@@ -173,7 +175,7 @@
   gl.uniform1f(U.uHiY, 1.0 - (26 + HI_ROW * 10) / 512);
 
   gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
   gl.disable(gl.DEPTH_TEST); // painter's order, back to front
 
   /* ---------------- the pages ---------------- */
@@ -226,7 +228,7 @@
   // reused every draw — allocating these per page per frame is ~3000 arrays/s
   var mProj = new Float32Array(16), mModel = new Float32Array(16);
   function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     var r = stage.getBoundingClientRect();
     var w = Math.max(1, Math.round(r.width * dpr));
     var h = Math.max(1, Math.round(r.height * dpr));
@@ -311,11 +313,13 @@
   function schedule() { if (raf === null) raf = requestAnimationFrame(frame); }
   function start() { if (!running && !lost) { running = true; schedule(); } }
   function stop() { running = false; if (raf !== null) { cancelAnimationFrame(raf); raf = null; } }
+  // give the framebuffer back while off-screen — see the same note in city.js
+  function release() { stop(); if (W !== 1) { canvas.width = canvas.height = 1; W = H = 0; } }
 
   // only run while the section is actually on screen
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
-      es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      es.forEach(function (e) { e.isIntersecting ? start() : release(); });
     }, { rootMargin: '120px' }).observe(host);
   } else {
     start();

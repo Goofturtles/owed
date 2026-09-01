@@ -282,7 +282,7 @@
 
   /* ---------------- scroll progress as a CSS variable ----------------
      Publishes 0..1 through each pinned section as --p so CSS can drive the
-     floating cards and the ink cross-fade. Deliberately independent of
+     floating cards and the city tags. Deliberately independent of
      scene.js: the cards must still work when WebGL is unavailable. */
   (function progressVars() {
     var secs = Array.prototype.slice.call(document.querySelectorAll('#stack, #city'));
@@ -302,15 +302,15 @@
     window.addEventListener('resize', onScroll, { passive: true });
     update();
     // Only now is it safe for CSS to hide anything behind --p. Without this the
-    // ink section is a full-screen black panel showing one line, and any throw
-    // in an earlier IIFE here would have caused exactly that.
+    // city tags never appear, and any throw in an earlier IIFE here would have
+    // caused exactly that.
     document.body.classList.add('js-p');
-    // promote the ink words only while that section is in play
-    var ink = document.getElementById('city');
-    if (ink && 'IntersectionObserver' in window) {
+    // promote the cross-fading words only while the section is in play
+    var city = document.getElementById('city');
+    if (city && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        es.forEach(function (e) { ink.classList.toggle('is-near', e.isIntersecting); });
-      }, { rootMargin: '200px' }).observe(ink);
+        es.forEach(function (e) { city.classList.toggle('is-near', e.isIntersecting); });
+      }, { rootMargin: '200px' }).observe(city);
     }
   })();
 
