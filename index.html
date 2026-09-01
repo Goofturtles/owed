@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owed — somebody already owes you a free repair</title>
+<meta name="description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts and consumer law — and tells you who still has to fix it for free, plus the words to say.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/base.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788197788">
+<script src="assets/js/theme.js?v=1788197788"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ FLOATING PILL NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-pill">
+    <a class="brand" href="index.html" aria-label="Owed home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+      <span class="brand-name">Owed</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#checks">What we check</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-quiet nav-signin" href="auth.html?mode=signin">Sign in</a>
+      <a class="btn btn-accent" href="auth.html?mode=signup">Start free</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-wash" aria-hidden="true"></div>
+
+    <div class="wrap hero-inner">
+      <a class="hero-chip" href="#checks" data-enter
+         aria-label="445 rules, in the five places cover hides. See what we check.">
+        <span class="hero-chip-n tnum">445</span>
+        <span class="hero-chip-t">rules, in five places cover hides</span>
+        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
+      </a>
+
+      <h1 class="display hero-title" data-split>Somebody already owes you <em>a free repair.</em></h1>
+
+      <p class="hero-sub" data-enter>
+        Owed reads the warranty you lost, the card you paid with, the payouts nobody
+        collects and the law where you live &mdash; then writes the words to say.
+      </p>
+
+      <form class="hero-try" id="tryForm" action="auth.html" method="get" novalidate data-enter>
+        <label class="sr-only" for="tryItem">What broke?</label>
+        <div class="hero-try-field">
+          <svg class="hero-try-ico" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m13.5 13.5 3 3"/></svg>
+          <input class="hero-try-input" id="tryItem" name="item" type="text"
+                 placeholder="What broke? Sony headphones, Whirlpool dishwasher…"
+                 autocomplete="off" spellcheck="false">
+          <button class="btn btn-accent hero-try-btn" type="submit">Check it</button>
+        </div>
+      </form>
+
+      <p class="hero-note" data-enter>Free, and no account needed to try. Nothing you type leaves your browser.</p>
+
+      <div class="try-result" id="tryResult" role="status" aria-live="polite" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ THE STACK: a flythrough of the paperwork ============ -->
+  <section class="stack" id="stack" aria-label="How deep the paperwork goes">
+
+    <div class="stack-sticky">
+      <!-- the static frame anyone without WebGL (or with reduced motion) sees -->
+      <div class="stack-still" aria-hidden="true"></div>
+      <canvas class="stack-canvas" aria-hidden="true"></canvas>
+
+      <div class="stack-caps">
+        <p class="stack-cap" data-cap data-from="0" data-to="0.34">
+          Every warranty. Every card benefit. Every payout nobody collects.
+        </p>
+        <p class="stack-cap" data-cap data-from="0.34" data-to="0.60">
+          <b class="tnum">445</b> rules deep, and none of it is written for you.
+        </p>
+        <p class="stack-cap" data-cap data-from="0.60" data-to="1.01">
+          One of them says your repair is <em>free.</em>
+        </p>
+      </div>
+
+      <span class="stack-hint mono" aria-hidden="true">scroll</span>
+    </div>
+  </section>
+
+  <!-- ============ THE SIGNATURE: fine print, one clause that counts ============ -->
+  <section class="finder" aria-label="How Owed reads the fine print">
+    <p class="sr-only">
+      Owed reads the small print nobody finishes and pulls out the single clause worth
+      asking about. For a pair of Sony headphones bought two years ago in England, that
+      clause is the Consumer Rights Act: the shop, not the maker, stays responsible for
+      goods that were faulty from the start, and you have six years to bring the claim
+      (five in Scotland). It is a right to ask, not a guarantee the answer is yes.
+    </p>
+
+    <div class="wrap finder-grid" aria-hidden="true">
+      <div class="finder-doc">
+        <div class="finder-doc-bar">
+          <span class="finder-doc-title mono">terms &amp; conditions</span>
+          <span class="finder-doc-count mono">reading 445 rules</span>
+        </div>
+        <div class="finder-wall" id="finderWall">
+          <p>and shall not apply to damage resulting from accident, misuse, neglect, unauthorised modification or repair, or use with</p>
+          <p>consumable components including but not limited to batteries, filters, belts, bulbs and external finishes are excluded from</p>
+          <p data-hit="0">the buyer has six years from delivery in which to bring a claim that goods were not of satisfactory quality</p>
+          <p>this limited warranty is given by the manufacturer, is in addition to and does not affect your statutory rights, and</p>
+          <p>proof of purchase in the form of an original dated sales receipt must be presented in order to obtain warranty service</p>
+          <p>the warranty period commences on the date of original retail purchase by the first end-user purchaser and continues</p>
+          <p data-hit="1">the card adds one further year of the same cover after the manufacturer's own warranty has run out</p>
+          <p>in no event shall liability exceed the original purchase price of the product, whether in contract, tort or otherwise</p>
+          <p>service may be provided by an authorised service provider using new or refurbished parts of equivalent performance and</p>
+          <p>transport costs to and from the service centre are the responsibility of the purchaser except where required by law</p>
+          <p data-hit="2">a free repair is owed for a reasonable period, which the law fixes at between three and six years for appliances</p>
+          <p>no employee, agent or representative is authorised to make any modification, extension or addition to this warranty</p>
+          <p>where local law confers rights that cannot be excluded, this warranty applies only to the extent permitted by that law</p>
+        </div>
+      </div>
+
+      <div class="finder-out">
+        <p class="finder-for mono" id="finderFor">Sony WH-1000XM4 &middot; 2 years old &middot; England</p>
+        <div class="finder-card">
+          <span class="finder-tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg>
+          </span>
+          <span class="finder-verdict" id="finderVerdict">The shop may still owe the repair</span>
+          <span class="finder-meta" id="finderMeta">Consumer Rights Act &middot; 6 years to bring a claim</span>
+        </div>
+        <p class="finder-note">One clause out of 445. That is the whole job.</p>
+      </div>
+    </div>
+  </section>
+
+<!-- ============ THE PRODUCT ============ -->
+  <section class="showcase">
+    <div class="wrap">
+      <div class="showcase-panel">
+        <div class="showcase-head">
+          <p class="eyebrow showcase-eyebrow">Your shelf</p>
+          <h2 class="display showcase-title">Everything you own, <em>watched for you.</em></h2>
+        </div>
+        <figure class="hero-shot">
+          <div class="hero-shot-frame">
+            <div class="hero-shot-bar" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <i class="mono">your shelf</i>
+            </div>
+            <!-- both sit ~2 viewports down and only one is ever visible, so
+                 neither is the LCP element and neither should be eager -->
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788197788"
+                 width="1500" height="1000" alt=""
+                 loading="lazy" decoding="async">
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788197788"
+                 width="1500" height="1000" alt=""
+                 loading="lazy" decoding="async">
+          </div>
+          <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOURCE STRIP ============ -->
+  <section class="strip" aria-label="Where cover comes from">
+    <div class="wrap strip-inner">
+      <p class="strip-label">Reads the fine print in</p>
+      <ul class="strip-list" role="list">
+        <li>Manufacturer warranties</li>
+        <li>Credit card benefits</li>
+        <li>Class action payouts</li>
+        <li>Repair programmes</li>
+        <li>Consumer law</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="section problem">
+    <div class="wrap-narrow">
+      <p class="eyebrow">The reason this exists</p>
+      <h2 class="display section-title">The cover is real. Finding it is the&nbsp;problem.</h2>
+      <p class="lede">
+        The rules that would get your thing fixed for free are scattered across a warranty
+        booklet you threw away, a card benefit guide nobody opens, a settlement website you
+        never heard of, and a consumer law nobody told you about. So people just buy a new one,
+        and a working product goes in the bin.
+      </p>
+      <div class="problem-cards">
+        <article class="pcard">
+          <p class="pcard-big display"><span class="count" data-count-to="1" data-count-dur="700">1</span> yr</p>
+          <p class="pcard-text">is what most people think they get. Paying with the right card can quietly double it.</p>
+        </article>
+        <article class="pcard">
+          <p class="pcard-big display"><span class="count" data-count-to="90" data-count-dur="1100">90</span> days</p>
+          <p class="pcard-text">is how long some card claims stay open. Miss the window and the cover vanishes.</p>
+        </article>
+        <article class="pcard">
+          <p class="pcard-big display"><span class="count" data-count-to="6" data-count-dur="900">6</span> yrs</p>
+          <p class="pcard-text">is how long the law in England and Wales can hold a seller responsible — long after the warranty card says no.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section how" id="how">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="display section-title">Four answers, then a phone&nbsp;call.</h2>
+      </header>
+
+      <ol class="steps" role="list">
+        <li class="step">
+          <div class="step-num mono">01</div>
+          <div class="step-body">
+            <h3 class="step-title">Tell it what broke</h3>
+            <p class="step-text">The thing, the brand, roughly when you bought it, and how you paid. Four taps. No receipt needed.</p>
+          </div>
+          <div class="step-art" aria-hidden="true">
+            <div class="mini-field"><span class="mono">Sony headphones</span></div>
+            <div class="mini-chips"><span>Headphones</span><span class="on">14 months</span><span>Visa</span></div>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num mono">02</div>
+          <div class="step-body">
+            <h3 class="step-title">It checks everyone who might owe you</h3>
+            <p class="step-text">The maker, your card, open payouts, repair programmes, and the law where you live — all at once.</p>
+          </div>
+          <div class="step-art" aria-hidden="true">
+            <ul class="mini-list">
+              <li><span class="dot ok"></span>Card adds a year<b class="mono">Strong</b></li>
+              <li><span class="dot ok"></span>Free repair programme<b class="mono">Strong</b></li>
+              <li><span class="dot maybe"></span>Open payout<b class="mono">Maybe</b></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num mono">03</div>
+          <div class="step-body">
+            <h3 class="step-title">Get the words to say</h3>
+            <p class="step-text">A short script with the rule named in it, the number to call, and the deadline. Read it out loud.</p>
+          </div>
+          <div class="step-art" aria-hidden="true">
+            <div class="mini-script mono">“I'm calling about a claim under my card's extended warranty benefit…”</div>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num mono">04</div>
+          <div class="step-body">
+            <h3 class="step-title">Keep a shelf of your stuff</h3>
+            <p class="step-text">Save what you own once. When a new payout or repair programme lands that covers it, you'll know.</p>
+          </div>
+          <div class="step-art" aria-hidden="true">
+            <div class="mini-shelf">
+              <div class="shelf-item"><span>Dishwasher</span><i class="pill pill-accent">New payout</i></div>
+              <div class="shelf-item"><span>Laptop</span><i class="pill pill-quiet">Covered</i></div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ WHAT WE CHECK ============ -->
+  <section class="section checks" id="checks">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">What we check</p>
+        <h2 class="display section-title">Five places cover hides.</h2>
+        <p class="lede section-lede">Most people know about the first one. The other four are where the free fixes actually are.</p>
+      </header>
+
+      <div class="check-grid">
+        <article class="check">
+          <span class="check-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 8.3 8 9 4.8-.7 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <h3 class="check-title">The maker's warranty</h3>
+          <p class="check-text">Still running more often than people think — and some brands quietly promise a lifetime.</p>
+        </article>
+
+        <article class="check">
+          <span class="check-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg>
+          </span>
+          <h3 class="check-title">The card you paid with</h3>
+          <p class="check-text">Many cards add a whole extra year on top of the maker's warranty, free, automatically.</p>
+        </article>
+
+        <article class="check">
+          <span class="check-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M7 7l-3 6a3.2 3.2 0 0 0 6 0Zm10 0-3 6a3.2 3.2 0 0 0 6 0Z"/></svg>
+          </span>
+          <h3 class="check-title">Payouts you can still claim</h3>
+          <p class="check-text">When a product turns out to be faulty, money gets set aside. Most of it is never collected.</p>
+        </article>
+
+        <article class="check">
+          <span class="check-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1 0 5.6l-2.1 2.1-5.6-5.6 2.1-2.1a4 4 0 0 1 5.6 0Z"/><path d="m9 12-5 5 3 3 5-5"/></svg>
+          </span>
+          <h3 class="check-title">Quiet repair programmes</h3>
+          <p class="check-text">Makers often fix a known fault for free without announcing it. You have to know to ask.</p>
+        </article>
+
+        <article class="check check-wide">
+          <span class="check-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M5 7h14M6.5 7 4 13.5h5L6.5 7Zm11 0L15 13.5h5L17.5 7ZM9 20h6M12 7v13"/></svg>
+          </span>
+          <h3 class="check-title">The law where you live</h3>
+          <p class="check-text">Your legal cover often outlasts the printed warranty — and in some places it lasts for years. The seller has to honour it whether or not the box says so.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INK: scroll-scrubbed, the fine print unfurling ============ -->
+  <section class="ink" id="ink" aria-label="The fine print, unfolding">
+    <div class="ink-sticky">
+      <video class="ink-video" id="inkVideo" aria-hidden="true"
+             src="assets/video/ink-water.webm?v=1788197788"
+             width="800" height="454"
+             muted playsinline preload="none" disablepictureinpicture></video>
+      <div class="ink-copy">
+        <p class="eyebrow">Written to be skipped</p>
+        <h2 class="display ink-title">Nobody reads it. <em>Owed reads all of it.</em></h2>
+        <p class="ink-sub">
+          Four hundred and forty-five rules, so you only ever read one sentence &mdash;
+          the one that says somebody owes you a repair.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCRIPT SHOWCASE ============ -->
+  <section class="section script-sec">
+    <div class="wrap script-grid">
+      <div class="script-copy">
+        <p class="eyebrow">The part that actually helps</p>
+        <h2 class="display section-title">Knowing you're covered isn't enough.</h2>
+        <p class="lede">
+          The reason people give up is the phone call. So Owed writes it for you — the rule
+          named out loud, in the order that gets a yes, with the deadline on top.
+        </p>
+        <a class="btn btn-primary btn-lg" href="auth.html?mode=signup">Get my script</a>
+      </div>
+
+      <figure class="script-card">
+        <figcaption class="script-head">
+          <span class="pill pill-accent">Say this</span>
+          <span class="mono muted">Sony · card benefit</span>
+        </figcaption>
+        <blockquote class="script-body mono">
+          <p>“Hi — I'd like to open a claim under the <mark>extended warranty benefit</mark> on my card.</p>
+          <p>I bought Sony WH‑1000XM4 headphones on <mark>12 June 2025</mark> and paid with this card. They stopped charging last week.</p>
+          <p>The manufacturer's one‑year warranty has ended, which is what this benefit is for. Can you tell me what you need from me — and confirm the claim deadline?”</p>
+        </blockquote>
+        <div class="script-foot">
+          <span class="mono">Claim within 90 days</span>
+          <button class="btn btn-ghost script-copy-btn" type="button" data-copy>Copy</button>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ LANDFILL / EARTH ============ -->
+  <section class="section earth">
+    <div class="wrap earth-inner">
+      <div class="earth-copy">
+        <p class="eyebrow">Why it matters beyond the money</p>
+        <h2 class="display section-title">Every claimed repair is one thing that doesn't get thrown&nbsp;away.</h2>
+        <p class="lede">
+          Broken electronics are the fastest-growing kind of household waste on the planet, and
+          most of it dies for a fixable fault while somebody, somewhere, was contractually
+          required to repair it for free. Owed makes the free repair the easy option.
+        </p>
+      </div>
+      <div class="earth-stat card">
+        <p class="eyebrow">Example shelf</p>
+        <p class="earth-num display tnum"><span class="count" data-count-to="4" data-count-dur="900">4</span> items</p>
+        <p class="earth-sub">kept out of landfill</p>
+        <div class="earth-bar" style="--pct:62%" aria-hidden="true"><i></i></div>
+        <p class="earth-note muted mono">counted only when a claim is marked won</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RULEBOOK STATS ============ -->
+  <section class="statband" aria-label="What is in the rulebook">
+    <div class="wrap statband-inner">
+      <div class="statband-item">
+        <b class="display count" data-count-to="445" data-count-dur="1400">445</b>
+        <span>rules in the book</span>
+      </div>
+      <div class="statband-item">
+        <b class="display count" data-count-to="5" data-count-dur="800">5</b>
+        <span>places cover hides</span>
+      </div>
+      <div class="statband-item">
+        <b class="display count" data-count-to="4" data-count-dur="800">4</b>
+        <span>regions covered</span>
+      </div>
+      <div class="statband-item">
+        <b class="display">$0</b>
+        <span>what it costs you</span>
+      </div>
+    </div>
+    <p class="statband-note wrap muted">
+      Every rule links to the page it came from. The book is hand-collected, so it is deep
+      rather than complete — strongest in the US and Canada right now.
+    </p>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section faq" id="faq">
+    <div class="wrap-narrow">
+      <header class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2 class="display section-title">The fair ones first.</h2>
+      </header>
+
+      <div class="faq-list" id="faqList">
+        <details class="faq-item">
+          <summary><span>Is this actually free?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>Yes. Owed doesn't take a cut of anything you claim and doesn't sell warranties. It's a student project built to be free.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary><span>Do I need my receipt?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>Not to check. Roughly when you bought it is enough to see what's likely open. You'll usually need proof when you actually claim — a bank statement line often counts, which is why Owed asks how you paid.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary><span>What if it finds nothing for my thing?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>It'll say so plainly rather than invent something. That's the honest weak spot: the rules are collected by hand, so an unusual brand or model may come back empty. Adding it to your shelf means you'll hear if that changes.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary><span>Is the advice legal advice?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>No. It points you at published rules and tells you what to ask. Every result links to the source so you can read it yourself, and it never claims certainty it doesn't have.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary><span>Where does my data go?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>Nowhere. Your shelf and your account live in your own browser's storage. There's no server collecting what you own.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary><span>Which countries does it work in?</span><i aria-hidden="true"></i></summary>
+          <div class="faq-body"><p>The maker and card rules are broad. The legal cover is strongest for the US, Canada, the UK and the EU right now — you pick your region and it only shows what applies to you.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta">
+    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788197788"
+           width="860" height="488" aria-hidden="true"
+           muted loop playsinline preload="none" disablepictureinpicture></video>
+    <div class="wrap-narrow cta-inner">
+      <h2 class="display cta-title">Before you buy a new one, check who owes you the old&nbsp;one.</h2>
+      <div class="cta-actions">
+        <a class="btn btn-accent btn-lg" href="auth.html?mode=signup">Start free</a>
+        <a class="btn btn-ghost btn-lg" href="app.html?demo=1">See it with a demo shelf</a>
+      </div>
+      <p class="cta-note muted">No card. No email verification. Works in your browser.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Owed home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+        <span class="brand-name">Owed</span>
+      </a>
+      <p class="footer-tag muted">Someone already owes you a fix.</p>
+    </div>
+
+    <nav class="footer-cols" aria-label="Footer">
+      <div class="footer-col">
+        <h3 class="footer-col-title">Product</h3>
+        <a href="auth.html?mode=signup">Start free</a>
+        <a href="auth.html?mode=signin">Sign in</a>
+        <a href="app.html?demo=1">Demo shelf</a>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">Learn</h3>
+        <a href="#how">How it works</a>
+        <a href="#checks">What we check</a>
+        <a href="#faq">Questions</a>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">What we read</h3>
+        <a href="#checks">Maker warranties</a>
+        <a href="#checks">Card benefits</a>
+        <a href="#checks">Consumer law</a>
+      </div>
+    </nav>
+
+    <div class="footer-base">
+      <p class="footer-fine muted">
+        Built for NextStep Hacks 2026. Owed is an information tool, not legal advice —
+        every rule links to its published source, and your shelf never leaves your browser.
+      </p>
+      <p class="footer-fine muted mono">Earth Forward · repair before replace</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/catalog.js?v=1788197788"></script>
+<script src="assets/js/landing.js?v=1788197788"></script>
+<script src="assets/js/scene.js?v=1788197788"></script>
+<script src="assets/js/motion.js?v=1788197788"></script>
+</body>
+</html>

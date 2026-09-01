@@ -1,0 +1,349 @@
+/* ============================================================
+   Owed — design system
+
+   Light is the DEFAULT, always. Dark is opt-in via the theme
+   button only; we deliberately do NOT follow prefers-color-scheme,
+   because the light page is the designed one.
+
+   Direction: warm paper, near-black warm ink, one high-contrast
+   display serif with a real italic, and a soft mint pill for the
+   things you press. Reference: Wispr Flow, Linear, Vercel, Craft.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ground + ink — warm paper, never sterile white */
+  --paper:   #FCFCF5;
+  --paper-2: #F5F5EA;
+  --paper-3: #EDEDE0;
+  --card:    #FFFFFF;
+  --ink:     #18170F;
+  --ink-2:   #55544A;
+  --ink-3:   #6A695E;
+  --line:    #E6E5D6;
+  --line-2:  #D6D5C4;
+
+  /* accent — green as INK: "money coming back to you" */
+  --accent:       #0B5C3A;
+  --accent-hover: #084A2E;
+  --accent-soft:  #E2F2E7;
+  --accent-line:  #B9DEC8;
+  --accent-ink:   #FFFFFF;
+
+  /* the pressable pill — soft mint, dark ink (never a saturated slab) */
+  --cta:       #C3EDD5;
+  --cta-hover: #B0E6C7;
+  --cta-ink:   #0C3826;
+
+  /* semantic */
+  --warn:        #8A5406;
+  --warn-soft:   #FBF1DF;
+  --warn-line:   #EBD6AE;
+  --danger:      #9C2A22;
+  --danger-soft: #FBEAE7;
+  --info:        #1C5798;
+  --info-soft:   #E9F0F9;
+
+  /* surfaces */
+  --field:      #FFFFFF;
+  --field-line: #D9D8C7;
+  --btn:        #18170F;
+  --btn-hover:  #2C2B20;
+  --btn-ink:    #FCFCF5;
+
+  --shadow-sm: 0 1px 2px rgba(24, 23, 15, .05);
+  --shadow-md: 0 4px 14px rgba(24, 23, 15, .06), 0 1px 3px rgba(24, 23, 15, .04);
+  --shadow-lg: 0 18px 44px rgba(24, 23, 15, .09), 0 5px 12px rgba(24, 23, 15, .04);
+  --shadow-xl: 0 44px 96px rgba(24, 23, 15, .13), 0 14px 30px rgba(24, 23, 15, .06);
+
+  /* type — one grotesk for UI, one display serif, one mono for fine print */
+  --sans:    "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --display: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --step--2: .78rem;
+  --step--1: clamp(.84rem, .82rem + .1vw, .89rem);
+  --step-0:  clamp(.95rem, .92rem + .14vw, 1rem);
+  --step-1:  clamp(1.06rem, 1rem + .28vw, 1.2rem);
+  --step-2:  clamp(1.35rem, 1.15rem + .8vw, 1.85rem);
+  --step-3:  clamp(1.9rem, 1.4rem + 2.1vw, 3.1rem);
+  --step-4:  clamp(2.4rem, 1.6rem + 3.4vw, 4.4rem);
+  --step-5:  clamp(2.7rem, 1.5rem + 5vw, 5.5rem);
+
+  --radius-sm: 7px;
+  --radius:    10px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-pill: 999px;
+
+  --ease:     cubic-bezier(.2, .7, .3, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Dark is opt-in only — no prefers-color-scheme block on purpose. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper:   #100F0B;
+  --paper-2: #17160F;
+  --paper-3: #1F1D15;
+  --card:    #1A1912;
+  --ink:     #F6F4E9;
+  --ink-2:   #ADAB9B;
+  --ink-3:   #8B8979;
+  --line:    #2A2820;
+  --line-2:  #3A382D;
+
+  --accent:       #5FDDA0;
+  --accent-hover: #7FE7B5;
+  --accent-soft:  #132A1F;
+  --accent-line:  #244936;
+  --accent-ink:   #052315;
+
+  --cta:       #6FE3AE;
+  --cta-hover: #88EBBE;
+  --cta-ink:   #05281A;
+
+  --warn:        #E2A94F;
+  --warn-soft:   #251E10;
+  --warn-line:   #3F3218;
+  --danger:      #F2857D;
+  --danger-soft: #271513;
+  --info:        #7EB2EF;
+  --info-soft:   #111C26;
+
+  --field:      #1C1B14;
+  --field-line: #35332A;
+  --btn:        #F6F4E9;
+  --btn-hover:  #FFFFFF;
+  --btn-ink:    #100F0B;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, .55);
+  --shadow-lg: 0 18px 44px rgba(0, 0, 0, .6);
+  --shadow-xl: 0 44px 96px rgba(0, 0, 0, .72);
+}
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* author display rules (e.g. .btn) otherwise beat the UA's [hidden] rule,
+   which silently breaks every `el.hidden = true` in the app */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  letter-spacing: -.006em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; padding: 0; }
+a { color: inherit; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+main:focus, main:focus-visible { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+::selection { background: var(--cta); color: var(--cta-ink); }
+
+/* ---------- type ---------- */
+/* The display serif is set at large sizes only. line-height stays >= 1.06
+   with explicit descender room so italic j/g/p tails are never shaved. */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -.018em;
+  line-height: 1.08;
+}
+.display em, .display .hl {
+  font-style: italic;
+  color: inherit;
+}
+.eyebrow {
+  font-family: var(--sans);
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.mono { font-family: var(--mono); font-size: .86em; letter-spacing: -.01em; }
+.lede { font-size: var(--step-1); color: var(--ink-2); line-height: 1.55; letter-spacing: -.008em; }
+.muted { color: var(--ink-3); }
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ---------- layout ---------- */
+.wrap { width: min(1140px, 100% - 2.5rem); margin-inline: auto; }
+.wrap-narrow { width: min(720px, 100% - 2.5rem); margin-inline: auto; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .66rem 1.15rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: -.012em;
+  border: 1px solid transparent;
+  transition: background-color .18s var(--ease), border-color .18s var(--ease),
+              color .18s var(--ease), box-shadow .18s var(--ease),
+              opacity .18s var(--ease), transform .18s var(--ease);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-primary { background: var(--btn); color: var(--btn-ink); }
+.btn-primary:hover { background: var(--btn-hover); }
+/* the mint pill — Owed's one pressable colour */
+.btn-accent {
+  background: var(--cta); color: var(--cta-ink);
+  border-color: color-mix(in srgb, var(--cta-ink) 12%, transparent);
+}
+.btn-accent:hover { background: var(--cta-hover); }
+.btn-ghost { border-color: var(--line-2); color: var(--ink); background: var(--card); }
+.btn-ghost:hover { border-color: var(--ink-3); background: var(--paper-2); }
+.btn-quiet { color: var(--ink-2); padding: .52rem .78rem; }
+.btn-quiet:hover { color: var(--ink); background: var(--paper-2); }
+.btn-lg { padding: .84rem 1.5rem; font-size: var(--step-0); }
+.btn-block { width: 100%; }
+.btn[disabled] { opacity: .45; pointer-events: none; }
+
+/* ---------- theme button ---------- */
+.theme-btn {
+  width: 34px; height: 34px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: var(--radius-pill); color: var(--ink-3);
+  border: 1px solid transparent;
+  transition: color .15s var(--ease), background-color .15s var(--ease), border-color .15s var(--ease);
+}
+.theme-btn:hover { color: var(--ink); background: var(--paper-2); border-color: var(--line); }
+.theme-btn-float {
+  position: absolute; top: 1.25rem; right: 1.25rem; z-index: 5;
+}
+
+/* ---------- brand ---------- */
+.brand {
+  display: inline-flex; align-items: center; gap: .5rem;
+  text-decoration: none; color: var(--ink); flex-shrink: 0;
+}
+.brand-mark {
+  width: 25px; height: 25px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: var(--ink); color: var(--paper);
+  border-radius: 7px;
+}
+.brand-name {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+/* ---------- fields ---------- */
+.input, .select {
+  width: 100%;
+  padding: .68rem .85rem;
+  background: var(--field);
+  border: 1px solid var(--field-line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+.input::placeholder { color: var(--ink-3); }
+.input:focus, .select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3.5px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 17px) center, calc(100% - 12px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2.1rem;
+  cursor: pointer;
+}
+
+/* ---------- card ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+/* ---------- pills / tags ---------- */
+.tag {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .2rem .55rem;
+  border-radius: var(--radius-pill);
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: -.005em;
+  border: 1px solid transparent;
+}
+.tag-strong { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+.tag-maybe  { background: var(--warn-soft);   color: var(--warn);   border-color: var(--warn-line); }
+.tag-long   { background: var(--paper-3);     color: var(--ink-3);  border-color: var(--line-2); }
+
+/* ---------- utilities ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -120%);
+  z-index: 100;
+  background: var(--ink); color: var(--paper);
+  padding: .6rem 1rem; border-radius: 0 0 var(--radius) var(--radius);
+  font-size: var(--step--1); font-weight: 600; text-decoration: none;
+  transition: transform .18s var(--ease);
+}
+.skip-link:focus { transform: translate(-50%, 0); }
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 1.6rem;
+  transform: translate(-50%, 150%);
+  z-index: 80;
+  background: var(--ink); color: var(--paper);
+  padding: .7rem 1.15rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--step--1); font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .4s var(--ease-out), opacity .3s var(--ease);
+  max-width: min(420px, calc(100% - 2rem));
+  text-align: center;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+/* ---------- footer ---------- */
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 2.6rem 0 3rem;
+  background: var(--paper);
+}
+.footer-inner {
+  display: flex; flex-wrap: wrap; gap: 1.25rem;
+  align-items: center; justify-content: space-between;
+}
+.footer-note { font-size: var(--step--1); color: var(--ink-3); max-width: 56ch; }

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your shelf — Owed</title>
+<meta name="description" content="Check what you own for free repairs, refunds and payouts you can still claim.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/base.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/app.css?v=1788197788">
+<script src="assets/js/theme.js?v=1788197788"></script>
+</head>
+<body class="app-body">
+<a class="skip-link" href="#appMain">Skip to content</a>
+
+<!-- ============ top bar ============ -->
+<header class="appbar">
+  <div class="appbar-inner">
+    <a class="brand" href="index.html" aria-label="Owed home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+      <span class="brand-name">Owed</span>
+    </a>
+
+    <div class="appbar-right">
+      <label class="sr-only" for="regionPick">Where you live</label>
+      <select class="select region-pick" id="regionPick">
+        <option value="US">United States</option>
+        <option value="CA">Canada</option>
+        <option value="UK">United Kingdom</option>
+        <option value="EU">European Union</option>
+      </select>
+      <div class="user-chip" id="userChip">
+        <span class="avatar" id="avatar" aria-hidden="true">A</span>
+        <span class="user-name" id="userName">You</span>
+      </div>
+      <button class="btn btn-quiet" id="signOutBtn" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main class="app-shell" id="appMain" tabindex="-1">
+
+  <!-- ============ sidebar: the shelf ============ -->
+  <aside class="shelf" id="shelf">
+    <div class="shelf-head">
+      <h2 class="shelf-title">Your shelf</h2>
+      <button class="btn btn-accent shelf-add" id="addBtn" type="button">
+        <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
+        Add
+      </button>
+    </div>
+
+    <div class="shelf-stats" id="shelfStats">
+      <div class="stat">
+        <b class="tnum" id="statItems">0</b>
+        <span>things</span>
+      </div>
+      <div class="stat">
+        <b class="tnum" id="statOpen">0</b>
+        <span>leads to chase</span>
+      </div>
+      <div class="stat stat-good">
+        <b class="tnum" id="statWon">0</b>
+        <span>kept out of landfill</span>
+      </div>
+    </div>
+
+    <ul class="shelf-list" id="shelfList"></ul>
+
+    <p class="shelf-empty muted" id="shelfEmpty" hidden>
+      Nothing here yet. Add the first thing you own and Owed will start watching the fine print for it.
+    </p>
+  </aside>
+
+  <!-- ============ main panel ============ -->
+  <section class="panel" id="panel">
+
+    <!-- welcome / empty -->
+    <div class="view view-welcome" id="viewWelcome">
+      <div class="welcome">
+        <span class="welcome-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5V20l-2.7-1.6L14.6 20 12 18.4 9.4 20l-2.7-1.6L4 20Z"/>
+            <path d="M8.5 9.5h7M8.5 13h4.5"/>
+          </svg>
+        </span>
+        <h1 class="display welcome-title" id="welcomeTitle">What broke?</h1>
+        <p class="welcome-sub">
+          Tell Owed about something you own and it'll check everywhere in its rulebook
+          for a free repair, refund or payout.
+        </p>
+        <button class="btn btn-accent btn-lg" id="welcomeStart" type="button">Check something</button>
+        <p class="welcome-note muted mono" id="corpusNote">Loading the rulebook…</p>
+      </div>
+    </div>
+
+    <!-- wizard -->
+    <div class="view view-wizard" id="viewWizard" hidden>
+      <div class="wiz">
+        <div class="wiz-head">
+          <button class="btn btn-quiet wiz-back" id="wizBack" type="button">← Back</button>
+          <div class="wiz-progress" aria-hidden="true"><i id="wizBar"></i></div>
+          <span class="wiz-count mono" id="wizCount">1 of 4</span>
+        </div>
+
+        <!-- step 1 -->
+        <div class="wiz-step is-on" data-step="1">
+          <p class="eyebrow">Step one</p>
+          <h2 class="display wiz-q">What is it?</h2>
+          <p class="wiz-help">Type it however you'd say it out loud.</p>
+          <input class="input wiz-input" id="wizName" type="text" placeholder="Sony headphones" autocomplete="off">
+          <div class="chip-row" id="catChips"></div>
+          <p class="wiz-detected muted" id="catDetected" hidden></p>
+        </div>
+
+        <!-- step 2 -->
+        <div class="wiz-step" data-step="2">
+          <p class="eyebrow">Step two</p>
+          <h2 class="display wiz-q">Who made it?</h2>
+          <p class="wiz-help">The brand on the box. If you're not sure, skip it.</p>
+          <input class="input wiz-input" id="wizBrand" type="text" placeholder="Sony" autocomplete="off" list="brandList">
+          <datalist id="brandList"></datalist>
+          <div class="chip-row" id="brandChips"></div>
+        </div>
+
+        <!-- step 3 -->
+        <div class="wiz-step" data-step="3">
+          <p class="eyebrow">Step three</p>
+          <h2 class="display wiz-q">Roughly when did you get it?</h2>
+          <p class="wiz-help">A guess is fine. No receipt needed.</p>
+          <div class="opt-list" id="ageOpts"></div>
+        </div>
+
+        <!-- step 4 -->
+        <div class="wiz-step" data-step="4">
+          <p class="eyebrow">Step four</p>
+          <h2 class="display wiz-q">How did you pay?</h2>
+          <p class="wiz-help">This one matters — cards quietly add cover most people never claim.</p>
+          <div class="opt-list" id="payOpts"></div>
+          <label class="wiz-broken">
+            <input type="checkbox" id="wizBroken" checked>
+            <span>It's broken or playing up right now</span>
+          </label>
+        </div>
+
+        <div class="wiz-foot">
+          <button class="btn btn-accent btn-lg" id="wizNext" type="button">Continue</button>
+          <button class="btn btn-quiet" id="wizSkip" type="button">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- results -->
+    <div class="view view-results" id="viewResults" hidden>
+      <div class="res-head">
+        <button class="btn btn-quiet" id="resBack" type="button">← Shelf</button>
+        <div class="res-title-wrap">
+          <h1 class="display res-title" id="resTitle">Sony headphones</h1>
+          <p class="res-sub muted mono" id="resSub"></p>
+        </div>
+        <button class="btn btn-ghost" id="resRecheck" type="button">Edit details</button>
+      </div>
+
+      <div class="res-summary" id="resSummary"></div>
+      <div class="res-groups" id="resGroups"></div>
+
+      <div class="res-none" id="resNone" hidden>
+        <h3 class="display">Nothing found for this one.</h3>
+        <p class="muted">
+          That's the honest answer, not a bug. Owed's rulebook is collected by hand, so
+          unusual brands and models can come back empty. It stays on your shelf, and if a
+          new payout or repair programme lands that covers it, it'll show up here.
+        </p>
+      </div>
+    </div>
+
+    <!-- script -->
+    <div class="view view-script" id="viewScript" hidden>
+      <div class="scr-head">
+        <button class="btn btn-quiet" id="scrBack" type="button">← Results</button>
+      </div>
+      <div class="scr-body" id="scrBody"></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/catalog.js?v=1788197788"></script>
+<script src="assets/js/store.js?v=1788197788"></script>
+<script src="assets/js/engine.js?v=1788197788"></script>
+<script src="assets/js/app.js?v=1788197788"></script>
+<script src="assets/js/motion.js?v=1788197788"></script>
+</body>
+</html>

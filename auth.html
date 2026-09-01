@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Owed</title>
+<meta name="description" content="Sign in to Owed to keep a shelf of what you own and hear when new free repairs land.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/base.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788197788">
+<link rel="stylesheet" href="assets/css/auth.css?v=1788197788">
+<script src="assets/js/theme.js?v=1788197788"></script>
+</head>
+<body class="auth-body">
+
+<main class="auth-shell">
+
+  <!-- ============ left: the pitch ============ -->
+  <aside class="auth-aside">
+    <a class="brand" href="index.html" aria-label="Owed home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+      <span class="brand-name">Owed</span>
+    </a>
+
+    <div class="aside-body">
+      <h2 class="display aside-title" data-enter>A shelf of your stuff, watching the fine print for&nbsp;you.</h2>
+      <ul class="aside-points">
+        <li data-enter>
+          <span class="ap-num mono">01</span>
+          <div><b>Check anything in four taps</b><p>What broke, the brand, roughly when, and how you paid.</p></div>
+        </li>
+        <li data-enter>
+          <span class="ap-num mono">02</span>
+          <div><b>Get the words to say</b><p>A short script naming the rule, with the deadline on top.</p></div>
+        </li>
+        <li data-enter>
+          <span class="ap-num mono">03</span>
+          <div><b>Hear when something new lands</b><p>New payouts and repair programmes get matched to your shelf.</p></div>
+        </li>
+      </ul>
+
+      <figure class="aside-quote" data-enter>
+        <blockquote>“Nobody can find those rules alone. They sit in fine print nobody reads.”</blockquote>
+      </figure>
+    </div>
+
+    <p class="aside-fine muted">Your shelf lives in this browser. There is no server collecting what you own.</p>
+  </aside>
+
+  <!-- ============ right: the form ============ -->
+  <section class="auth-main">
+    <div class="auth-card card">
+
+      <div class="auth-switch" role="tablist" aria-label="Sign in or create an account">
+        <button class="auth-tab is-on" id="tabSignup" role="tab" aria-selected="true" type="button">Create account</button>
+        <button class="auth-tab" id="tabSignin" role="tab" aria-selected="false" type="button">Sign in</button>
+        <span class="auth-slider" aria-hidden="true"></span>
+      </div>
+
+      <div class="auth-panel" id="panel">
+        <h1 class="display auth-title" id="authTitle">Start your shelf</h1>
+        <p class="auth-sub muted" id="authSub">Free, and it takes about fifteen seconds.</p>
+
+        <form class="auth-form" id="authForm" novalidate>
+          <div class="field field-name" id="fieldName">
+            <label for="name">Your name</label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Alex">
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email"
+                   placeholder="you@example.com" required>
+            <p class="field-hint" id="emailHint">Used only as the name on your shelf — nothing is sent to it.</p>
+          </div>
+
+          <div class="field field-region" id="fieldRegion">
+            <label for="region">Where you live</label>
+            <select class="select" id="region" name="region">
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="UK">United Kingdom</option>
+              <option value="EU">European Union</option>
+            </select>
+            <p class="field-hint">Your legal cover depends on this, so it changes your results.</p>
+          </div>
+
+          <p class="auth-error" id="authError" role="alert" hidden></p>
+
+          <button class="btn btn-accent btn-lg btn-block" id="authSubmit" type="submit">
+            <span>Create account</span>
+            <svg class="btn-arrow" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5"/></svg>
+          </button>
+        </form>
+
+        <div class="auth-or"><span>or</span></div>
+
+        <a class="btn btn-ghost btn-block" href="app.html?demo=1">
+          Skip — show me a demo shelf
+        </a>
+
+        <p class="auth-legal muted">
+          No password, no verification email, no card. Owed is a student project and
+          your account is just a name stored in this browser.
+        </p>
+      </div>
+    </div>
+
+    <a class="auth-back" href="index.html">← Back to the front page</a>
+  </section>
+</main>
+
+<script src="assets/js/store.js?v=1788197788"></script>
+<script src="assets/js/auth.js?v=1788197788"></script>
+<script src="assets/js/motion.js?v=1788197788"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* ============================================================
+   Owed — motion layer
+   Everything here is decorative and degrades to static under
+   prefers-reduced-motion (see the guard at the bottom).
+   ============================================================ */
+
+/* ---------- scroll progress ---------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px;
+  z-index: 60; pointer-events: none;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* ---------- generic entrance ----------
+   The hide rule is gated on .js-enter, which motion.js adds only once it is
+   actually running. Without it nothing is hidden, so a failed script leaves a
+   plain readable page rather than an invisible-but-clickable hero form. */
+.js-enter [data-enter] { opacity: 0; transform: translateY(16px); }
+.js-enter.enter-ready [data-enter] {
+  animation: enterUp .8s var(--ease-out) forwards;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+@keyframes enterUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- headline: word by word ----------
+   Words are inline-block spans, never masked — a mask over a display
+   serif shaves the italic descenders in "claim it." */
+.split-w {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.36em);
+  filter: blur(7px);
+  will-change: opacity, transform, filter;
+}
+.enter-ready .split-w {
+  animation: wordIn .95s var(--ease-out) forwards;
+  animation-delay: calc(var(--wd, 0) * 1ms);
+}
+@keyframes wordIn {
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ---------- scroll reveals ---------- */
+.reveal { opacity: 0; transform: translateY(22px); }
+.reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity .75s var(--ease-out), transform .75s var(--ease-out);
+}
+
+/* ---------- counters ---------- */
+.count { font-variant-numeric: tabular-nums; }
+
+/* ---------- step scroll highlight ---------- */
+.step { position: relative; overflow: hidden; }
+.step::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--accent);
+  transform: scaleY(0); transform-origin: 50% 0;
+  transition: transform .5s var(--ease);
+}
+.step.active::before { transform: scaleY(1); }
+.step.active { border-color: var(--accent-line); }
+.step.active .step-num {
+  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+  transform: scale(1.06);
+}
+.step-num {
+  transition: background-color .35s var(--ease), color .35s var(--ease),
+              transform .35s var(--ease), border-color .35s var(--ease);
+}
+
+/* ---------- spotlight cards ---------- */
+.check { position: relative; overflow: hidden; --mx: 50%; --my: 50%; }
+.check::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(240px circle at var(--mx) var(--my),
+              color-mix(in srgb, var(--accent) 11%, transparent), transparent 65%);
+  opacity: 0; transition: opacity .35s var(--ease);
+}
+.check:hover::before { opacity: 1; }
+.check-ico { transition: transform .4s var(--ease); }
+.check:hover .check-ico { transform: translateY(-2px) rotate(-6deg) scale(1.06); }
+
+/* ---------- typewriter script ----------
+   Only ever hide this content once JS has proved it is running and will
+   reveal it again (.js-anim is set by motion.js). Hiding it from plain CSS
+   means a single JS error leaves the claim script permanently blank. */
+.script-body.js-anim p { opacity: 0; }
+.script-body.js-anim.typed p { animation: fadeLine .5s var(--ease) forwards; }
+.script-body.js-anim.typed p:nth-child(1) { animation-delay: .05s; }
+.script-body.js-anim.typed p:nth-child(2) { animation-delay: .45s; }
+.script-body.js-anim.typed p:nth-child(3) { animation-delay: .85s; }
+@keyframes fadeLine { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.script-body mark {
+  background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
+  background-repeat: no-repeat;
+  transition: background-size .5s var(--ease);
+}
+.script-body.js-anim mark { background-size: 0% 100%; }
+.script-body.js-anim.typed mark { background-size: 100% 100%; }
+.script-card { position: relative; overflow: hidden; }
+.script-card::after {
+  content: ""; position: absolute; top: 0; left: -120%;
+  width: 60%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--accent) 9%, transparent), transparent);
+  transition: left .9s var(--ease);
+}
+.script-card.typed::after { left: 160%; }
+
+/* ---------- earth bar ----------
+   Same rule: without JS the bar keeps its inline width rather than being
+   pinned to 0, which would read as a real "0%" measurement. */
+.earth-bar.js-anim i { width: 0 !important; transition: width 1.4s cubic-bezier(.2, .8, .2, 1); }
+.earth-bar.js-anim.fill i { width: var(--pct, 62%) !important; }
+
+/* ---------- magnetic buttons ---------- */
+/* only promote the buttons that actually move — a blanket rule on .btn
+   creates a compositor layer for every button on every page */
+.magnetic { transition: transform .35s var(--ease); will-change: transform; }
+
+/* ---------- FAQ smooth ---------- */
+.faq-item .faq-body { overflow: hidden; }
+.faq-item[open] .faq-body { animation: openDown .35s var(--ease); }
+@keyframes openDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- cta glow ---------- */
+.cta { position: relative; overflow: hidden; isolation: isolate; }
+.cta::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(60% 70% at 50% 120%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%);
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: .6; transform: scale(1); }
+  50%      { opacity: 1;  transform: scale(1.08); }
+}
+
+/* ============================================================
+   Reduced motion: strip every decorative animation. The finder
+   stops cycling in motion.js and simply rests on its first example.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .cta::before { animation: none !important; }
+  .js-enter [data-enter] { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .split-w { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .script-body.js-anim p { opacity: 1 !important; animation: none !important; }
+  .script-body.js-anim mark { background-size: 100% 100% !important; }
+  .earth-bar.js-anim i { transition: none !important; }
+  .finder-wall p[data-hit] { transition: none !important; }
+  .script-card::after { display: none !important; }
+  .step::before { transition: none !important; }
+  .step-num { transition: none !important; transform: none !important; }
+  .faq-item[open] .faq-body { animation: none !important; }
+  .try-result { animation: none !important; }
+  .scroll-progress { display: none; }
+}

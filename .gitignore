@@ -1,0 +1,15 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# local preview + tooling
+.claude/
+__pycache__/
+*.pyc
+
+# raw model output — only the web-encoded clips are committed
+assets/video/*.raw.webm
