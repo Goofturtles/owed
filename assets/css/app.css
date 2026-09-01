@@ -15,86 +15,120 @@
 }
 .appbar-inner {
   display: flex; align-items: center; gap: 1rem;
-  height: 62px; padding-inline: clamp(1rem, 3vw, 1.75rem);
+  height: 56px; padding-inline: clamp(.85rem, 2vw, 1.25rem);
 }
-.appbar-right { display: flex; align-items: center; gap: .6rem; margin-left: auto; }
-.region-pick { padding: .42rem 2rem .42rem .65rem; font-size: .82rem; width: auto; }
-.user-chip { display: flex; align-items: center; gap: .5rem; }
+.appbar-right { display: flex; align-items: center; gap: .5rem; margin-left: auto; }
+.region-pick { padding: .38rem 1.9rem .38rem .6rem; font-size: .78rem; width: auto; }
+.user-chip { display: flex; align-items: center; gap: .45rem; }
 .avatar {
-  width: 30px; height: 30px; border-radius: 50%;
+  width: 26px; height: 26px; border-radius: var(--radius-pill);
   background: var(--accent); color: var(--accent-ink);
   display: grid; place-items: center;
-  font-size: .8rem; font-weight: 700; flex-shrink: 0;
+  font-size: .72rem; font-weight: 700; flex-shrink: 0;
 }
-
-.user-name { font-size: var(--step--1); font-weight: 600; max-width: 12ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-name {
+  font-size: var(--step--1); font-weight: 600; max-width: 12ch;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 
 /* ---------------- shell ---------------- */
 .app-shell {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
-  gap: 0;
-  min-height: calc(100vh - 62px);
+  grid-template-columns: 296px minmax(0, 1fr);
+  min-height: calc(100vh - 56px);
 }
 /* grid children default to min-width:auto, which lets a horizontally
    scrolling shelf push the whole page wider than the viewport */
 .app-shell > * { min-width: 0; }
 
-/* ---------------- shelf sidebar ---------------- */
+/* ---------------- shelf ----------------
+   After Supabase: a filter at the top, a small-caps group label, the list,
+   and the counts pinned to the foot as a quiet strip — not three boxed stat
+   tiles competing with the items they describe. */
 .shelf {
   border-right: 1px solid var(--line);
   background: var(--paper);
-  padding: 1.25rem;
-  display: flex; flex-direction: column; gap: 1rem;
+  padding: .85rem .8rem 0;
+  display: flex; flex-direction: column; gap: .8rem;
+  position: sticky; top: 56px;
+  height: calc(100vh - 56px);
 }
-.shelf-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.shelf-title { font-family: var(--display); font-size: 1.45rem; font-weight: 400; letter-spacing: -.015em; }
-.shelf-add { padding: .45rem .85rem; font-size: .8rem; }
-
-.shelf-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;
-  padding: .85rem; background: var(--paper-2);
-  border: 1px solid var(--line); border-radius: var(--radius);
+.shelf-search {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .45rem .65rem;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-3);
+  transition: border-color .16s var(--ease), box-shadow .16s var(--ease);
 }
-.stat { text-align: center; }
-.stat b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1.15; }
-.stat span { font-size: .66rem; color: var(--ink-3); line-height: 1.25; display: block; margin-top: .15rem; }
-.stat-good b { color: var(--accent); }
+.shelf-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.shelf-search input {
+  flex: 1; min-width: 0; border: 0; background: none; outline: none;
+  font-size: var(--step--1); color: var(--ink);
+}
+.shelf-search input::placeholder { color: var(--ink-3); }
+.shelf-search input::-webkit-search-cancel-button { filter: grayscale(1); }
 
-.shelf-list { display: flex; flex-direction: column; gap: .5rem; overflow-y: auto; }
+.shelf-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.shelf-title {
+  font-size: .64rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 500;
+}
+.shelf-add { padding: .34rem .7rem; font-size: .74rem; }
+
+.shelf-list {
+  display: flex; flex-direction: column; gap: .2rem;
+  overflow-y: auto; flex: 1;
+  margin-inline: -.35rem; padding-inline: .35rem;
+  scrollbar-width: thin;
+}
 .shelf-row { position: relative; display: flex; }
+/* rows, not cards: the old bordered card per item made a 4-item shelf look
+   like a pricing page */
 .shelf-card {
   width: 100%; text-align: left;
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: .8rem .85rem;
-  display: flex; flex-direction: column; gap: .4rem;
-  transition: border-color .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
+  border-radius: var(--radius-sm);
+  padding: .5rem .55rem;
+  display: flex; flex-direction: column; gap: .15rem;
+  border: 1px solid transparent;
+  transition: background-color .15s var(--ease), border-color .15s var(--ease);
 }
-.shelf-card:hover { border-color: var(--accent-line); transform: translateX(2px); box-shadow: var(--shadow-sm); }
-.shelf-card.is-on { border-color: var(--accent); background: var(--accent-soft); }
-.shelf-card.has-new { border-color: var(--accent); }
-.shelf-card.has-new { padding-right: 3rem; }
+.shelf-card:hover { background: var(--paper-2); }
+.shelf-card.is-on { background: var(--accent-soft); border-color: var(--accent-line); }
 .shelf-card.has-new::before {
-  content: ""; position: absolute; top: .6rem; right: 2.35rem;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  content: ""; position: absolute; top: .62rem; right: 1.85rem;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
-.shelf-card { position: relative; padding-right: 2.1rem; }
-.sc-name { font-size: var(--step--1); font-weight: 600; line-height: 1.3; display: block; }
+.shelf-card { position: relative; padding-right: 1.9rem; }
+.sc-name { font-size: var(--step--1); font-weight: 500; line-height: 1.35; display: block; }
+.sc-meta { font-size: .64rem; color: var(--ink-3); font-family: var(--mono); }
+.sc-tags { display: flex; gap: .25rem; flex-wrap: wrap; margin-top: .15rem; }
 .sc-x {
-  position: absolute; top: .45rem; right: .4rem; z-index: 2;
-  width: 26px; height: 26px; border-radius: 50%;
-  display: grid; place-items: center; font-size: 1.05rem; line-height: 1;
+  position: absolute; top: .34rem; right: .25rem; z-index: 2;
+  width: 24px; height: 24px; border-radius: var(--radius-sm);
+  display: grid; place-items: center; font-size: 1rem; line-height: 1;
   color: var(--ink-3); opacity: 0;
-  transition: opacity .18s var(--ease), color .18s var(--ease), background-color .18s var(--ease);
+  transition: opacity .15s var(--ease), color .15s var(--ease), background-color .15s var(--ease);
 }
 .shelf-row:hover .sc-x, .sc-x:focus-visible { opacity: 1; }
 .sc-x:hover { color: var(--danger); background: var(--danger-soft); }
 /* on touch there is no hover, so a hidden control is simply unreachable */
 @media (hover: none) { .sc-x { opacity: 1; } }
-.sc-meta { font-size: .7rem; color: var(--ink-3); font-family: var(--mono); }
-.sc-tags { display: flex; gap: .3rem; flex-wrap: wrap; }
-.shelf-empty { font-size: var(--step--1); line-height: 1.6; padding: .5rem; }
+.shelf-empty { font-size: var(--step--1); line-height: 1.6; padding: .5rem .55rem; }
+
+.shelf-foot {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  padding: .7rem .55rem .8rem;
+  border-top: 1px solid var(--line);
+  margin-inline: -.8rem; padding-inline: 1.35rem;
+}
+.sf { font-size: .68rem; color: var(--ink-3); }
+.sf b { font-size: .82rem; color: var(--ink); font-weight: 600; margin-right: .15rem; }
+.sf-good b { color: var(--accent); }
 
 /* ---------------- panel + views ---------------- */
 .panel { padding: clamp(1.25rem, 3vw, 2.5rem); overflow-x: hidden; }
@@ -102,12 +136,10 @@
 @keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 /* welcome */
-.welcome { text-align: center; padding: clamp(2rem, 8vh, 5rem) 1rem; }
-.welcome-ico {
-  width: 64px; height: 64px; border-radius: var(--radius-pill);
-  background: var(--accent-soft); color: var(--accent);
-  border: 1px solid var(--accent-line);
-  display: grid; place-items: center; margin: 0 auto 1.25rem;
+.welcome { text-align: center; padding: clamp(2rem, 10vh, 6rem) 1rem; max-width: 44rem; margin-inline: auto; }
+.welcome-kicker {
+  font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: .6rem;
 }
 .welcome-title { font-size: var(--step-3); letter-spacing: -.02em; padding-bottom: .06em; }
 .welcome-sub { font-size: var(--step-0); color: var(--ink-2); max-width: 44ch; margin: .75rem auto 1.75rem; }
@@ -163,73 +195,106 @@
 
 .wiz-foot { display: flex; align-items: center; gap: .75rem; margin-top: 1.75rem; }
 
-/* ---------------- results ---------------- */
-.res-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.res-title-wrap { flex: 1; min-width: 0; }
-.res-title { font-size: var(--step-2); letter-spacing: -.018em; padding-bottom: .05em; }
-.res-sub { font-size: .74rem; margin-top: .2rem; }
+/* ---------------- results ----------------
+   After Supabase's roles list: a page header with a description line, a chip
+   filter, then rows separated by rules. The old version boxed every match in
+   its own bordered card, which made twenty matches unreadable. */
+.res-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start; gap: .75rem 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.25rem;
+}
+.res-back { align-self: center; }
+.res-title { font-size: var(--step-2); letter-spacing: -.02em; padding-bottom: .04em; }
+.res-sub { font-size: .68rem; color: var(--ink-3); margin-top: .25rem; }
 
 .res-summary {
-  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  padding: 1.1rem 1.25rem; margin-bottom: 1.5rem;
-  border-radius: var(--radius-lg);
-  background: var(--accent-soft); border: 1px solid var(--accent-line);
+  display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap;
+  margin-bottom: 1.25rem;
 }
-.res-summary.none { background: var(--paper-3); border-color: var(--line); }
-.res-sum-num { font-family: var(--display); font-weight: 400; font-size: var(--step-3); color: var(--accent); line-height: 1.1; }
+.res-sum-num {
+  font-family: var(--display); font-size: var(--step-3);
+  color: var(--accent); line-height: 1;
+}
 .res-summary.none .res-sum-num { color: var(--ink-3); }
 .res-sum-text { font-size: var(--step-0); color: var(--ink); }
 .res-sum-text b { font-weight: 600; }
 .res-sum-text small { display: block; font-size: .78rem; color: var(--ink-2); margin-top: .15rem; }
 
-.res-groups { display: flex; flex-direction: column; gap: 1.5rem; }
-.rgroup-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; }
-.rgroup-title { font-size: var(--step--1); font-weight: 700; letter-spacing: .02em; }
-.rgroup-count { font-size: .7rem; color: var(--ink-3); font-family: var(--mono); }
-
-.rcard {
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); overflow: hidden;
-  margin-bottom: .6rem;
-  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+/* filter chips */
+.res-filter { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.fchip {
+  font-size: .74rem; font-weight: 500;
+  padding: .32rem .7rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--card); color: var(--ink-2);
+  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
 }
-.rcard:hover { border-color: var(--line-2); box-shadow: var(--shadow-sm); }
-.rcard.strong { border-left: 3px solid var(--accent); }
-.rcard.worth { border-left: 3px solid var(--warn); }
-.rcard.longshot { border-left: 3px solid var(--line-2); }
+.fchip:hover { border-color: var(--line-2); color: var(--ink); }
+.fchip.is-on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.res-groups { display: flex; flex-direction: column; gap: 1.75rem; }
+.rgroup-head { display: flex; align-items: baseline; gap: .55rem; margin-bottom: .35rem; }
+.rgroup-title {
+  font-size: .64rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.rgroup-count { font-size: .64rem; color: var(--ink-3); font-family: var(--mono); }
+
+/* a row, not a card */
+.rcard {
+  border-top: 1px solid var(--line);
+  transition: background-color .16s var(--ease);
+}
+.rcard:last-child { border-bottom: 1px solid var(--line); }
+.rcard:hover { background: var(--paper-2); }
+.rcard.is-hidden { display: none; }
 
 .rc-top {
   display: flex; align-items: flex-start; gap: .85rem;
-  padding: .95rem 1.1rem; width: 100%; text-align: left;
+  padding: .95rem .6rem; width: 100%; text-align: left;
 }
 .rc-main { flex: 1; min-width: 0; }
-.rc-title { font-size: var(--step-0); font-weight: 600; line-height: 1.35; }
+.rc-title { font-size: var(--step-0); font-weight: 600; line-height: 1.4; }
+/* the strength reads as a coloured dot on the title, not a border on a box */
+.rc-title::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 6px; height: 6px; border-radius: 50%; margin-right: .5rem;
+  background: var(--line-2);
+}
+.rcard.strong .rc-title::before { background: var(--accent); }
+.rcard.worth .rc-title::before { background: var(--warn); }
 .rc-get { font-size: var(--step--1); color: var(--ink-2); margin-top: .3rem; }
-.rc-why { font-size: .76rem; color: var(--ink-3); margin-top: .35rem; font-style: italic; }
+.rc-why { font-size: .74rem; color: var(--ink-3); margin-top: .3rem; font-style: italic; }
 .rc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .35rem; flex-shrink: 0; }
 .rc-chev { color: var(--ink-3); transition: transform .25s var(--ease); }
 .rcard.open .rc-chev { transform: rotate(180deg); }
+.rcard.open { background: var(--paper-2); }
 
 .rc-body {
-  border-top: 1px solid var(--line); padding: 1.1rem;
-  display: none; background: var(--paper-2);
+  padding: 0 .6rem 1.1rem;
+  display: none;
 }
-.rcard.open .rc-body { display: block; animation: bodyIn .3s var(--ease); }
-@keyframes bodyIn { from { opacity: 0; } to { opacity: 1; } }
-.rc-row { display: flex; gap: .75rem; padding: .5rem 0; font-size: var(--step--1); border-bottom: 1px solid var(--line); }
+.rcard.open .rc-body { display: block; animation: bodyIn .32s var(--ease-out); }
+@keyframes bodyIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.rc-row { display: flex; gap: .75rem; padding: .45rem 0; font-size: var(--step--1); border-bottom: 1px solid var(--line); }
 .rc-row:last-of-type { border-bottom: 0; }
-.rc-row dt { flex-shrink: 0; width: 8.5rem; color: var(--ink-3); font-size: .78rem; }
+.rc-row dt { flex-shrink: 0; width: 8.5rem; color: var(--ink-3); font-size: .74rem; }
 .rc-row dd { margin: 0; color: var(--ink-2); }
 .rc-actions { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .9rem; }
-.rc-src { font-size: .74rem; color: var(--ink-3); word-break: break-all; }
+.rc-src { font-size: .72rem; color: var(--ink-3); word-break: break-all; }
 .rc-src a { color: var(--accent); }
 
-.rgroup-toggle { width: 100%; font-size: .78rem; padding: .5rem; margin-top: .2rem; color: var(--ink-3); }
+.rgroup-toggle { width: 100%; font-size: .76rem; padding: .55rem; margin-top: .3rem; color: var(--ink-3); }
 .rgroup-toggle:hover { color: var(--ink); }
 .rgroup-more { animation: bodyIn .3s var(--ease); }
 
 .res-none { text-align: center; padding: 2.5rem 1rem; }
-.res-none h3 { font-size: var(--step-2); letter-spacing: -.018em; padding-bottom: .05em; margin-bottom: .75rem; }
+.res-none h3 { font-size: var(--step-2); margin-bottom: .75rem; padding-bottom: .04em; }
 .res-none p { max-width: 50ch; margin-inline: auto; font-size: var(--step--1); line-height: 1.65; }
 
 /* ---------------- script view ---------------- */
@@ -266,8 +331,9 @@
   .app-shell { grid-template-columns: 1fr; }
   .shelf {
     border-right: 0; border-bottom: 1px solid var(--line);
-    position: sticky; top: 62px; z-index: 30;
+    position: static; height: auto; padding-bottom: .5rem;
   }
+  .shelf-foot { margin-inline: -.8rem; }
   .shelf-list {
     flex-direction: row; overflow-x: auto; padding-bottom: .35rem;
     scrollbar-width: none;            /* Firefox */

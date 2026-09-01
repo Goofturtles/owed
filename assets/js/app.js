@@ -731,4 +731,53 @@
     el.corpusNote.textContent = 'Could not load the rulebook — try refreshing.';
     toast('The rulebook failed to load.');
   });
+
+  /* ---------------- result filter chips ----------------
+     Operates on whatever app.js has already rendered, so it does not need to
+     know how results are built. Also re-hides on every fresh render. */
+  (function resultFilter() {
+    var bar = document.getElementById('resFilter');
+    var groups = document.getElementById('resGroups');
+    if (!bar || !groups) return;
+    var active = 'all';
+
+    function apply() {
+      var cards = groups.querySelectorAll('.rcard');
+      Array.prototype.forEach.call(cards, function (c) {
+        c.classList.toggle('is-hidden', active !== 'all' && !c.classList.contains(active));
+      });
+      // a group whose every row is filtered out should go too
+      Array.prototype.forEach.call(groups.querySelectorAll('.rgroup'), function (g) {
+        var any = g.querySelector('.rcard:not(.is-hidden)');
+        g.hidden = !any;
+      });
+    }
+
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('.fchip');
+      if (!b) return;
+      active = b.dataset.f;
+      Array.prototype.forEach.call(bar.querySelectorAll('.fchip'), function (c) {
+        c.classList.toggle('is-on', c === b);
+        c.setAttribute('aria-pressed', String(c === b));
+      });
+      apply();
+    });
+    // results are re-rendered wholesale, so re-apply when the list changes
+    new MutationObserver(apply).observe(groups, { childList: true });
+  })();
+
+  /* ---------------- shelf filter ---------------- */
+  (function shelfFilter() {
+    var input = document.getElementById('shelfFilter');
+    var list = document.getElementById('shelfList');
+    if (!input || !list) return;
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      Array.prototype.forEach.call(list.querySelectorAll('.shelf-row'), function (row) {
+        row.hidden = !!q && row.textContent.toLowerCase().indexOf(q) === -1;
+      });
+    });
+  })();
+
 })();
