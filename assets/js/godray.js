@@ -69,7 +69,7 @@
     // into by slowly drifting haze
     'float mask(vec2 uv, vec2 src, float ar){',
     '  vec2 d = (uv - src) * vec2(ar, 1.0);',
-    '  float core = smoothstep(0.52, 0.0, length(d));',
+    '  float core = smoothstep(0.46, 0.0, length(d));',
     '  if (core <= 0.001) return 0.0;',
     '  float haze = fbm(uv * vec2(3.4, 2.2) + vec2(uTime * 0.021, -uTime * 0.043));',
     '  float bite = fbm(uv * vec2(7.0, 3.0) - vec2(uTime * 0.014, uTime * 0.03));',
@@ -79,7 +79,7 @@
     'void main(){',
     '  vec2 uv = gl_FragCoord.xy / uRes;',
     '  float ar = uRes.x / uRes.y;',
-    '  vec2 src = vec2(0.5, 1.08);',            // the lamp, just off the top edge
+    '  vec2 src = vec2(0.5, 1.16);',            // the lamp, just off the top edge
 
     // march back toward the source, accumulating with decay
     '  vec2 delta = (uv - src) * (1.0 / 34.0) * 0.72;',
@@ -91,10 +91,11 @@
     '    decay *= 0.962;',
     '  }',
     '  illum /= 34.0;',
-    '  illum *= 3.1;',
+    '  illum *= 2.7;',
 
     // the beam has to die before the section edge or it reads as a gradient
-    '  illum *= smoothstep(-0.25, 0.92, uv.y);',
+    '  illum *= smoothstep(-0.25, 0.86, uv.y);',
+    '  illum *= smoothstep(1.04, 0.90, uv.y);',   // trim the bulb, keep the shaft
     '  illum *= smoothstep(0.0, 0.30, 1.0 - abs(uv.x - 0.5) * 2.0);',
 
     // dust caught in the beam
@@ -109,7 +110,7 @@
 
     // cool at the top, a touch warmer where it lands
     '  vec3 col = mix(uCool, uWarm, smoothstep(0.85, 0.0, uv.y));',
-    '  float a = clamp(illum + dust, 0.0, 1.0);',
+    '  float a = clamp(illum + dust, 0.0, 0.86);',
     '  gl_FragColor = vec4(col * (illum + dust), a);',   // premultiplied
     '}'
   ].join('\n');

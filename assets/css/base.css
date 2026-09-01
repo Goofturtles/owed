@@ -102,6 +102,7 @@
      so a set of cards reads as one material. The --il-sand and
      --il-blush names are kept as aliases of the new ramp. */
   --il-ink:   #15161A;
+  --il-line:  var(--il-ink);   /* bare strokes; gets a dark counterpart below */
   --il-paper: #FFFFFF;
   --il-mint:  #A9DDC3;
   --il-teal:  #A4D5D8;
@@ -145,12 +146,12 @@
   --paper:   #101312;
   --paper-2: #171B19;
   --paper-3: #1E2321;
-  --card:    #151917;
+  --card:    #1A1F1C;
   --ink:     #F2F3F0;
   --ink-2:   #A8ABA6;
   --ink-3:   #888C86;
-  --line:    #232825;
-  --line-2:  #323834;
+  --line:    #2E3531;
+  --line-2:  #3E453F;
 
   --accent:       #58DDA0;
   --accent-hover: #74E6B2;
@@ -174,17 +175,23 @@
   --info:        #7EB2EF;
   --info-soft:   #111C26;
 
-  --field:      #171B19;
-  --field-line: #323834;
+  --field:      #1E2321;
+  --field-line: #3E453F;
 
-  /* the ramp is deliberately NOT re-declared for dark: these tints paint
-     objects that always carry fixed dark ink, and flipping them put dark
-     ink on a dark ground. Only the roles that are genuinely surfaces
-     (--il-paper) and the accent-as-ink change. */
-  --il-paper: #DEDCD2;
-  --il-green: #58DDA0;
-  --il-amber: #C4881F;
+  /* The ramp is deliberately NOT re-declared for dark. These tints paint
+     objects that always carry fixed dark ink, and flipping them put dark ink
+     on a dark ground. --il-green, --il-paper and --il-amber used to be
+     excepted "because they are surfaces" - they are not, they are object
+     fills, and flipping them took the tick inside the receipt from 5.30:1
+     to 1.13:1 on its own mint disc. Nothing in this ramp flips.
+     The one thing that DOES need a dark counterpart is the bare stroke:
+     --il-ink is the outline ON the light tints, where near-black is right,
+     but three strokes in the hero sit straight on --paper, where it read
+     1.03:1. --il-line is that stroke. */
+  --il-line: #7E8480;
 
+  /* #17: .toast and .fchip.is-on invert to a near-white fill (16.9:1) in
+     dark, which is a light-mode control pasted onto a dark page. */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, .55);
   --shadow-lg: 0 18px 40px -10px rgba(0, 0, 0, .62);
@@ -514,3 +521,41 @@ main:focus:not(:focus-visible) { outline: none; }
   align-items: center; justify-content: space-between;
 }
 .footer-note { font-size: var(--step--1); color: var(--ink-3); max-width: 56ch; }
+
+
+/* ============================================================
+   Dark-theme corrections
+
+   Everything here fixes a value that was tuned for the light ground and
+   had no dark counterpart. Each ratio quoted was measured in the browser,
+   not estimated.
+   ============================================================ */
+
+/* #17 inverted fills. A near-white slab at 16.9:1 reads as a light-mode
+   control dropped onto a dark page; the site already has a calmer
+   "selected" vocabulary in --accent-soft / --accent-line. */
+:root[data-theme="dark"] .toast {
+  background: var(--paper-3);
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+}
+
+/* #19 the system's one dimensional effect is a top light. On the dark
+   theme's bright mint fill a white inset just lightens an already-light
+   chip, so the hairline moves to the bottom edge and goes dark. */
+:root[data-theme="dark"] .btn-primary,
+:root[data-theme="dark"] .btn-accent {
+  box-shadow: inset 0 -1px 0 rgba(5, 36, 26, .16);
+}
+:root[data-theme="dark"] .btn-primary:hover,
+:root[data-theme="dark"] .btn-accent:hover {
+  box-shadow: inset 0 -1px 0 rgba(5, 36, 26, .22);
+}
+
+/* #12 hover states that were literal no-ops: --paper-2 on --paper is
+   1.03:1. Mixing against the ink self-inverts, so one rule serves both
+   themes. */
+.theme-btn:hover,
+.nav-links a:hover {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}

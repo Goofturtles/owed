@@ -710,7 +710,7 @@
   content: ""; position: absolute; z-index: 0;
   inset: 8% -6% 22%;
   background: radial-gradient(60% 60% at 50% 45%,
-    color-mix(in srgb, var(--accent) 11%, transparent), transparent 72%);
+    color-mix(in srgb, var(--dk-accent) 11%, transparent), transparent 72%);
   filter: blur(28px); pointer-events: none;
 }
 
@@ -873,9 +873,15 @@
   background: var(--dk-2);
   border-block-color: var(--dk-2);
 }
-.script-stage { position: relative; isolation: isolate; padding-bottom: 2.5rem; }
+.script-stage {
+  position: relative; isolation: isolate;
+  /* headroom for the beam, so the light lives above the card rather than
+     over the section header */
+  padding-top: clamp(3rem, 7vw, 6rem);
+  padding-bottom: 2.5rem;
+}
 
-.spot { position: absolute; inset: -7rem -2rem 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.spot { position: absolute; inset: 0 -2rem 0; z-index: 0; pointer-events: none; overflow: hidden; }
 /* the shader canvas; godray.js appends it and adds .has-gl only once it has
    a live context and has drawn, so the CSS cones below stay as the fallback */
 .spot-gl {
@@ -889,14 +895,14 @@
 .spot.has-gl::before { display: none; }
 /* the lamp itself, a hot spot at the apex */
 .spot::before {
-  content: ""; position: absolute; left: 50%; top: 5.5rem;
+  content: ""; position: absolute; left: 50%; top: 1rem;
   width: 190px; height: 60px; transform: translateX(-50%);
   background: radial-gradient(50% 50% at 50% 50%, rgba(232,255,243,.5), transparent 70%);
   filter: blur(20px); mix-blend-mode: screen;
 }
 .spot-cone {
-  position: absolute; left: 50%; top: 5.5rem;
-  width: min(1180px, 138%); height: calc(100% - 5.5rem);
+  position: absolute; left: 50%; top: 0;
+  width: min(1180px, 138%); height: 100%;
   transform: translateX(-50%);
   clip-path: polygon(47.4% 0, 52.6% 0, 93% 100%, 7% 100%);
   background: linear-gradient(180deg,
@@ -1586,12 +1592,14 @@
   font-family: var(--mono);
   font-size: var(--step--1);
   letter-spacing: .04em;
-  color: var(--ink-2);
-  background: var(--card);
-  border: 1px solid var(--line);
+  /* the beat is fixed black in BOTH themes, so these cannot use themed
+     tokens - the pills measured 19.85:1 in light and 1.12:1 in dark */
+  color: #4A4C52;
+  background: #FFFFFF;
+  border: 1px solid #E2E1DB;
   border-radius: var(--radius-pill);
   padding: .42rem .95rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .45);
   white-space: nowrap;
   opacity: 0;
 }
@@ -1759,3 +1767,56 @@
 }
 .section.is-dark .sc-script { font-size: var(--step-mono); }
 .sc-script-legacy { color: #B9B8B0; border-left-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+
+
+/* ============================================================
+   Dark-theme corrections — landing
+
+   Every value below fixes something tuned for the light ground that had
+   no dark counterpart. Ratios quoted were measured in the browser.
+   ============================================================ */
+
+/* The strength dots sit inside .section.is-dark, which is dark in BOTH
+   themes, but they were painted with the themed --accent. Light measured
+   2.24:1 - a 6px dot you could not see - against 10.53:1 in dark. The
+   section is fixed, so the dots are fixed too. */
+.is-dark .dot.ok    { background: var(--dk-accent); }
+.is-dark .dot.maybe { background: #E2A94F; }
+
+/* The most important input on the site was a hairline over an invisible
+   shadow: --card is 1.05:1 off the dark ground. --field is the raised
+   surface; in light both resolve to white, so light is unchanged. */
+.hero-try-field { background: var(--field); }
+
+/* The floating nav composited to 1.02:1 off the ground and its shadow is
+   black on near-black, so it did not float. A top inset hairline is what
+   reads as glass on a dark ground. */
+:root[data-theme="dark"] .nav-pill {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(242, 243, 240, .07);
+}
+
+/* The document's bound edge is a signature detail that vanished:
+   --accent-line to --line-2 at 70% over --card is nothing on dark. */
+:root[data-theme="dark"] .finder-doc::before {
+  background: linear-gradient(#2F6B50, var(--line-2));
+  opacity: .9;
+}
+
+/* A dark screenshot on a dark page, with an invisible shadow and a 1.25:1
+   border, had no boundary at all. */
+:root[data-theme="dark"] .sc-shot img { border-color: var(--line-2); }
+
+/* Three saturated aurora blobs tuned for putty glow neon on near-black. */
+:root[data-theme="dark"] .pf-aurora { opacity: .55; }
+
+/* The pill and tile drop shadows are dark green, which grounds a pastel
+   object on putty and contributes nothing on near-black. A 1px dark rim is
+   what separates a light object from the glow behind it. */
+:root[data-theme="dark"] .pf-pill {
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, .78),
+    inset 0 -9px 15px rgba(0, 0, 0, .09),
+    0 0 0 1px rgba(0, 0, 0, .45),
+    0 18px 34px -12px rgba(0, 0, 0, .55);
+}
+:root[data-theme="dark"] .tile { box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }

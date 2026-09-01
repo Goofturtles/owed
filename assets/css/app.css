@@ -148,7 +148,7 @@
 /* ---------------- wizard ---------------- */
 .wiz { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, 2rem); box-shadow: var(--shadow-sm); }
 .wiz-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
-.wiz-progress { flex: 1; height: 4px; background: var(--paper-3); border-radius: 999px; overflow: hidden; }
+.wiz-progress { flex: 1; height: 4px; background: var(--line-2); border-radius: 999px; overflow: hidden; }
 .wiz-progress i { display: block; height: 100%; width: 25%; background: var(--accent); border-radius: 999px; transition: width .45s var(--ease); }
 .wiz-count { font-size: var(--step--1); color: var(--ink-3); flex-shrink: 0; }
 
@@ -457,3 +457,22 @@
   color: var(--ink-2);
   max-width: 56ch;
 }
+
+
+/* ============================================================
+   Dark-theme corrections — app
+   ============================================================ */
+
+/* .fchip.is-on inverted to a near-white slab (16.9:1) on a control that can
+   be on screen indefinitely. The app already has a calmer selected
+   vocabulary in --accent-soft / --accent-line, shared with .shelf-card. */
+:root[data-theme="dark"] .fchip.is-on {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+/* --paper-2 on --paper-2 is a zero-op hover in BOTH themes. Mixing against
+   the ink self-inverts, so one rule serves both. */
+.rcard:hover, .rcard.open { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.shelf-card:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
