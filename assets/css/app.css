@@ -366,9 +366,6 @@
   .user-chip { display: none; }
   #signOutBtn { padding: .45rem .5rem; font-size: var(--step--1); }
   .shelf { padding: 1rem .85rem; }
-  .shelf-stats { padding: .7rem .5rem; }
-  .stat b { font-size: 1.15rem; }
-  .stat span { font-size: var(--step--2); }
   .panel { padding: 1.1rem .85rem 2rem; }
 }
 @media (prefers-reduced-motion: reduce) {
