@@ -268,7 +268,14 @@
     border-right: 0; border-bottom: 1px solid var(--line);
     position: sticky; top: 62px; z-index: 30;
   }
-  .shelf-list { flex-direction: row; overflow-x: auto; padding-bottom: .35rem; }
+  .shelf-list {
+    flex-direction: row; overflow-x: auto; padding-bottom: .35rem;
+    scrollbar-width: none;            /* Firefox */
+    -ms-overflow-style: none;         /* old Edge */
+    scroll-snap-type: x proximity;
+  }
+  .shelf-list::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  .shelf-row { scroll-snap-align: start; }
   .shelf-card { min-width: 210px; }
   .user-name { display: none; }
 }

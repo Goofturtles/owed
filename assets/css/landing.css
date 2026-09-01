@@ -600,8 +600,10 @@
 .stack {
   position: relative;
   height: 340vh;            /* the scroll distance the flythrough consumes */
-  background: var(--paper-2);
-  border-block: 1px solid var(--line);
+  /* same ground as the hero above it — a tonal step plus a border read as a
+     seam right where the page should feel continuous */
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 }
 .stack-sticky {
   position: sticky; top: 0;
@@ -643,8 +645,8 @@
 .stack-sticky::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(52% 34% at 50% 50%,
-    color-mix(in srgb, var(--paper-2) 92%, transparent) 0%,
-    color-mix(in srgb, var(--paper-2) 70%, transparent) 55%,
+    color-mix(in srgb, var(--paper) 92%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 70%, transparent) 55%,
     transparent 84%);
 }
 .stack-caps {
@@ -664,11 +666,63 @@
   opacity: 0;
   transition: opacity .5s var(--ease), transform .7s var(--ease-out);
   padding-bottom: .07em;
-  text-shadow: 0 2px 26px var(--paper-2);
+  text-shadow: 0 2px 26px var(--paper);
 }
 .stack-cap em { font-style: italic; color: var(--accent); }
 .stack-cap b { font-weight: 400; color: var(--accent); }
 .stack-cap.is-on { opacity: 1; transform: translateY(-50%); }
+
+/* ---- floating verdict cards ----
+   zero.university floats white UI cards over a held 3D scene at different
+   depths. Same device here, except each card carries a real verdict, so the
+   ornament is also the argument. --sd is the depth multiplier (bigger = further
+   away = drifts less), --sat is the scroll point it fades in at. */
+.stack-cards {
+  position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+}
+.scard {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(190px, 20vw, 246px);
+  padding: .8rem .9rem .85rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .1rem .55rem;
+  /* held in place, drifting up as you travel — parallax by depth */
+  transform:
+    translate(-50%, -50%)
+    translate(calc(var(--sx) * 4.4), calc(var(--sy) * 4.4 + (0.5 - var(--p, 0)) * 190px / var(--sd)))
+    scale(calc(1 + (var(--p, 0) - var(--sat)) * .07));
+  opacity: clamp(0, calc((var(--p, 0) - var(--sat)) * 9), 1);
+  transition: opacity .25s linear;
+}
+.scard-tick {
+  grid-row: 1 / span 2;
+  width: 18px; height: 18px; margin-top: .18rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  position: relative;
+}
+.scard-tick::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--accent-ink);
+  clip-path: polygon(20% 52%, 42% 72%, 80% 30%, 86% 38%, 42% 84%, 14% 58%);
+}
+.scard b { font-size: .82rem; font-weight: 600; letter-spacing: -.012em; line-height: 1.3; }
+.scard i {
+  font-style: normal; font-family: var(--mono);
+  font-size: .64rem; color: var(--ink-3); line-height: 1.45; margin-top: .12rem;
+}
+@media (max-width: 900px) {
+  /* two cards is plenty on a phone — four is clutter over the type */
+  .scard:nth-child(2), .scard:nth-child(4) { display: none; }
+  .scard { width: 168px; }
+}
 
 .stack-hint {
   position: absolute; bottom: 1.75rem; left: 50%;
@@ -685,12 +739,22 @@
 
 /* ============================================================
    INK — a scroll-scrubbed clip, rendered on the local GPU
+
+   A deliberately dark interlude: paper, then black, then paper.
+   The clip is black ink on white, so inverting it gives luminous
+   white ink on near-black at FULL contrast. The previous version
+   sat it on paper at 46% behind a heavy scrim, which turned a
+   crisp clip into grey mush and put a pale blob under the text.
+   Dark ground means the type is legible without washing the
+   footage out, so no scrim is needed.
    ============================================================ */
 .ink {
   position: relative;
-  height: 260vh;
-  background: var(--paper);
-  border-block: 1px solid var(--line);
+  height: 300vh;
+  /* fixed, not themed — this beat is dark in light mode too */
+  --ink-ground: #0A0B0A;
+  --ink-fg: #F5F4EC;
+  background: var(--ink-ground);
 }
 .ink-sticky {
   position: sticky; top: 0;
@@ -699,51 +763,86 @@
   overflow: hidden;
   display: grid;
   place-items: center;
+  background: var(--ink-ground);
 }
 .ink-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  /* the clip is black ink on white: multiply drops the white out so the ink
-     sits on our paper rather than on a grey rectangle */
-  mix-blend-mode: multiply;
-  opacity: .46;
+  filter: invert(1);          /* black ink on white -> white ink on black */
+  opacity: .92;
 }
-/* the ink is gorgeous and completely swamped the copy at full strength — this
-   scrim keeps the text readable without flattening the clip behind it */
+/* just enough to seat the type — nothing like the old blob */
 .ink-sticky::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(58% 46% at 50% 50%,
-    color-mix(in srgb, var(--paper) 94%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 76%, transparent) 52%,
-    transparent 84%);
+  background: radial-gradient(62% 48% at 50% 50%,
+    rgba(10, 11, 10, .74) 0%, rgba(10, 11, 10, .40) 55%, transparent 82%);
 }
-:root[data-theme="dark"] .ink-video {
-  /* inverted, screen-blended, the same ink reads as light on near-black */
-  filter: invert(1);
-  mix-blend-mode: screen;
-  opacity: .34;
-}
+
 .ink-copy {
   position: relative; z-index: 2;
-  text-shadow: 0 1px 18px var(--paper);
-  width: min(680px, 100% - 2.5rem);
+  width: min(760px, 100% - 2.5rem);
   text-align: center;
+  color: var(--ink-fg);
+}
+.ink-copy .eyebrow {
+  color: color-mix(in srgb, var(--ink-fg) 62%, transparent);
+  transition: opacity .4s var(--ease);
+  opacity: calc(1 - var(--p, 0) * 1.6);
 }
 .ink-title {
   font-size: var(--step-3);
   margin-top: .6rem;
-  padding-bottom: .07em;
   letter-spacing: -.022em;
+  color: var(--ink-fg);
+  display: grid;              /* the two lines stack in one cell and cross-fade */
+  place-items: center;
+}
+.ink-title span {
+  grid-area: 1 / 1;
+  display: block;
+  padding-bottom: .09em;
+  will-change: opacity, transform;
 }
 .ink-title em { font-style: italic; }
-.ink-sub {
-  margin-top: 1rem;
-  font-size: var(--step-0);
-  color: var(--ink-2);
-  max-width: 46ch; margin-inline: auto;
+
+/* --p is the scroll progress through the section, set by motion.js.
+   The handover runs word by word rather than swapping two whole lines —
+   a block of text appearing at once reads as being thrown at you. Each word
+   carries its own --i, so it rises and sharpens a beat after the one before. */
+.ink-title .iw {
+  display: inline-block;
+  will-change: opacity, transform, filter;
 }
-@media (max-width: 700px) { .ink { height: 200vh; } }
+.ink-l2 .iw {
+  --t: clamp(0, calc((var(--p, 0) - .30 - var(--i, 0) * .035) * 9), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 20px));
+  filter: blur(calc((1 - var(--t)) * 7px));
+}
+.ink-l1 .iw {
+  /* leaves in the same order it arrived, so the two lines cross rather than cut */
+  --t: clamp(0, calc((.40 - var(--p, 0) + var(--i, 0) * .028) * 9), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * -16px));
+  filter: blur(calc((1 - var(--t)) * 6px));
+}
+.ink-sub {
+  margin-top: 1.1rem;
+  font-size: var(--step-0);
+  color: color-mix(in srgb, var(--ink-fg) 76%, transparent);
+  max-width: 46ch; margin-inline: auto;
+  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 16px));
+}
+
+/* no JS: show the end state rather than a blank black screen */
+/* no JS: --p never updates, so show the finished state */
+.no-js .ink-l1 { display: none; }
+.no-js .ink-l2 .iw, .no-js .ink-sub { opacity: 1; transform: none; filter: none; }
+
+@media (max-width: 700px) { .ink { height: 240vh; } }
 
 /* ============================================================
    CTA ambient particles
@@ -757,13 +856,10 @@
   opacity: .30;
   mix-blend-mode: screen;
 }
-/* the clip is warm sparks on black — on cream paper that needs inverting
-   and pulling right down or it reads as dirt */
-:root:not([data-theme="dark"]) .cta-video {
-  filter: invert(1) grayscale(.35);
-  mix-blend-mode: multiply;
-  opacity: .13;
-}
+/* The clip is warm sparks on black. Inverted onto cream it reads as grey
+   speckles — like dust on a scanner — so it is dark-theme only. Light mode
+   keeps the plain radial glow, which is cleaner anyway. */
+:root:not([data-theme="dark"]) .cta-video { display: none; }
 .cta > .wrap, .cta > .wrap-narrow, .cta-inner { position: relative; z-index: 1; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -771,10 +867,68 @@
   .stack-sticky { position: static; height: auto; min-height: 62vh; padding: 4rem 0; }
   .stack-canvas { display: none; }
   .stack-hint { display: none; }
+  .stack-cards { position: static; display: flex; flex-wrap: wrap; gap: .75rem;
+                 justify-content: center; margin-top: 2rem; }
+  .scard { position: static; transform: none; opacity: 1; }
   .stack-sticky::after { display: none; }
   .stack-caps { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 1.5rem; }
   .stack-cap { position: static; opacity: 1; transform: none; }
   .ink { height: auto; }
   .ink-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
   .ink-video, .cta-video { display: none; }
+  .ink-sticky::after { display: none; }
+  .ink-title { display: block; }
+  .ink-l1 { display: none; }
+  .ink-l2 .iw { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .ink-l2, .ink-sub, .ink-copy .eyebrow { opacity: 1 !important; transform: none !important; }
+}
+
+/* ============================================================
+   SPOT ILLUSTRATIONS
+   Drawn as SVG so they carry real colour on a transparent ground
+   and stay crisp at any size. They sit behind the hero copy and
+   drift gently — decoration only, so aria-hidden and no layout cost.
+   ============================================================ */
+.hero-art {
+  position: absolute; inset: 0;
+  z-index: -1;                      /* behind the headline, above the wash */
+  pointer-events: none;
+  overflow: hidden;
+}
+.ha {
+  position: absolute;
+  display: block;
+  width: clamp(46px, 6.2vw, 82px);
+  opacity: 0;
+  animation: haIn .9s var(--ease-out) forwards;
+  animation-delay: calc(var(--had, 0) * 1ms);
+  will-change: transform, opacity;
+}
+.ha svg { width: 100%; height: auto; display: block; }
+@keyframes haIn { to { opacity: 1; } }
+
+/* each one drifts on its own clock so the group never pulses together */
+.ha::after { content: none; }
+.ha-1 { top: 15%; left: 6%;   --had: 640;  animation-name: haIn, haFloat; animation-duration: .9s, 9s;   animation-iteration-count: 1, infinite; animation-delay: 640ms, 640ms; }
+.ha-2 { top: 58%; left: 12%;  --had: 900;  animation-name: haIn, haFloat; animation-duration: .9s, 11s;  animation-iteration-count: 1, infinite; animation-delay: 900ms, 900ms; }
+.ha-3 { top: 24%; right: 9%;  --had: 760;  animation-name: haIn, haFloat; animation-duration: .9s, 10s;  animation-iteration-count: 1, infinite; animation-delay: 760ms, 760ms; }
+.ha-4 { top: 63%; right: 7%;  --had: 1020; animation-name: haIn, haFloat; animation-duration: .9s, 12s;  animation-iteration-count: 1, infinite; animation-delay: 1020ms, 1020ms; }
+.ha-5 { top: 78%; left: 26%;  --had: 1140; animation-name: haIn, haFloat; animation-duration: .9s, 10.5s; animation-iteration-count: 1, infinite; animation-delay: 1140ms, 1140ms; }
+.ha-6 { top: 8%;  right: 27%; --had: 1240; animation-name: haIn, haFloat; animation-duration: .9s, 13s;  animation-iteration-count: 1, infinite; animation-delay: 1240ms, 1240ms; }
+.ha-1, .ha-4 { --rot: -9deg; }
+.ha-2, .ha-6 { --rot: 7deg; }
+.ha-3, .ha-5 { --rot: -4deg; }
+@keyframes haFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-14px) rotate(calc(var(--rot, 0deg) * -.6)); }
+}
+
+/* on a phone the hero is tight — keep two, drop the rest */
+@media (max-width: 820px) {
+  .ha-2, .ha-4, .ha-5, .ha-6 { display: none; }
+  .ha-1 { top: 7%; left: 2%; }
+  .ha-3 { top: 6%; right: 2%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ha { animation: none !important; opacity: 1; transform: rotate(var(--rot, 0deg)); }
 }

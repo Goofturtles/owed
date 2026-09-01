@@ -1,0 +1,149 @@
+/* ============================================================
+   Owed — scroll feel
+
+   Two things, both optional and both self-disabling:
+
+   1. SMOOTH — wheel input drives a target position that the real
+      scroll eases toward. This is the thing that makes sites like
+      zero.university feel expensive; they use Lenis for it. Written
+      by hand here (~60 lines) rather than adding a dependency.
+
+   2. GUIDED — entering a pinned section scrolling downward plays
+      the animation through for you. The moment you scroll again,
+      it lets go completely and never grabs that section twice.
+
+   Never runs under prefers-reduced-motion, and never on touch —
+   hijacking a phone's native scroll always feels broken.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  var api = { smooth: false, guided: false, cancelGuided: function () {} };
+  window.OwedScroll = api;
+  if (reduce || !fine) return;
+
+  var docEl = document.documentElement;
+  function maxScroll() { return docEl.scrollHeight - window.innerHeight; }
+  function clamp(v) { return Math.max(0, Math.min(maxScroll(), v)); }
+
+  /* ---------------- 1. smooth ---------------- */
+  var target = window.scrollY;
+  var current = target;
+  var raf = null;
+  var programmatic = false;   // true while WE are the ones calling scrollTo
+
+  function apply(y) {
+    programmatic = true;
+    window.scrollTo(0, y);
+    programmatic = false;
+  }
+
+  function loop() {
+    raf = null;
+    var d = target - current;
+    if (Math.abs(d) < 0.35) {
+      current = target;
+      apply(current);
+      return;
+    }
+    current += d * 0.115;               // the ease; lower = heavier glide
+    apply(current);
+    raf = requestAnimationFrame(loop);
+  }
+  function kick() { if (raf === null) raf = requestAnimationFrame(loop); }
+
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) return;                                  // pinch-zoom
+    if (e.target && e.target.closest && e.target.closest('[data-native-scroll]')) return;
+    e.preventDefault();
+    // deltaMode 1 = lines, 2 = pages
+    var k = e.deltaMode === 1 ? 18 : (e.deltaMode === 2 ? window.innerHeight : 1);
+    target = clamp(target + e.deltaY * k);
+    kick();
+  }, { passive: false });
+
+  // Anything that moves the page by other means — keyboard, scrollbar drag,
+  // anchor jumps, find-in-page, focus — has to win. Resync to reality.
+  window.addEventListener('scroll', function () {
+    if (programmatic) return;
+    target = current = window.scrollY;
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+  }, { passive: true });
+
+  window.addEventListener('resize', function () {
+    target = current = window.scrollY;
+  }, { passive: true });
+
+  api.smooth = true;
+  api.scrollTo = function (y) { target = clamp(y); kick(); };
+
+  /* ---------------- 2. guided ---------------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('[data-guided]'));
+  if (!sections.length) return;
+
+  var guiding = false, gRaf = null, gDone = [], lastY = window.scrollY;
+
+  function stopGuide() {
+    if (!guiding) return;
+    guiding = false;
+    if (gRaf !== null) { cancelAnimationFrame(gRaf); gRaf = null; }
+    // hand the smooth layer back exactly where the page actually is
+    target = current = window.scrollY;
+  }
+  api.cancelGuided = stopGuide;
+
+  // Any genuine input releases it — this is what keeps it from being a trap.
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (evt) {
+    window.addEventListener(evt, function () { if (guiding) stopGuide(); },
+      { passive: true, capture: true });
+  });
+
+  function guide(sec) {
+    var startY = window.scrollY;
+    var travel = sec.offsetHeight - window.innerHeight;
+    var endY = clamp(sec.getBoundingClientRect().top + window.scrollY + travel);
+    var dist = endY - startY;
+    if (dist <= 60) return;
+
+    var dur = Math.min(4200, Math.max(2000, dist * 0.9));
+    var t0 = null;
+    guiding = true;
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+
+    function step(ts) {
+      if (!guiding) return;
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      // easeInOutCubic — starts gently so the handover is not a jolt
+      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      var y = startY + dist * e;
+      current = target = y;
+      apply(y);
+      if (p < 1) gRaf = requestAnimationFrame(step);
+      else { guiding = false; gRaf = null; }
+    }
+    gRaf = requestAnimationFrame(step);
+  }
+
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    var down = y > lastY;
+    lastY = y;
+    if (guiding || !down) return;        // upward is always free
+    for (var i = 0; i < sections.length; i++) {
+      if (gDone[i]) continue;
+      var r = sections[i].getBoundingClientRect();
+      // fire as the section pins to the top of the viewport
+      if (r.top <= 6 && r.top > -90) {
+        gDone[i] = true;
+        guide(sections[i]);
+        break;
+      }
+    }
+  }, { passive: true });
+
+  api.guided = true;
+})();

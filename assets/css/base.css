@@ -77,6 +77,16 @@
   --radius-xl: 26px;
   --radius-pill: 999px;
 
+  /* illustration palette — muted enough to sit on cream, but actually colour */
+  --il-ink:   #1B2320;
+  --il-paper: #FFFDF6;
+  --il-mint:  #BCE9D1;
+  --il-green: #0E6E45;
+  --il-sand:  #F2E2C0;
+  --il-amber: #E0A63A;
+  --il-blue:  #C6DCF0;
+  --il-blush: #F4D3CB;
+
   --ease:     cubic-bezier(.2, .7, .3, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);
 }
@@ -118,6 +128,15 @@
   --btn:        #F6F4E9;
   --btn-hover:  #FFFFFF;
   --btn-ink:    #100F0B;
+
+  --il-ink:   #0A0D0C;
+  --il-paper: #E6E4D8;
+  --il-mint:  #7FC9A4;
+  --il-green: #0B4F31;
+  --il-sand:  #D8C398;
+  --il-amber: #C4881F;
+  --il-blue:  #9DBEDC;
+  --il-blush: #DCAFA5;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, .55);

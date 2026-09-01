@@ -9,12 +9,62 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788197788">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788197788">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788197788">
-<script src="assets/js/theme.js?v=1788197788"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788224846">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788224846">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788224846">
+<script src="assets/js/theme.js?v=1788224846"></script>
 </head>
 <body>
+<!-- ============ spot illustrations ============
+     Drawn as SVG rather than shipped as images: transparent by definition,
+     crisp at any size, themeable, and no extra requests. Each one is a thing
+     people actually claim on. -->
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-headphones" viewBox="0 0 64 64">
+      <path d="M12 40v-8a20 20 0 0 1 40 0v8" fill="none" stroke="var(--il-ink)" stroke-width="3.2" stroke-linecap="round"/>
+      <rect x="6" y="36" width="14" height="21" rx="6" fill="var(--il-mint)" stroke="var(--il-ink)" stroke-width="2.6"/>
+      <rect x="44" y="36" width="14" height="21" rx="6" fill="var(--il-mint)" stroke="var(--il-ink)" stroke-width="2.6"/>
+      <path d="M10 43h6M48 43h6" stroke="var(--il-ink)" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    </symbol>
+
+    <symbol id="ic-washer" viewBox="0 0 64 64">
+      <rect x="9" y="6" width="46" height="52" rx="7" fill="var(--il-sand)" stroke="var(--il-ink)" stroke-width="2.8"/>
+      <circle cx="32" cy="37" r="14" fill="var(--il-paper)" stroke="var(--il-ink)" stroke-width="2.6"/>
+      <path d="M20 37a12 12 0 0 0 24 0" fill="var(--il-blue)" opacity=".85"/>
+      <circle cx="17" cy="15" r="2.6" fill="var(--il-ink)"/>
+      <path d="M27 15h20" stroke="var(--il-ink)" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
+    </symbol>
+
+    <symbol id="ic-laptop" viewBox="0 0 64 64">
+      <rect x="11" y="12" width="42" height="29" rx="3.5" fill="var(--il-blue)" stroke="var(--il-ink)" stroke-width="2.8"/>
+      <path d="M5 47h54l-4 6H9z" fill="var(--il-paper)" stroke="var(--il-ink)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M18 21h20M18 28h14" stroke="var(--il-paper)" stroke-width="2.6" stroke-linecap="round" opacity=".9"/>
+    </symbol>
+
+    <symbol id="ic-card" viewBox="0 0 64 64">
+      <rect x="5" y="15" width="54" height="34" rx="5" fill="var(--il-green)" stroke="var(--il-ink)" stroke-width="2.8"/>
+      <path d="M5 25h54" stroke="var(--il-ink)" stroke-width="4.5"/>
+      <rect x="12" y="33" width="13" height="9" rx="2" fill="var(--il-amber)" stroke="var(--il-ink)" stroke-width="2"/>
+      <path d="M34 40h14" stroke="var(--il-paper)" stroke-width="2.6" stroke-linecap="round" opacity=".8"/>
+    </symbol>
+
+    <symbol id="ic-kettle" viewBox="0 0 64 64">
+      <path d="M16 26h30a4 4 0 0 1 4 4v18a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V30a4 4 0 0 1 4-4z" fill="var(--il-blush)" stroke="var(--il-ink)" stroke-width="2.8"/>
+      <path d="M50 32c7 1 8 12 0 13" fill="none" stroke="var(--il-ink)" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M22 26c0-6 4-9 10-9s10 3 10 9" fill="none" stroke="var(--il-ink)" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M22 42h13" stroke="var(--il-paper)" stroke-width="2.6" stroke-linecap="round" opacity=".85"/>
+    </symbol>
+
+    <symbol id="ic-receipt" viewBox="0 0 64 64">
+      <path d="M14 6h36v50l-6-4-6 4-6-4-6 4-6-4-6 4z" fill="var(--il-paper)" stroke="var(--il-ink)" stroke-width="2.8" stroke-linejoin="round"/>
+      <path d="M22 19h20M22 28h20M22 37h12" stroke="var(--il-ink)" stroke-width="2.6" stroke-linecap="round" opacity=".45"/>
+      <circle cx="44" cy="41" r="10" fill="var(--il-mint)" stroke="var(--il-ink)" stroke-width="2.4"/>
+      <path d="M39.5 41.5l3.2 3.2 6-6.4" fill="none" stroke="var(--il-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ============ FLOATING PILL NAV ============ -->
@@ -73,12 +123,21 @@
 
       <p class="hero-note" data-enter>Free, and no account needed to try. Nothing you type leaves your browser.</p>
 
+      <div class="hero-art" aria-hidden="true">
+        <span class="ha ha-1"><svg viewBox="0 0 64 64"><use href="#ic-headphones"/></svg></span>
+        <span class="ha ha-2"><svg viewBox="0 0 64 64"><use href="#ic-washer"/></svg></span>
+        <span class="ha ha-3"><svg viewBox="0 0 64 64"><use href="#ic-card"/></svg></span>
+        <span class="ha ha-4"><svg viewBox="0 0 64 64"><use href="#ic-laptop"/></svg></span>
+        <span class="ha ha-5"><svg viewBox="0 0 64 64"><use href="#ic-kettle"/></svg></span>
+        <span class="ha ha-6"><svg viewBox="0 0 64 64"><use href="#ic-receipt"/></svg></span>
+      </div>
+
       <div class="try-result" id="tryResult" role="status" aria-live="polite" hidden></div>
     </div>
   </section>
 
   <!-- ============ THE STACK: a flythrough of the paperwork ============ -->
-  <section class="stack" id="stack" aria-label="How deep the paperwork goes">
+  <section class="stack" id="stack" data-guided aria-label="How deep the paperwork goes">
 
     <div class="stack-sticky">
       <!-- the static frame anyone without WebGL (or with reduced motion) sees -->
@@ -95,6 +154,29 @@
         <p class="stack-cap" data-cap data-from="0.60" data-to="1.01">
           One of them says your repair is <em>free.</em>
         </p>
+      </div>
+
+      <div class="stack-cards" aria-hidden="true">
+        <div class="scard" style="--sx:-38%; --sy:-34%; --sd:1.35; --sat:.06">
+          <span class="scard-tick"></span>
+          <b>Free repair from the shop</b>
+          <i>England &middot; 6 years to bring a claim</i>
+        </div>
+        <div class="scard" style="--sx:36%; --sy:-38%; --sd:.85; --sat:.20">
+          <span class="scard-tick"></span>
+          <b>One more year of cover</b>
+          <i>Your credit card &middot; after the maker's ran out</i>
+        </div>
+        <div class="scard" style="--sx:-40%; --sy:33%; --sd:1.6; --sat:.36">
+          <span class="scard-tick"></span>
+          <b>Free fix, parts and labour</b>
+          <i>Open safety recall &middot; any franchised dealer</i>
+        </div>
+        <div class="scard" style="--sx:38%; --sy:36%; --sd:1.05; --sat:.52">
+          <span class="scard-tick"></span>
+          <b>A payout nobody claimed</b>
+          <i>Class action &middot; while the window is open</i>
+        </div>
       </div>
 
       <span class="stack-hint mono" aria-hidden="true">scroll</span>
@@ -164,10 +246,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788197788"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788224846"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788197788"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788224846"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -337,15 +419,18 @@
   </section>
 
   <!-- ============ INK: scroll-scrubbed, the fine print unfurling ============ -->
-  <section class="ink" id="ink" aria-label="The fine print, unfolding">
+  <section class="ink" id="ink" data-guided aria-label="The fine print, unfolding">
     <div class="ink-sticky">
       <video class="ink-video" id="inkVideo" aria-hidden="true"
-             src="assets/video/ink-water.webm?v=1788197788"
+             src="assets/video/ink-water.webm?v=1788224846"
              width="800" height="454"
              muted playsinline preload="none" disablepictureinpicture></video>
       <div class="ink-copy">
         <p class="eyebrow">Written to be skipped</p>
-        <h2 class="display ink-title">Nobody reads it. <em>Owed reads all of it.</em></h2>
+        <h2 class="display ink-title">
+          <span class="ink-l1"><span class="iw" style="--i:0">Nobody</span> <span class="iw" style="--i:1">reads</span> <span class="iw" style="--i:2">it.</span></span>
+          <span class="ink-l2"><em><span class="iw" style="--i:0">Owed</span> <span class="iw" style="--i:1">reads</span> <span class="iw" style="--i:2">all</span> <span class="iw" style="--i:3">of</span> <span class="iw" style="--i:4">it.</span></em></span>
+        </h2>
         <p class="ink-sub">
           Four hundred and forty-five rules, so you only ever read one sentence &mdash;
           the one that says somebody owes you a repair.
@@ -472,7 +557,7 @@
 
   <!-- ============ CTA ============ -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788197788"
+    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788224846"
            width="860" height="488" aria-hidden="true"
            muted loop playsinline preload="none" disablepictureinpicture></video>
     <div class="wrap-narrow cta-inner">
@@ -527,9 +612,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788197788"></script>
-<script src="assets/js/landing.js?v=1788197788"></script>
-<script src="assets/js/scene.js?v=1788197788"></script>
-<script src="assets/js/motion.js?v=1788197788"></script>
+<script src="assets/js/catalog.js?v=1788224846"></script>
+<script src="assets/js/landing.js?v=1788224846"></script>
+<script src="assets/js/scroll.js?v=1788224846"></script>
+<script src="assets/js/scene.js?v=1788224846"></script>
+<script src="assets/js/motion.js?v=1788224846"></script>
 </body>
 </html>

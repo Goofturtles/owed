@@ -280,6 +280,29 @@
     }, 8000);
   })();
 
+  /* ---------------- scroll progress as a CSS variable ----------------
+     Publishes 0..1 through each pinned section as --p so CSS can drive the
+     floating cards and the ink cross-fade. Deliberately independent of
+     scene.js: the cards must still work when WebGL is unavailable. */
+  (function progressVars() {
+    var secs = Array.prototype.slice.call(document.querySelectorAll('#stack, #ink'));
+    if (!secs.length) return;
+    var raf = null;
+    function update() {
+      raf = null;
+      for (var i = 0; i < secs.length; i++) {
+        var r = secs[i].getBoundingClientRect();
+        var travel = r.height - window.innerHeight;
+        var p = travel > 0 ? Math.min(1, Math.max(0, -r.top / travel)) : 0;
+        secs[i].style.setProperty('--p', p.toFixed(4));
+      }
+    }
+    function onScroll() { if (raf === null) raf = requestAnimationFrame(update); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+
   /* ---------------- ink: scroll-scrubbed clip ----------------
      The clip was rendered locally on the GPU and encoded with dense
      keyframes (-g 8) so seeking stays responsive. preload="none" until
