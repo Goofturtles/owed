@@ -176,115 +176,161 @@
 .dot.maybe { background: var(--warn); }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-/* ---------------- the finder: 445 rules in, one clause out ----------------
-   Owed's own signature. A wall of the small print nobody finishes, with the
-   single clause that means a free repair lit up and lifted out beside it. */
+/* ---------------- the finder: a marked-up page ----------------
+   Reworked away from the generic "tick circle + bold line + grey line" card.
+   That pattern, plus a verdict floating in space with nothing tying it to the
+   clause it came from, is what made this read as generated. It is now a
+   document with a margin annotation — which is literally what the product
+   does — and a rule physically connects the marked line to the note. */
 .finder {
   background: var(--paper-2);
   border-block: 1px solid var(--line);
-  padding: clamp(2.25rem, 5vw, 3.5rem) 0;
-  margin-top: clamp(1.75rem, 4vw, 3rem);
+  padding: clamp(3rem, 7vw, 5rem) 0;
 }
+.finder-head { max-width: 42rem; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
+.finder-title {
+  font-size: var(--step-3);
+  margin-top: .55rem;
+  letter-spacing: -.022em;
+  padding-bottom: .06em;
+}
+.finder-title em { font-style: italic; color: var(--accent); }
+
 .finder-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, .78fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  align-items: start;
+  position: relative;
 }
 
-/* the document */
+/* ---- the document ---- */
 .finder-doc {
+  margin: 0;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: 3px;                     /* paper, not an app panel */
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
+  position: relative;
+}
+/* a bound edge, so it reads as a page out of something longer */
+.finder-doc::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
+  background: linear-gradient(var(--accent-line), var(--line-2));
+  opacity: .7;
 }
 .finder-doc-bar {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .55rem .9rem;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: .7rem 1rem .7rem 1.4rem;
   border-bottom: 1px solid var(--line);
   background: var(--paper-2);
 }
-.finder-doc-title, .finder-doc-count { font-size: .68rem; color: var(--ink-3); }
+.finder-doc-name {
+  font-size: .68rem; color: var(--ink-2); letter-spacing: .02em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.finder-doc-pp { font-size: .64rem; color: var(--ink-3); flex-shrink: 0; }
 
 .finder-wall {
-  padding: .9rem .2rem .9rem 0;
-  /* the print runs off both edges — it is meant to feel endless */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 92%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 92%, transparent 100%);
+  padding: 1rem .2rem 1.15rem 0;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
+          mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
 }
 .finder-wall p {
+  position: relative;
   font-family: var(--mono);
-  font-size: .625rem;
-  line-height: 2.05;
+  font-size: .645rem;
+  line-height: 2.1;
   color: var(--ink-3);
-  opacity: .5;
+  opacity: .62;
   white-space: nowrap;
-  padding-inline: .95rem;
+  padding-inline: 1.4rem .95rem;
   transition: opacity .4s var(--ease), color .4s var(--ease);
 }
-/* every other line starts a little further in, so it reads as a page */
-.finder-wall p:nth-child(even) { padding-left: 2.1rem; }
+.finder-wall p:nth-child(even) { padding-left: 2.4rem; }
 
+/* the marked line: a highlighter swipe plus a margin marker */
 .finder-wall p[data-hit] {
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
   background-repeat: no-repeat;
+  background-position: 0 0;
   background-size: 0% 100%;
-  border-radius: 4px;
-  transition: background-size .55s var(--ease-out), opacity .4s var(--ease), color .4s var(--ease);
+  transition: background-size .6s var(--ease-out), opacity .4s var(--ease), color .4s var(--ease);
 }
-.finder-wall p.is-hit {
-  opacity: 1;
-  color: var(--accent);
-  background-size: 100% 100%;
+.finder-wall p[data-hit]::before {
+  content: ""; position: absolute; left: 0; top: 12%; bottom: 12%; width: 3px;
+  background: var(--accent);
+  transform: scaleY(0); transform-origin: 50% 50%;
+  transition: transform .45s var(--ease-out);
 }
+.finder-wall p.is-hit { opacity: 1; color: var(--accent); background-size: 100% 100%; }
+.finder-wall p.is-hit::before { transform: scaleY(1); }
 
-/* the answer */
-.finder-out { display: flex; flex-direction: column; align-items: flex-start; gap: .7rem; }
-.finder-for {
-  font-size: .68rem; color: var(--ink-3);
-  transition: opacity .3s var(--ease);
+/* ---- the margin note ---- */
+.finder-note-out {
+  position: relative;
+  padding-left: clamp(0px, 1.1vw, 1rem);
+  /* rides down to meet the marked line; clamped so it can never run off */
+  margin-top: clamp(0px, calc(var(--hit-y, 150px) - 3.4rem), 320px);
+  transition: margin-top .55s var(--ease-out);
 }
-.finder-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: .2rem .65rem;
-  width: 100%;
-  padding: .95rem 1.1rem;
-  background: var(--card);
-  border: 1px solid var(--accent-line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+/* the connector: what actually ties the note to the clause */
+.finder-rule {
+  position: absolute; right: 100%; top: 1.05rem;
+  width: clamp(.6rem, 3vw, 2.75rem); height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-line) 40%, var(--accent));
 }
-.finder-tick {
-  grid-row: 1 / span 2;
-  width: 26px; height: 26px; flex-shrink: 0;
-  display: grid; place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--accent); color: var(--accent-ink);
+.finder-rule::after {
+  content: ""; position: absolute; right: -3px; top: -2.5px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+}
+.finder-label {
+  font-size: .62rem; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--ink-3);
 }
 .finder-verdict {
-  font-size: var(--step-0); font-weight: 600;
-  letter-spacing: -.015em; line-height: 1.3;
+  font-family: var(--display);
+  font-size: var(--step-2);
+  line-height: 1.16;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-top: .3rem;
+  padding-bottom: .05em;
 }
-.finder-meta { font-size: .74rem; color: var(--ink-2); line-height: 1.35; }
-.finder-note { font-size: .74rem; color: var(--ink-3); max-width: 26ch; }
+.finder-meta {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-top: .5rem;
+  padding-top: .55rem;
+  border-top: 1px solid var(--line);
+}
+.finder-for { font-size: .64rem; color: var(--ink-3); margin-top: .5rem; }
 
-/* the swap between examples */
-.finder-card, .finder-verdict, .finder-meta, .finder-for { transition: opacity .32s var(--ease); }
-.finder-out.is-swapping .finder-card,
-.finder-out.is-swapping .finder-for { opacity: 0; }
+.finder-foot {
+  font-size: var(--step--1); color: var(--ink-3);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: 1rem; border-top: 1px solid var(--line);
+}
+.finder-foot b { color: var(--accent); font-weight: 600; }
 
-@media (max-width: 860px) {
+/* while the example swaps, the note steps back rather than snapping */
+.finder-note-out.is-swapping .finder-label,
+.finder-note-out.is-swapping .finder-verdict,
+.finder-note-out.is-swapping .finder-meta,
+.finder-note-out.is-swapping .finder-for { opacity: 0; }
+.finder-label, .finder-verdict, .finder-meta, .finder-for { transition: opacity .3s var(--ease); }
+
+@media (max-width: 880px) {
   .finder-grid { grid-template-columns: 1fr; }
-  .finder-out { align-items: stretch; }
-  .finder-note { max-width: none; }
+  .finder-note-out { margin-top: 1.5rem; padding-left: 0; }
+  .finder-rule { display: none; }       /* nothing to connect once stacked */
+  .finder-verdict { font-size: var(--step-1); }
 }
 @media (max-width: 560px) {
   .finder-wall p { font-size: .58rem; line-height: 2; }
-  .finder-doc-count { display: none; }
+  .finder-doc-pp { display: none; }
 }
 
 /* ---------------- product showcase ---------------- */

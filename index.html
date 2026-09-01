@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788234802">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788234802">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788234802">
-<script src="assets/js/theme.js?v=1788234802"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788270717">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788270717">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788270717">
+<script src="assets/js/theme.js?v=1788270717"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -191,23 +191,31 @@
     </div>
   </section>
 
-  <!-- ============ THE SIGNATURE: fine print, one clause that counts ============ -->
-  <section class="finder" aria-label="How Owed reads the fine print">
-    <p class="sr-only">
-      Owed reads the small print nobody finishes and pulls out the single clause worth
-      asking about. For a pair of Sony headphones bought two years ago in England, that
-      clause is the Consumer Rights Act: the shop, not the maker, stays responsible for
-      goods that were faulty from the start, and you have six years to bring the claim
-      (five in Scotland). It is a right to ask, not a guarantee the answer is yes.
-    </p>
+  <!-- ============ THE SIGNATURE: a marked-up page ============ -->
+  <section class="finder" aria-labelledby="finderHead">
+    <div class="wrap">
+      <header class="finder-head">
+        <p class="eyebrow">What Owed actually does</p>
+        <h2 class="display finder-title" id="finderHead">
+          It reads the page you would skip, <em>and marks the one line.</em>
+        </h2>
+      </header>
 
-    <div class="wrap finder-grid" aria-hidden="true">
-      <div class="finder-doc">
-        <div class="finder-doc-bar">
-          <span class="finder-doc-title mono">terms &amp; conditions</span>
-          <span class="finder-doc-count mono">reading 445 rules</span>
-        </div>
-        <div class="finder-wall" id="finderWall">
+      <p class="sr-only">
+        Owed reads the small print nobody finishes and pulls out the single clause worth
+        asking about. For a pair of Sony headphones bought two years ago in England, that
+        clause is the Consumer Rights Act: the shop, not the maker, stays responsible for
+        goods that were faulty from the start, and you have six years to bring the claim
+        (five in Scotland). It is a right to ask, not a guarantee the answer is yes.
+      </p>
+
+      <div class="finder-grid" aria-hidden="true">
+        <figure class="finder-doc">
+          <figcaption class="finder-doc-bar">
+            <span class="mono finder-doc-name" id="finderDocName">Sony WH-1000XM4 &mdash; limited warranty</span>
+            <span class="mono finder-doc-pp">p. 14 / 22</span>
+          </figcaption>
+          <div class="finder-wall" id="finderWall">
           <p>and shall not apply to damage resulting from accident, misuse, neglect, unauthorised modification or repair, or use with</p>
           <p>consumable components including but not limited to batteries, filters, belts, bulbs and external finishes are excluded from</p>
           <p data-hit="0">the buyer has six years from delivery in which to bring a claim that goods were not of satisfactory quality</p>
@@ -221,20 +229,21 @@
           <p data-hit="2">a free repair is owed for a reasonable period, which the law fixes at between three and six years for appliances</p>
           <p>no employee, agent or representative is authorised to make any modification, extension or addition to this warranty</p>
           <p>where local law confers rights that cannot be excluded, this warranty applies only to the extent permitted by that law</p>
-        </div>
+          </div>
+        </figure>
+
+        <aside class="finder-note-out">
+          <span class="finder-rule" aria-hidden="true"></span>
+          <p class="finder-label mono">What that line means</p>
+          <p class="finder-verdict" id="finderVerdict">The shop may still owe the repair</p>
+          <p class="finder-meta" id="finderMeta">Consumer Rights Act &middot; 6 years to bring a claim</p>
+          <p class="finder-for mono" id="finderFor">Sony WH-1000XM4 &middot; 2 years old &middot; England</p>
+        </aside>
       </div>
 
-      <div class="finder-out">
-        <p class="finder-for mono" id="finderFor">Sony WH-1000XM4 &middot; 2 years old &middot; England</p>
-        <div class="finder-card">
-          <span class="finder-tick" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg>
-          </span>
-          <span class="finder-verdict" id="finderVerdict">The shop may still owe the repair</span>
-          <span class="finder-meta" id="finderMeta">Consumer Rights Act &middot; 6 years to bring a claim</span>
-        </div>
-        <p class="finder-note">One clause out of 445. That is the whole job.</p>
-      </div>
+      <p class="finder-foot">
+        One clause out of <b class="tnum">445</b>. Finding it is the whole job.
+      </p>
     </div>
   </section>
 
@@ -254,10 +263,10 @@
             </div>
             <!-- both sit ~2 viewports down and only one is ever visible, so
                  neither is the LCP element and neither should be eager -->
-            <img class="shot-light" src="assets/img/app-shot.webp?v=1788234802"
+            <img class="shot-light" src="assets/img/app-shot.webp?v=1788270717"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
-            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788234802"
+            <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788270717"
                  width="1500" height="1000" alt=""
                  loading="lazy" decoding="async">
           </div>
@@ -578,7 +587,7 @@
 
   <!-- ============ CTA ============ -->
   <section class="cta">
-    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788234802"
+    <video class="cta-video" src="assets/video/ember-drift.webm?v=1788270717"
            width="860" height="488" aria-hidden="true"
            muted loop playsinline preload="none" disablepictureinpicture></video>
     <div class="wrap-narrow cta-inner">
@@ -633,10 +642,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788234802"></script>
-<script src="assets/js/landing.js?v=1788234802"></script>
-<script src="assets/js/scroll.js?v=1788234802"></script>
-<script src="assets/js/scene.js?v=1788234802"></script>
-<script src="assets/js/motion.js?v=1788234802"></script>
+<script src="assets/js/catalog.js?v=1788270717"></script>
+<script src="assets/js/landing.js?v=1788270717"></script>
+<script src="assets/js/scroll.js?v=1788270717"></script>
+<script src="assets/js/scene.js?v=1788270717"></script>
+<script src="assets/js/motion.js?v=1788270717"></script>
 </body>
 </html>

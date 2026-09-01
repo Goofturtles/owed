@@ -64,7 +64,7 @@
     // slot it into whichever bar this page has
     var host = document.querySelector('.nav-actions') ||
                document.querySelector('.appbar-right') ||
-               document.querySelector('.auth-main');
+               document.querySelector('.auth-proof');
     if (!host) return;
 
     btn = document.createElement('button');
@@ -72,7 +72,7 @@
     btn.className = 'theme-btn';
     btn.addEventListener('click', toggle);
 
-    if (host.classList.contains('auth-main')) {
+    if (host.classList.contains('auth-proof')) {
       btn.classList.add('theme-btn-float');
       host.appendChild(btn);
     } else {

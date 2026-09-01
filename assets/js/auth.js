@@ -6,7 +6,8 @@
 
   var S = window.OwedStore;
   var params = new URLSearchParams(location.search);
-  var card = document.querySelector('.auth-card');
+  // the boxed card wrapper is gone; the panel itself carries the mode
+  var card = document.getElementById('panel');
   var sw = document.querySelector('.auth-switch');
   var tabSignup = document.getElementById('tabSignup');
   var tabSignin = document.getElementById('tabSignin');

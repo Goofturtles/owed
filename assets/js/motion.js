@@ -33,7 +33,7 @@
      paraphrase of a rule that is actually in data/coverage.json. */
   (function finder() {
     var wall = document.getElementById('finderWall');
-    var out = document.querySelector('.finder-out');
+    var out = document.querySelector('.finder-note-out');
     if (!wall || !out) return;
 
     var hits = wall.querySelectorAll('p[data-hit]');
@@ -63,6 +63,15 @@
       Array.prototype.forEach.call(hits, function (p) {
         p.classList.toggle('is-hit', Number(p.dataset.hit) === n);
       });
+      // publish the marked line's centre so the margin note can ride down to it
+      var hit = wall.querySelector('p.is-hit');
+      if (hit) {
+        var grid = wall.closest('.finder-grid');
+        if (grid) {
+          grid.style.setProperty('--hit-y',
+            (hit.offsetTop + wall.offsetTop + hit.offsetHeight / 2) + 'px');
+        }
+      }
       var c = CASES[n];
       if (elFor) elFor.textContent = c.item;
       if (elVerdict) elVerdict.textContent = c.verdict;
