@@ -359,8 +359,10 @@
 
   .appbar-inner { gap: .5rem; padding-inline: .85rem; }
   .appbar-right { gap: .3rem; min-width: 0; }
+  /* the 5.5rem cap truncated "United States" to "United S". The user chip is
+     already hidden at this width, which frees the room the label needs. */
   .region-pick {
-    max-width: 5.5rem; padding: .4rem 1.6rem .4rem .5rem;
+    max-width: none; padding: .4rem 1.6rem .4rem .5rem;
     font-size: var(--step--1); background-position: right .5rem center;
   }
   .user-chip { display: none; }
