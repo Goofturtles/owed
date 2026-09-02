@@ -8,9 +8,15 @@
 
   /* ---------- sticky nav ---------- */
   var nav = document.getElementById('nav');
+  var darkCard = document.querySelector('.city-sticky');
   var onScroll = function () {
     if (!nav) return;
     nav.classList.toggle('is-stuck', window.scrollY > 8);
+    // dark glass while the pill floats over the dark statement card
+    if (darkCard) {
+      var r = darkCard.getBoundingClientRect();
+      nav.classList.toggle('on-dark', r.top < 72 && r.bottom > 20);
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

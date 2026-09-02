@@ -26,6 +26,13 @@
   transition: box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
 .nav.is-stuck .nav-pill { box-shadow: var(--shadow-lg); border-color: var(--line-2); }
+/* over the dark card the pill turns to dark glass instead of a grey slab */
+.nav.on-dark .nav-pill {
+  background: color-mix(in srgb, #15181A 78%, transparent);
+  border-color: rgba(242, 243, 240, .14);
+}
+.nav.on-dark .nav-pill :is(a, button):not(.btn-accent) { color: #F2F3F0; }
+.nav.on-dark .brand { color: #F2F3F0; }
 
 .nav .brand-name { font-size: 1.2rem; }
 .nav-links { display: flex; gap: .1rem; margin-inline: auto; }
@@ -287,7 +294,7 @@
 /* ---- the margin note ---- */
 .finder-note-out {
   position: relative;
-  padding-left: clamp(0px, 1.1vw, 1rem);
+  padding-left: 0;
   /* rides down to meet the marked line; clamped so it can never run off */
   margin-top: clamp(0rem, calc(var(--hit-y, 150px) - 1.05rem), 22rem);
   transition: margin-top .55s var(--ease-out);
@@ -341,6 +348,8 @@
 }
 @media (max-width: 560px) {
   .finder-wall { padding-inline: 1rem 1rem; row-gap: .45rem; }
+  /* fewer filler lines on a phone; the three marked lines always stay */
+  .finder-wall p:not([data-hit]):nth-of-type(n+9) { display: none; }
   .finder-wall p { font-size: var(--step--2); }
   .finder-wall p[data-hit] { font-size: var(--step--1); }
   .finder-doc-pp { display: none; }
@@ -450,8 +459,6 @@
      that already clears AA rather than an arbitrary opacity */
   color: var(--ink);
 }
-.prem-row:nth-child(2) .prem-fig { color: var(--ink-2); }
-.prem-row:nth-child(3) .prem-fig { color: var(--ink-3); }
 
 .prem-text { padding-top: .55em; }        /* optically level with the figure's cap */
 .prem-label {
@@ -463,7 +470,7 @@
 /* the nuance lives in a footnote, the way Amplemarket and Spade caption a figure */
 .prem-foot {
   margin-top: .55rem;
-  font-size: var(--step--2);
+  font-size: var(--step-mono);
   letter-spacing: .02em;
   color: var(--ink-3);
 }
@@ -587,24 +594,20 @@
 .tile.wide { grid-column: span 3; }
 .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
 
-.tile-mint  { background: var(--il-mint);  border-color: color-mix(in srgb, var(--il-green) 22%, transparent); }
-.tile-blue  { background: var(--il-blue);  border-color: color-mix(in srgb, #3C5A78 22%, transparent); }
-.tile-sand  { background: var(--il-sand);  border-color: color-mix(in srgb, var(--il-amber) 30%, transparent); }
-.tile-blush { background: var(--il-blush); border-color: color-mix(in srgb, #B4531C 20%, transparent); }
-.tile-paper { background: var(--il-bone);  border-color: color-mix(in srgb, var(--il-ink) 14%, transparent); }
-/* every tint is a light one, so the ink stays fixed and readable on all five */
-.tile, .tile-title { color: #1B2320; }
-.tile-text { color: #3E4744; }
-.tile-n { color: #46504D; }   /* #5C6763 measured 4.17 on the blue tile */
+/* pastel belongs to one section (the earth pills); the five places are white
+   cards told apart by a hairline, the icon a single ink stroke, no box */
+.tile { background: var(--card); border-color: var(--line); }
+.tile, .tile-title { color: var(--ink); }
+.tile-text { color: var(--ink-2); }
+.tile-n { color: var(--ink-3); }
 
 .tile-ico {
   position: relative; z-index: 1;
-  width: 44px; height: 44px; border-radius: var(--radius);
+  width: 28px; height: 28px;
   display: grid; place-items: center;
-  background: rgba(255, 255, 255, .62);
-  color: #1B2320;
-  border: 1px solid rgba(27, 35, 32, .10);
+  color: var(--ink);
 }
+.tile-ico svg { width: 28px; height: 28px; }
 .tile-n {
   position: relative; z-index: 1;
   font-size: var(--step--2); letter-spacing: .06em; margin-top: 1.3rem;
@@ -615,17 +618,12 @@
   font-size: var(--step-3); line-height: 1.14;
   letter-spacing: -.02em; margin-top: .35rem;
   padding-bottom: .04em;
+  min-height: 2.32em;               /* two lines reserved, so bodies align across the row */
 }
 .tile-text {
   position: relative; z-index: 1;
   font-size: var(--step-0); line-height: 1.55; margin-top: .6rem;
   max-width: 42ch;
-}
-.tile-foot {
-  position: relative; z-index: 1;
-  margin-top: .7rem;
-  font-size: var(--step--2); letter-spacing: .02em;
-  color: #46504D;                       /* measured on the blue tile, see .tile-n */
 }
 @media (max-width: 900px) {
   .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -732,8 +730,8 @@
 .script-body p.sr-only { position: absolute; }
 .script-body p {
   position: relative; isolation: isolate;
-  font-family: var(--mono);
-  font-size: var(--step-mono); line-height: 1.65; color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: var(--step-0); line-height: 1.6; color: var(--ink);
 }
 .script-body mark {
   position: relative;
@@ -903,6 +901,8 @@
 .pf-sand  { background: linear-gradient(158deg, #F2EADA, var(--il-sand)); }
 .pf-blush { background: linear-gradient(158deg, #CBE9EB, var(--il-blush)); }
 
+.pf-cap-mob { display: none; }
+@media (max-width: 760px) { .pf-cap-mob { display: inline; } }
 .pf-cap {
   font-size: var(--step--2); color: var(--ink-3); letter-spacing: .02em;
   margin-bottom: .9rem;
@@ -919,13 +919,14 @@
 @media (max-width: 760px) {
   .pillfield {
     height: auto;
-    display: flex; flex-wrap: wrap; gap: .55rem; justify-content: center;
-    padding: 1.75rem 1.25rem .5rem;
+    display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
+    padding: 1.75rem 1.25rem .75rem;
   }
   .pf-pill {
     position: relative; left: auto; top: auto;
-    transform: none; max-width: 100%;
+    transform: none !important; max-width: 100%;
   }
+  .pf-cap-desk { display: none; }
   .pf-far, .pf-mid { display: none; }
   .pf-aurora { filter: blur(44px); }
 }
@@ -981,6 +982,10 @@
   align-content: start;
   padding: 0;
   border: 0;
+}
+/* Fluz and Wise separate the four cells with a vertical hairline */
+@media (min-width: 761px) {
+  .reg-row + .reg-row { border-left: 1px solid var(--line); padding-left: clamp(1.25rem, 2.5vw, 2rem); }
 }
 @media (max-width: 760px) { .reg { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; } }
 @media (max-width: 420px) { .reg { grid-template-columns: 1fr; } }
@@ -1083,15 +1088,27 @@
    closes put motion behind the last sentence.
    ============================================================ */
 .cta {
-  background: var(--field-accent);
-  color: var(--field-accent-ink);
-  padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+  background: var(--paper);
+  padding: 0 clamp(12px, 2vw, 28px) clamp(3rem, 6vw, 5rem);
   text-align: center;
 }
+/* the green field is an inset card on the page ground */
 .cta-inner {
   display: flex; flex-direction: column; align-items: center;
-  width: min(940px, 100%); margin-inline: auto;
+  width: min(1140px, 100%); margin-inline: auto;
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+  background: var(--field-accent);
+  color: var(--field-accent-ink);
+  border-radius: var(--radius-xl);
 }
+.cta-link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 .5rem;
+  font-size: var(--step-0); font-weight: 600; letter-spacing: -.01em;
+  color: var(--field-accent-ink); text-decoration: none;
+  opacity: .92; transition: opacity .15s var(--ease);
+}
+.cta-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.cta-link:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; border-radius: 4px; }
 .cta-title {
   font-size: clamp(2rem, 4.4vw, 3.4rem);
   line-height: 1.1;
@@ -1100,7 +1117,7 @@
   color: var(--field-accent-ink);
   padding-bottom: .06em;
 }
-.cta-actions { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; margin-top: clamp(1.5rem, 3vw, 2.1rem); }
+.cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; margin-top: clamp(1.5rem, 3vw, 2.1rem); }
 
 /* On the accent field the site's own green pill would disappear, so the
    primary inverts: a bone pill carrying the accent as its ink. */
@@ -1109,20 +1126,7 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
 }
 .btn-onfield-solid:hover { background: #F1F0EB; }
-.btn-onfield-line {
-  background: transparent; color: var(--field-accent-ink);
-  border-color: rgba(255, 255, 255, .5);
-}
-.btn-onfield-line:hover { background: rgba(255, 255, 255, .12); border-color: #FFFFFF; }
 .cta .btn:focus-visible { outline-color: #FFFFFF; }
-
-/* Circle keeps the reassurance about one line-height under the action, so
-   it reads as a condition of the click rather than a separate band. */
-.cta-note {
-  margin-top: 1.25em;
-  font-size: var(--step--1);
-  color: rgba(255, 255, 255, .82);
-}
 
 /* ============================================================
    footer — after Structured, with Garden's brand/columns split
@@ -1179,7 +1183,7 @@
 .footer-mark {
   margin: clamp(1rem, 3vw, 2rem) 0 0;
   font-family: var(--display);
-  font-size: 27vw;
+  font-size: clamp(64px, 8vw, 120px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -.05em;
@@ -1201,11 +1205,8 @@
   .footer-fine-r { text-align: right; }
 }
 @media (max-width: 560px) {
-  .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* three groups in two columns left one orphan; the last spans both */
-  .footer-col:last-child { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: 0 1.25rem; }
-  .footer-col:last-child .footer-col-title { width: 100%; }
-  .footer-mark { font-size: 32vw; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .footer-mark { font-size: 64px; }
 }
 
 /* the field's focus ring is a box-shadow, which forced-colors mode strips */
@@ -1373,21 +1374,26 @@
    ============================================================ */
 .city {
   position: relative;
-  height: 320vh;
-  /* fixed, not themed — black in light mode too */
+  height: 220vh;                    /* the pin length; tuned in the preview */
+  --inset: clamp(12px, 2vw, 28px);
+  /* fixed, not themed - the card is dark in both themes */
   --city-ground: #101312;
   --city-fg: #F5F4EC;
-  background: var(--city-ground);
-  border-bottom: 1px solid var(--city-ground);
+  background: var(--paper);
+  padding-block: var(--inset);
 }
+/* the dark card: pinned, inset from the page edge, rounded like the tiles */
 .city-sticky {
-  position: sticky; top: 0;
-  height: 100vh;
-  height: 100svh;
+  position: sticky; top: var(--inset);
+  height: calc(100vh - 2 * var(--inset));
+  height: calc(100svh - 2 * var(--inset));
+  margin-inline: var(--inset);
   overflow: hidden;
   display: grid;
   place-items: center;
   background: var(--city-ground);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(242, 243, 240, .08);
 }
 
 .city-copy {
@@ -1457,18 +1463,21 @@
   left: 50%; bottom: clamp(1.5rem, 5vh, 3rem);
   transform: translateX(-50%);
   display: flex; flex-wrap: wrap; justify-content: center;
-  gap: .6rem;
+  gap: 8px;
   width: min(820px, 92%);
 }
 .city-tags li {
-  font-family: var(--mono);
-  font-size: var(--step-mono);
-  letter-spacing: .03em;
-  /* the beat is fixed dark in BOTH themes, so these cannot use themed tokens */
-  color: #15161A;
-  background: #F7F6F2;
+  /* chips in the reference set sit at ~63% of the button height with a
+     near-transparent fill and one hairline; sans, never mono */
+  font-family: var(--sans);
+  font-size: var(--step--1); font-weight: 500; line-height: 1.4;
+  height: 28px; display: inline-flex; align-items: center;
+  padding: 0 12px;
+  /* the card is fixed dark in BOTH themes, so these cannot use themed tokens */
+  color: #A8ABA6;
+  background: rgba(242, 243, 240, .04);
+  border: 1px solid rgba(242, 243, 240, .13);
   border-radius: var(--radius-pill);
-  padding: .5rem .9rem;
   white-space: nowrap;
 }
 .js-p .city-tags li {
@@ -1477,7 +1486,7 @@
   transform: translateY(calc((1 - var(--t)) * 8px));
 }
 
-@media (max-width: 700px) { .city { height: 260vh; } }
+@media (max-width: 700px) { .city { height: 150vh; } }
 
 @media (prefers-reduced-motion: reduce) {
   .stack { height: auto; }
@@ -1657,71 +1666,18 @@
 :root[data-theme="dark"] .tile { box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
 
 /* ============================================================
-   Ground transitions
+   Ground plan
 
-   The page used to switch grounds instantly - light to near-black to light
-   again - and every one of those boundaries read as a hard line cutting the
-   page in half. The light sections are one continuous colour now, and the
-   sections that genuinely need their own ground fade into it instead.
-
-   The band lives INSIDE the section, at its own top or bottom edge, running
-   from the neighbouring ground to its own. Keeping it inside means it can
-   never darken the section above it, and the sections all carry enough
-   padding that no content sits inside the band.
+   One paper ground for the whole page. The two coloured beats - the dark
+   statement and the green closer - sit on it as inset rounded cards
+   (Aboard's card variant; Tailscale, Homerun, TravelPerk), so the ground
+   never switches and nothing has to fade or cut. Sixteen of sixteen
+   reference ground changes were hard cuts; this avoids the question.
    ============================================================ */
-.how, .script-sec, .city, .cta { position: relative; }
+.script-sec, .city, .cta { position: relative; }
 .script-sec > .ch-grid { position: relative; z-index: 1; }
-
-/* content rides above the bands */
-.how > .wrap,
-.script-sec > .wrap,
-.cta > .cta-inner { position: relative; z-index: 1; }
-/* the city stage is sticky, which is already positioned: giving it
-   position: relative here is exactly what un-pinned it */
 .city > .city-sticky { z-index: 1; }
-
-.how::before, .how::after,
-.script-sec::before, .script-sec::after,
-.city::before,
-.cta::before, .cta::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0;
-  height: clamp(60px, 6vw, 110px);
-  z-index: 0;
-  pointer-events: none;
-}
-/* The band must never reach the content: light type rendered over the still-
-   light half of a fade is invisible. These sections carry enough padding to
-   clear the tallest the band can get at any width. */
-.how, .script-sec, .cta { padding-block: clamp(6.5rem, 12vw, 9.5rem); }
-
-/* how it works: paper above it, paper below it */
-.how::before { top: 0;    background: linear-gradient(to bottom, var(--paper), transparent); }
-.how::after  { bottom: 0; background: linear-gradient(to top,    var(--paper), transparent); }
-
-/* the black beat is preceded by the checks section */
-.city::before { top: 0; z-index: 2; background: linear-gradient(to bottom, var(--paper), transparent); }
-
-/* the script section sits on paper now: it meets the black beat above and
-   the earth section below, both on the page ground */
-.script-sec::before { top: 0;    background: linear-gradient(to bottom, #080A09, transparent); }
-.script-sec::after  { bottom: 0; background: linear-gradient(to top, var(--paper), transparent); }
-
-/* the closing field sits between the FAQ and the footer, both on paper */
-.cta::before { top: 0;    background: linear-gradient(to bottom, var(--paper), transparent); }
-.cta::after  { bottom: 0; background: linear-gradient(to top,    var(--paper), transparent); }
-
-/* The bands ARE the transition, so a hairline at the same boundary draws a
-   hard line straight through the middle of a fade. `.section.is-dark` sets
-   its own border and out-specifies a bare class, so this has to match it. */
-.section.is-dark, .earth, .cta { border-block: 0; }
-
-/* The black beat's sticky child paints an opaque ground over the whole
-   section, including the band. Lifting the band above it works because the
-   beat's copy is vertically centred in a full-height sticky - the top strip
-   it covers is empty. */
-.city::before { z-index: 2; }
+.script-sec, .earth, .cta { border-block: 0; }
 
 /* ============================================================
    the materials case
@@ -1737,11 +1693,24 @@
   border-top: 1px solid var(--line);
 }
 .saves-title {
-  font-size: var(--step-3);
+  font-size: var(--step-4);
   letter-spacing: -.022em;
   padding-bottom: .04em;
 }
-.saves-fig { margin: 1.25rem 0 0; display: grid; gap: .9rem; }
+.saves-eyebrow { grid-area: eye; }
+.saves-title { grid-area: title; }
+.saves-fig { grid-area: fig; margin: 0; display: grid; gap: .9rem; align-content: start; }
+.saves-list { grid-area: list; }
+@media (min-width: 900px) {
+  .saves {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "eye fig" "title fig" "list fig";
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+  .saves > * { max-width: none; }
+}
 .saves-fig .xv { width: min(100%, 460px); height: auto; display: block; }
 .xv-t text { font: 500 12px var(--mono); fill: var(--ink-3); letter-spacing: .02em; }
 .saves-cap { font-size: var(--step-0); line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
@@ -1801,9 +1770,6 @@
   }
   .sc-shot img { width: 190%; max-width: none; border: 0; border-radius: 0; box-shadow: none; }
 }
-
-/* [V14] the tile icon chips were near-white hot-spots on the dark ground */
-:root[data-theme="dark"] .tile-ico { background: rgba(255, 255, 255, .34); }
 
 /* [V31] the Railway card had no face on the dark theme: 2% over near-black.
    A touch more fill and the same top-light the nav pill uses. */

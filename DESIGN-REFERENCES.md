@@ -1,0 +1,224 @@
+# Design references
+
+Every section of the landing page and every view of the app was built from real product UI found on Mobbin, plus named motion systems for timing and easing. This ledger says which. Colours and words are Owed's; the structure, proportions and behaviour come from the references. Standing rule: match a reference's craft level, never lift its signature idea — Owed's own signature is the lit clause in the small print.
+
+Research method: for each part, 4–20 Mobbin queries (sections, screens, flows), every returned image examined, ≥5 references recorded with measurable specifics, patterns stated only when ≥3 references share them, then an independent completeness critic and a synthesised spec. Raw notes and the spec live with the September 2026 work log; the merge and count audit is in `LIMITATIONS.md`.
+
+Motion systems named throughout: Material 3 motion tokens and easings; Framer Motion's default spring (stiffness 100, damping 10, mass 1); Emil Kowalski's guidance on UI animation; Apple HIG Motion (Reduce Motion honoured everywhere).
+
+## Landing page
+
+### Hero and WebGL flythrough
+
+Frozen at the owner's request; not part of the September pass.
+
+### Finder (the fine print with one line marked)
+
+Owed's own signature idea. Its typography follows the document-facsimile pattern: grotesque sans at ~0.8× UI size, two tones, ragged right, never cropped; the marked line at ≥14px with a tint behind the run and Owed's margin bar. Motion: Material 3 `medium4` 400ms emphasized-decelerate fill, `medium1` 250ms bar.
+
+- [Stripe (invoice PDF preview)](https://mobbin.com/screens/2a141402-f3a4-4faa-a838-e3884921b3a5) — The canonical premium invoice facsimile: a white sheet in a right-hand preview pane with a 2px blue 
+- [Midday (invoice)](https://mobbin.com/screens/328c47b5-51d9-4e71-ac3a-ee46f4c65304) — A designer-grade invoice document centred on a light grey ground: regular-weight title, two-tone lab
+- [Mercury (invoice preview)](https://mobbin.com/screens/32882676-91fa-4afb-88e6-7306bfff6dbf) — Fintech invoice preview: light-weight large 'Invoice', three-column From/To/Details header, table, a
+- [Wave (Statement of Account)](https://mobbin.com/screens/5db5bbad-dc14-4305-8f4f-786e8e0bcac6) — A customer statement rendered in-app as a paper sheet: dark-red top bar, large monogram, right-align
+- [illoca (An Open Letter hero)](https://mobbin.com/sites/sections/6820d250-c387-46cc-ba01-61933152a6e5) — A landing-page LETTER facsimile: cream sheet emerging from an envelope on a navy ground, six short p
+- [Dovetail (transcript highlight)](https://mobbin.com/screens/9fd5fd65-a2fc-4218-8725-c49a35988746) — Long-form text in white cards with two sentence-spans highlighted for a comment thread in the right 
+- [Strut (highlighted paragraph)](https://mobbin.com/screens/1301bdca-619b-47d0-b3d3-821a20eab5b2) — A document editor with one 4-line paragraph marked by a highlighter fill.
+- [Figma (Terms of Service)](https://mobbin.com/sites/sections/ee216299-6ed2-4fa9-8e95-c2c9850d7821) — Real legal text as a product company sets it: effective date, version dropdown, body paragraphs, and
+
+### Showcase (the app on the page)
+
+Intercom's hairline index beside a cropped product shot (section study, Aug 2026); reduced to one lede + one visual per the image-led density research. Screenshot to be re-shot at 2× without browser chrome after the app rebuild.
+
+- [Linear](https://mobbin.com/sites/sections/91b1d7ce-42f5-45bb-a46d-d639dc04f9f4) — Dark 2-col feature section: 2-word heading left, two bold-lead micro-paragraphs, two overlapping app
+- [Craft](https://mobbin.com/sites/sections/58c31ff2-407c-4d33-933f-3b0a08528728) — Centered 6-word headline, two pill CTAs, then a laptop photo with the product UI filling the bottom 
+- [Front](https://mobbin.com/sites/sections/ba4ff47e-3460-4256-b2fb-0e0948cd8eb9) — Single centered 6-word heading followed directly by a full app screenshot on a pastel gradient panel
+- [Vercel](https://mobbin.com/sites/sections/892a4a8f-55b5-4bad-84b3-c77a538bcfb2) — 2-col feature: heading + one paragraph with a bolded phrase + one black CTA on the left; a cropped U
+- [Intercom](https://mobbin.com/sites/sections/9c26abac-3024-4d9e-8948-527d49d46d12) — Abstract UI wireframe (skeleton bars, no real text) on a pale-blue card left; 4-word heading and one
+- [Descript](https://mobbin.com/sites/sections/e24b2a5a-b2f9-44c6-945d-5c06d32462d2) — Dark section: icon + 3-word serif heading + one paragraph + one CTA left; app crop right showing a t
+- [Wise](https://mobbin.com/sites/sections/5913d254-146e-49b6-bc26-caaee21e868e) — 3-step how-it-works: numbered circles, a flat illustration per step, a single-sentence caption, one 
+- [Zipline](https://mobbin.com/sites/sections/7b0ca7a7-caf2-42a6-b315-53b86c8cd190) — 3 tall illustrated cards; each card is ~80% image with a small "01/02/03" and a one-line caption at 
+
+### Problem ledger (1 year / 90 days / 6 years)
+
+Instrument's ruled ledger (section study, Aug 2026); figure + ≤4-word label + mono footnote per the density research's stat pattern (Amplemarket, Legora, Spade, Klarna); single ink after the round-1 review.
+
+- [Linear](https://mobbin.com/sites/sections/91b1d7ce-42f5-45bb-a46d-d639dc04f9f4) — Dark 2-col feature section: 2-word heading left, two bold-lead micro-paragraphs, two overlapping app
+- [Craft](https://mobbin.com/sites/sections/58c31ff2-407c-4d33-933f-3b0a08528728) — Centered 6-word headline, two pill CTAs, then a laptop photo with the product UI filling the bottom 
+- [Front](https://mobbin.com/sites/sections/ba4ff47e-3460-4256-b2fb-0e0948cd8eb9) — Single centered 6-word heading followed directly by a full app screenshot on a pastel gradient panel
+- [Vercel](https://mobbin.com/sites/sections/892a4a8f-55b5-4bad-84b3-c77a538bcfb2) — 2-col feature: heading + one paragraph with a bolded phrase + one black CTA on the left; a cropped U
+- [Intercom](https://mobbin.com/sites/sections/9c26abac-3024-4d9e-8948-527d49d46d12) — Abstract UI wireframe (skeleton bars, no real text) on a pale-blue card left; 4-word heading and one
+- [Descript](https://mobbin.com/sites/sections/e24b2a5a-b2f9-44c6-945d-5c06d32462d2) — Dark section: icon + 3-word serif heading + one paragraph + one CTA left; app crop right showing a t
+
+### How it works (four white tiles with real app crops)
+
+Light section, header stack left, one row of four equal tiles identified by fill, each with a small mono numeral, a 2–4-word title, ≤12 words of body and a real crop of the product bleeding off the tile's well. No connector line. Motion: Material 3 `medium2` 300ms emphasized-decelerate rise, `short1` 50ms stagger.
+
+- [Norma](https://mobbin.com/sites/sections/96f4183b-7eb5-437c-90ad-95d1306d320c) — Left-aligned 'How it works.' heading and a 2-line lede, then 3 equal hairline-bordered cards, each w
+- [Airtasker](https://mobbin.com/sites/sections/c8ad31ec-26b9-4c52-9f86-0ddb568bb5e8) — Left-aligned 'What is Airtasker?' heading, then 3 solid-blue rounded tiles each holding a phone-scre
+- [Braintrust](https://mobbin.com/sites/sections/3269321e-bdad-48fc-a49b-c1126a3fed77) — Large centred 'How it works', three pastel-gradient tiles each containing a UI crop that bleeds off 
+- [Sequence](https://mobbin.com/sites/sections/27bf1023-ba04-4af0-ae50-5fad11815613) — Eyebrow chip, 2-line headline, then a 4-step horizontal timeline (dots joined by a hairline) with th
+- [Wise](https://mobbin.com/sites/sections/5913d254-146e-49b6-bc26-caaee21e868e) — Centred one-line headline 'Order a card in just 5 minutes.', three flat illustrations inside pale pa
+- [Zipline](https://mobbin.com/sites/sections/7b0ca7a7-caf2-42a6-b315-53b86c8cd190) — Centred 'How It Works', three tall pastel illustrated cards (sky, pink, green); the first holds a ph
+- [Fruitful](https://mobbin.com/sites/sections/b6807166-b6b4-44f5-9040-1bfdf61ceb43) — Eyebrow 'How it works' and headline, a horizontal timeline with 4 labelled dots (Today / Day 1 / Day
+- [Ramp](https://mobbin.com/sites/sections/329c945f-4a02-48ca-ab03-3a668e4e4d47) — Split layout: left column with a 2-line heading 'Four simple steps to get started on Ramp.' and a ye
+
+### What we check (five places)
+
+Tines' bento (section study, Aug 2026) re-skinned per the density research: white hairline cards, one single-stroke ink icon, mono numeral, ≤12-word body (Retool, Daylight, ClickUp, Figma icon grids). Pastel is reserved for the earth pills.
+
+- [Linear](https://mobbin.com/sites/sections/91b1d7ce-42f5-45bb-a46d-d639dc04f9f4) — Dark 2-col feature section: 2-word heading left, two bold-lead micro-paragraphs, two overlapping app
+- [Craft](https://mobbin.com/sites/sections/58c31ff2-407c-4d33-933f-3b0a08528728) — Centered 6-word headline, two pill CTAs, then a laptop photo with the product UI filling the bottom 
+- [Front](https://mobbin.com/sites/sections/ba4ff47e-3460-4256-b2fb-0e0948cd8eb9) — Single centered 6-word heading followed directly by a full app screenshot on a pastel gradient panel
+- [Vercel](https://mobbin.com/sites/sections/892a4a8f-55b5-4bad-84b3-c77a538bcfb2) — 2-col feature: heading + one paragraph with a bolded phrase + one black CTA on the left; a cropped U
+- [Intercom](https://mobbin.com/sites/sections/9c26abac-3024-4d9e-8948-527d49d46d12) — Abstract UI wireframe (skeleton bars, no real text) on a pale-blue card left; 4-word heading and one
+- [Descript](https://mobbin.com/sites/sections/e24b2a5a-b2f9-44c6-945d-5c06d32462d2) — Dark section: icon + 3-word serif heading + one paragraph + one CTA left; app crop right showing a t
+
+### Statement beat (Nobody reads it. / Owed reads all of it.)
+
+A dark statement as an inset rounded card (Aboard's card variant) with two lines at 5–6vw, one italic phrase in the accent, and the five chips all visible at once (no reference cycles tags). Reveal line by line: rise + fade, no blur (Emil Kowalski: ease-out for entrances, ≤300ms). Chips at 28px, sans, near-transparent fill + hairline (chip height ≈63% of the primary button in the reference set).
+
+- [Aboard (homepage closer)](https://mobbin.com/sites/sections/7abec472-d4cf-4019-a6b0-7f971371a740) — Black full-bleed closing section: one two-line bold sans statement, one pill button, then footer.
+- [Cosmos (intro beat)](https://mobbin.com/sites/sections/5262f136-e0e1-4d69-bb6b-19673552612f) — Black full-screen section with a single one-line sentence over dim 3D flowers.
+- [FLORA (CTA band)](https://mobbin.com/sites/sections/34d18078-910f-46c9-8c6d-291d5b260440) — Compact black band between sections holding one sentence and one button.
+- [Nike After Dark Tour](https://mobbin.com/sites/sections/a7d81051-1ae6-44b0-8069-adebc2aff07f) — Full-screen black statement in all-caps condensed type with a colour glow.
+- [Grok (xAI) mission beat](https://mobbin.com/sites/sections/30ab578c-5e08-4070-905a-146bc41a8e12) — Black full-screen with a 3-word statement split across two corners over a line starburst.
+- [Varo Bank blog header](https://mobbin.com/sites/sections/789f3d78-ac9e-4336-9008-b06fc838bb87) — the closest match to 'st
+- [TinyWins homepage](https://mobbin.com/sites/sections/eb379572-6bc5-4f91-8ad9-ef6a2ff09f11) — Split-corner statement in condensed caps with a row of three tiny fact lines under it.
+- [Function (pricing beat)](https://mobbin.com/sites/sections/a4e3f14f-e77d-4c33-b31c-54b6c4cadf54) — Serif headline where exactly one phrase is set in italic serif and coloured for emphasis; marquee wi
+
+### Script showcase (the words to say)
+
+Charma's colour panel with a white card floating inside (section study, Aug 2026); the script body set in the document face (Geist 16px) per the facsimile research; the panel sits on paper as an inset card (Tailscale, Homerun, TravelPerk).
+
+- [Figma](https://mobbin.com/sites/sections/81a9826a-afe2-41fa-b4c9-540a62865af5) — Three grounds stacked in one viewport: periwinkle feature strip, pure-black CTA band, then white sec
+- [Dropbox](https://mobbin.com/sites/sections/233bd963-d5a3-48c9-b83c-5a91eda1e6c2) — Cream disclaimer section → dark-charcoal CTA band → pure-black footer
+- [Clockwise](https://mobbin.com/sites/sections/631080cf-56d2-4a37-bfa0-a3c079c78eab) — White content → pale-mint CTA band → dark-green footer
+- [Wise](https://mobbin.com/sites/sections/2ab68571-bb36-4ac5-ad2d-d849d92521ca) — Dark forest-green header block with lime display type, then a white section
+- [Wise](https://mobbin.com/sites/sections/30aeab8b-e5a9-4677-ac01-d547a6de6dcd) — Tail of dark-green section → white 4-column photo feature row → start of faint grey strip
+- [Tailscale](https://mobbin.com/sites/sections/e72d1d36-a761-4557-b655-d2797beb7abb) — Dark CTA rendered as two inset rounded cards on a white page
+
+### Earth (twelve rule pills that fall, bounce and settle)
+
+Copilot Money's depth-of-field pills (owner's reference) specified from the floating-objects research: three tiers (scale first, blur only on the far tier — Cosmos), a shallow heap along the bottom with the near tier never covered (Clay, Inkwell, Revolut, Daydream). Fall: Material 3 `long2` 500ms emphasized-accelerate; settle: Framer Motion default spring (stiffness 100, damping 10, mass 1); then a linear scroll slide.
+
+- [Copilot Money (hero)](https://mobbin.com/screens/329f7238-3f47-43b7-a226-ca7186181443) — Glossy 3D category pills scattered around a centred three-line headline on a navy ground - the close
+- [Cosmos (hero)](https://mobbin.com/screens/ae48f6fa-6cd5-471c-8fde-8c453de05cc3) — About thirty tilted rounded-square photo tiles scattered full-bleed around a small centred headline,
+- [Revolut (mission section)](https://mobbin.com/sites/sections/481d7e3c-d983-486f-a906-e8f003e52831) — A loose pile of seven glossy 3D coins sitting below a centred headline and intro paragraph on a whit
+- [Daydream (method section)](https://mobbin.com/sites/sections/b9ea8bf7-0cd1-4d5c-93e7-b6c379ab5263) — Seven pastel cards fanned in a slight arc under a headline, each rotated a little and overlapping th
+- [Inkwell (hero, settled orbs)](https://mobbin.com/sites/sections/409f023a-42b3-41f6-953f-7cdec40b00a5) — Five soft-edged circular image orbs resting on the bottom edge of a full-height gradient section, li
+- [Inkwell (talents section, depth bubbles)](https://mobbin.com/sites/sections/d3d530a1-2a62-4ccf-8fec-ac7f8427f6e4) — About thirteen circular portrait bubbles floating at different depths around a centred two-line sent
+- [Clay (hero)](https://mobbin.com/screens/f57bf23b-4bd1-40c8-8d74-14def5382948) — Two stacks of 3D pastel toy blocks resting in the bottom-left and bottom-right corners of the hero c
+- [Shop (home)](https://mobbin.com/screens/b7eb92dd-7046-4712-bacf-c337eb9cc4a7) — About twelve product cards and cut-out products scattered around a centred wordmark and search bar, 
+
+### Materials diagram (what a repair saves)
+
+A layered exploded view with an adjacent labelled list — T1 Energy's layered stack with its parts list, FREITAG's callout drawing with a numbered legend — drawn in the hero sprite's hand.
+
+- [T1 Energy](https://mobbin.com/sites/sections/d768b5c8-b3a1-49c6-aff9-df1e13e4a440) — layered 3D solar-cell stack with a parts list beside it
+- [FREITAG](https://mobbin.com/sites/sections/3ccd68f1-5142-422c-b972-8009dc78c366) — isometric process drawing with numbered callouts and a legend list
+
+### Rulebook register (four figures)
+
+Four figures in a row with vertical hairline dividers, number over a short label over a grey note.
+
+- [Fluz](https://mobbin.com/sites/sections/2cd277b3-579b-4d9d-8a70-bc882293c9e7) — four stats in a row with vertical dividers and two-line grey notes
+- [Wise](https://mobbin.com/sites/sections/7dfcd207-47ec-4cf2-9988-85371589abc4) — four figures with dividers and short labels
+- [Klarna](https://mobbin.com/sites/sections/3cd1f36b-d3d2-494b-953c-a7fcd9087451) — four figures with small labels on one ground
+- [Slack](https://mobbin.com/sites/sections/53c33050-78c8-43d5-ba24-92277cedeaa4) — four coloured figures with bold labels
+- [Revolut](https://mobbin.com/sites/sections/b5d03099-8332-47e5-bd72-ed80d0d9756b) — stat tiles: number, label, grey note
+
+### FAQ
+
+Farm Minerals' two-column accordion (section study, Aug 2026): heading left, questions right, one open at a time; capped at six questions, ≤35 words each (Titan's collapsed detail).
+
+- [Farm Minerals](https://mobbin.com/sites/sections/82a675c9-a7cd-4930-9fb2-d94fcefe242f) — two-column FAQ accordion
+
+### Closing CTA
+
+The green field as an inset rounded card on the page ground (Tailscale, Homerun, TravelPerk; Aboard's card variant), one filled pill and one text link.
+
+- [Figma](https://mobbin.com/sites/sections/81a9826a-afe2-41fa-b4c9-540a62865af5) — Three grounds stacked in one viewport: periwinkle feature strip, pure-black CTA band, then white sec
+- [Dropbox](https://mobbin.com/sites/sections/233bd963-d5a3-48c9-b83c-5a91eda1e6c2) — Cream disclaimer section → dark-charcoal CTA band → pure-black footer
+- [Clockwise](https://mobbin.com/sites/sections/631080cf-56d2-4a37-bfa0-a3c079c78eab) — White content → pale-mint CTA band → dark-green footer
+- [Wise](https://mobbin.com/sites/sections/2ab68571-bb36-4ac5-ad2d-d849d92521ca) — Dark forest-green header block with lime display type, then a white section
+- [Wise](https://mobbin.com/sites/sections/30aeab8b-e5a9-4677-ac01-d547a6de6dcd) — Tail of dark-green section → white 4-column photo feature row → start of faint grey strip
+
+### Footer
+
+Structured's split of brand and link columns with a cropped wordmark (section study, Aug 2026), the wordmark capped after the round-1 review.
+
+- Section study, August 2026 (Mobbin; site named above).
+
+### Section rhythm and ground plan
+
+One paper ground; coloured beats as inset cards; hairline seams between same-ground sections; symmetric section padding. Sixteen of sixteen reference ground changes are hard cuts — the inset-card plan avoids the switch altogether.
+
+- [Figma](https://mobbin.com/sites/sections/81a9826a-afe2-41fa-b4c9-540a62865af5) — Three grounds stacked in one viewport: periwinkle feature strip, pure-black CTA band, then white sec
+- [Dropbox](https://mobbin.com/sites/sections/233bd963-d5a3-48c9-b83c-5a91eda1e6c2) — Cream disclaimer section → dark-charcoal CTA band → pure-black footer
+- [Clockwise](https://mobbin.com/sites/sections/631080cf-56d2-4a37-bfa0-a3c079c78eab) — White content → pale-mint CTA band → dark-green footer
+- [Wise](https://mobbin.com/sites/sections/2ab68571-bb36-4ac5-ad2d-d849d92521ca) — Dark forest-green header block with lime display type, then a white section
+- [Wise](https://mobbin.com/sites/sections/30aeab8b-e5a9-4677-ac01-d547a6de6dcd) — Tail of dark-green section → white 4-column photo feature row → start of faint grey strip
+- [Tailscale](https://mobbin.com/sites/sections/e72d1d36-a761-4557-b655-d2797beb7abb) — Dark CTA rendered as two inset rounded cards on a white page
+- [Homerun](https://mobbin.com/sites/sections/367ac760-ee9f-4f90-b8ae-5e75be7fd5e0) — Two stacked full-width inset cards (gradient stats card, dark-charcoal team card) on a white page
+- [TravelPerk](https://mobbin.com/sites/sections/1415123f-0bb7-4803-93b7-0aa8dbc5dd8b) — Black inset CTA card between two cream sections
+
+## App
+
+### App shell (sidebar)
+
+Copilot Money and ChatGPT sidebars (owner's references) specified from the shell research: 14–19% width, icon + label rows, soft-tint selected row, grouped headers with counts, pinned bottom utilities; mobile dissolves into bottom tabs and in-page collapsible groups.
+
+- [Copilot Money (web)](https://mobbin.com/screens/a5d06373-d04c-4d20-aefc-6f41a1bae3c1) — Sidebar + accounts + detail panel
+- [Mercury (web)](https://mobbin.com/screens/c73a79d3-53e3-4a55-ab8f-51227cf36e63) — Banking shell
+- [Origin (web)](https://mobbin.com/screens/1eb1f32e-30c0-4fa3-aa69-2e5aaacb70c6) — Net-worth page
+- [YNAB (web)](https://mobbin.com/screens/417f3c31-1f5a-46d6-94fd-382e694ca69c) — Dark navy sidebar
+- [ChatGPT (web)](https://mobbin.com/screens/eebd03db-a802-47aa-a61b-8d68a5fe78f7) — Chat shell
+- [Claude (web)](https://mobbin.com/screens/7f488e21-04bc-4523-8ac5-b2038e7977fd) — Chat shell
+- [Gemini (web)](https://mobbin.com/screens/cee4870c-d114-431c-8ac9-4051fc3ba8d1) — Chat shell
+- [Notion AI (web)](https://mobbin.com/screens/176a7fae-1de4-4d50-a28b-cb14eef8b18b) — Chat shell
+
+### Start screen (question 1 inline)
+
+A question as the headline, one large input with an example placeholder, 4–6 icon chips beneath, body copy ≤2 lines.
+
+- [OpenAI Platform (web)](https://mobbin.com/screens/6134cdad-e9ac-41c3-8419-455cc17f7e83) — Empty "Chat prompts"
+- [WRITER (web)](https://mobbin.com/screens/f2b6ccd0-e81b-41b4-8f8d-fa9969f74a2d) — New session
+- [Wrangle (web)](https://mobbin.com/screens/81cdf5c6-e48b-4fed-afab-05fe938f5af3) — Sourcing start
+- [Juicebox (web)](https://mobbin.com/screens/04fde659-d71e-4081-ae32-7996e7b5ba52) — Agent start
+- [Fabric (web)](https://mobbin.com/screens/99b7f2db-c4bb-46ae-9fe8-a047a6d3b431) — New smart collection
+- [Notion AI (web)](https://mobbin.com/screens/176a7fae-1de4-4d50-a28b-cb14eef8b18b) — Home
+- [Alan "My coverage" (iOS)](https://mobbin.com/flows/1dd99a8e-7167-477f-b1e0-3c8bc2dd3aa7) — Coverage search start
+- [Tiimo (iOS)](https://mobbin.com/screens/da18f710-765d-4312-8be3-23d9c0a25b92) — One-question onboarding
+
+### Wizard (one question per screen)
+
+Monzo, Monese, N26, Opal, Liven: question ≤9 words at ≥28px, full-width option rows ≥56px with the radio on the right, 'Can't remember' last, progress bar + 'Question N of 4', Continue dimmed until answered, Skip as a text link under it.
+
+- [Monzo (iOS)](https://mobbin.com/screens/c0b40079-b472-403c-bdbd-12112553820f) — One question per screen, options in a white card with checkbox on the right, single pinned Next.
+- [Monese (iOS)](https://mobbin.com/flows/8d8c40df-0e61-4d79-8ccf-ca7a1571067c) — Counted progress ('Question 5 of 5'), single-select radio rows, selected state = green check, intro 
+- [N26 (iOS)](https://mobbin.com/flows/fc7b54bc-18d1-4755-94eb-e81914511561) — Vertical step checklist between question screens, then one question with radio rows.
+- [Plenty of Fish (iOS)](https://mobbin.com/flows/8181f889-f1f9-40e7-ab3a-3d9a5f83aff4) — One question per screen with big outlined pill options; single-select auto-advances, multi-select sh
+- [Opal (iOS)](https://mobbin.com/flows/7b6dc8e9-56e3-4db3-a898-cfdddc9b1e8a) — Question + one-line reason, 7 range options as full-width pills, Skip in the corner, Continue disabl
+- [Brilliant (iOS)](https://mobbin.com/flows/7ffbd4f0-78d1-49be-bf0d-9c90cac00e8c) — Option labels written as a bold lead phrase plus a plain-language tail.
+- [Liven (iOS)](https://mobbin.com/screens/40979156-6cee-4070-a387-2ba5cfedd075) — Long text made read-aloud-able: text-size control, listen toggle, numbered steps, bold key phrases.
+- [UNIQLO (iOS)](https://mobbin.com/screens/a5850c1f-d709-481b-8bcd-15bf31ec0458) — Results list where status is shown three ways at once (shape icon + colour + words) and each row has
+
+### Results (visual cards)
+
+Status is a coloured pill with the word — no per-row bar anywhere in 20 queries; rows lead with an icon tile, carry ≤20 visible words and one labelled action; the summary is stat tiles with a proportion bar; the recommended card gets a tint and a 'Start here' label.
+
+- [Credit Karma cards (iOS)](https://mobbin.com/screens/fd6ed637-c487-4210-8bd9-2674714fb742) — Offer card: ribbon, title, card thumbnail, facts row, promo box
+- [Cleo AI Benefits (iOS)](https://mobbin.com/screens/d482b3d1-13b1-4d30-b9cc-c4690d1ee82f) — 8 benefit rows in one card
+- [CVS Health visit checklist (iOS)](https://mobbin.com/screens/5367bf1b-68be-434d-825e-33fa368bfd42) — 5 stacked task cards
+- [Zocdoc Well Guide (iOS)](https://mobbin.com/screens/86529650-4ea4-42ec-ad0e-a1d14a9c9fb0) — 4 checkup rows with summary
+- [Superpower biomarkers (iOS)](https://mobbin.com/screens/e0abf867-3161-4008-be8e-1229e68cb175) — 14 health categories
+- [Mercedes-Benz Services (iOS)](https://mobbin.com/screens/155f60ad-ee02-4383-8de4-80f7f999eeb6) — Car health list under a photo
+- [Apple Health Checklist (iOS)](https://mobbin.com/screens/0420e040-cdba-419e-a764-21d85beffdd5) — "Inactive" section of cards
+- [Vanta Tests (web)](https://mobbin.com/screens/7b3e98c2-b1fd-4c66-b4f4-51fbbb0a346f) — Summary tiles above a status table
+
+## What was deliberately not copied
+
+- Copilot Money: the blue-on-light-blue selection, dollar-amount rows, the orange 'Start here'.
+- ChatGPT / Codex: 'New chat', the 'Projects / Your chats' pair, plain-text recents, the floating chat pill.
+- Linear: the gradient card behind a crop; FLORA: the giant numeral over an image; Descript: blurred UI stand-ins; Intercom: abstract wireframes — Owed's crops are real product pixels.
+- Kiwi's 'Top Pick' ribbon and Credit Karma's offer ribbon — Owed uses its own 'Start here' label in the accent.
