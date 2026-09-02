@@ -333,7 +333,7 @@ main:focus:not(:focus-visible) { outline: none; }
     transition-duration: .32s;
   }
 }
-.btn:not(.btn-quiet):active { transform: scale(.98); transition-duration: .1s; }
+.btn:not(.btn-quiet):active { transform: scale(.98); transition-duration: .1s; transition-timing-function: ease-out; }
 @media (prefers-reduced-motion: reduce) {
   .btn:hover, .btn:active { transform: none !important; }
 }

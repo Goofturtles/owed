@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788368000">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788368000">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788368000">
-<script src="assets/js/theme.js?v=1788368000"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788368400">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788368400">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788368400">
+<script src="assets/js/theme.js?v=1788368400"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -76,9 +76,10 @@
       <span class="brand-name">Owed</span>
     </a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#how" class="swap" data-text="How it works"><span>How it works</span></a>
-      <a href="#checks" class="swap" data-text="What we check"><span>What we check</span></a>
-      <a href="#faq" class="swap" data-text="Questions"><span>Questions</span></a>
+      <!-- data-text feeds the second, sliding copy (CSS ::after); aria-label keeps the name single for screen readers -->
+      <a href="#how" class="swap" data-text="How it works" aria-label="How it works"><span aria-hidden="true">How it works</span></a>
+      <a href="#checks" class="swap" data-text="What we check" aria-label="What we check"><span aria-hidden="true">What we check</span></a>
+      <a href="#faq" class="swap" data-text="Questions" aria-label="Questions"><span aria-hidden="true">Questions</span></a>
     </nav>
     <div class="nav-actions">
       <a class="btn btn-quiet nav-signin" href="auth.html?mode=signin">Sign in</a>
@@ -266,9 +267,9 @@
       </div>
 
       <figure class="sc-shot">
-        <img class="shot-light" src="assets/img/app-shot.webp?v=1788368000" width="1500" height="1000"
+        <img class="shot-light" src="assets/img/app-shot.webp?v=1788368400" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
-        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788368000" width="1500" height="1000"
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788368400" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
         <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
       </figure>
@@ -804,10 +805,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788368000"></script>
-<script src="assets/js/landing.js?v=1788368000"></script>
-<script src="assets/js/scroll.js?v=1788368000"></script>
-<script src="assets/js/scene.js?v=1788368000"></script>
-<script src="assets/js/motion.js?v=1788368000"></script>
+<script src="assets/js/catalog.js?v=1788368400"></script>
+<script src="assets/js/landing.js?v=1788368400"></script>
+<script src="assets/js/scroll.js?v=1788368400"></script>
+<script src="assets/js/scene.js?v=1788368400"></script>
+<script src="assets/js/motion.js?v=1788368400"></script>
 </body>
 </html>

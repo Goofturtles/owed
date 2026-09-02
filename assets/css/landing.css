@@ -52,6 +52,8 @@
 /* the label slides up and a second copy takes its place (Sharplink, Awwwards
    Site of the Day 27 Aug 2026 - two stacked copies of every nav word) */
 .nav-links a.swap { position: relative; overflow: hidden; padding: 0; }
+.nav-links a.swap:focus-visible { overflow: visible; }   /* the focus ring must never be clipped */
+.nav-links a.swap:focus-visible::after { display: none; }
 .nav-links a.swap > span, .nav-links a.swap::after {
   display: block; padding: .42rem .7rem;
   transition: transform .35s cubic-bezier(.65, 0, .35, 1);

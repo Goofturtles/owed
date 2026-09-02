@@ -284,8 +284,8 @@
 .wiz-photo { display: flex; flex-direction: column; align-items: center; gap: .75rem; max-width: 760px; margin: 0 auto .5rem; }
 .wiz-photo-btn { gap: .55rem; }
 .wiz-photo-btn svg { flex-shrink: 0; }
-.wiz-photo input:focus-visible + .wiz-photo-preview,
-.wiz-photo-btn:has(+ input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* keyboard focus lands on the hidden file input; the visible button shows it */
+.wiz-photo:focus-within .wiz-photo-btn { outline: 2px solid var(--accent); outline-offset: 3px; }
 .wiz-photo-preview {
   display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 1rem; align-items: center;
   width: 100%; padding: .75rem;
