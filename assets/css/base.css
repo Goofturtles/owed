@@ -282,6 +282,9 @@ main:focus:not(:focus-visible) { outline: none; }
 
 /* ---------- layout ---------- */
 .wrap { width: min(1140px, 100% - 2.5rem); margin-inline: auto; }
+/* on wide screens the page grows with the viewport instead of floating in a
+   1140px column with 400px of paper either side */
+@media (min-width: 1600px) { .wrap { width: min(1320px, 100% - 4rem); } }
 .wrap-narrow { width: min(720px, 100% - 2.5rem); margin-inline: auto; }
 
 /* ---------- buttons ---------- */

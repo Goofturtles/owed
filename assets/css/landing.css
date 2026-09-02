@@ -442,8 +442,10 @@
 .prem { margin-top: clamp(2rem, 4vw, 3.25rem); }
 .prem-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(200px, 26vw, 340px);
-  column-gap: clamp(2rem, 6vw, 6rem);
+  /* the label hugs the figure (Klarna, Fluz, Spade set label beside or under
+     the number); a far-right column left the middle of the row empty */
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 4.5rem);
   align-items: start;
   padding-block: clamp(1.1rem, 2.4vw, 1.9rem);
   border-top: 1px solid var(--line);
@@ -462,6 +464,7 @@
 
 .prem-text { padding-top: .55em; }        /* optically level with the figure's cap */
 .prem-label {
+  max-width: 40ch;
   font-size: var(--step-1);
   line-height: 1.35;
   letter-spacing: -.008em;
@@ -469,6 +472,7 @@
 }
 /* the nuance lives in a footnote, the way Amplemarket and Spade caption a figure */
 .prem-foot {
+  max-width: 60ch;
   margin-top: .55rem;
   font-size: var(--step-mono);
   letter-spacing: .02em;
