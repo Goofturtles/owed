@@ -78,7 +78,8 @@
     if (pay === false) return null;
 
     // timing
-    var age = Number(item.ageMonths);
+    // unknown age (null / '') must not coerce to 0 and pass every clock
+    var age = (item.ageMonths == null || item.ageMonths === '') ? NaN : Number(item.ageMonths);
     // null/'' would coerce to 0 and silently close the rule for everything
     var win = (rule.window_months == null || rule.window_months === '')
       ? NaN : Number(rule.window_months);
@@ -89,6 +90,10 @@
       } else if (age > win * 0.8) {
         timing = 'closing';
       }
+    } else if (!isFinite(age) && isFinite(win) && win < 900) {
+      // the user could not remember when they bought it: a timed rule can't be
+      // called open, so it is kept, marked down, and the script says to check
+      timing = 'unknown';
     }
 
     // hard deadline (settlements)
@@ -112,6 +117,7 @@
         at.payment_methods.indexOf('*') === -1) score += 1.5;
     if (pay === 'maybe') score -= 0.5;
     if (timing === 'closing') score -= 0.5;
+    if (timing === 'unknown') score -= 1;      // a clock nobody can read yet
     if (timing === 'closed') score -= 1;      // only floors get here
     if (rule.source_type === 'settlement') score += 1;   // real money, time-limited
     if (rule.source_type === 'program') score += 0.5;
@@ -134,6 +140,7 @@
     var timed = isFinite(win) && win < 900;
     if (timed && timing === 'open') reason.push('you are still inside the window');
     if (timed && timing === 'closing') reason.push('the window is nearly up');
+    if (timed && timing === 'unknown') reason.push('depends on when you bought it — the receipt or a bank statement will show the date');
     if (timing === 'closed') {
       reason.push('the legal minimum has passed, but some places give longer \u2014 worth asking');
     }
@@ -265,6 +272,7 @@
   }
 
   function agePhrase(months) {
+    if (months == null || months === '') return 'a while ago';
     var m = Number(months);
     if (!isFinite(m)) return 'a while ago';
     if (m < 4) return 'a couple of months ago';

@@ -194,7 +194,7 @@
     Object.keys(el.views).forEach(function (k) {
       el.views[k].hidden = (k !== name);
     });
-    if (name !== 'results') hidePanel();
+    if (name !== 'results') { hidePanel(); detail.body.innerHTML = ''; }
   }
 
   var mobileMQ = window.matchMedia('(max-width: 899.98px)');
@@ -222,7 +222,7 @@
     Array.prototype.forEach.call(el.tabs, function (t) {
       var on = t.dataset.tab === name;
       t.classList.toggle('is-on', on);
-      if (on) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+      if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
     });
   }
 
@@ -477,7 +477,7 @@
     wizEls.name.value = wiz.name;
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
-    wizEls.err.hidden = true;
+    wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
     renderCatRows();
     renderBrandRows();
     syncOptions();
@@ -548,7 +548,7 @@
   function updateContinue() {
     var ready = wiz.step !== 1 || !!(wiz.name.trim() || wiz.category);
     wizEls.next.classList.toggle('is-dim', !ready);
-    if (ready) wizEls.err.hidden = true;
+    if (ready) wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
   }
 
   wizEls.catChips.addEventListener('click', function (e) {
@@ -636,6 +636,7 @@
         // field stays until there is an answer
         toast('Type or pick something first.');
         wizEls.err.hidden = false;
+        document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1 wizErr');
         wizEls.name.focus();
         return;
       }
@@ -668,7 +669,7 @@
       name: wiz.name.trim() || itemLabel({ brand: wiz.brand, category: wiz.category }),
       brand: wiz.brand.trim(),
       category: wiz.category || 'other',
-      ageMonths: wiz.ageMonths == null ? 14 : wiz.ageMonths,
+      ageMonths: wiz.ageMonths,   // null = the user could not remember; never invent an age
       payment: wiz.payment || 'unknown',
       broken: wiz.broken,
       region: user.region || 'US'
@@ -1145,6 +1146,7 @@
 
     if (inPanel) {
       selectRule(m, { focus: false, render: false });
+      scrBody.innerHTML = '';   // the narrow-layout copy would keep the same ids
       detail.body.className = 'detail-body is-script';
       detail.body.innerHTML = html;
       panelMode = 'script';

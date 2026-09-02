@@ -290,6 +290,8 @@
   /* ---------------- magnetic buttons ---------------- */
   (function magnetic() {
     if (reduce || !window.matchMedia('(hover: hover)').matches) return;
+    // never in the app: its primary buttons are 44px targets for older users
+    if (document.body.classList.contains('app-body')) return;
     // the hero submit sits inside a pill with no overflow clipping — it would
     // visibly poke through the border while you aim at it
     var btns = document.querySelectorAll('.btn-accent:not(.hero-try-btn)');
