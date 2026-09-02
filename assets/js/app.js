@@ -892,6 +892,8 @@
     var facts = [];
     var win = firstClause(r.window_note, 6);
     if (win) facts.push(fact('clock', 'Window', win));
+    // an unknown purchase date on a timed rule: the clock cannot be read yet, and the card says so
+    if (m.timing === 'unknown') facts.push(fact('calendar', 'Date', 'check your receipt'));
     if (r.deadline) facts.push(fact('calendar', 'Deadline', fmtDate(r.deadline)));
     if (ASK_WHO[r.source_type]) facts.push(fact('who', 'Ask', ASK_WHO[r.source_type]));
 
