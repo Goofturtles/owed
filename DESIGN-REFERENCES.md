@@ -6,6 +6,17 @@ Research method: for each part, 4–20 Mobbin queries (sections, screens, flows)
 
 Motion systems named throughout: Material 3 motion tokens and easings; Framer Motion's default spring (stiffness 100, damping 10, mass 1); Emil Kowalski's guidance on UI animation; Apple HIG Motion (Reduce Motion honoured everywhere).
 
+## Interaction finish, measured on award-winning sites (2 September 2026)
+
+Hover and press states cannot be read from Mobbin stills, so they were measured live, in the browser, on the sites Awwwards had just awarded (verified on awwwards.com the same day):
+
+- **Aardvark Book Club** — Site of the Day, 30 Aug 2026 ([awwwards.com/sites/aardvark-book-club](https://www.awwwards.com/sites/aardvark-book-club), live at aardvarkbookclub.com). Primary buttons: the pill's fill scales up on hover (`scale .15s cubic-bezier(.4,0,.2,1)` on the anchor; the fill span runs `transform .35s cubic-bezier(.34, 2.27, …)`, an overshoot), and the label nudges 3px with a 4° tilt. → Owed's `.btn-accent:hover` scales to 1.025 on `cubic-bezier(.34, 1.56, .64, 1)` over 320ms and settles to .98 on press; the tilt was left out for the older audience.
+- **Sharplink** — Site of the Day, 27 Aug 2026 ([awwwards.com/sites/sharplink](https://www.awwwards.com/sites/sharplink)). Every nav word and CTA is rendered twice, stacked; on hover the visible copy slides up and the second takes its place. → Owed's nav links (`.nav-links a.swap`) carry the same two-copy slide, 350ms `cubic-bezier(.65, 0, .35, 1)`, disabled under Reduce Motion.
+- **Squarespace Foundations** — Site of the Day, 1 Sep 2026 ([awwwards.com/sites/squarespace-foundations](https://www.awwwards.com/sites/squarespace-foundations)). Utility controls fade (`opacity .3s`) rather than move. → Owed's icon buttons keep their fill-only hover.
+- **Opal Tadpole** — Site of the Day, 11 Jan 2024, on the Sites of the Year list ([awwwards.com/sites/opal-tadpole](https://www.awwwards.com/sites/opal-tadpole)); the product page now redirects to a story page, so nothing was measured.
+
+Cards on both pages (`.rcard`, `.tile`, `.hw-tile`) rise 1px with a soft shadow on hover; footer and script links draw an underline in from the left (250ms). Result cards and tiles only animate under `@media (hover: hover)`.
+
 ## Landing page
 
 ### Hero and WebGL flythrough
@@ -27,7 +38,7 @@ Owed's own signature idea. Its typography follows the document-facsimile pattern
 
 ### Showcase (the app on the page)
 
-Intercom's hairline index beside a cropped product shot (section study, Aug 2026); reduced to one lede + one visual per the image-led density research. Screenshot to be re-shot at 2× without browser chrome after the app rebuild.
+Intercom's hairline index beside a cropped product shot (section study, Aug 2026); reduced to one lede + one visual per the image-led density research. Re-shot 2 September 2026 from the rebuilt three-pane shell: 1500×1000 at 2×, no browser chrome, one file per theme (`assets/img/app-shot.webp`, `app-shot-dark.webp`), run past the container's right edge from 900px and clipped by the section.
 
 - [Linear](https://mobbin.com/sites/sections/91b1d7ce-42f5-45bb-a46d-d639dc04f9f4) — Dark 2-col feature section: 2-word heading left, two bold-lead micro-paragraphs, two overlapping app
 - [Craft](https://mobbin.com/sites/sections/58c31ff2-407c-4d33-933f-3b0a08528728) — Centered 6-word headline, two pill CTAs, then a laptop photo with the product UI filling the bottom 
@@ -49,9 +60,9 @@ Instrument's ruled ledger (section study, Aug 2026); figure + ≤4-word label + 
 - [Intercom](https://mobbin.com/sites/sections/9c26abac-3024-4d9e-8948-527d49d46d12) — Abstract UI wireframe (skeleton bars, no real text) on a pale-blue card left; 4-word heading and one
 - [Descript](https://mobbin.com/sites/sections/e24b2a5a-b2f9-44c6-945d-5c06d32462d2) — Dark section: icon + 3-word serif heading + one paragraph + one CTA left; app crop right showing a t
 
-### How it works (four white tiles with real app crops)
+### How it works (four white tiles with real app crops, 2×2)
 
-Light section, header stack left, one row of four equal tiles identified by fill, each with a small mono numeral, a 2–4-word title, ≤12 words of body and a real crop of the product bleeding off the tile's well. No connector line. Motion: Material 3 `medium2` 300ms emphasized-decelerate rise, `short1` 50ms stagger.
+Light section under the heading "Four questions, then a phone call.", header stack left, then a 2×2 grid of near-square (4:3) tiles told apart from the paper by fill alone, each with a small mono numeral, a 2–4-word title (Answer four questions · See who owes you · Read the script · Keep it on your shelf), ≤12 words of body and a real crop of the rebuilt app in a well filling the bottom half of the tile, bleeding off its bottom and right edges. The crops are 2× exports (`assets/img/how-01..04.webp`, each with a `-dark` twin) shown at about half their pixel width, so the UI sits at ~1:1 on a 2× screen; the two tall phone crops are narrowed to 78% and 56% of the well. Two-up rather than four-up because four 273px tiles could not keep one element of real UI legible. No connector line. Motion: Material 3 `medium2` 300ms emphasized-decelerate rise from 16px, `short1` 50ms stagger; hover lifts the crop 12px; one column under 720px.
 
 - [Norma](https://mobbin.com/sites/sections/96f4183b-7eb5-437c-90ad-95d1306d320c) — Left-aligned 'How it works.' heading and a 2-line lede, then 3 equal hairline-bordered cards, each w
 - [Airtasker](https://mobbin.com/sites/sections/c8ad31ec-26b9-4c52-9f86-0ddb568bb5e8) — Left-aligned 'What is Airtasker?' heading, then 3 solid-blue rounded tiles each holding a phone-scre
@@ -168,6 +179,8 @@ One paper ground; coloured beats as inset cards; hairline seams between same-gro
 
 Copilot Money and ChatGPT sidebars (owner's references) specified from the shell research: 14–19% width, icon + label rows, soft-tint selected row, grouped headers with counts, pinned bottom utilities; mobile dissolves into bottom tabs and in-page collapsible groups.
 
+As built (2 September 2026): a 272px sidebar — brand row, a full-width accent "Check something" button, a collapsible "My things" group with its count and one ≥56px row per item carrying a status dot and "N to ask" or "N long shots" ("Show N more" past six), and the utilities pinned to the foot: region select, theme toggle, Help, Sign out, the rulebook count. Under 900px the sidebar dissolves into a brand-only top bar, the shelf as an in-page collapsible group, and a bottom tab bar (My things · Check · Help) with the utilities under Help. From 1200px a third pane, `clamp(380px, 32vw, 480px)` wide, holds the selected rule or its script and opens on the top lead.
+
 - [Copilot Money (web)](https://mobbin.com/screens/a5d06373-d04c-4d20-aefc-6f41a1bae3c1) — Sidebar + accounts + detail panel
 - [Mercury (web)](https://mobbin.com/screens/c73a79d3-53e3-4a55-ab8f-51227cf36e63) — Banking shell
 - [Origin (web)](https://mobbin.com/screens/1eb1f32e-30c0-4fa3-aa69-2e5aaacb70c6) — Net-worth page
@@ -180,6 +193,8 @@ Copilot Money and ChatGPT sidebars (owner's references) specified from the shell
 ### Start screen (question 1 inline)
 
 A question as the headline, one large input with an example placeholder, 4–6 icon chips beneath, body copy ≤2 lines.
+
+As built: question 1 is the start screen — "What broke?" at ≥28px, one 56px input with the placeholder "e.g. Sony headphones", six category rows in two columns plus "Something else", one line of help, no Back and no Skip.
 
 - [OpenAI Platform (web)](https://mobbin.com/screens/6134cdad-e9ac-41c3-8419-455cc17f7e83) — Empty "Chat prompts"
 - [WRITER (web)](https://mobbin.com/screens/f2b6ccd0-e81b-41b4-8f8d-fa9969f74a2d) — New session
@@ -194,6 +209,8 @@ A question as the headline, one large input with an example placeholder, 4–6 i
 
 Monzo, Monese, N26, Opal, Liven: question ≤9 words at ≥28px, full-width option rows ≥56px with the radio on the right, 'Can't remember' last, progress bar + 'Question N of 4', Continue dimmed until answered, Skip as a text link under it.
 
+As built: four questions (What broke? · Who made it? · When did you get it? · How did you pay?), "Question N of 4" over a progress bar, full-width option rows ≥56px with the radio on the right, "Can't remember — that's fine" as the last row on both the date and the payment questions, Continue dimmed (not disabled) until question 1 has an answer, "Skip this question" as a text link on the brand question only, and the last button reading "See what you are owed". Picking a date advances by itself.
+
 - [Monzo (iOS)](https://mobbin.com/screens/c0b40079-b472-403c-bdbd-12112553820f) — One question per screen, options in a white card with checkbox on the right, single pinned Next.
 - [Monese (iOS)](https://mobbin.com/flows/8d8c40df-0e61-4d79-8ccf-ca7a1571067c) — Counted progress ('Question 5 of 5'), single-select radio rows, selected state = green check, intro 
 - [N26 (iOS)](https://mobbin.com/flows/fc7b54bc-18d1-4755-94eb-e81914511561) — Vertical step checklist between question screens, then one question with radio rows.
@@ -206,6 +223,8 @@ Monzo, Monese, N26, Opal, Liven: question ≤9 words at ≥28px, full-width opti
 ### Results (visual cards)
 
 Status is a coloured pill with the word — no per-row bar anywhere in 20 queries; rows lead with an icon tile, carry ≤20 visible words and one labelled action; the summary is stat tiles with a proportion bar; the recommended card gets a tint and a 'Start here' label.
+
+As built: a header with a 48px category tile and "Edit details"; a summary strip — one line ("N places to ask and M long shots"), three stat tiles each with a one-sentence key, a proportion bar; filter chips All · Strong · Worth asking · Long shots with counts; groups by source with a count, open on their first three leads, long shots folded behind "Show N long shots"; each card a 48px source tile, the title, a 14px status pill (word + glyph: filled check, half disc, empty ring), facts (Window · Date · Deadline · Ask), Details and "Get the words to say"; the top lead tinted 7% accent with a "Start here" label, never a long shot. From 1200px the card's button turns quiet and the panel carries the primary.
 
 - [Credit Karma cards (iOS)](https://mobbin.com/screens/fd6ed637-c487-4210-8bd9-2674714fb742) — Offer card: ribbon, title, card thumbnail, facts row, promo box
 - [Cleo AI Benefits (iOS)](https://mobbin.com/screens/d482b3d1-13b1-4d30-b9cc-c4690d1ee82f) — 8 benefit rows in one card

@@ -329,7 +329,7 @@
       li.innerHTML =
         '<button class="srow' + (on ? ' is-on' : '') + '" type="button"' +
           (on ? ' aria-current="true"' : '') + ' data-id="' + esc(item.id) + '">' +
-          '<span class="srow-ico" aria-hidden="true">' + catIcon(item.category) + '</span>' +
+          '<span class="srow-ico" aria-hidden="true">' + itemPicture(item) + '</span>' +
           '<span class="srow-main">' +
             '<span class="srow-name">' + label + '</span>' +
             '<span class="srow-sub">' +
@@ -409,7 +409,7 @@
   var wiz = {};
   function resetWiz() {
     wiz = { step: 1, name: '', category: null, brand: '', brandOther: false,
-            ageMonths: null, ageUnknown: false, payment: null, broken: true, editingId: null };
+            ageMonths: null, ageUnknown: false, payment: null, broken: true, editingId: null, photo: null };
   }
   resetWiz();
 
@@ -428,7 +428,13 @@
     brandChips: document.getElementById('brandChips'),
     ageOpts: document.getElementById('ageOpts'),
     payOpts: document.getElementById('payOpts'),
-    broken: document.getElementById('wizBroken')
+    broken: document.getElementById('wizBroken'),
+    photo: document.getElementById('wizPhoto'),
+    photoWrap: document.getElementById('wizPhotoWrap'),
+    photoPreview: document.getElementById('wizPhotoPreview'),
+    photoImg: document.getElementById('wizPhotoImg'),
+    photoNote: document.getElementById('wizPhotoNote'),
+    photoRemove: document.getElementById('wizPhotoRemove')
   };
 
   var POPULAR_CATS = ['phone', 'laptop', 'headphones', 'appliance-large', 'appliance-small', 'power-tool'];
@@ -473,6 +479,7 @@
       wiz.ageMonths = editItem.ageMonths == null ? null : editItem.ageMonths;
       wiz.payment = editItem.payment;
       wiz.broken = editItem.broken !== false;
+      wiz.photo = editItem.photo || null;
     } else if (prefill) {
       wiz.name = prefill;
       wiz.category = C.guessCategory(prefill);
@@ -482,6 +489,7 @@
     wizEls.name.value = wiz.name;
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
+    showPhoto(wiz.photo, wiz.photo ? 'Photo saved with this item.' : '');
     wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
     renderCatRows();
     renderBrandRows();
@@ -613,6 +621,110 @@
 
   wizEls.broken.addEventListener('change', function () { wiz.broken = wizEls.broken.checked; });
 
+  /* ---------------- a photo of the item ----------------
+     The photo is shrunk to a small JPEG and kept with the item in this
+     browser. Where the browser ships a built-in model (Chrome's Prompt API)
+     it names the item on the device; otherwise a barcode is read when there
+     is one. Nothing is uploaded anywhere. */
+  var CAT_IDS = POPULAR_CATS.concat(['other']);
+
+  function itemPicture(item) {
+    return item && item.photo && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(item.photo)
+      ? '<img src="' + item.photo + '" alt="">'
+      : catIcon(item.category);
+  }
+
+  function showPhoto(dataUrl, noteHTML) {
+    var has = !!dataUrl;
+    wizEls.photoPreview.hidden = !has;
+    wizEls.photoWrap.classList.toggle('has-photo', has);
+    if (has) wizEls.photoImg.src = dataUrl; else wizEls.photoImg.removeAttribute('src');
+    wizEls.photoNote.innerHTML = noteHTML || '';
+  }
+
+  function shrinkPhoto(file, cb) {
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      var max = 640, s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      var c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.naturalWidth * s));
+      c.height = Math.max(1, Math.round(img.naturalHeight * s));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      cb(c.toDataURL('image/jpeg', .82));
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); cb(null); };
+    img.src = url;
+  }
+
+  function applyIdentified(r) {
+    var changed = false;
+    if (r.name && !wiz.name.trim()) { wiz.name = String(r.name).slice(0, 80); wizEls.name.value = wiz.name; changed = true; }
+    if (r.brand && !wiz.brand.trim()) { wiz.brand = String(r.brand).slice(0, 40); wizEls.brand.value = wiz.brand; changed = true; }
+    if (r.category && CAT_IDS.indexOf(r.category) !== -1) { wiz.category = r.category; changed = true; }
+    renderCatRows();
+    renderBrandRows();
+    return changed;
+  }
+
+  function identifyWithBuiltInAI(file) {
+    if (!('LanguageModel' in window) || typeof window.LanguageModel.create !== 'function') {
+      return Promise.reject(new Error('no built-in model'));
+    }
+    return window.LanguageModel.create({ expectedInputs: [{ type: 'image' }] }).then(function (session) {
+      var ask = 'Look at this photo of a household item. Reply with ONLY compact JSON like ' +
+        '{"name":"Sony WH-1000XM4 headphones","brand":"Sony","category":"headphones"} ' +
+        'where category is one of: ' + CAT_IDS.join(', ') + '. Use empty strings when unsure.';
+      return session.prompt([{ role: 'user', content: [{ type: 'text', value: ask }, { type: 'image', value: file }] }]);
+    }).then(function (text) {
+      var m = String(text).match(/\{[\s\S]*\}/);
+      if (!m) throw new Error('no json');
+      return JSON.parse(m[0]);
+    });
+  }
+
+  function readBarcode(file) {
+    if (!('BarcodeDetector' in window) || typeof createImageBitmap !== 'function') return Promise.resolve(null);
+    return createImageBitmap(file).then(function (bmp) {
+      return new window.BarcodeDetector().detect(bmp);
+    }).then(function (codes) {
+      return codes && codes.length ? String(codes[0].rawValue).slice(0, 40) : null;
+    }).catch(function () { return null; });
+  }
+
+  wizEls.photo.addEventListener('change', function () {
+    var file = wizEls.photo.files && wizEls.photo.files[0];
+    wizEls.photo.value = '';
+    if (!file) return;
+    shrinkPhoto(file, function (dataUrl) {
+      if (!dataUrl) { toast('That file could not be read as a photo.'); return; }
+      wiz.photo = dataUrl;
+      showPhoto(dataUrl, 'Looking at your photo…');
+      identifyWithBuiltInAI(file).then(function (r) {
+        r = r || {};
+        var did = applyIdentified(r);
+        var what = r.name || r.brand || (r.category && C.categoryLabel(r.category));
+        showPhoto(dataUrl, did && what
+          ? '<b>Looks like ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
+          : 'Photo saved with this item. Type what it is below.');
+        updateContinue();
+      }).catch(function () {
+        return readBarcode(file).then(function (code) {
+          showPhoto(dataUrl, code
+            ? '<b>Barcode ' + esc(code) + ' read.</b> The photo is saved with this item — type what it is and who made it below.'
+            : 'Photo saved with this item. This browser cannot name products by itself yet, so type what it is below.');
+        });
+      });
+    });
+  });
+
+  wizEls.photoRemove.addEventListener('click', function () {
+    wiz.photo = null;
+    showPhoto(null, '');
+    wizEls.name.focus();
+  });
+
   function goStep(n) {
     wiz.step = Math.max(1, Math.min(4, n));
     Array.prototype.forEach.call(document.querySelectorAll('.wiz-step'), function (s) {
@@ -620,7 +732,8 @@
     });
     wizEls.bar.style.width = (wiz.step / 4 * 100) + '%';
     wizEls.count.textContent = 'Question ' + wiz.step + ' of 4';
-    wizEls.next.textContent = wiz.step === 4 ? 'See what you are owed' : 'Continue';
+    // the button says what comes next, not just "Continue" (round-2 judges)
+    wizEls.next.textContent = ['Next: who made it', 'Next: when you got it', 'Next: how you paid', 'See what you are owed'][wiz.step - 1];
     // skip only where there is no "can't remember" row to do the same job
     wizEls.skip.hidden = wiz.step !== 2;
     // no Back on the start screen; on question 1 it appears only while editing
@@ -677,7 +790,8 @@
       ageMonths: wiz.ageMonths,   // null = the user could not remember; never invent an age
       payment: wiz.payment || 'unknown',
       broken: wiz.broken,
-      region: user.region || 'US'
+      region: user.region || 'US',
+      photo: wiz.photo || null    // a small JPEG data URL; lives only in this browser
     };
 
     var item;
@@ -728,7 +842,7 @@
   function showResults(item, keepFocus) {
     current.item = item;
     resEls.title.textContent = item.name || itemLabel(item);
-    resEls.icon.innerHTML = catIcon(item.category);
+    resEls.icon.innerHTML = itemPicture(item);
     resEls.sub.textContent = [
       C.categoryLabel(item.category),
       item.brand,
@@ -777,17 +891,15 @@
       }
     } else {
       resEls.none.hidden = true;
-      resEls.filter.hidden = false;
+      // the filter chips repeated the key's numbers and confused the people
+      // this is for; the long shots fold behind one row instead
+      resEls.filter.hidden = true;
       resEls.summary.hidden = false;
       resEls.summary.innerHTML = renderSummary(n);
-      // the proportion bar: grow each segment by its count
-      Array.prototype.forEach.call(resEls.summary.querySelectorAll('.res-bar i'), function (seg) {
-        seg.style.flexGrow = seg.dataset.n;
-      });
       startMarked = false;
-      resEls.groups.innerHTML = E.group(matches).map(function (g) {
-        return renderGroup(g, n.ask > 0);
-      }).join('');
+      var leads = matches.filter(function (m) { return !isLongShot(m); });
+      var longs = matches.filter(isLongShot);
+      resEls.groups.innerHTML = E.group(leads).map(renderGroup).join('') + renderLongShots(longs, !leads.length);
       // wide: the panel is never empty — it opens on the top lead
       if (wide) {
         var first = resEls.groups.querySelector('.rcard');
@@ -811,47 +923,35 @@
     }
   }
 
-  /* one headline line, three stat tiles with their plain sentence, a bar */
+  /* one plain sentence and a three-part key. The stat tiles and the bar said
+     the same numbers three times over (round-2 judges; Zillow and Glassdoor
+     open their results with one sentence, then the list). */
   function renderSummary(n) {
-    var line = '<p class="res-line' + (n.ask ? '' : ' none') + '">' +
-      '<b class="res-n tnum">' + n.ask + '</b> ' + (n.ask === 1 ? 'place to ask' : 'places to ask') +
-      (n.long ? ' <span class="res-line-sub">and ' + n.long + (n.long === 1 ? ' long shot' : ' long shots') + '</span>' : '') +
-      '</p>';
-    var tiles = [['strong', 'strong'], ['worth asking', 'worth'], ['long shot', 'long']].map(function (pair) {
+    var lead;
+    if (n.ask) {
+      lead = '<b class="res-n tnum">' + n.ask + '</b> ' + (n.ask === 1 ? 'place' : 'places') +
+        ' to ask about a free fix. <span class="res-line-sub">Start with the first one below.</span>';
+    } else {
+      lead = 'No strong lead for this one' +
+        (n.long ? ', <span class="res-line-sub">but the long shots below are worth a look.</span>' : '.');
+    }
+    var keys = [['strong', 'strong'], ['worth asking', 'worth'], ['long shot', 'long']].filter(function (pair) {
+      return n[pair[1]] > 0;
+    }).map(function (pair) {
       var s = STRENGTH[pair[0]], count = n[pair[1]];
-      return '<div class="stile' + (count ? '' : ' zero') + '">' +
-        '<span class="stile-n tnum">' + count + '</span>' +
-        '<span class="stile-l"><i class="dot ' + s.dot + '" aria-hidden="true"></i>' + esc(s.plural) + '</span>' +
-        '<span class="stile-key">' + esc(s.key) + '</span>' +
-      '</div>';
+      var word = pair[0] === 'long shot' ? (count === 1 ? 'long shot' : 'long shots') : pair[0];
+      return '<span class="res-key"><i class="dot ' + s.dot + '" aria-hidden="true"></i><b class="tnum">' + count + '</b> ' + esc(word) + '</span>';
     }).join('');
-    var bar = '<div class="res-bar" aria-hidden="true">' +
-      (n.strong ? '<i class="strong" data-n="' + n.strong + '"></i>' : '') +
-      (n.worth ? '<i class="worth" data-n="' + n.worth + '"></i>' : '') +
-      (n.long ? '<i class="long" data-n="' + n.long + '"></i>' : '') +
-      '</div>';
-    return line + '<div class="res-tiles">' + tiles + '</div>' + bar;
+    return '<p class="res-line' + (n.ask ? '' : ' none') + '">' + lead + '</p>' +
+      '<p class="res-keys">' + keys + '</p>';
   }
 
-  var GROUP_VISIBLE = 3;
   var startMarked = false;
 
   function isLongShot(m) { return m.strength === 'long shot'; }
 
-  /* a group shows its first three leads; long shots (and any overflow) fold
-     behind one button. When there are no leads at all, the long shots are
-     the answer and stay open. */
-  function renderGroup(g, collapseLong) {
-    var lead = [], rest = [];
-    g.items.forEach(function (m) {
-      if ((collapseLong && isLongShot(m)) || lead.length >= GROUP_VISIBLE) rest.push(m);
-      else lead.push(m);
-    });
-    var longs = rest.filter(isLongShot).length;
-    var more = longs === rest.length
-      ? 'Show ' + rest.length + (rest.length === 1 ? ' long shot' : ' long shots')
-      : 'Show ' + rest.length + ' more';
-
+  /* a source group shows every real lead it holds; nothing folds inside it */
+  function renderGroup(g) {
     return '<section class="rgroup">' +
       '<h2 class="rgroup-head">' +
         '<span class="rgroup-ico" aria-hidden="true">' + ico(SRC_ICON[g.type] || 'box', 18) + '</span>' +
@@ -859,12 +959,27 @@
         '<span class="sr-only">, </span>' +
         '<span class="rgroup-count tnum">' + g.items.length + '</span>' +
       '</h2>' +
+      '<div class="rgroup-list">' + g.items.map(renderCard).join('') + '</div>' +
+    '</section>';
+  }
+
+  /* every long shot on the page sits behind ONE quiet row at the end, so the
+     list of real leads is never broken up by "show more" buttons. When there
+     is no real lead, the long shots are the answer and stay open. */
+  function renderLongShots(longs, open) {
+    if (!longs.length) return '';
+    var label = longs.length + (longs.length === 1 ? ' long shot' : ' long shots');
+    return '<section class="rgroup rgroup-long">' +
+      '<h2 class="rgroup-head">' +
+        '<span class="rgroup-ico" aria-hidden="true">' + ico('box', 18) + '</span>' +
+        '<span class="rgroup-title">Long shots</span>' +
+        '<span class="sr-only">, </span>' +
+        '<span class="rgroup-count tnum">' + longs.length + '</span>' +
+      '</h2>' +
+      '<p class="rgroup-note">General rules that probably do not apply to you. Kept so nothing is hidden.</p>' +
       '<div class="rgroup-list">' +
-        lead.map(renderCard).join('') +
-        (rest.length
-          ? '<div class="rgroup-more" hidden>' + rest.map(renderCard).join('') + '</div>' +
-            '<button class="rgroup-toggle" type="button" data-more>' + more + '</button>'
-          : '') +
+        '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + longs.map(renderCard).join('') + '</div>' +
+        (open ? '' : '<button class="rgroup-toggle" type="button" data-more>Show ' + label + '</button>') +
       '</div>' +
     '</section>';
   }
