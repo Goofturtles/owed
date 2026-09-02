@@ -36,7 +36,10 @@
   /* Passwords are never stored. This is a local demo account: the
      browser simply remembers a name, email and region. */
   function getUser() {
-    return read(KEY_USER, null);
+    var u = read(KEY_USER, null);
+    if (!u || typeof u !== 'object' || Array.isArray(u)) return null;
+    ['name', 'email', 'region'].forEach(function (k) { if (u[k] != null) u[k] = String(u[k]); });
+    return u;
   }
 
   function signUp(name, email, region) {
@@ -94,7 +97,17 @@
     var shelf = read(KEY_SHELF, []);
     if (!Array.isArray(shelf)) return [];
     // one malformed entry should not take the whole app down
-    return shelf.filter(function (it) { return it && typeof it === 'object' && it.id; });
+    return shelf.filter(function (it) {
+      return it && typeof it === 'object' && !Array.isArray(it) && it.id;
+    }).map(function (it) {
+      // normalise the shape at the read boundary: everything downstream
+      // builds markup from these fields
+      it.id = String(it.id);
+      if (it.name != null) it.name = String(it.name);
+      if (it.brand != null) it.brand = String(it.brand);
+      if (!it.claims || typeof it.claims !== 'object' || Array.isArray(it.claims)) it.claims = {};
+      return it;
+    });
   }
 
   function addItem(item) {

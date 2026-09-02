@@ -108,7 +108,7 @@
       result.hidden = false;
       result.innerHTML =
         '<h2 class="try-h">' + t.heading + '</h2>' +
-        '<p class="muted" style="font-size:.82rem">Four questions in the app narrows this to the ones that actually apply to you.</p>' +
+        '<p class="muted" style="font-size:.82rem">Four questions in the app narrow this to the ones worth asking about.</p>' +
         '<ul>' + items + '</ul>' +
         '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">Check my ' +
         (C.guessCategory(text) ? esc(C.categoryLabel(C.guessCategory(text))).toLowerCase() : 'item') + '</a>';
@@ -122,7 +122,9 @@
     var card = btn.closest('.script-card');
     var body = card && card.querySelector('.script-body');
     if (!body) return;
-    var text = body.innerText.trim();
+    var text = Array.prototype.map.call(body.querySelectorAll('p:not(.sr-only)'), function (p) {
+      return p.innerText.trim();
+    }).join('\n');
     // the button holds an icon as well as a label, so only the label swaps
     var lbl = btn.querySelector('span') || btn;
     var done = function () {
@@ -145,10 +147,12 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.sc-copy, .sc-shot, .section-head, .prem-row, .step, .tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
+    '.sc-copy, .sc-shot, .section-head, .prem-row, .tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
   );
 
+  var io = null;
   function revealAll() {
+    if (io) { io.disconnect(); io = null; }
     Array.prototype.forEach.call(revealables, function (el) { el.classList.add('in'); });
   }
 
@@ -162,7 +166,7 @@
       var n = Array.prototype.indexOf.call(sibs, el);
       el.style.transitionDelay = Math.min(n, 5) * 70 + 'ms';
     });
-    var io = new IntersectionObserver(function (entries) {
+    io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('in');
@@ -176,7 +180,9 @@
     window.addEventListener('load', function () {
       setTimeout(revealAll, 900);
     });
-    setTimeout(revealAll, 2500);
+    // a hard floor only for a load event that never comes; 2.5s used to
+    // reveal every section while the reader was still on the first one
+    setTimeout(revealAll, 6000);
   }
 
 
@@ -201,7 +207,6 @@
     if (!card || !body || !tabsWrap) return;
 
     var tabs = tabsWrap.querySelectorAll('.script-tab');
-    var ink = tabsWrap.querySelector('.script-tab-ink');
     var who = document.getElementById('scriptWho');
     var rule = document.getElementById('scriptRule');
     var due = document.getElementById('scriptDue');
@@ -217,16 +222,16 @@
         lines: [
           'Hi \u2014 I\u2019d like to open a claim under the \u00abextended warranty benefit\u00bb on my card.',
           'I bought Sony WH\u20111000XM4 headphones on \u00ab12 June 2025\u00bb and paid for them with this card. They stopped charging last week.',
-          'Sony\u2019s one\u2011year warranty has ended, which is exactly what this benefit is for. Could you tell me what you need from me, and confirm the claim deadline?'
+          'The maker\u2019s own warranty has ended, which is exactly what this benefit is for. Could you tell me what you need from me, and confirm the claim deadline?'
         ]
       },
       {
         who: 'The shop you bought it from',
         rule: 'Consumer Rights Act 2015',
-        due: 'Up to 6 years \u00b7 England & Wales',
-        src: 'UK Consumer Rights Act 2015, s.19',
+        due: 'Up to 6 years \u00b7 England, Wales & NI',
+        src: 'UK Consumer Rights Act 2015, s.9',
         lines: [
-          'Hi \u2014 I\u2019m writing about a dishwasher I bought from you in \u00abMarch 2023\u00bb. It has stopped draining.',
+          'Hi \u2014 I\u2019m writing about a dishwasher I bought from you in \u00abMarch 2024\u00bb. It has stopped draining.',
           'Under the \u00abConsumer Rights Act 2015\u00bb goods have to be of satisfactory quality and last a reasonable time, and my claim is against you as the seller rather than the manufacturer.',
           'A dishwasher failing after two years isn\u2019t reasonable, so I\u2019m asking for a repair. Could you confirm how you\u2019d like to arrange that?'
         ]
@@ -270,7 +275,13 @@
           }
           addWords(p, rest, function () { return i++; });
         });
+        // the word-by-word copy is for the eye; assistive tech gets the line
+        p.setAttribute('aria-hidden', 'true');
         body.appendChild(p);
+        var sr = document.createElement('p');
+        sr.className = 'sr-only';
+        sr.textContent = line.replace(/[\u00ab\u00bb]/g, '');
+        body.appendChild(sr);
       });
       return i;
     }
@@ -300,12 +311,6 @@
       setTimeout(go, 140);
     }
 
-    function moveInk(el) {
-      if (!ink) return;
-      ink.style.setProperty('--w', el.offsetWidth + 'px');
-      ink.style.setProperty('--x', el.offsetLeft + 'px');
-    }
-
     var current = -1;
     var armed = false;      // set once the card has actually been seen
     function show(n, focusTab) {
@@ -326,7 +331,6 @@
         t.classList.toggle('is-on', on);
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        if (on) moveInk(t);
         if (on && focusTab) t.focus();
       });
 
@@ -359,13 +363,6 @@
     tabsWrap.classList.add('is-armed');
     current = -1;
     show(0, false);
-    // the pill can only be placed once the tabs have their final width
-    window.addEventListener('load', function () { moveInk(tabs[current]); });
-    var rt;
-    window.addEventListener('resize', function () {
-      clearTimeout(rt);
-      rt = setTimeout(function () { moveInk(tabs[current]); }, 120);
-    });
 
     // hold the words back until the card is actually on screen
     /* Hold the words back until the card is on screen, then let them arrive.
@@ -465,6 +462,7 @@
     window.addEventListener('pointermove', function (e) {
       tx = (e.clientX / window.innerWidth - .5) * 2;
       ty = (e.clientY / window.innerHeight - .5) * 2;
+      if (live && !praf && !stacked.matches) praf = requestAnimationFrame(glide);
     }, { passive: true });
 
     var stacked = window.matchMedia('(max-width: 760px)');
@@ -486,6 +484,8 @@
         var k = depth(el) / 46 * 12;          // 12 / 7 / 4px by layer
         el.style.translate = (cx * k).toFixed(2) + 'px ' + (cy * k).toFixed(2) + 'px';
       }
+      // settled: stop burning frames until the pointer moves again
+      if (Math.abs(tx - cx) < .0005 && Math.abs(ty - cy) < .0005) { praf = 0; return; }
       praf = requestAnimationFrame(glide);
     }
 

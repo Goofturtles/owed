@@ -40,19 +40,19 @@
     if (!hits.length) return;
 
     // Every line here traces to a specific rule in data/coverage.json, including
-    // the caveats that rule states about itself. `doc` matters: without it the
-    // page kept showing a Sony warranty while the note talked about a MacBook.
+    // the caveats that rule states about itself. `doc` is the SOURCE that rule
+    // was read from - never the user's own paperwork, which Owed does not read.
     var CASES = [
       // coverage.json is explicit that the six years is the window to BRING a
       // claim, not a promise the product lasts that long — and that Scotland is
       // five, not six. Say it the way the rule says it.
-      { doc: 'Sony WH-1000XM4 — limited warranty',
-        page: 'p. 14 / 22',
+      { doc: 'Consumer Rights Act 2015 — s. 9',
+        page: 'statute · verified',
         item: 'Sony WH-1000XM4 · 2 years old · England',
         verdict: 'The shop may still owe the repair',
         meta: 'Consumer Rights Act · 6 years to bring a claim' },
       { doc: 'Visa Signature — guide to benefits',
-        page: 'p. 31 / 48',
+        page: 'guide · check your issuer',
         item: 'MacBook Air · 14 months · paid by card',
         verdict: 'One more year of cover',
         meta: "Card extended warranty · after Apple's ran out" },
@@ -61,7 +61,7 @@
       // or after that date", so a three-year-old machine can never use it.
       // The durability warranty has no start date and no fixed end.
       { doc: 'Quebec Consumer Protection Act — s. 38',
-        page: 'p. 9 / 26',
+        page: 'statute · verified',
         item: 'Whirlpool dishwasher · 3 years · Quebec',
         verdict: 'It should still be working',
         meta: 'Quebec legal warranty · must last a reasonable time' }
@@ -118,7 +118,7 @@
       }, 340);
     }
 
-    function start() { if (timer === null) timer = setInterval(step, 4200); }
+    function start() { if (timer === null) timer = setInterval(step, 2200); }
     function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
 
     // don't animate a section nobody is looking at
@@ -254,43 +254,7 @@
      current step to advance and nothing to pin on hover. */
 
   /* ---------------- spotlight on cards ---------------- */
-  (function spotlight() {
-    if (reduce || !window.matchMedia('(hover: hover)').matches) return;
-    document.addEventListener('pointermove', function (e) {
-      var card = e.target.closest('.check');
-      if (!card) return;
-      var r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    }, { passive: true });
-  })();
-
-  /* The script typewriter trigger that lived here is gone: landing.js now
-     owns the reveal for .script-body, and running both meant two independent
-     hide/show systems with two different failsafes gating one element. */
-
   /* ---------------- earth bar fill ---------------- */
-  (function earthBar() {
-    var bar = document.querySelector('.earth-bar');
-    if (!bar) return;
-    if (!('IntersectionObserver' in window) || reduce) { bar.classList.add('fill'); return; }
-    bar.classList.add('js-anim');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        bar.classList.add('fill');
-        io.disconnect();
-      });
-    // the bar is only 5px tall, so a fast scroll can blow past a 50% ratio.
-    // Any sliver counts.
-    }, { threshold: 0 });
-    io.observe(bar);
-    // if it somehow never fires, show the real value rather than a false 0%
-    setTimeout(function () {
-      if (!bar.classList.contains('fill')) bar.classList.remove('js-anim');
-    }, 8000);
-  })();
-
   /* ---------------- scroll progress as a CSS variable ----------------
      Publishes 0..1 through each pinned section as --p so CSS can drive the
      floating cards and the city tags. Deliberately independent of
@@ -330,7 +294,7 @@
     if (reduce || !window.matchMedia('(hover: hover)').matches) return;
     // the hero submit sits inside a pill with no overflow clipping — it would
     // visibly poke through the border while you aim at it
-    var btns = document.querySelectorAll('.btn-accent:not(.hero-try-btn), .btn-primary.btn-lg');
+    var btns = document.querySelectorAll('.btn-accent:not(.hero-try-btn)');
     Array.prototype.forEach.call(btns, function (btn) {
       btn.classList.add('magnetic');
       // measure once on enter, not on every move — reading the rect mid-move

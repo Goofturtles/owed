@@ -190,7 +190,15 @@
       if (!buckets[t]) buckets[t] = { type: t, label: labels[t] || t, items: [] };
       buckets[t].items.push(m);
     });
-    return order.filter(function (t) { return buckets[t]; }).map(function (t) { return buckets[t]; });
+    // "Start at the top" is only true if the strongest group is on top; the
+    // fixed source order is the tie-break, not the order.
+    var rank = { 'strong': 0, 'worth asking': 1, 'long shot': 2 };
+    function best(g) {
+      return Math.min.apply(null, g.items.map(function (m) { return rank[m.strength]; }));
+    }
+    return order.filter(function (t) { return buckets[t]; })
+      .map(function (t) { return buckets[t]; })
+      .sort(function (a, b) { return best(a) - best(b) || order.indexOf(a.type) - order.indexOf(b.type); });
   }
 
   /**

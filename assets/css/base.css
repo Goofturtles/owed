@@ -257,7 +257,7 @@ main:focus:not(:focus-visible) { outline: none; }
 /* The serif survives in exactly one place: an italic clause inside a
    headline. It keeps its own tracking - the display's negative tracking
    would close up a face with sidebearings this tight. */
-.display em, .display .hl {
+.display em {
   font-family: var(--serif);
   font-style: italic;
   font-weight: 400;
@@ -321,7 +321,6 @@ main:focus:not(:focus-visible) { outline: none; }
               opacity .18s var(--ease);
 }
 .btn-lg { height: 52px; padding: 0 32px; font-size: 16px; }
-.btn-sm { height: 40px; padding: 0 24px; font-size: 14px; }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
 
@@ -370,49 +369,20 @@ main:focus:not(:focus-visible) { outline: none; }
 
 /* the one achromatic button: used only where a button sits on a
    saturated accent field, so the field never fights a second accent */
-.btn-ink {
-  background: var(--paper); color: var(--ink);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
-}
-.btn-ink:hover { background: #FFFFFF; }
 
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* On the fixed-dark sections the light-mode forest green would read only
-   2.4 : 1 against the ground - the button shape would barely separate -
-   so the ink inverts while the geometry stays identical. */
-.is-dark .btn-primary,
-.is-dark .btn-accent {
-  background: var(--dk-accent); color: var(--dk-accent-ink);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
-}
-.is-dark .btn-primary:hover,
-.is-dark .btn-accent:hover { background: var(--dk-accent-2); }
-.is-dark .btn-ghost {
-  color: var(--dk-fg);
-  border-color: rgba(242, 243, 240, .26);
-  background: transparent;
-}
-.is-dark .btn-ghost:hover {
-  background: rgba(242, 243, 240, .07);
-  border-color: rgba(242, 243, 240, .5);
-}
-.is-dark .btn-quiet { color: var(--dk-fg-2); }
-.is-dark .btn-quiet:hover { color: var(--dk-fg); }
-.is-dark .btn:focus-visible { outline-color: var(--dk-accent); }
 
-.btn-block { width: 100%; }
-.btn[disabled] { opacity: .45; pointer-events: none; }
 
 /* ---------- theme button ---------- */
 .theme-btn {
-  width: 34px; height: 34px; flex-shrink: 0;
+  width: 44px; height: 44px; flex-shrink: 0; flex-shrink: 0;
   display: grid; place-items: center;
   border-radius: var(--radius-pill); color: var(--ink-3);
   border: 1px solid transparent;
   transition: color .15s var(--ease), background-color .15s var(--ease), border-color .15s var(--ease);
 }
-.theme-btn:hover { color: var(--ink); background: var(--paper-2); border-color: var(--line); }
+.theme-btn:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); border-color: var(--line); }
 .theme-btn-float {
   position: absolute; top: 1.25rem; right: 1.25rem; z-index: 5;
 }
@@ -519,17 +489,6 @@ main:focus:not(:focus-visible) { outline: none; }
 }
 .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
-/* ---------- footer ---------- */
-.footer {
-  border-top: 1px solid var(--line);
-  padding: 2.6rem 0 3rem;
-  background: var(--paper);
-}
-.footer-inner {
-  display: flex; flex-wrap: wrap; gap: 1.25rem;
-  align-items: center; justify-content: space-between;
-}
-.footer-note { font-size: var(--step--1); color: var(--ink-3); max-width: 56ch; }
 
 
 /* ============================================================
@@ -564,7 +523,6 @@ main:focus:not(:focus-visible) { outline: none; }
 /* #12 hover states that were literal no-ops: --paper-2 on --paper is
    1.03:1. Mixing against the ink self-inverts, so one rule serves both
    themes. */
-.theme-btn:hover,
 .nav-links a:hover {
   background: color-mix(in srgb, var(--ink) 8%, transparent);
 }

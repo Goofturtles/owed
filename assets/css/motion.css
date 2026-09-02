@@ -52,53 +52,6 @@
   transition: opacity .75s var(--ease-out), transform .75s var(--ease-out);
 }
 
-/* ---------- counters ---------- */
-.count { font-variant-numeric: tabular-nums; }
-
-/* ---------- step scroll highlight ---------- */
-.step { position: relative; overflow: hidden; }
-.step::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--accent);
-  transform: scaleY(0); transform-origin: 50% 0;
-  transition: transform .5s var(--ease);
-}
-.step.active::before { transform: scaleY(1); }
-.step.active { border-color: var(--accent-line); }
-.step.active .step-num {
-  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
-  transform: scale(1.06);
-}
-.step-num {
-  transition: background-color .35s var(--ease), color .35s var(--ease),
-              transform .35s var(--ease), border-color .35s var(--ease);
-}
-
-/* ---------- spotlight cards ---------- */
-.check { position: relative; overflow: hidden; --mx: 50%; --my: 50%; }
-.check::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(240px circle at var(--mx) var(--my),
-              color-mix(in srgb, var(--accent) 11%, transparent), transparent 65%);
-  opacity: 0; transition: opacity .35s var(--ease);
-}
-.check:hover::before { opacity: 1; }
-.check-ico { transition: transform .4s var(--ease); }
-.check:hover .check-ico { transform: translateY(-2px) rotate(-6deg) scale(1.06); }
-
-/* The typewriter script block that lived here is gone. It has been replaced
-   by the word-stagger reveal in landing.js / landing.css, and because this
-   sheet loads AFTER landing.css its `.script-body mark` gradient was still
-   winning - painting a light --accent-soft pill under the dark stage's mint
-   text at 1.14:1. Two reveal systems were also stacking their delays on
-   every tab switch. */
-
-/* ---------- earth bar ----------
-   Same rule: without JS the bar keeps its inline width rather than being
-   pinned to 0, which would read as a real "0%" measurement. */
-.earth-bar.js-anim i { width: 0 !important; transition: width 1.4s cubic-bezier(.2, .8, .2, 1); }
-.earth-bar.js-anim.fill i { width: var(--pct, 62%) !important; }
-
 /* ---------- magnetic buttons ---------- */
 /* only promote the buttons that actually move — a blanket rule on .btn
    creates a compositor layer for every button on every page */
@@ -128,17 +81,10 @@
 @media (prefers-reduced-motion: reduce) {
   .faq-item::after { transition: none !important; }
   .faq-item summary span { transition: none !important; transform: none !important; }
-  .section.is-dark .step { opacity: 1 !important; filter: none !important; transform: none !important; }
   .js-enter [data-enter] { opacity: 1 !important; transform: none !important; animation: none !important; }
   .split-w { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
-  .script-body.js-anim p { opacity: 1 !important; animation: none !important; }
-  .script-body.js-anim mark { background-size: 100% 100% !important; }
-  .earth-bar.js-anim i { transition: none !important; }
   .finder-wall p[data-hit] { transition: none !important; }
-  .script-card::after { display: none !important; }
-  .step::before { transition: none !important; }
-  .step-num { transition: none !important; transform: none !important; }
   .faq-item[open] .faq-body { animation: none !important; }
   .try-result { animation: none !important; }
   .scroll-progress { display: none; }

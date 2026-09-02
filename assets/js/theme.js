@@ -54,9 +54,10 @@
     var c = current();
     // show the icon for the mode you'd switch TO
     btn.innerHTML = c === 'dark' ? ICONS.light : ICONS.dark;
-    var label = c === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
-    btn.setAttribute('aria-label', label);
-    btn.setAttribute('title', label);
+    // a toggle button: the label names the thing being toggled, the pressed
+    // state says whether it is on, and the tooltip can spell out the action
+    btn.setAttribute('aria-label', 'Dark theme');
+    btn.setAttribute('title', c === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     btn.setAttribute('aria-pressed', c === 'dark' ? 'true' : 'false');
   }
 

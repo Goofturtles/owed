@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your shelf — Owed</title>
@@ -10,10 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788308972">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788308972">
-<link rel="stylesheet" href="assets/css/app.css?v=1788308972">
-<script src="assets/js/theme.js?v=1788308972"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788311426">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788311426">
+<link rel="stylesheet" href="assets/css/app.css?v=1788311426">
+<script src="assets/js/theme.js?v=1788311426"></script>
 </head>
 <body class="app-body">
 <a class="skip-link" href="#appMain">Skip to content</a>
@@ -105,34 +106,34 @@
 
         <div class="wiz-step is-on" data-step="1">
           <p class="eyebrow">Step one</p>
-          <h2 class="display wiz-q">What is it?</h2>
-          <p class="wiz-help">Type it however you&rsquo;d say it out loud.</p>
-          <input class="input wiz-input" id="wizName" type="text" placeholder="Sony headphones" autocomplete="off">
+          <h2 class="display wiz-q" id="wizQ1">What is it?</h2>
+          <p class="wiz-help" id="wizHelp1">Type it however you&rsquo;d say it out loud.</p>
+          <input class="input wiz-input" id="wizName" type="text" aria-labelledby="wizQ1" aria-describedby="wizHelp1" placeholder="Sony headphones" autocomplete="off">
           <div class="chip-row" id="catChips"></div>
           <p class="wiz-detected muted" id="catDetected" hidden></p>
         </div>
 
         <div class="wiz-step" data-step="2">
           <p class="eyebrow">Step two</p>
-          <h2 class="display wiz-q">Who made it?</h2>
-          <p class="wiz-help">The brand on the box. If you&rsquo;re not sure, skip it.</p>
-          <input class="input wiz-input" id="wizBrand" type="text" placeholder="Sony" autocomplete="off" list="brandList">
+          <h2 class="display wiz-q" id="wizQ2">Who made it?</h2>
+          <p class="wiz-help" id="wizHelp2">The brand on the box. If you&rsquo;re not sure, skip it.</p>
+          <input class="input wiz-input" id="wizBrand" type="text" aria-labelledby="wizQ2" aria-describedby="wizHelp2" placeholder="Sony" autocomplete="off" list="brandList">
           <datalist id="brandList"></datalist>
           <div class="chip-row" id="brandChips"></div>
         </div>
 
         <div class="wiz-step" data-step="3">
           <p class="eyebrow">Step three</p>
-          <h2 class="display wiz-q">Roughly when did you get it?</h2>
+          <h2 class="display wiz-q" id="wizQ3">Roughly when did you get it?</h2>
           <p class="wiz-help">A guess is fine. No receipt needed.</p>
-          <div class="opt-list" id="ageOpts"></div>
+          <div class="opt-list" id="ageOpts" role="group" aria-labelledby="wizQ3"></div>
         </div>
 
         <div class="wiz-step" data-step="4">
           <p class="eyebrow">Step four</p>
-          <h2 class="display wiz-q">How did you pay?</h2>
+          <h2 class="display wiz-q" id="wizQ4">How did you pay?</h2>
           <p class="wiz-help">This one matters &mdash; cards quietly add cover most people never claim.</p>
-          <div class="opt-list" id="payOpts"></div>
+          <div class="opt-list" id="payOpts" role="group" aria-labelledby="wizQ4"></div>
           <label class="wiz-broken">
             <input type="checkbox" id="wizBroken" checked>
             <span>It&rsquo;s broken or playing up right now</span>
@@ -161,16 +162,18 @@
 
       <!-- filter chips, after Supabase's role filters -->
       <div class="res-filter" id="resFilter" role="group" aria-label="Filter by how likely they are to say yes">
-        <button class="fchip is-on" type="button" data-f="all">All</button>
-        <button class="fchip" type="button" data-f="strong">Strong</button>
-        <button class="fchip" type="button" data-f="worth">Worth asking</button>
-        <button class="fchip" type="button" data-f="longshot">Long shots</button>
+        <button class="fchip is-on" type="button" data-f="all" aria-pressed="true">All</button>
+        <button class="fchip" type="button" data-f="strong" aria-pressed="false">Strong</button>
+        <button class="fchip" type="button" data-f="worth" aria-pressed="false">Worth asking</button>
+        <button class="fchip" type="button" data-f="longshot" aria-pressed="false">Long shots</button>
       </div>
+      <p class="res-legend">Strong, worth asking and long shot rate how well a rule fits your
+        answers &mdash; not whether you qualify. Owed points at published rules; it is not legal advice.</p>
 
       <div class="res-groups" id="resGroups"></div>
 
       <div class="res-none" id="resNone" hidden>
-        <h3 class="display">Nothing found for this one.</h3>
+        <h2 class="display">Nothing found for this one.</h2>
         <p class="muted">
           That&rsquo;s the honest answer, not a bug. Owed&rsquo;s rulebook is collected by hand, so
           unusual brands and models can come back empty. It stays on your shelf, and if a
@@ -191,10 +194,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/catalog.js?v=1788308972"></script>
-<script src="assets/js/store.js?v=1788308972"></script>
-<script src="assets/js/engine.js?v=1788308972"></script>
-<script src="assets/js/app.js?v=1788308972"></script>
-<script src="assets/js/motion.js?v=1788308972"></script>
+<script src="assets/js/catalog.js?v=1788311426"></script>
+<script src="assets/js/store.js?v=1788311426"></script>
+<script src="assets/js/engine.js?v=1788311426"></script>
+<script src="assets/js/app.js?v=1788311426"></script>
+<script src="assets/js/motion.js?v=1788311426"></script>
 </body>
 </html>

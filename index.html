@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Owed — somebody already owes you a free repair</title>
-<meta name="description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts and consumer law — and tells you who still has to fix it for free, plus the words to say.">
+<meta name="description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts, repair programmes and consumer law — and tells you who still has to fix it for free, plus the words to say.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788308972">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788308972">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788308972">
-<script src="assets/js/theme.js?v=1788308972"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788311426">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788311426">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788311426">
+<script src="assets/js/theme.js?v=1788311426"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -207,13 +208,15 @@
         clause is the Consumer Rights Act: the shop, not the maker, stays responsible for
         goods that were faulty from the start, and you have six years to bring the claim
         (five in Scotland). It is a right to ask, not a guarantee the answer is yes.
+        Owed does not read your own documents; it matches what you own against rules
+        it has already read.
       </p>
 
       <div class="finder-grid" aria-hidden="true">
         <figure class="finder-doc">
           <figcaption class="finder-doc-bar">
-            <span class="mono finder-doc-name" id="finderDocName">Sony WH-1000XM4 &mdash; limited warranty</span>
-            <span class="mono finder-doc-pp" id="finderDocPage">p. 14 / 22</span>
+            <span class="mono finder-doc-name" id="finderDocName">Consumer Rights Act 2015 &mdash; s. 9</span>
+            <span class="mono finder-doc-pp" id="finderDocPage">statute &middot; verified</span>
           </figcaption>
           <div class="finder-wall" id="finderWall">
           <p>and shall not apply to damage resulting from accident, misuse, neglect, unauthorised modification or repair, or use with</p>
@@ -234,7 +237,7 @@
 
         <aside class="finder-note-out">
           <span class="finder-rule" aria-hidden="true"></span>
-          <p class="finder-label mono">What that line means</p>
+          <p class="eyebrow">What that line means</p>
           <p class="finder-verdict" id="finderVerdict">The shop may still owe the repair</p>
           <p class="finder-meta" id="finderMeta">Consumer Rights Act &middot; 6 years to bring a claim</p>
           <p class="finder-for mono" id="finderFor">Sony WH-1000XM4 &middot; 2 years old &middot; England</p>
@@ -254,8 +257,9 @@
         <p class="eyebrow">Your shelf</p>
         <h2 class="display sc-title">Everything you own, <em>watched for you.</em></h2>
         <p class="lede sc-lede">
-          Save a thing once. Owed re-checks it against the whole rulebook every time the
-          book grows, so a payout that opens two years from now still finds you.
+          Save a thing once. Every time you open Owed it re-checks your shelf against the
+          latest book and flags anything new &mdash; so a payout that opens two years from
+          now is waiting the next time you look.
         </p>
 
         <!-- The index IS the shelf. After Intercom: hairline-ruled rows with
@@ -289,9 +293,9 @@
       </div>
 
       <figure class="sc-shot">
-        <img class="shot-light" src="assets/img/app-shot.webp?v=1788308972" width="1500" height="1000"
+        <img class="shot-light" src="assets/img/app-shot.webp?v=1788311426" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
-        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788308972" width="1500" height="1000"
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788311426" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
         <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
       </figure>
@@ -336,7 +340,7 @@
         <li class="prem-row" style="--i:2">
           <p class="prem-fig display">6 years</p>
           <p class="prem-text">
-            is how long the law in England and Wales can hold a seller responsible &mdash; long
+            is how long the law in England, Wales and Northern Ireland can hold a seller responsible &mdash; long
             after the warranty card says no.
           </p>
         </li>
@@ -378,14 +382,14 @@
             <span class="rw-n" aria-hidden="true">3</span>
             <div class="rw-text">
               <h3 class="rw-step-title">Get the words to say</h3>
-              <p class="rw-step-body">A short script with the rule named in it, the number to call and the deadline on top. Read it out loud.</p>
+              <p class="rw-step-body">A short script with the rule named in it, who to contact, and any deadline on top. Read it out loud.</p>
             </div>
           </li>
           <li class="rw-step">
             <span class="rw-n" aria-hidden="true">4</span>
             <div class="rw-text">
               <h3 class="rw-step-title">Keep a shelf of your stuff</h3>
-              <p class="rw-step-body">Save what you own once. When a new payout or repair programme lands that covers it, you&rsquo;ll know.</p>
+              <p class="rw-step-body">Save what you own once. Next time you open Owed, any new payout or repair programme that covers it is flagged as new.</p>
             </div>
           </li>
         </ol>
@@ -420,13 +424,13 @@
           <span class="tile-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg></span>
           <p class="tile-n mono">02</p>
           <h3 class="tile-title">The card you paid with</h3>
-          <p class="tile-text">Many cards add a whole extra year on top of the maker&rsquo;s warranty, free, automatically.</p>
+          <p class="tile-text">Many cards add a whole extra year on top of the maker&rsquo;s warranty, free &mdash; but only if you call within the window, often 30 to 90 days after it breaks.</p>
         </article>
         <article class="tile tile-sand ">
           <span class="tile-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5a2.8 2.8 0 0 0-2.5-1.3c-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2 2.6.8 2.6 2-1.1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.3"/><path d="M12 6.4v11.2"/></svg></span>
           <p class="tile-n mono">03</p>
           <h3 class="tile-title">Payouts you can still claim</h3>
-          <p class="tile-text">When a product turns out to be faulty, money gets set aside. Most of it is never collected.</p>
+          <p class="tile-text">When a product turns out to be faulty, money gets set aside &mdash; and only the people who file a claim see any of it.</p>
         </article>
         <article class="tile tile-blush ">
           <span class="tile-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg></span>
@@ -496,7 +500,7 @@
           The reason people give up is the phone call. So Owed writes it for you &mdash; the
           rule named out loud, the deadline on top, and the sentences in the order that gets
           a yes. Read it down the phone, or paste it into an email. Every line of it comes
-          from a rule in the book, with the page it came from attached.
+          from a rule in the book.
         </p>
         <a class="ch-link" href="auth.html?mode=signup">Get my script &rarr;</a>
       </div>
@@ -519,7 +523,7 @@
           <blockquote class="script-body" id="scriptBody">
             <p>Hi &mdash; I&rsquo;d like to open a claim under the <mark>extended warranty benefit</mark> on my card.</p>
             <p>I bought Sony WH&#8209;1000XM4 headphones on <mark>12 June 2025</mark> and paid for them with this card. They stopped charging last week.</p>
-            <p>Sony&rsquo;s one&#8209;year warranty has ended, which is exactly what this benefit is for. Could you tell me what you need from me, and confirm the claim deadline?</p>
+            <p>The maker&rsquo;s own warranty has ended, which is exactly what this benefit is for. Could you tell me what you need from me, and confirm the claim deadline?</p>
           </blockquote>
 
           <div class="script-foot">
@@ -547,7 +551,6 @@
             <span class="script-tab-n mono">03</span>
             <span class="script-tab-t">A quiet repair programme</span>
           </button>
-          <i class="script-tab-ink" aria-hidden="true"></i>
         </div>
       </div>
     </div>
@@ -560,13 +563,13 @@
        gone. What replaces it is citable: the repair laws already exist. Every
        chip in the ticker is a verbatim rule title from data/coverage.json. -->
   <section class="section earth" id="earth">
-    <div class="wrap-narrow earth-lead">
+    <div class="wrap earth-lead">
       <p class="eyebrow">Why it matters beyond the money</p>
       <h2 class="display section-title">Every claimed repair is one thing that doesn&rsquo;t get thrown&nbsp;away.</h2>
       <p class="lede section-lede">
         Lawmakers already did the hard part. Across the EU and a growing list of US states,
         makers now have to sell you the part, hand over the manual, and sometimes carry out
-        the repair themselves &mdash; long after the warranty card says no. A rule like that
+        the repair themselves &mdash; long after the printed warranty has run out. A rule like that
         only saves anything if the person holding the broken thing knows it&rsquo;s there.
       </p>
     </div>
@@ -582,18 +585,18 @@
         <span class="pf-pill pf-far pf-mint" aria-hidden="true" style="--x:6%;--y:14%;--rot:-7deg;--i:0"><i class="pf-gloss" aria-hidden="true"></i>EU: two years of free repair or replacement, minimum</span>
         <span class="pf-pill pf-far pf-blue" aria-hidden="true" style="--x:62%;--y:8%;--rot:6deg;--i:1"><i class="pf-gloss" aria-hidden="true"></i>New York: makers must hand over parts, tools and repair manuals</span>
         <span class="pf-pill pf-far pf-sand" aria-hidden="true" style="--x:30%;--y:66%;--rot:4deg;--i:2"><i class="pf-gloss" aria-hidden="true"></i>UK: in the first 6 months the shop has to prove it wasn't faulty</span>
-        <span class="pf-pill pf-far pf-blush" aria-hidden="true" style="--x:78%;--y:66%;--rot:-5deg;--i:3"><i class="pf-gloss" aria-hidden="true"></i>Colorado: parts, tools and manuals for your electronics</span>
+        <span class="pf-pill pf-far pf-blush" aria-hidden="true" style="--x:78%;--y:66%;--rot:-5deg;--i:3"><i class="pf-gloss" aria-hidden="true"></i>Colorado: the repair-parts rule now covers everyday electronics</span>
         <span class="pf-pill pf-mid pf-sand" aria-hidden="true" style="--x:3%;--y:44%;--rot:5deg;--i:4"><i class="pf-gloss" aria-hidden="true"></i>US states: makers must sell you the part, the tool and the manual</span>
         <span class="pf-pill pf-mid pf-blush" aria-hidden="true" style="--x:70%;--y:36%;--rot:-6deg;--i:5"><i class="pf-gloss" aria-hidden="true"></i>EU: choosing repair adds a year to your guarantee</span>
-        <span class="pf-pill pf-mid pf-blue" aria-hidden="true" style="--x:40%;--y:22%;--rot:-3deg;--i:6"><i class="pf-gloss" aria-hidden="true"></i>Minnesota: parts, tools and manuals within 60 days</span>
-        <span class="pf-pill pf-near pf-mint" style="--x:8%;--y:28%;--rot:-3deg;--i:7"><i class="pf-gloss" aria-hidden="true"></i>California: makers must keep parts and repair manuals for 7 years</span>
-        <span class="pf-pill pf-near pf-blue" style="--x:52%;--y:56%;--rot:4deg;--i:8"><i class="pf-gloss" aria-hidden="true"></i>Oregon: makers can't use software to block a working part</span>
+        <span class="pf-pill pf-mid pf-blue" aria-hidden="true" style="--x:40%;--y:22%;--rot:-3deg;--i:6"><i class="pf-gloss" aria-hidden="true"></i>Minnesota: parts, tools and manuals within 60 days of a product&rsquo;s launch</span>
+        <span class="pf-pill pf-near pf-mint" style="--x:8%;--y:28%;--rot:-3deg;--i:7"><i class="pf-gloss" aria-hidden="true"></i>California: makers must keep parts and repair manuals available for up to 7 years</span>
+        <span class="pf-pill pf-near pf-blue" style="--x:52%;--y:56%;--rot:4deg;--i:8"><i class="pf-gloss" aria-hidden="true"></i>Oregon: makers can&rsquo;t use software to block a working replacement part</span>
         <span class="pf-pill pf-near pf-sand" style="--x:20%;--y:70%;--rot:-2deg;--i:9"><i class="pf-gloss" aria-hidden="true"></i>EU: makers must repair it, even after the guarantee has ended</span>
         <span class="pf-pill pf-near pf-blush" style="--x:58%;--y:4%;--rot:3deg;--i:10"><i class="pf-gloss" aria-hidden="true"></i>Drifting Joy-Cons are repaired free forever in the UK and Europe</span>
         <span class="pf-pill pf-near pf-mint" style="--x:74%;--y:72%;--rot:5deg;--i:11"><i class="pf-gloss" aria-hidden="true"></i>UK: the shop stays on the hook for up to six years</span>
     </div>
 
-    <p class="pf-cap mono wrap-narrow">Twelve of the 445 rules Owed reads. All real, all sourced.</p>
+    <p class="pf-cap mono wrap">Twelve of the 445 rules Owed reads. All real, all sourced.</p>
 
     <!-- The materials argument. Both facts below are rules in the corpus with
          confidence "certain" and a primary source, and both links go to that
@@ -602,7 +605,7 @@
          asserted. No CO2 figure and no tonnage: LIMITATIONS.md rules those
          out, and an invented number would undercut the only honest thing
          here. -->
-    <div class="wrap-narrow saves">
+    <div class="wrap saves">
       <h3 class="display saves-title">What a repair actually saves.</h3>
       <p class="saves-lede">
         A claim that works keeps something you already own in service, and stops another
@@ -615,8 +618,8 @@
         <li class="saves-row">
           <p class="saves-fact">
             Phones and tablets put on the EU market since <b>20 June 2025</b> have to still
-            hold <b>80% of their charge after 800 full cycles</b> &mdash; a battery that gives
-            up in two years is no longer legal to sell.
+            hold <b>80% of their charge after 800 full cycles</b> &mdash; a phone whose battery
+            gives up far short of that falls short of what the law now requires.
           </p>
           <a class="saves-src mono" href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R1670"
              target="_blank" rel="noopener">Regulation (EU) 2023/1670</a>
@@ -634,9 +637,9 @@
       </ul>
     </div>
 
-    <div class="wrap-narrow earth-honest">
+    <div class="wrap earth-honest">
       <p>
-        Owed counts one number, and only one: things you told it you actually got fixed.
+        On the environment, Owed counts one number, and only one: things you told it you actually got fixed.
         No CO&#8322; estimate, no invented multiplier. A made-up figure would have looked
         better here and undercut the only honest thing on the page.
       </p>
@@ -654,24 +657,25 @@
        not align to any consistent cell. -->
   <section class="statband" aria-labelledby="regHead">
     <div class="wrap">
-      <h2 class="reg-head" id="regHead">What is in the rulebook</h2>
+      <p class="eyebrow">The rulebook</p>
+      <h2 class="display reg-head" id="regHead">What is in the rulebook</h2>
 
       <dl class="reg">
         <div class="reg-row">
           <dt class="reg-n mono">01</dt>
-          <dd class="reg-fig display count tnum" data-count-to="445" data-count-dur="1400">445</dd>
+          <dd class="reg-fig display tnum" data-count-to="445" data-count-dur="1400">445</dd>
           <dd class="reg-label">rules in the book</dd>
           <dd class="reg-note">every one links to the page it came from</dd>
         </div>
         <div class="reg-row">
           <dt class="reg-n mono">02</dt>
-          <dd class="reg-fig display count tnum" data-count-to="5" data-count-dur="800">5</dd>
+          <dd class="reg-fig display tnum" data-count-to="5" data-count-dur="800">5</dd>
           <dd class="reg-label">places cover hides</dd>
           <dd class="reg-note">the maker, your card, payouts, repair programmes, the law</dd>
         </div>
         <div class="reg-row">
           <dt class="reg-n mono">03</dt>
-          <dd class="reg-fig display count tnum" data-count-to="4" data-count-dur="800">4</dd>
+          <dd class="reg-fig display tnum" data-count-to="4" data-count-dur="800">4</dd>
           <dd class="reg-label">regions covered</dd>
           <dd class="reg-note">United States, Canada, United Kingdom, European Union</dd>
         </div>
@@ -679,7 +683,7 @@
           <dt class="reg-n mono">04</dt>
           <dd class="reg-fig display tnum">&#36;0</dd>
           <dd class="reg-label">what it costs you</dd>
-          <dd class="reg-note">no account needed to look, and no cut of anything you claim</dd>
+          <dd class="reg-note">no account needed to look</dd>
         </div>
       </dl>
 
@@ -710,11 +714,11 @@
         </details>
         <details class="faq-item">
           <summary><span>What if it finds nothing for my thing?</span><i aria-hidden="true"></i></summary>
-          <div class="faq-body"><p>It'll say so plainly rather than invent something. That's the honest weak spot: the rules are collected by hand, so an unusual brand or model may come back empty. Adding it to your shelf means you'll hear if that changes.</p></div>
+          <div class="faq-body"><p>It'll say so plainly rather than invent something. That's the honest weak spot: the rules are collected by hand, so an unusual brand or model may come back empty. Adding it to your shelf means it gets re-checked against the latest book every time you open Owed.</p></div>
         </details>
         <details class="faq-item">
           <summary><span>Is the advice legal advice?</span><i aria-hidden="true"></i></summary>
-          <div class="faq-body"><p>No. It points you at published rules and tells you what to ask. Every result links to the source so you can read it yourself, and it never claims certainty it doesn't have.</p></div>
+          <div class="faq-body"><p>No. It points you at published rules and tells you what to ask. Every result links to the source so you can read it yourself, and the strong / worth asking / long shot label rates how well the rule fits your answers &mdash; not whether you personally qualify.</p></div>
         </details>
         <details class="faq-item">
           <summary><span>Where does my data go?</span><i aria-hidden="true"></i></summary>
@@ -722,7 +726,7 @@
         </details>
         <details class="faq-item">
           <summary><span>Which countries does it work in?</span><i aria-hidden="true"></i></summary>
-          <div class="faq-body"><p>The maker and card rules are broad. The legal cover is strongest for the US, Canada, the UK and the EU right now — you pick your region and it only shows what applies to you.</p></div>
+          <div class="faq-body"><p>Maker warranties are in the book for all four regions, though most are US or Canadian. Card benefits are almost entirely US and Canada. Consumer law is covered for the US, Canada, the UK and the EU, and nowhere else yet. You pick your country and Owed filters to it — state and province rules are named by state in their title, so you can see which ones actually reach you.</p></div>
         </details>
       </div>
     </div>
@@ -778,6 +782,8 @@
           <h3 class="footer-col-title">What we read</h3>
           <a href="#checks">Maker warranties</a>
           <a href="#checks">Card benefits</a>
+          <a href="#checks">Payouts</a>
+          <a href="#checks">Repair programmes</a>
           <a href="#checks">Consumer law</a>
         </div>
       </nav>
@@ -799,10 +805,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788308972"></script>
-<script src="assets/js/landing.js?v=1788308972"></script>
-<script src="assets/js/scroll.js?v=1788308972"></script>
-<script src="assets/js/scene.js?v=1788308972"></script>
-<script src="assets/js/motion.js?v=1788308972"></script>
+<script src="assets/js/catalog.js?v=1788311426"></script>
+<script src="assets/js/landing.js?v=1788311426"></script>
+<script src="assets/js/scroll.js?v=1788311426"></script>
+<script src="assets/js/scene.js?v=1788311426"></script>
+<script src="assets/js/motion.js?v=1788311426"></script>
 </body>
 </html>

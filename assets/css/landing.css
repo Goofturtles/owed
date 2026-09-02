@@ -38,9 +38,9 @@
   border-radius: var(--radius-pill);
   transition: color .15s var(--ease), background-color .15s var(--ease);
 }
-.nav-links a:hover { color: var(--ink); background: var(--paper-2); }
+.nav-links a:hover { color: var(--ink); }
 .nav-actions { display: flex; align-items: center; gap: .2rem; }
-.nav-toggle { display: none; width: 38px; height: 38px; border-radius: var(--radius-pill); }
+.nav-toggle { display: none; width: 44px; height: 44px; border-radius: var(--radius-pill); }
 .nav-toggle span {
   display: block; width: 16px; height: 1.6px; background: var(--ink);
   margin: 4px auto; border-radius: 2px;
@@ -150,6 +150,7 @@
   padding: .6rem 0;
   font-size: var(--step-0);
   color: var(--ink);
+  text-overflow: ellipsis;      /* applies to the placeholder too */
 }
 .hero-try-input::placeholder { color: var(--ink-3); }
 /* the button system owns height and padding; this only stops it shrinking */
@@ -172,9 +173,6 @@
 .try-result ul { display: flex; flex-direction: column; gap: .45rem; margin-top: .7rem; }
 .try-result li { display: flex; align-items: flex-start; gap: .55rem; font-size: var(--step--1); color: var(--ink-2); }
 .try-result .go { margin-top: 1rem; display: inline-flex; }
-.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: .45rem; }
-.dot.ok { background: var(--accent); }
-.dot.maybe { background: var(--warn); }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* ---------------- the finder: a marked-up page ----------------
@@ -186,7 +184,7 @@
 .finder {
   /* the light run is one continuous ground now; a tonal step here read as
      a hard seam right where the page should feel continuous */
-  padding: clamp(3rem, 7vw, 5rem) 0;
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
 }
 .finder-head { max-width: 42rem; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
 .finder-title {
@@ -286,12 +284,9 @@
   content: ""; position: absolute; right: -3px; top: -2.5px;
   width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
 }
-.finder-label {
-  font-size: var(--step--2); letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink-3);
-}
 .finder-verdict {
   font-family: var(--display);
+  font-weight: 600;
   font-size: var(--step-3);
   line-height: 1.16;
   letter-spacing: -.02em;
@@ -331,6 +326,8 @@
 }
 @media (max-width: 560px) {
   .finder-wall p { font-size: var(--step--2); line-height: 2; }
+  /* the one line the section exists to show must be readable in full */
+  .finder-wall p[data-hit] { white-space: normal; line-height: 1.6; padding-block: .3rem; }
   .finder-doc-pp { display: none; }
 }
 
@@ -398,14 +395,6 @@
   .sc-shot img { border-radius: var(--radius-lg) 0 0 var(--radius-lg); border-right: 0; }
 }
 
-/* ---------------- source strip — after Adaline ----------------
-   One tracked label and the sources as plain type. The old bordered chips
-   read as tags on a blog post. */
-.strip {
-  border-top: 1px solid var(--line);
-  background: var(--paper);
-  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
-}
 .strip-inner {
   display: flex; align-items: baseline; flex-wrap: wrap;
   gap: .8rem clamp(1.25rem, 3vw, 2.5rem);
@@ -444,7 +433,6 @@
   gap: clamp(1rem, 4vw, 3.5rem);
   align-items: end;
   padding-bottom: 1.35rem;
-  border-bottom: 1px solid var(--line);
 }
 /* 20ch broke 'Four answers, then a phone call.' onto four lines */
 .section-head.split .head-a { max-width: none; }
@@ -453,7 +441,6 @@
 .section-head.split .section-lede { margin-top: 0; max-width: 46ch; }
 @media (max-width: 820px) {
   .section-head.split { grid-template-columns: 1fr; gap: 1rem; align-items: start; }
-  .section-head.split .head-a { max-width: none; }
 }
 .section-title {
   font-size: var(--step-4);
@@ -620,20 +607,13 @@
 .tile.wide { grid-column: span 3; }
 .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
 
-/* a soft bloom of the tile's own colour, so the ground is not a flat block */
-.tile::after {
-  content: ""; position: absolute; inset: auto -20% -45% auto;
-  width: 62%; aspect-ratio: 1; border-radius: 50%;
-  background: rgba(255, 255, 255, .38);
-  pointer-events: none;
-}
 .tile-mint  { background: var(--il-mint);  border-color: color-mix(in srgb, var(--il-green) 22%, transparent); }
 .tile-blue  { background: var(--il-blue);  border-color: color-mix(in srgb, #3C5A78 22%, transparent); }
 .tile-sand  { background: var(--il-sand);  border-color: color-mix(in srgb, var(--il-amber) 30%, transparent); }
 .tile-blush { background: var(--il-blush); border-color: color-mix(in srgb, #B4531C 20%, transparent); }
 .tile-paper { background: var(--il-bone);  border-color: color-mix(in srgb, var(--il-ink) 14%, transparent); }
 /* every tint is a light one, so the ink stays fixed and readable on all five */
-.tile, .tile-title, .tile-text, .tile-n { color: #1B2320; }
+.tile, .tile-title { color: #1B2320; }
 .tile-text { color: #3E4744; }
 .tile-n { color: #46504D; }   /* #5C6763 measured 4.17 on the blue tile */
 
@@ -647,11 +627,11 @@
 }
 .tile-n {
   position: relative; z-index: 1;
-  font-size: var(--step--2); letter-spacing: .16em; margin-top: 1.3rem;
+  font-size: var(--step--2); letter-spacing: .06em; margin-top: 1.3rem;
 }
 .tile-title {
   position: relative; z-index: 1;
-  font-family: var(--display); font-weight: 400;
+  font-family: var(--display); font-weight: 600;
   font-size: var(--step-3); line-height: 1.14;
   letter-spacing: -.02em; margin-top: .35rem;
   padding-bottom: .04em;
@@ -664,7 +644,7 @@
 @media (max-width: 900px) {
   .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile, .tile.wide { grid-column: span 1; }
-  .tile-title { font-size: var(--step-1); }
+  .tile-title { font-size: var(--step-2); }
 }
 @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } }
 
@@ -715,7 +695,7 @@
 /* the colour panel, and the card floating inside it */
 .ch-panel {
   background: var(--field-accent);
-  border-radius: clamp(20px, 2.4vw, 30px);
+  border-radius: var(--radius-xl);
   padding: clamp(1.25rem, 3vw, 2.5rem);
 }
 .ch-panel .script-card {
@@ -827,9 +807,8 @@
    wrong tabs. Charma has no tab row to copy here, so there is nothing lost
    in using the simpler state. */
 .script-tab.is-on { color: var(--field-accent); background: #FFFFFF; }
-.script-tab:hover:not(.is-on) { color: #FFFFFF; }
-.script-tab:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
-.script-tab-ink { display: none; }
+.script-tab:hover:not(.is-on) { color: var(--field-accent-ink); }
+.script-tab:focus-visible { outline: 2px solid var(--field-accent-ink); outline-offset: 2px; }
 
 @media (min-width: 900px) {
   .ch-grid { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); }
@@ -966,7 +945,7 @@
     text-decoration: underline; text-underline-offset: 4px;
     border: 1px solid CanvasText;
   }
-  .script-tab-ink { display: none; }
+  
   .pf-aurora, .pf-gloss { display: none; }
   .pf-pill { border: 1px solid CanvasText; forced-color-adjust: none; }
   .pf-far, .pf-mid { filter: none; opacity: 1; }
@@ -982,22 +961,31 @@
    confused. Everything sits on one baseline, which is what makes a
    register look typeset rather than assembled.
    ============================================================ */
-.statband { border-block: 1px solid var(--line); padding: clamp(3rem, 6vw, 5rem) 0; }
+.statband { border-block: 1px solid var(--line); padding: clamp(3.5rem, 8vw, 6rem) 0; }
 .reg-head {
-  font-size: var(--step-2);
+  font-size: var(--step-3);
   letter-spacing: -.02em;
   margin-bottom: clamp(1.25rem, 3vw, 2rem);
 }
-.reg { margin: 0; }
+/* .problem already owns the ruled big-numeral ledger; the same device
+   twice on one page read as a repeat, so this is a four-up register
+   instead - figure over label over note, no rules between */
+.reg {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
 .reg-row {
   display: grid;
-  grid-template-columns: 3rem 6ch minmax(0, 1fr) minmax(0, 30ch);
-  column-gap: clamp(1rem, 3vw, 2.5rem);
-  align-items: baseline;
-  padding-block: clamp(1.1rem, 2.2vw, 1.75rem);
-  border-top: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: .3rem;
+  align-content: start;
+  padding: 0;
+  border: 0;
 }
-.reg-row:last-child { border-bottom: 1px solid var(--line); }
+@media (max-width: 760px) { .reg { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; } }
+@media (max-width: 420px) { .reg { grid-template-columns: 1fr; } }
 .reg-n { font-size: var(--step--2); color: var(--ink-3); letter-spacing: .06em; }
 .reg-fig {
   margin: 0;
@@ -1135,12 +1123,13 @@
    footer — after Structured, with Garden's brand/columns split
    ============================================================ */
 .footer {
-  border-top: 1px solid var(--line);
+  /* no hairline: the CTA's fade above it is the transition, and a rule at the
+     foot of a fade is a line drawn through it */
   background: var(--paper);
   padding: clamp(3rem, 6vw, 4.5rem) 0 1.75rem;
   overflow: hidden;              /* the wordmark is cropped on purpose */
 }
-.footer-inner { display: grid; gap: clamp(2rem, 4vw, 3rem); }
+.footer-inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 4vw, 3rem); }
 
 .footer-top { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }
 .footer-brand .brand { text-decoration: none; }
@@ -1208,6 +1197,9 @@
 }
 @media (max-width: 560px) {
   .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* three groups in two columns left one orphan; the last spans both */
+  .footer-col:last-child { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: 0 1.25rem; }
+  .footer-col:last-child .footer-col-title { width: 100%; }
   .footer-mark { font-size: 32vw; }
 }
 
@@ -1595,7 +1587,6 @@
   .scroll-cue { display: none; }
 }
 
-
 /* ============================================================
    DARK SECTION
    One hard break in the middle of the cream run, so the page has
@@ -1605,34 +1596,16 @@
 .section.is-dark {
   --dk: var(--dk-1);
   background: var(--dk);
-  border-block: 1px solid var(--dk);
   color: var(--dk-fg);
 }
-.section.is-dark .section-title,
-.section.is-dark .step-title { color: var(--dk-fg); }
-.section.is-dark .eyebrow { color: var(--dk-fg-3); }
-.section.is-dark .section-lede { color: var(--dk-fg-2); }
-.section.is-dark .section-head.split { border-bottom-color: rgba(245, 244, 236, .16); }
 
 /* After Overmind: on the dark ground ONE card is lit and the rest are held
    back, rather than four equally murky cards competing. The lit one advances
    on its own while the section is in view, and hovering pins it. */
-.section.is-dark .step-n { color: var(--dk-accent); }
-.section.is-dark .step-text { color: var(--dk-fg-2); }
 
-.section.is-dark .sc-list li,
-.section.is-dark .sc-shelf li { color: var(--dk-fg-2); }
-.section.is-dark .sc-list b,
-.section.is-dark .sc-shelf b { color: var(--dk-fg-3); }
 /* the chip fill is themed, so on the dark ground it was still painting a
    near-white pill under light-grey text */
-.section.is-dark .sc-shelf li {
-  background: rgba(242, 243, 240, .06);
-  border-color: var(--dk-line);
-}
-.section.is-dark .sc-script { font-size: var(--step-mono); }
 .sc-script-legacy { color: #B9B8B0; border-left-color: color-mix(in srgb, var(--accent) 45%, transparent); }
-
 
 /* ============================================================
    Dark-theme corrections — landing
@@ -1640,13 +1613,6 @@
    Every value below fixes something tuned for the light ground that had
    no dark counterpart. Ratios quoted were measured in the browser.
    ============================================================ */
-
-/* The strength dots sit inside .section.is-dark, which is dark in BOTH
-   themes, but they were painted with the themed --accent. Light measured
-   2.24:1 - a 6px dot you could not see - against 10.53:1 in dark. The
-   section is fixed, so the dots are fixed too. */
-.is-dark .dot.ok    { background: var(--dk-accent); }
-.is-dark .dot.maybe { background: #E2A94F; }
 
 /* The most important input on the site was a hairline over an invisible
    shadow: --card is 1.05:1 off the dark ground. --field is the raised
@@ -1751,7 +1717,6 @@
    it covers is empty. */
 .city::before { z-index: 2; }
 
-
 /* ============================================================
    the materials case
 
@@ -1805,4 +1770,34 @@
 
 @media (min-width: 860px) {
   .saves-row { grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); align-items: start; }
+}
+
+/* ============================================================
+   Audit pass
+   ============================================================ */
+
+/* [V04] the earth blocks sit on the page's left column like every other
+   section; the measure is capped on the children, because capping a .wrap
+   just re-centres it */
+.earth-lead > *, .saves > *, .earth-honest > * { max-width: 44rem; }
+
+/* [V12] on the phone the desktop screenshot shrank to 350px and its UI to
+   3px type. Crop it at reading size instead, the way the desktop column does. */
+@media (max-width: 560px) {
+  .sc-shot {
+    aspect-ratio: 4 / 3; overflow: hidden;
+    border-radius: var(--radius-lg); border: 1px solid var(--line);
+    box-shadow: var(--shadow-xl);
+  }
+  .sc-shot img { width: 190%; max-width: none; border: 0; border-radius: 0; box-shadow: none; }
+}
+
+/* [V14] the tile icon chips were near-white hot-spots on the dark ground */
+:root[data-theme="dark"] .tile-ico { background: rgba(255, 255, 255, .34); }
+
+/* [V31] the Railway card had no face on the dark theme: 2% over near-black.
+   A touch more fill and the same top-light the nav pill uses. */
+:root[data-theme="dark"] .rw-card {
+  background: rgba(242, 243, 240, .035);
+  box-shadow: inset 0 1px 0 rgba(242, 243, 240, .06);
 }

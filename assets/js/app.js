@@ -55,7 +55,7 @@
     S.updateUser({ region: el.regionPick.value });
     user = S.getUser();
     toast('Region set to ' + el.regionPick.options[el.regionPick.selectedIndex].text);
-    if (current.item) showResults(current.item);
+    if (current.item) showResults(current.item, true);
   });
 
   el.signOut.addEventListener('click', function () {
@@ -80,6 +80,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () {
       el.toast.classList.remove('show');
+      setTimeout(function () { el.toast.textContent = ''; }, 400);
     }, 2400);
   }
 
@@ -134,16 +135,17 @@
       li.innerHTML =
         '<button class="shelf-card' + (current.item && current.item.id === item.id ? ' is-on' : '') +
         (fresh.length ? ' has-new' : '') +
-        '" type="button" data-id="' + esc(item.id) + '">' +
+        '" type="button"' + (current.item && current.item.id === item.id ? ' aria-current="true"' : '') +
+        ' data-id="' + esc(item.id) + '">' +
           '<span class="sc-name">' + label + '</span>' +
           '<span class="sc-meta">' + esc(C.categoryLabel(item.category)) + ' · ' +
             esc(E.agePhrase(item.ageMonths)) + '</span>' +
           '<span class="sc-tags">' +
-            (fresh.length ? '<i class="pill pill-accent">' + fresh.length + ' new</i>' : '') +
-            (won ? '<i class="pill pill-accent">Claimed</i>' : '') +
+            (fresh.length ? '<span class="tag tag-strong">' + fresh.length + ' new</span>' : '') +
+            (won ? '<span class="tag tag-strong">Claimed</span>' : '') +
             (matches.length
-              ? '<i class="pill pill-quiet">' + matches.length + ' to try</i>'
-              : '<i class="pill pill-quiet">nothing yet</i>') +
+              ? '<span class="tag tag-long">' + matches.length + ' to try</span>'
+              : '<span class="tag tag-long">nothing yet</span>') +
           '</span>' +
         '</button>' +
         '<button class="sc-x" type="button" data-remove="' + esc(item.id) + '" ' +
@@ -180,13 +182,14 @@
   function removeFromShelf(id) {
     var item = S.getItem(id);
     if (!item) return;
-    var row = el.shelfList.querySelector('[data-remove="' + id + '"]');
+    var row = el.shelfList.querySelector('[data-remove="' + CSS.escape(String(id)) + '"]');
     var idx = row ? Array.prototype.indexOf.call(el.shelfList.children, row.closest('.shelf-row')) : -1;
 
     S.removeItem(id);
     if (current.item && current.item.id === id) {
       current.item = null;
       show('welcome');
+      focusView('welcome');
     }
     renderShelf();
 
@@ -245,12 +248,12 @@
   });
 
   wizEls.ageOpts.innerHTML = C.AGES.map(function (a) {
-    return '<button class="opt" type="button" data-age="' + a.id + '">' +
+    return '<button class="opt" type="button" aria-pressed="false" data-age="' + a.id + '">' +
       '<span class="opt-radio" aria-hidden="true"></span>' + esc(a.label) + '</button>';
   }).join('');
 
   wizEls.payOpts.innerHTML = C.PAYMENTS.map(function (p) {
-    return '<button class="opt" type="button" data-pay="' + esc(p.id) + '">' +
+    return '<button class="opt" type="button" aria-pressed="false" data-pay="' + esc(p.id) + '">' +
       '<span class="opt-radio" aria-hidden="true"></span>' + esc(p.label) + '</button>';
   }).join('');
 
@@ -288,8 +291,9 @@
     var list = wiz.category && popular.indexOf(wiz.category) === -1
       ? [wiz.category].concat(popular) : popular;
     wizEls.catChips.innerHTML = list.map(function (id) {
-      return '<button class="chip' + (wiz.category === id ? ' is-on' : '') +
-        '" type="button" data-cat="' + esc(id) + '">' + esc(C.categoryLabel(id)) + '</button>';
+      var on = wiz.category === id;
+      return '<button class="chip' + (on ? ' is-on' : '') +
+        '" aria-pressed="' + on + '" type="button" data-cat="' + esc(id) + '">' + esc(C.categoryLabel(id)) + '</button>';
     }).join('');
     if (wiz.category) {
       wizEls.catDetected.hidden = false;
@@ -304,17 +308,22 @@
     var common = ['Apple', 'Samsung', 'Sony', 'Bose', 'Dyson', 'Whirlpool', 'DeWalt', 'Nike'];
     var list = wiz.brand && common.indexOf(wiz.brand) === -1 ? [wiz.brand].concat(common) : common;
     wizEls.brandChips.innerHTML = list.slice(0, 9).map(function (b) {
-      return '<button class="chip' + (wiz.brand.toLowerCase() === b.toLowerCase() ? ' is-on' : '') +
-        '" type="button" data-brand="' + esc(b) + '">' + esc(b) + '</button>';
+      var on = wiz.brand.toLowerCase() === b.toLowerCase();
+      return '<button class="chip' + (on ? ' is-on' : '') +
+        '" aria-pressed="' + on + '" type="button" data-brand="' + esc(b) + '">' + esc(b) + '</button>';
     }).join('');
   }
 
   function syncOptions() {
     Array.prototype.forEach.call(wizEls.ageOpts.children, function (b) {
-      b.classList.toggle('is-on', Number(b.dataset.age) === Number(wiz.ageMonths));
+      var on = Number(b.dataset.age) === Number(wiz.ageMonths);
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', String(on));
     });
     Array.prototype.forEach.call(wizEls.payOpts.children, function (b) {
-      b.classList.toggle('is-on', b.dataset.pay === wiz.payment);
+      var on = b.dataset.pay === wiz.payment;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', String(on));
     });
   }
 
@@ -373,6 +382,7 @@
     wizEls.count.textContent = wiz.step + ' of 4';
     wizEls.next.textContent = wiz.step === 4 ? 'See what you are owed' : 'Continue';
     wizEls.skip.hidden = (wiz.step === 1 || wiz.step === 4);
+    focusView('wizard');
   }
 
   wizEls.next.addEventListener('click', function () {
@@ -394,6 +404,7 @@
     if (wiz.step === 1) {
       show('welcome');
       renderShelf();
+      focusView('welcome');
       return;
     }
     goStep(wiz.step - 1);
@@ -445,6 +456,7 @@
     current.item = null;
     renderShelf();
     show('welcome');
+    focusView('welcome');
   });
 
   resEls.recheck.addEventListener('click', function () {
@@ -452,9 +464,9 @@
   });
 
   var STRENGTH_CLASS = { 'strong': 'strong', 'worth asking': 'worth', 'long shot': 'longshot' };
-  var STRENGTH_PILL = { 'strong': 'pill-accent', 'worth asking': 'pill-warn', 'long shot': 'pill-quiet' };
+  var STRENGTH_PILL = { 'strong': 'tag-strong', 'worth asking': 'tag-maybe', 'long shot': 'tag-long' };
 
-  function showResults(item) {
+  function showResults(item, keepFocus) {
     current.item = item;
 
     // Never say "nothing matched" when the truth is "the rulebook isn't here yet".
@@ -474,7 +486,7 @@
       resEls.groups.innerHTML = '';
       resEls.none.hidden = true;
       show('results');
-      focusView('results');
+      if (!keepFocus) focusView('results');
       return;
     }
 
@@ -507,12 +519,14 @@
       var realLeads = matches.length - longShots;
       var headline;
       if (realLeads > 0) {
-        headline = realLeads === 1 ? 'One place worth asking' : realLeads + ' places worth asking';
-        if (strong && realLeads > 1) headline += ', ' + strong + ' of them strong';
+        // the numeral beside this already prints the count
+        headline = realLeads === 1 ? 'place worth asking' : 'places worth asking';
+        if (strong && realLeads > 1) {
+          headline += strong === realLeads ? ', all of them strong' : ', ' + strong + ' of them strong';
+        }
         headline += '.';
       } else {
-        headline = 'Nothing strong, but ' + longShots +
-                   (longShots === 1 ? ' long shot' : ' long shots') + ' below.';
+        headline = (longShots === 1 ? 'long shot' : 'long shots') + ' below, none of them strong.';
       }
       var tail = realLeads > 0 && longShots
         ? 'Start at the top. There ' + (longShots === 1 ? 'is also one weaker one' : 'are also ' + longShots + ' weaker ones') +
@@ -533,7 +547,7 @@
 
     show('results');
     renderShelf();
-    focusView('results');
+    if (!keepFocus) focusView('results');
   }
 
   var GROUP_VISIBLE = 3;
@@ -544,7 +558,7 @@
 
     return '<section class="rgroup">' +
       '<div class="rgroup-head">' +
-        '<h3 class="rgroup-title">' + esc(g.label) + '</h3>' +
+        '<h2 class="rgroup-title">' + esc(g.label) + '</h2>' +
         '<span class="rgroup-count">' + g.items.length + '</span>' +
       '</div>' +
       lead.map(renderCard).join('') +
@@ -559,7 +573,7 @@
   function renderCard(m) {
     var r = m.rule;
     var cls = STRENGTH_CLASS[m.strength] || 'longshot';
-    var pill = STRENGTH_PILL[m.strength] || 'pill-quiet';
+    var pill = STRENGTH_PILL[m.strength] || 'tag-long';
     var deadline = r.deadline
       ? '<div class="rc-row"><dt>Claim by</dt><dd><b>' + esc(r.deadline) + '</b></dd></div>' : '';
     var contact = r.contact
@@ -573,7 +587,7 @@
           (m.reason ? '<div class="rc-why">Matched because ' + esc(m.reason) + '</div>' : '') +
         '</div>' +
         '<div class="rc-side">' +
-          '<span class="pill ' + pill + '">' + esc(m.strength) + '</span>' +
+          '<span class="tag ' + pill + '">' + esc(m.strength) + '</span>' +
           '<svg class="rc-chev" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 5 5 5-5"/></svg>' +
         '</div>' +
       '</button>' +
@@ -650,6 +664,7 @@
   var scrBody = document.getElementById('scrBody');
   document.getElementById('scrBack').addEventListener('click', function () {
     show('results');
+    focusView('results');
   });
 
   function showScript(m) {
@@ -659,8 +674,8 @@
     scrBody.innerHTML =
       '<div class="scr-card">' +
         '<div class="scr-top">' +
-          '<span class="scr-for">' + esc(r.title) + '</span>' +
-          '<span class="pill ' + (STRENGTH_PILL[m.strength] || 'pill-quiet') + '">' + esc(m.strength) + '</span>' +
+          '<h2 class="scr-for">' + esc(r.title) + '</h2>' +
+          '<span class="tag ' + (STRENGTH_PILL[m.strength] || 'tag-long') + '">' + esc(m.strength) + '</span>' +
         '</div>' +
         '<div class="scr-lines">' +
           s.lines.map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('') +
@@ -671,10 +686,10 @@
         '</div>' +
       '</div>' +
       '<div class="scr-meta">' +
-        (s.who ? '<div class="scr-block"><h4>Who to contact</h4><p>' + linkify(s.who) + '</p></div>' : '') +
-        (s.deadline ? '<div class="scr-block"><h4>Deadline</h4><p>Claim by <b>' + esc(s.deadline) + '</b>. After that this one closes for good.</p></div>' : '') +
-        '<div class="scr-block"><h4>Before you call</h4><p>' + esc(r.how_to_claim) + '</p></div>' +
-        '<div class="scr-block"><h4>Read it yourself</h4><p>' +
+        (s.who ? '<div class="scr-block"><h3>Who to contact</h3><p>' + linkify(s.who) + '</p></div>' : '') +
+        (s.deadline ? '<div class="scr-block"><h3>Deadline</h3><p>Claim by <b>' + esc(s.deadline) + '</b>. After that this one closes for good.</p></div>' : '') +
+        '<div class="scr-block"><h3>Before you call</h3><p>' + esc(r.how_to_claim) + '</p></div>' +
+        '<div class="scr-block"><h3>Read it yourself</h3><p>' +
           (r.source_url ? linkify(r.source_url) : 'No public link recorded for this one — treat it as a lead to check, not a promise.') +
         '</p></div>' +
       '</div>';
@@ -695,16 +710,18 @@
       toast('Counted. That is one thing that stays out of the bin.');
       renderShelf();
       show('results');
+      focusView('results');
       showResults(current.item);
     });
 
     show('script');
+    focusView('script');
   }
 
   /* ---------------- keyboard ---------------- */
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (!el.views.script.hidden) { show('results'); }
+    if (!el.views.script.hidden) { show('results'); focusView('results'); }
     else if (!el.views.results.hidden) { resEls.back.click(); }
     else if (!el.views.wizard.hidden) { wizEls.back.click(); }
   });
@@ -717,7 +734,7 @@
     el.corpusNote.textContent = n + ' rules loaded — warranties, card benefits, payouts and consumer law.';
     renderShelf();
     // if the user clicked an item while the rulebook was still loading, redraw it
-    if (current.item) showResults(current.item);
+    if (current.item) showResults(current.item, true);
 
     var pending = params.get('new');
     if (pending) {
