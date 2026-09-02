@@ -70,17 +70,18 @@
     });
   }
 
-  var toastTimer = null;
+  var toastTimer = null, toastClear;
   function toast(msg) {
     // the node stays in the accessibility tree at all times — writing into a
     // `hidden` live region is never announced
     el.toast.hidden = false;
     el.toast.textContent = msg;
     requestAnimationFrame(function () { el.toast.classList.add('show'); });
-    clearTimeout(toastTimer);
+    clearTimeout(toastTimer); clearTimeout(toastClear);
     toastTimer = setTimeout(function () {
       el.toast.classList.remove('show');
-      setTimeout(function () { el.toast.textContent = ''; }, 400);
+      // tracked, or a toast fired during the fade has its text wiped
+      toastClear = setTimeout(function () { el.toast.textContent = ''; }, 400);
     }, 2400);
   }
 
@@ -189,7 +190,6 @@
     if (current.item && current.item.id === id) {
       current.item = null;
       show('welcome');
-      focusView('welcome');
     }
     renderShelf();
 
@@ -281,8 +281,8 @@
     renderCatChips();
     renderBrandChips();
     syncOptions();
-    goStep(1);
     show('wizard');
+    goStep(1);          // after show(): goStep places focus in the visible view
     setTimeout(function () { wizEls.name.focus(); }, 120);
   }
 
@@ -710,7 +710,6 @@
       toast('Counted. That is one thing that stays out of the bin.');
       renderShelf();
       show('results');
-      focusView('results');
       showResults(current.item);
     });
 

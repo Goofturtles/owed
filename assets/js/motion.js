@@ -253,8 +253,6 @@
      steps are four ruled rows now, all legible at once, so there is no
      current step to advance and nothing to pin on hover. */
 
-  /* ---------------- spotlight on cards ---------------- */
-  /* ---------------- earth bar fill ---------------- */
   /* ---------------- scroll progress as a CSS variable ----------------
      Publishes 0..1 through each pinned section as --p so CSS can drive the
      floating cards and the city tags. Deliberately independent of

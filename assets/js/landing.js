@@ -108,7 +108,7 @@
       result.hidden = false;
       result.innerHTML =
         '<h2 class="try-h">' + t.heading + '</h2>' +
-        '<p class="muted" style="font-size:.82rem">Four questions in the app narrow this to the ones worth asking about.</p>' +
+        '<p class="muted try-sub">Four questions in the app narrow this to the ones worth asking about.</p>' +
         '<ul>' + items + '</ul>' +
         '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">Check my ' +
         (C.guessCategory(text) ? esc(C.categoryLabel(C.guessCategory(text))).toLowerCase() : 'item') + '</a>';
@@ -166,11 +166,11 @@
       var n = Array.prototype.indexOf.call(sibs, el);
       el.style.transitionDelay = Math.min(n, 5) * 70 + 'ms';
     });
-    io = new IntersectionObserver(function (entries) {
+    io = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('in');
-          io.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
     }, { rootMargin: '200px 0px 0px 0px', threshold: 0.01 });

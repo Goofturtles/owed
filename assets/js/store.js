@@ -106,6 +106,10 @@
       if (it.name != null) it.name = String(it.name);
       if (it.brand != null) it.brand = String(it.brand);
       if (!it.claims || typeof it.claims !== 'object' || Array.isArray(it.claims)) it.claims = {};
+      Object.keys(it.claims).forEach(function (k) {
+        var cl = it.claims[k];
+        if (!cl || typeof cl !== 'object' || typeof cl.state !== 'string') delete it.claims[k];
+      });
       return it;
     });
   }
@@ -180,7 +184,7 @@
   function newRulesFor(itemId, ruleIds) {
     var seen = getSeen();
     var before = seen[itemId];
-    if (!before) return [];
+    if (!Array.isArray(before)) return [];
     return ruleIds.filter(function (id) { return before.indexOf(id) === -1; });
   }
 

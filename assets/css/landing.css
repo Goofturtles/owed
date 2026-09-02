@@ -294,6 +294,8 @@
   margin-top: .3rem;
   padding-bottom: .05em;
 }
+.finder-note-out.is-swapping .finder-verdict, .finder-note-out.is-swapping .finder-meta, .finder-note-out.is-swapping .finder-for { opacity: 0; }
+.finder-verdict, .finder-meta, .finder-for { transition: opacity .3s var(--ease); }
 .finder-meta {
   font-size: var(--step--1);
   color: var(--ink-2);
@@ -312,11 +314,6 @@
 .finder-foot b { color: var(--accent); font-weight: 600; }
 
 /* while the example swaps, the note steps back rather than snapping */
-.finder-note-out.is-swapping .finder-label,
-.finder-note-out.is-swapping .finder-verdict,
-.finder-note-out.is-swapping .finder-meta,
-.finder-note-out.is-swapping .finder-for { opacity: 0; }
-.finder-label, .finder-verdict, .finder-meta, .finder-for { transition: opacity .3s var(--ease); }
 
 @media (max-width: 880px) {
   .finder-grid { grid-template-columns: 1fr; }
@@ -393,29 +390,6 @@
      this never reaches the document and never causes a page scrollbar */
   .sc-shot { width: calc(100% + clamp(2rem, 9vw, 9rem)); }
   .sc-shot img { border-radius: var(--radius-lg) 0 0 var(--radius-lg); border-right: 0; }
-}
-
-.strip-inner {
-  display: flex; align-items: baseline; flex-wrap: wrap;
-  gap: .8rem clamp(1.25rem, 3vw, 2.5rem);
-  justify-content: center;
-}
-.strip-label {
-  font-size: var(--step--2); letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink-3);
-}
-.strip-list {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: .4rem clamp(1rem, 2.5vw, 2rem);
-}
-.strip-list li {
-  font-size: var(--step--1); font-weight: 500; color: var(--ink-2);
-  position: relative;
-}
-.strip-list li + li::before {
-  content: ""; position: absolute; left: calc(-1 * clamp(.5rem, 1.25vw, 1rem));
-  top: 50%; width: 3px; height: 3px; border-radius: 50%;
-  background: var(--line-2); transform: translateY(-50%);
 }
 
 /* ---------------- sections ---------------- */
@@ -742,6 +716,8 @@
 .script-due i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; }
 
 .script-body { margin: 0; padding: 1.25rem 1.2rem; display: flex; flex-direction: column; gap: .85rem; }
+/* the screen-reader copy of each line must not take a flex slot */
+.script-body p.sr-only { position: absolute; }
 .script-body p {
   position: relative; isolation: isolate;
   font-family: var(--mono);
@@ -986,16 +962,23 @@
 }
 @media (max-width: 760px) { .reg { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; } }
 @media (max-width: 420px) { .reg { grid-template-columns: 1fr; } }
-.reg-n { font-size: var(--step--2); color: var(--ink-3); letter-spacing: .06em; }
+.reg { counter-reset: reg; }
+/* the ordinal is decoration, so it is generated rather than read out as a term */
+.reg-row::before {
+  counter-increment: reg;
+  content: counter(reg, decimal-leading-zero);
+  font-family: var(--mono); font-size: var(--step--2); color: var(--ink-3); letter-spacing: .06em;
+}
 .reg-fig {
+  order: 1;
   margin: 0;
   font-size: clamp(1.9rem, 4vw, 2.9rem);
   line-height: 1;
   letter-spacing: -.03em;
   color: var(--accent);
 }
-.reg-label { margin: 0; font-size: var(--step-1); color: var(--ink); letter-spacing: -.01em; }
-.reg-note  { margin: 0; font-size: var(--step--1); color: var(--ink-3); line-height: 1.5; }
+.reg-label { order: 2; margin: 0; font-size: var(--step-1); color: var(--ink); letter-spacing: -.01em; }
+.reg-note  { order: 3; margin: 0; font-size: var(--step--1); color: var(--ink-3); line-height: 1.5; }
 .reg-caveat {
   margin-top: 1.4rem;
   font-size: var(--step--1);
@@ -1215,10 +1198,18 @@
   position: relative;
   height: 340vh;            /* the scroll distance the flythrough consumes */
   /* same ground as the hero above it — a tonal step plus a top border read as
-     a seam right where the page should feel continuous. The bottom edge does
-     want a line: it meets the finder, which is a different surface. */
+     a seam right where the page should feel continuous. The bottom edge is
+     a fade (::after below), not a line. */
   background: var(--paper);
-  border-bottom: 1px solid var(--line);
+}
+/* the stage scrolls out at the end of the section; without this the pages are
+   sliced by a hard horizontal edge and a hairline. Same band as every other
+   ground transition on the page. */
+.stack::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: clamp(90px, 12vw, 170px);
+  z-index: 3; pointer-events: none;
+  background: linear-gradient(to top, var(--paper), transparent);
 }
 .stack-sticky {
   position: sticky; top: 0;
@@ -1605,7 +1596,6 @@
 
 /* the chip fill is themed, so on the dark ground it was still painting a
    near-white pill under light-grey text */
-.sc-script-legacy { color: #B9B8B0; border-left-color: color-mix(in srgb, var(--accent) 45%, transparent); }
 
 /* ============================================================
    Dark-theme corrections — landing
@@ -1671,8 +1661,10 @@
 /* content rides above the bands */
 .how > .wrap,
 .script-sec > .wrap,
-.cta > .cta-inner,
-.city > * { position: relative; z-index: 1; }
+.cta > .cta-inner { position: relative; z-index: 1; }
+/* the city stage is sticky, which is already positioned: giving it
+   position: relative here is exactly what un-pinned it */
+.city > .city-sticky { z-index: 1; }
 
 .how::before, .how::after,
 .script-sec::before, .script-sec::after,
@@ -1695,7 +1687,7 @@
 .how::after  { bottom: 0; background: linear-gradient(to top,    var(--paper), transparent); }
 
 /* the black beat is preceded by the checks section */
-.city::before { top: 0; background: linear-gradient(to bottom, var(--paper), transparent); }
+.city::before { top: 0; z-index: 2; background: linear-gradient(to bottom, var(--paper), transparent); }
 
 /* the script section sits on paper now: it meets the black beat above and
    the earth section below, both on the page ground */
@@ -1801,3 +1793,9 @@
   background: rgba(242, 243, 240, .035);
   box-shadow: inset 0 1px 0 rgba(242, 243, 240, .06);
 }
+
+/* the hero teaser's tone dots and note (rendered by landing.js) */
+.try-result .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: .45rem; }
+.try-result .dot.ok { background: var(--accent); }
+.try-result .dot.maybe { background: var(--warn); }
+.try-result .try-sub { font-size: var(--step--1); }
