@@ -13,3 +13,4 @@ __pycache__/
 
 # raw model output — only the web-encoded clips are committed
 assets/video/*.raw.webm
+.gstack/

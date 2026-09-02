@@ -2,7 +2,7 @@
 
 Owed tells you who might owe you a free repair. This file is the honest account of where it is thin, where it can be wrong, and what it deliberately does not claim.
 
-Everything below was checked against the code and the rulebook in this repo, not written from memory. Counts come from `data/coverage.json` (315 rules after the 2 September 2026 deduplication; 445 as compiled on 2026-08-26 — see `data/dedup-log.json`). Behaviour comes from `assets/js/engine.js`, `assets/js/catalog.js`, `assets/js/store.js` and `assets/js/app.js`.
+Everything below was checked against the code and the rulebook in this repo, not written from memory. Counts come from `data/coverage.json` (318 rules after the 2 September 2026 deduplication; 445 as compiled on 2026-08-26 — see `data/dedup-log.json`). Behaviour comes from `assets/js/engine.js`, `assets/js/catalog.js`, `assets/js/store.js` and `assets/js/app.js`.
 
 ---
 
@@ -10,28 +10,28 @@ Everything below was checked against the code and the rulebook in this repo, not
 
 | | Count |
 |---|---|
-| Rules total | 315 |
-| The maker's own warranty | 150 |
-| Consumer law | 78 |
-| Credit card benefits | 42 |
+| Rules total | 318 |
+| The maker's own warranty | 151 |
+| Consumer law | 75 |
+| Credit card benefits | 47 |
 | Class-action settlements | 15 |
 | Free repair programmes | 3 |
 | The shop that sold it | 27 |
 | Marked `certain` (term read in a primary source) | 276 |
-| Marked `likely` (verified with a caveat) | 38 |
+| Marked `likely` (verified with a caveat) | 41 |
 | Marked `possible` (reported, not verified) | 1 |
 | Brands named | 194 |
 | Rules with a hard claim deadline | 14 |
-| Rules with no phone number or contact link | 48 |
+| Rules with no phone number or contact link | 47 |
 | Statutory floors kept past their window (`window_kind: floor`) | 6 |
 
 Region coverage, counted by rule (a rule can list more than one region):
 
 | Region | Rules |
 |---|---|
-| United States | 238 |
+| United States | 243 |
 | Canada | 84 |
-| United Kingdom | 33 |
+| United Kingdom | 31 |
 | European Union | 32 |
 | Worldwide | 14 |
 
@@ -60,9 +60,9 @@ The landing page FAQ states this in words; the numbers are here. Region coverage
 
 | | United States | Canada | United Kingdom | European Union |
 |---|---|---|---|---|
-| The maker's own warranty | 134 | 50 | 16 | 15 |
-| Consumer law | 36 | 17 | 12 | 14 |
-| Credit card benefits | 29 | 12 | 1 | 1 |
+| The maker's own warranty | 135 | 50 | 16 | 15 |
+| Consumer law | 35 | 17 | 10 | 14 |
+| Credit card benefits | 34 | 12 | 1 | 1 |
 | Class-action settlements | 15 | 0 | 0 | 0 |
 | The shop that sold it | 23 | 5 | 3 | 0 |
 | Free repair programmes | 1 | 0 | 1 | 2 |
@@ -111,7 +111,7 @@ Owed produces leads, not eligibility decisions. A "strong" match means the rule 
 
 Card rules are the shakiest part of the book, and they are shaky in a way that cannot be fixed by better research.
 
-**Visa and Mastercard write the standard terms. Each issuing bank decides whether to include them.** So a verified Visa Signature extended-warranty document tells you what the benefit says, not whether your Visa has it. That is why 8 of the 42 card rules are marked `likely` rather than `certain`. Amex is the exception because Amex is both network and issuer, and even Amex only covers "eligible cards".
+**Visa and Mastercard write the standard terms. Each issuing bank decides whether to include them.** So a verified Visa Signature extended-warranty document tells you what the benefit says, not whether your Visa has it. That is why 10 of the 47 card rules are marked `likely` rather than `certain`. Amex is the exception because Amex is both network and issuer, and even Amex only covers "eligible cards".
 
 Owed asks which network you paid with. It never asks which product you hold, and the difference between two Visa cards from two banks can be total. This is the one category where the correct instruction is "go read your own Guide to Benefits", and the app should say that louder than it does.
 
@@ -129,7 +129,7 @@ Card benefits also carry short reporting deadlines that Owed shows but does not 
 
 ## 6. Settlement deadlines decay, and the decay is not automatic
 
-16 rules carry a hard deadline, the earliest 2026-08-27 and the latest 2030-03-02. The engine hides any rule whose deadline has passed. That is the right default and it is also the whole mechanism. There is no scheduled re-check, no alert, and no per-rule freshness date. The file carries one `generated` date for all 315 rules.
+16 rules carry a hard deadline, the earliest 2026-08-27 and the latest 2030-03-02. The engine hides any rule whose deadline has passed. That is the right default and it is also the whole mechanism. There is no scheduled re-check, no alert, and no per-rule freshness date. The file carries one `generated` date for all 318 rules.
 
 Two consequences worth stating plainly:
 
@@ -143,10 +143,10 @@ Settlements that closed before compilation were dropped for the same reason: the
 
 **Typos do not produce an obvious failure. They produce a quieter, wrong answer.** Searched for a US phone bought nine months ago on a Visa:
 
-- Brand `Samsung`: 40 results, with Samsung's battery warranty ranked strong at the top.
-- Brand `Sasmung`: 38 results still come back. The card and consumer-law rules are untouched, and nothing is strong.
+- Brand `Samsung`: 42 results, with Samsung's battery warranty ranked strong at the top.
+- Brand `Sasmung`: 40 results still come back. The card and consumer-law rules are untouched, and nothing is strong.
 
-The user does not see an error. They see a list two rows shorter that looks like a real answer. Every US user gets a floor of about 38 generic consumer-law, recall and shop-policy rules whatever they typed (7 in the UK, 13 in the EU, 16 in Canada), all ranked long shot, so a failed brand match never bottoms out at zero. A US user with a three-year-old blender paid by debit card gets 28 results and not one of them is strong or worth asking. The empty-state copy, which is honest and well written, almost never fires; the collapsed "Show N weaker ones" control is doing the work of hiding the floor.
+The user does not see an error. They see a list two rows shorter that looks like a real answer. Every US user gets a floor of about 37 generic consumer-law, recall and shop-policy rules whatever they typed (7 in the UK, 13 in the EU, 16 in Canada), all ranked long shot, so a failed brand match never bottoms out at zero. A US user with a three-year-old blender paid by debit card gets 27 results and not one of them is strong or worth asking. The empty-state copy, which is honest and well written, almost never fires; the collapsed "Show N weaker ones" control is doing the work of hiding the floor.
 
 **Brand matching is exact or substring.** No fuzzy matching, no aliases, no spelling correction. `Stanley` matches `stanley 1913`, which is intended. Nothing catches `Sasmung`, `Dewalt Tools`, `iphone` typed into the brand box, or a sub-brand the book does not list.
 
@@ -160,9 +160,9 @@ The user does not see an error. They see a list two rows shorter that looks like
 
 ## 7a. The book had duplicates; most are merged now
 
-The rulebook was built in batches, and several batches wrote the same right up again under a different title. Before 2 September 2026 a UK card user saw four overlapping Section 75 rules as four separate results. On 2 September 2026 a judged deduplication merged 130 rules into 90 survivors (445 → 315). Every merge is recorded in `data/dedup-log.json` with the survivor, the merged ids and the judge's reason; brands, categories and payment methods were unioned, confidence never dropped, and quoted caveats that only a merged rule carried were appended to the survivor's note.
+The rulebook was built in batches, and several batches wrote the same right up again under a different title. Before 2 September 2026 a UK card user saw four overlapping Section 75 rules as four separate results. On 2 September 2026 a judged deduplication merged 127 rules into 88 survivors (445 → 318). Every merge is recorded in `data/dedup-log.json` with the survivor, the merged ids and the judge's reason; brands, categories and payment methods were unioned, confidence never dropped, and quoted caveats that only a merged rule carried were appended to the survivor's note.
 
-What was deliberately left alone: 8 proposed merges that an independent reviewer refuted (the two rules turned out to be different rights), and 0 pairs where the copies carry different regions — those are the same policy stated per country and will be merged with a region union in a later pass. The landing page's count is the deduplicated figure.
+What was deliberately left alone: 12 proposed merges that an independent review refuted (the two rules turned out to be different rights, or the survivor's terms would have misdescribed the merged rule). A second independent re-audit of every applied merge on 2 September 2026 found 88 of 90 sound; the four it questioned were undone and the sentences it found lost were carried into their survivors. Eleven near-duplicate sets remain on purpose or await an owner check (see `data/dedup-log.json`). The landing page's count is the deduplicated figure.
 ## 8. The risk that "long shot" reads as a promise
 
 Three labels appear on results: **strong**, **worth asking**, **long shot**. They are produced by a small scoring function, not by any model of your odds. Base score is 3 for a `certain` rule and 2 for a `likely` one, plus 2 for an exact brand hit, plus 1.5 when a card rule matches your card network, plus 1 for a settlement, minus half a point when you cannot remember how you paid. Five or more is strong, 3.2 or more is worth asking, below that is long shot. Those thresholds were tuned by hand until results looked sensible. They are not calibrated against any real claim outcomes, because there are none.
@@ -210,7 +210,7 @@ One environmental claim is made in prose on the landing page: that broken electr
 - **No invented environmental numbers.** No CO2 figures, no tonnes diverted, no "equivalent to X trees". The only environmental number in the app is a count of items a user said they got fixed.
 - **No legal advice.** Owed points at published rules and suggests words to say. It does not tell you what your rights are in your situation, and it is not written or reviewed by a lawyer.
 - **No guarantee of payout.** Not one rule in the book means a company will say yes. Several mean only that a rule exists which might apply to a product like yours.
-- **No claim of completeness.** 315 rules is not the world. It is what one person could verify to primary-source standard in three days.
+- **No claim of completeness.** 318 rules is not the world. It is what one person could verify to primary-source standard in three days.
 - **No verification of your specific item.** Owed never sees your serial number, your receipt, or your card product, so it cannot confirm eligibility and never says it has.
 - **No revenue.** No affiliate links, no cut of claims, no warranty upsell. Nothing in the ranking is paid for.
 - **No data collection.** No analytics, no accounts on a server, no telemetry.
@@ -237,6 +237,6 @@ A hand-collected rulebook is a promise to keep reading. This is the part that do
 
 Inside this one file, all of the following change at their own pace: settlement claim deadlines; service programmes, which get retired without announcement; manufacturer warranty terms; card benefits, which changed at least six times across major issuers between 2018 and 2024; and consumer law, which has three separate live dates already sitting in the book. Colorado's parts-pairing ban started 1 January 2026. The EU Right to Repair Directive transposition deadline was 31 July 2026 and several member states had not finished, which is exactly why that rule is marked `likely`. Quebec's warranty of good working order does not begin until 5 October 2026, about six weeks after the book was written.
 
-Every one of the 315 rules has a `source_url`, so re-verification is possible by hand. Nothing automates it. There is no diffing, no alerting when a source page changes, and no queue of rules due for re-check. A rulebook that is not re-read becomes a list of confident-sounding statements about a world that has moved on, and that is worse than no rulebook, because it costs the user a phone call to find out.
+Every one of the 318 rules has a `source_url`, so re-verification is possible by hand. Nothing automates it. There is no diffing, no alerting when a source page changes, and no queue of rules due for re-check. A rulebook that is not re-read becomes a list of confident-sounding statements about a world that has moved on, and that is worse than no rulebook, because it costs the user a phone call to find out.
 
 The honest summary: the depth here is real, and it is real because it was checked by hand. The same fact is the ceiling. Owed is deep, not complete, and it decays unless someone keeps reading.

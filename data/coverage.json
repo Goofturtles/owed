@@ -382,7 +382,7 @@
         ]
       },
       "window_months": 999,
-      "window_note": "Lasts as long as you own it, starting the day you bought it. Only for home cooking, and only for enameled cast iron — non-stick pans and non-cast-iron bits aren't covered. only counts for the person who bought it",
+      "window_note": "Lasts as long as you own it, starting the day you bought it. Only for home cooking, and only for enameled cast iron — non-stick pans and non-cast-iron bits aren't covered. Only counts for the person who bought it.",
       "what_you_get": "Le Creuset makes good a pot or pan that was faulty in its materials or workmanship.",
       "confidence": "certain",
       "how_to_claim": "Ring Le Creuset consumer services and describe the fault. You pay the postage to send the item in; they don't cover that part.",
@@ -1524,7 +1524,7 @@
         ]
       },
       "window_months": 999,
-      "window_note": "This works for as long as the product's warranty is still running. There's no extra deadline of its own. They can only refuse if that outside part or repair is what actually caused the damage. A maker can only require their own brand if they hand it to you free. ask them to prove that supply caused this fault — that proof is on them, not you.",
+      "window_note": "This works for as long as the product's warranty is still running. There's no extra deadline of its own. They can only refuse if that outside part or repair is what actually caused the damage. A maker can only require their own brand if they hand it to you free. Ask them to prove that supply caused this fault — that proof is on them, not you.",
       "what_you_get": "The company still has to give you the free repair or replacement it promised, even though you used a part that wasn't theirs or took it to a local shop. Those \"warranty void if this sticker is removed\" stickers don't count either — the FTC has fined companies for using them.",
       "confidence": "certain",
       "how_to_claim": "Call the maker's warranty line and ask for the repair. If they say the warranty is void because of the part you used or the shop you went to, say the sentence below. If they still refuse, report them at reportfraud.ftc.gov — the FTC has already made Weber, Harley-Davidson and Westinghouse change their warranties over exactly this.",
@@ -1552,7 +1552,7 @@
         ]
       },
       "window_months": 999,
-      "window_note": "No deadline of its own — it rides along with whatever warranty claim you're already making. small claims court is cheap and you don't need a lawyer give them a date to reply by",
+      "window_note": "No deadline of its own — it rides along with whatever warranty claim you're already making. Small claims court is cheap and you don't need a lawyer give them a date to reply by.",
       "what_you_get": "Your fix or refund, plus the court can order the company to pay your legal costs and your lawyer's actual hours. That's why consumer lawyers take these cases with no money up front, and why naming this rule in a letter often ends the stalling on its own.",
       "confidence": "certain",
       "how_to_claim": "Put it in your written complaint before you sue. If you do go ahead, look for a lawyer who handles Magnuson-Moss cases — most work on the fees the other side has to pay.",
@@ -2403,7 +2403,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "There is no time limit. Nintendo says this applies even after the 24-month warranty has run out, and even when the drifting was caused by ordinary wear and tear. It covers Joy-Cons bought in the UK, the European Economic Area and Switzerland. Don't open the controller yourself or use non-Nintendo parts - that voids the free repair. They can still refuse if the damage came from a drop, a third party accessory, or commercial use. with Nintendo covering the postage",
+      "window_note": "There is no time limit. Nintendo says this applies even after the 24-month warranty has run out, and even when the drifting was caused by ordinary wear and tear. It covers Joy-Cons bought in the UK, the European Economic Area and Switzerland. Don't open the controller yourself or use non-Nintendo parts - that voids the free repair. They can still refuse if the damage came from a drop, a third party accessory, or commercial use. With Nintendo covering the postage.",
       "what_you_get": "A free repair at an official Nintendo repair centre when the control stick moves your character on its own, or stops responding properly. No charge at all, however old the controller is.",
       "confidence": "certain",
       "how_to_claim": "Go to Nintendo's Joy-Con repair page, try their troubleshooting steps, then book a repair using the form on that page.",
@@ -2554,6 +2554,34 @@
       "how_to_claim": "Dig out your receipt first, because Samsung requires proof of the purchase date for this one. Then call Samsung or book service online and tell them the motor has failed.",
       "contact": "1-800-726-7864",
       "script_hint": "My Samsung washer's motor has failed. I bought it after 1 April 2026, so the digital inverter motor is covered for 10 years. I have my receipt showing the purchase date.",
+      "source_url": "https://www.samsung.com/us/home-appliances/warranty/",
+      "deadline": ""
+    },
+    {
+      "id": "programs-samsung-washer-dryer-motor-10-year",
+      "source_type": "manufacturer",
+      "title": "Samsung washer or dryer: 10 years on the inverter motor",
+      "applies_to": {
+        "brands": [
+          "samsung"
+        ],
+        "categories": [
+          "appliance-large"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
+          "*"
+        ]
+      },
+      "window_months": 120.0,
+      "window_note": "Samsung's appliance warranty page lists 1 year parts and labour overall, plus 10-year cover on the digital inverter motor in washers and dryers. Check your own model to be sure yours has that motor.",
+      "what_you_get": "If the drum motor fails, Samsung covers the motor for 10 years from purchase instead of the usual 1 year.",
+      "confidence": "likely",
+      "how_to_claim": "Note the model and serial number from the door frame or back panel, then book a repair with Samsung and say you are claiming on the 10-year digital inverter motor cover.",
+      "contact": "1-800-726-7864",
+      "script_hint": "The motor in my Samsung washer has failed and you cover the digital inverter motor for 10 years - please book this as a warranty repair.",
       "source_url": "https://www.samsung.com/us/home-appliances/warranty/",
       "deadline": ""
     },
@@ -3107,7 +3135,7 @@
         ]
       },
       "window_months": 48.0,
-      "window_note": "Runs alongside the written warranty. In most states you have about 4 years from the purchase date to make the claim. If the written one is a 'limited' warranty the company may cap this second one to the same length; if it is a 'full' warranty they cannot cap it at all. then escalate to your state attorney general's consumer protection office.",
+      "window_note": "Runs alongside the written warranty. In most states you have about 4 years from the purchase date to make the claim. If the written one is a 'limited' warranty the company may cap this second one to the same length; if it is a 'full' warranty they cannot cap it at all. Then escalate to your state attorney general's consumer protection office.",
       "what_you_get": "On top of whatever the paper warranty says, you also have the law's built-in promise that the product actually does what it's supposed to do. If a company gives you a written warranty, it is not allowed to cancel that built-in promise. Same if it sold you a service contract.",
       "confidence": "certain",
       "how_to_claim": "If the written warranty just ran out, or doesn't cover your particular problem, write to the seller and the maker and say you are also claiming the implied warranty of merchantability, which they were never allowed to cancel.",
@@ -3355,7 +3383,7 @@
         ]
       },
       "window_months": 999,
-      "window_note": "Counted from when the maker last built your model, not from when you bought it, so an old model may already be past it. The rules started 1 July 2024 and cover products made after 1 July 2021. Game consoles and alarm/fire systems are excluded. so a model that's still on shelves buys you much longer than 7 years. If they refuse, get the refusal in writing — the refusal itself is the thing worth complaining about. Laws are live in California, New York, Minnesota, Oregon and Colorado. Game consoles are left out almost everywhere, and New York leaves out fridges, ovens, microwaves and HVAC.",
+      "window_note": "Counted from when the maker last built your model, not from when you bought it, so an old model may already be past it. The rules started 1 July 2024 and cover products made after 1 July 2021. Game consoles and alarm/fire systems are excluded. So a model that's still on shelves buys you much longer than 7 years. If they refuse, get the refusal in writing — the refusal itself is the thing worth complaining about. Laws are live in California, New York, Minnesota, Oregon and Colorado. Game consoles are left out almost everywhere, and New York leaves out fridges, ovens, microwaves and HVAC.",
       "what_you_get": "Spare parts, tools and the service manuals needed to fix your electronics or appliance, available to you and to independent repair shops on fair terms and at the same cost the maker charges its own approved shops. Documents must be free apart from real printing and postage costs. 7 years for anything with a wholesale price of $100 or more, 3 years for $50 to $99.99.",
       "confidence": "certain",
       "how_to_claim": "Ask the maker's support line for the part and the service manual, or ask a local independent repair shop to order them for you. If the maker refuses, say California's Right to Repair Act requires it and that a city attorney, district attorney or the Attorney General can enforce it.",
@@ -3440,7 +3468,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "In force since 1 January 2025. Covers phones first made and sold from 1 July 2021, and other consumer electronics from 1 July 2015. Important catch: the Attorney General can only fine companies for violations happening on or after 1 July 2027, so before then this is a strong argument rather than an instant penalty. Cars, medical gear, heating and cooling, solar, game consoles and electric toothbrushes are excluded. Fingerprint and face-unlock sensors are the one carve-out. , check the date your device was made or first sold, then say that to the maker in writing.",
+      "window_note": "In force since 1 January 2025. Covers phones first made and sold from 1 July 2021, and other consumer electronics from 1 July 2015. Important catch: the Attorney General can only fine companies for violations happening on or after 1 July 2027, so before then this is a strong argument rather than an instant penalty. Cars, medical gear, heating and cooling, solar, game consoles and electric toothbrushes are excluded. Fingerprint and face-unlock sensors are the one carve-out. Check the date your device was made or first sold, then say that to the maker in writing.",
       "what_you_get": "Parts, tools and manuals on fair terms, at the best price the maker gives its own approved shops. Plus, for gear first made and sold after 1 January 2025, the maker cannot use software \"parts pairing\" to stop a good replacement part working, to slow your device down, or to nag you with warnings about unidentified parts that you can't dismiss.",
       "confidence": "certain",
       "how_to_claim": "Ask the maker, or get your repair shop to ask, for the part and for the software or tool needed to make that part work. If a fitted part is being blocked, throttled or flagged, say so in writing and complain to the Oregon Department of Justice.",
@@ -4245,7 +4273,7 @@
         ]
       },
       "window_months": 24.0,
-      "window_note": "Any time your AppleCare+ plan is still running. A one-off AppleCare+ plan is usually 2 years; a monthly plan keeps going until you cancel it. Only the battery that came in the box counts. Mac plans are usually 3 years. On a Mac hold Option, click the Apple menu, choose System Information, then Power. ask for battery service under AppleCare+",
+      "window_note": "Any time your AppleCare+ plan is still running. A one-off AppleCare+ plan is usually 2 years; a monthly plan keeps going until you cancel it. Only the battery that came in the box counts. Mac plans are usually 3 years. On a Mac hold Option, click the Apple menu, choose System Information, then Power. Ask for battery service under AppleCare+.",
       "what_you_get": "A brand new battery fitted for free. No service fee, no parts charge.",
       "confidence": "certain",
       "how_to_claim": "On an iPhone open Settings, tap Battery, then Battery Health, and read Maximum Capacity. If it says under 80%, book a free appointment at an Apple Store or an Apple Authorised Service Provider and bring the device.",
@@ -4760,7 +4788,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "No purchase window, and it does not matter whether you ever registered the seat or kept the receipt. The free-fix duty only stops for things bought more than 15 years before the recall notice, and car seats expire long before that. — free, including posting you the fix kit. Free recall fixes don't expire and don't depend on you having the receipt.",
+      "window_note": "No purchase window, and it does not matter whether you ever registered the seat or kept the receipt. The free-fix duty only stops for things bought more than 15 years before the recall notice, and car seats expire long before that. Free, including posting you the fix kit. Free recall fixes don't expire and don't depend on you having the receipt.",
       "what_you_get": "By US law the maker has to put it right for free - repair it, swap it for the same or an equal seat, or refund what you paid. The maker picks which one.",
       "confidence": "certain",
       "how_to_claim": "Find the model number and date of manufacture on the sticker on the seat, look it up on the government recall list, then call the maker and say your seat is on it. Registering your seat also gets you told automatically next time.",
@@ -5042,7 +5070,7 @@
         ]
       },
       "window_months": 3.0,
-      "window_note": "You must call within 90 days of buying it, and only after the store has already said no to your return. Then you have 60 days to send the paperwork. The item has to still work and look new. be ready to show the shop's return policy or that they turned you down.",
+      "window_note": "You must call within 90 days of buying it, and only after the store has already said no to your return. Then you have 60 days to send the paperwork. The item has to still work and look new. Be ready to show the shop's return policy or that they turned you down.",
       "what_you_get": "Chase refunds what you paid, up to $500 for one item and $1,000 per 12 months. You may have to mail the item in at your own cost.",
       "confidence": "certain",
       "how_to_claim": "Ask the store for a return first and get their no. Then go to chasecardbenefits.com or call 1-800-350-1697 within 90 days of the purchase date.",
@@ -5066,18 +5094,46 @@
           "US"
         ],
         "payment_methods": [
+          "mastercard"
+        ]
+      },
+      "window_months": 999.0,
+      "window_note": "This has nothing to do with when you bought the phone. You just have to have paid your whole phone bill with the card the month before the damage. Report it within 60 days of the damage and send papers within 90 days. If it was stolen, file a police report within 48 hours.",
+      "what_you_get": "Up to $800 per claim after a $50 deductible, with 2 paid claims and $1,000 max per 12 months. Lost phones and battery problems are not covered.",
+      "confidence": "likely",
+      "how_to_claim": "Go to chasecardbenefits.com or call 1-800-349-2691. Have your phone bill showing you paid it with the card, your card statement, and a repair estimate.",
+      "contact": "1-800-349-2691",
+      "script_hint": "I pay my phone bill with my Chase Freedom Flex and my screen cracked. I want to file a cell phone protection claim.",
+      "source_url": "https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11363_v2.pdf",
+      "deadline": ""
+    },
+    {
+      "id": "cards-us-chase-cell-phone",
+      "source_type": "card",
+      "title": "Chase Freedom Flex: pays for a smashed or stolen phone",
+      "applies_to": {
+        "brands": [
+          "*"
+        ],
+        "categories": [
+          "phone"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
           "mastercard",
           "visa"
         ]
       },
       "window_months": 999.0,
-      "window_note": "This has nothing to do with when you bought the phone. You just have to have paid your whole phone bill with the card the month before the damage. Report it within 60 days of the damage and send papers within 90 days. If it was stolen, file a police report within 48 hours. Other Chase cards like Ink Business Preferred have their own version.",
-      "what_you_get": "Up to $800 per claim after a $50 deductible, with 2 paid claims and $1,000 max per 12 months. Lost phones and battery problems are not covered.",
+      "window_note": "Not tied to when you bought the phone. You just have to be paying your monthly phone bill with the Chase card. Report a break or theft quickly - these phone benefits normally give you 60 to 90 days.",
+      "what_you_get": "Pay your phone bill with a Freedom Flex and a broken or stolen phone gets fixed or replaced - up to $800 a claim and $1,000 a year, minus a $50 deductible, maximum 2 claims in 12 months. Other Chase cards like Ink Business Preferred have their own version.",
       "confidence": "certain",
-      "how_to_claim": "Go to chasecardbenefits.com or call 1-800-349-2691. Have your phone bill showing you paid it with the card, your card statement, and a repair estimate.",
-      "contact": "1-800-349-2691",
-      "script_hint": "I pay my phone bill with my Chase Freedom Flex and my screen cracked. I want to file a cell phone protection claim.",
-      "source_url": "https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11363_v2.pdf",
+      "how_to_claim": "Call the number on the back of your Chase card and ask about the cell phone protection claim, and do it as soon as the phone breaks or goes missing. You'll need the statement showing you paid last month's phone bill with the card, and a police report for theft.",
+      "contact": "",
+      "script_hint": "I'm filing a cell phone protection claim on my Chase Freedom Flex. I pay my monthly wireless bill with this card and my phone was damaged/stolen on this date.",
+      "source_url": "https://www.chase.com/personal/credit-cards/education/chase-cards/chase-freedom-benefits-guide",
       "deadline": ""
     },
     {
@@ -5524,7 +5580,7 @@
       },
       "window_months": 72.0,
       "window_note": "The law itself sets no cut-off. In practice people claim up to about six years after the thing went wrong, because six years is the normal court deadline for a broken deal in England and Wales. Don't wait — ask as soon as you spot the problem. If they turn you down, take it to the Financial Ombudsman Service. Debit cards do not count - for those, ask about chargeback instead.",
-      "what_you_get": "This is the biggest unused right in Britain. If you put a purchase on a credit card, your card company is on the hook for exactly the same things the shop is. Faulty, never turned up, or not what you were promised? Ask the card company for a repair, a replacement or your money back. It still works if the shop has gone bust, moved on, or is simply ignoring you. It covers anything with a ticket price over £100 and up to £30,000. It does NOT work with debit cards, charge cards, overdrafts, bank transfers or cash — and note that some American Express cards are charge cards rather than credit cards, so check yours.",
+      "what_you_get": "This is the biggest unused right in Britain. If you put a purchase on a credit card, your card company is on the hook for exactly the same things the shop is. Faulty, never turned up, or not what you were promised? Ask the card company for a repair, a replacement or your money back. It still works if the shop has gone bust, moved on, or is simply ignoring you. It covers anything with a ticket price over £100 and up to £30,000. It does NOT work with debit cards, charge cards, overdrafts, bank transfers or cash — and note that some American Express cards are charge cards rather than credit cards, so check yours. Pay even a tiny slice — a £20 deposit on a £3,000 kitchen — and the card company is still on the hook for the whole thing.",
       "confidence": "certain",
       "how_to_claim": "Phone or message your credit card company (not the shop) and say you are making a Section 75 claim. Send them the receipt, whatever you were promised in the advert or listing, and photos of what is wrong. They have to investigate it themselves — they are not allowed to just tell you to go back to the shop.",
       "contact": "",
@@ -6751,7 +6807,7 @@
         ]
       },
       "window_months": 120.0,
-      "window_note": "Years 1-5: LG pays for the compressor part AND the labour. Years 6-10: LG still pays for the Linear or Inverter compressor part, but you pay the fitting. The clock starts on the day you bought it, so keep your receipt. Ask them to confirm in writing that the part is covered before the technician arrives. Terms vary by model, so check your own model number on LG's site. book a repair through LG rather than a random local engineer - an outside repair can cost you the free part.",
+      "window_note": "Years 1-5: LG pays for the compressor part AND the labour. Years 6-10: LG still pays for the Linear or Inverter compressor part, but you pay the fitting. The clock starts on the day you bought it, so keep your receipt. Ask them to confirm in writing that the part is covered before the technician arrives. Terms vary by model, so check your own model number on LG's site. Book a repair through LG rather than a random local engineer - an outside repair can cost you the free part.",
       "what_you_get": "A free replacement compressor - the expensive part that makes the fridge cold. In the first 5 years the fitting is free too. The sealed system (condenser, dryer, connecting tube, evaporator) is also parts-and-labour free for 5 years.",
       "confidence": "certain",
       "how_to_claim": "Ring LG on 1-800-243-0000 and tell them the fridge is not cooling. Have your model number, serial number and proof of purchase ready. Ask them to book a warranty repair, not a paid one.",
@@ -7679,7 +7735,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "No fixed number of years - the test is what is reasonable for that kind of product used that way. Each province has its own court deadline for actually suing, so do not sit on it. In New Brunswick you can claim even if you were not the person who bought it - a gift counts. every province also has a deadline for going to court — usually around two years from when you noticed the problem Applies to items bought or leased from a business, not from a private seller.",
+      "window_note": "No fixed number of years - the test is what is reasonable for that kind of product used that way. Each province has its own court deadline for actually suing, so do not sit on it. In New Brunswick you can claim even if you were not the person who bought it - a gift counts. Every province also has a deadline for going to court — usually around two years from when you noticed the problem Applies to items bought or leased from a business, not from a private seller.",
       "what_you_get": "A built-in promise, attached to every sale, that the item and its parts will last a reasonable period of time. It cannot be signed away, and 'sold as is, no warranty' does not remove it in a normal consumer sale.",
       "confidence": "certain",
       "how_to_claim": "Write to the retailer. Say what you paid, how long it lasted, and that the province's statutory durability warranty applies regardless of the manufacturer's warranty. If they refuse, small claims court is the backstop.",
@@ -7769,7 +7825,7 @@
         ]
       },
       "window_months": 48.0,
-      "window_note": "Kicks in the day the maker's warranty runs out. Only works if that warranty was 3 years or less, so the latest it can help you is about 4 years after you bought the thing. The clock that really matters is after it breaks: call within 60 days or they can say no. once the item breaks you have only 60 days to phone, and 90 days to send the paperwork. Banks pick which Visa benefits to switch on, so check your own card's Guide to Benefits before you count on it.",
+      "window_note": "Kicks in the day the maker's warranty runs out. Only works if that warranty was 3 years or less, so the latest it can help you is about 4 years after you bought the thing. The clock that really matters is after it breaks: call within 60 days or they can say no. Once the item breaks you have only 60 days to phone, and 90 days to send the paperwork. Banks pick which Visa benefits to switch on, so check your own card's Guide to Benefits before you count on it.",
       "what_you_get": "Your Visa card quietly adds a whole extra year onto the maker's warranty. So if your TV died 14 months in and the maker only covered 12 months, Visa can pay to fix it, or replace it, or pay you back what you spent - up to $10,000 for that one item and $50,000 total.",
       "confidence": "certain",
       "how_to_claim": "Call the Visa Benefit Administrator at 1-888-221-3289 as soon as the item stops working. Have ready: the receipt, the card statement showing you paid with the Visa, and the maker's warranty paper. They send you a claim form and tell you which repair shop to use.",
@@ -7817,7 +7873,7 @@
         ]
       },
       "window_months": 24.0,
-      "window_note": "Only helps if the maker's warranty was 12 months or less. It doubles that, so most people are covered until roughly two years after they bought it. After it breaks you get 60 days to report it and 180 days to send the paperwork. On World and World Elite cards it works on warranties up to 24 months and adds up to 24 months. If the maker's warranty is longer than that limit, you get nothing. the maker's warranty and a repair estimate from an authorised shop",
+      "window_note": "Only helps if the maker's warranty was 12 months or less. It doubles that, so most people are covered until roughly two years after they bought it. After it breaks you get 60 days to report it and 180 days to send the paperwork. On World and World Elite cards it works on warranties up to 24 months and adds up to 24 months. If the maker's warranty is longer than that limit, you get nothing. The maker's warranty and a repair estimate from an authorised shop.",
       "what_you_get": "A basic Mastercard doubles the maker's warranty by up to 12 extra months. Most electronics come with one year, so this usually gets you a second year free. They pay the repair or replacement, capped at what you charged to the card or $10,000, whichever is smaller.",
       "confidence": "certain",
       "how_to_claim": "Call 1-800-627-8372 (that's 1-800-Mastercard) or go to mycardbenefits.com and start a claim within 60 days of the day it broke. Then send in the receipt and the card statement showing the purchase within 180 days.",
@@ -7925,10 +7981,56 @@
           "bike",
           "outdoor",
           "toy",
-          "other",
+          "other"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
+          "mastercard",
+          "visa"
+        ]
+      },
+      "window_months": 84.0,
+      "window_note": "Citi adds 24 months on top of the maker's warranty, with total cover capped at 7 years from the day you bought it. Send all requested documents within 180 days of the failure. Careful: Citi stripped these benefits from a lot of its cards, so check yours first.",
+      "what_you_get": "On the Citi cards that still have it, Citi adds a full 24 months to the maker's warranty - double what most cards give. They repair, replace or pay you back up to $10,000 per item.",
+      "confidence": "likely",
+      "how_to_claim": "Call 1-866-506-5222 (8am to midnight ET, any day) or go to mybenefits.cardbenefitclaims.com as soon as the item fails. First, check your card actually has the benefit - look up your card's Guide to Protection Benefits at cardbenefits.citi.com.",
+      "contact": "1-866-506-5222",
+      "script_hint": "I want to open an Extended Warranty claim on my Citi card. Can you confirm my card has this benefit? The item failed on this date and the manufacturer's warranty has run out.",
+      "source_url": "https://www.cardbenefits.citi.com/-/media/CPP/Files/LegalDocs/SOAPI/PID90_PRESTIGE_CRE130_GTPB_0124_TAGGED.PDF",
+      "deadline": ""
+    },
+    {
+      "id": "citi-extended-warranty-us",
+      "source_type": "card",
+      "title": "Citi extended warranty (US)",
+      "applies_to": {
+        "brands": [
+          "*"
+        ],
+        "categories": [
+          "phone",
+          "laptop",
+          "tablet",
+          "headphones",
+          "tv",
+          "appliance-large",
+          "appliance-small",
+          "kitchen",
+          "vacuum",
+          "power-tool",
           "furniture",
           "mattress",
-          "watch"
+          "watch",
+          "camera",
+          "console",
+          "monitor",
+          "printer",
+          "bike",
+          "outdoor",
+          "toy",
+          "other"
         ],
         "regions": [
           "US"
@@ -7939,14 +8041,14 @@
           "amex"
         ]
       },
-      "window_months": 84.0,
-      "window_note": "Citi adds 24 months on top of the maker's warranty, with total cover capped at 7 years from the day you bought it. Send all requested documents within 180 days of the failure. Careful: Citi stripped these benefits from a lot of its cards, so check yours first. Citi cut most of these benefits on 22 September 2019, then added a 2-year extended warranty back to cards like Double Cash and Custom Cash from 17 November 2024.",
-      "what_you_get": "On the Citi cards that still have it, Citi adds a full 24 months to the maker's warranty - double what most cards give. They repair, replace or pay you back up to $10,000 per item.",
+      "window_months": 84,
+      "window_note": "Citi adds up to 24 extra months, with total cover capped at 7 years from the purchase date. Worth checking even if you were told years ago that Citi had dropped it: Citi cut most of these benefits on 22 September 2019, then added a 2-year extended warranty back to cards like Double Cash and Custom Cash from 17 November 2024. Send documents within 180 days of the failure.",
+      "what_you_get": "A free repair or replacement after the maker's warranty ends, up to $10,000 per item.",
       "confidence": "likely",
-      "how_to_claim": "Call 1-866-506-5222 (8am to midnight ET, any day) or go to mybenefits.cardbenefitclaims.com as soon as the item fails. First, check your card actually has the benefit - look up your card's Guide to Protection Benefits at cardbenefits.citi.com.",
-      "contact": "1-866-506-5222",
-      "script_hint": "I want to open an Extended Warranty claim on my Citi card. Can you confirm my card has this benefit? The item failed on this date and the manufacturer's warranty has run out.",
-      "source_url": "https://www.cardbenefits.citi.com/-/media/CPP/Files/LegalDocs/SOAPI/PID90_PRESTIGE_CRE130_GTPB_0124_TAGGED.PDF",
+      "how_to_claim": "Go to cardbenefits.citi.com or call 1-866-918-4670 as soon as the item stops working, and return every document they ask for within 180 days of the breakdown. Check your own card's Guide to Protection Benefits first, because not every Citi card has this.",
+      "contact": "1-866-918-4670",
+      "script_hint": "I'd like to file a Citi Extended Warranty claim. My [item] failed after the manufacturer's warranty ran out, and I paid for it in full with this Citi card.",
+      "source_url": "https://www.cardbenefits.citi.com/",
       "deadline": ""
     },
     {
@@ -8050,9 +8152,7 @@
           "bike",
           "outdoor",
           "toy",
-          "other",
-          "appliance-large",
-          "watch"
+          "other"
         ],
         "regions": [
           "US"
@@ -8064,13 +8164,145 @@
         ]
       },
       "window_months": 48.0,
-      "window_note": "How long the extension runs depends on your card's network. World Elite Mastercard versions add up to 24 months; Visa versions add 12. Capital One says to file within 60 to 90 days of the thing breaking. Only works on maker warranties of 3 years or less. Call within 60 days of the breakdown and send the form within 90 days. You can also register the warranty ahead of time by calling the same number. Works on maker or store warranties of 24 months or less and doubles them, so a 2-year warranty becomes 4 years. Report within 60 days of the breakdown and send written proof within 180 days. Their damage and theft cover is separate and smaller: $1,000 per loss within 90 days of buying.",
+      "window_note": "How long the extension runs depends on your card's network. World Elite Mastercard versions add up to 24 months; Visa versions add 12. Capital One says to file within 60 to 90 days of the thing breaking.",
       "what_you_get": "Capital One kept this benefit while others dropped it. Venture, VentureOne, Savor, SavorOne, Quicksilver and QuicksilverOne all have extended warranty. Covers TVs, phones and appliances that aren't wired or plumbed in - so a toaster yes, a built-in dishwasher no.",
       "confidence": "certain",
       "how_to_claim": "Mastercard versions: call 800-627-8372 or go to mycardbenefits.com. Visa and Discover versions: call 844-288-2140 or go to cardbenefitservices.com. File within 60 days of the failure to be safe. Bring the itemised receipt, the maker's warranty, a repair estimate and the statement showing the purchase.",
       "contact": "844-288-2140",
       "script_hint": "I'm filing an extended warranty claim on my Capital One card. The item failed after the manufacturer's warranty ended and I bought it with this card.",
       "source_url": "https://www.capitalone.com/help-center/credit-cards/extended-warranty-benefits/",
+      "deadline": ""
+    },
+    {
+      "id": "cards-us-capitalone-venture-x-extended-warranty",
+      "source_type": "card",
+      "title": "Capital One Venture X adds a free extra year of warranty",
+      "applies_to": {
+        "brands": [
+          "*"
+        ],
+        "categories": [
+          "laptop",
+          "tablet",
+          "headphones",
+          "tv",
+          "appliance-large",
+          "appliance-small",
+          "kitchen",
+          "vacuum",
+          "power-tool",
+          "camera",
+          "console",
+          "monitor",
+          "printer",
+          "bike",
+          "phone",
+          "watch",
+          "outdoor"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
+          "visa"
+        ]
+      },
+      "window_months": 51.0,
+      "window_note": "Only works if the maker's warranty was 3 years or shorter. It adds 1 more year on top. Call within 60 days of the item breaking and send the signed form within 90 days.",
+      "what_you_get": "They pay to repair or replace the item, up to $10,000 per claim and $50,000 per cardholder.",
+      "confidence": "certain",
+      "how_to_claim": "Call the Benefit Administrator at 1-844-288-2140 right after the item fails. Have the receipt, warranty paper, and card statement.",
+      "contact": "1-844-288-2140",
+      "script_hint": "The maker's warranty just ended and my item stopped working. I bought it on my Capital One Venture X and want an extended warranty claim.",
+      "source_url": "https://ecm.capitalone.com/WCM/card/benefits-guide/visa-benefits-guides/visa-infinite-english.pdf",
+      "deadline": ""
+    },
+    {
+      "id": "cards-us-capitalone-visa-signature-extended-warranty",
+      "source_type": "card",
+      "title": "Capital One Visa Signature cards add a free extra year of warranty",
+      "applies_to": {
+        "brands": [
+          "*"
+        ],
+        "categories": [
+          "laptop",
+          "tablet",
+          "headphones",
+          "tv",
+          "appliance-large",
+          "appliance-small",
+          "kitchen",
+          "vacuum",
+          "power-tool",
+          "camera",
+          "console",
+          "monitor",
+          "printer",
+          "bike",
+          "phone",
+          "watch",
+          "outdoor"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
+          "visa"
+        ]
+      },
+      "window_months": 51.0,
+      "window_note": "Covers Capital One Visa Signature cards like Venture, VentureOne, Savor and Quicksilver. Only works on maker warranties of 3 years or less. Call within 60 days of the breakdown and send the form within 90 days.",
+      "what_you_get": "They pay to repair or replace the item, up to $10,000 per claim and $50,000 per cardholder. These cards do not have cell phone or return protection.",
+      "confidence": "certain",
+      "how_to_claim": "Call the Benefit Administrator at 1-844-288-2140. You can also register the warranty ahead of time by calling the same number.",
+      "contact": "1-844-288-2140",
+      "script_hint": "My item's maker warranty just ran out and it failed. I bought it on my Capital One Visa Signature card and want an extended warranty claim.",
+      "source_url": "https://ecm.capitalone.com/WCM/card/benefits-guide/visa-benefits-guides/visa-signature-english.pdf",
+      "deadline": ""
+    },
+    {
+      "id": "cards-us-capitalone-world-elite-extended-warranty",
+      "source_type": "card",
+      "title": "Capital One World Elite Mastercard doubles your warranty, up to 2 extra years",
+      "applies_to": {
+        "brands": [
+          "*"
+        ],
+        "categories": [
+          "laptop",
+          "tablet",
+          "headphones",
+          "tv",
+          "appliance-large",
+          "appliance-small",
+          "kitchen",
+          "vacuum",
+          "power-tool",
+          "camera",
+          "console",
+          "monitor",
+          "printer",
+          "bike",
+          "phone",
+          "watch",
+          "outdoor"
+        ],
+        "regions": [
+          "US"
+        ],
+        "payment_methods": [
+          "mastercard"
+        ]
+      },
+      "window_months": 50.0,
+      "window_note": "Works on maker or store warranties of 24 months or less and doubles them, so a 2-year warranty becomes 4 years. Report within 60 days of the breakdown and send written proof within 180 days.",
+      "what_you_get": "They pay to repair or replace the item, up to $10,000 per claim. Their damage and theft cover is separate and smaller: $1,000 per loss within 90 days of buying.",
+      "confidence": "certain",
+      "how_to_claim": "Go to mycardbenefits.com or call 1-800-627-8372. Have the receipt, warranty paper, and card statement.",
+      "contact": "1-800-627-8372",
+      "script_hint": "My item's warranty just ran out and it stopped working. I bought it on my Capital One World Elite Mastercard and want an extended warranty claim.",
+      "source_url": "https://ecm.capitalone.com/WCM/card/benefits-guide/20210621-updates-to-wmc-world-and-we/mc-we-gtb_english.pdf",
       "deadline": ""
     },
     {
@@ -8093,7 +8325,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "Nothing to do with when you bought the phone. Cover starts on the first day of the month after your phone bill posts to the Wells Fargo card, and stops if you skip a month. Report within 60 days of the loss. send documents within 120 days. Lost phones are not covered.",
+      "window_note": "Nothing to do with when you bought the phone. Cover starts on the first day of the month after your phone bill posts to the Wells Fargo card, and stops if you skip a month. Report within 60 days of the loss. Send documents within 120 days. Lost phones are not covered.",
       "what_you_get": "Pay your monthly phone bill with a Wells Fargo card and a damaged, stolen or accidentally-lost-forever phone gets fixed or replaced - up to $600 a claim minus a $25 deductible, 2 paid claims and $1,200 max in 12 months. Every line on that bill is covered. Cracked screens that don't affect how it works are not.",
       "confidence": "certain",
       "how_to_claim": "Call 1-800-316-8051 or go to mycardbenefits.assurant.com within 60 days of the damage or theft. You'll need the wireless bill showing the whole monthly payment went on the Wells Fargo card.",
@@ -8225,57 +8457,6 @@
       "contact": "",
       "script_hint": "I want to open a claim today to protect my deadline, even though I don't have all my paperwork yet. Please note the date I reported this.",
       "source_url": "https://usa.visa.com/content/dam/VCOM/regional/na/us/pay-with-visa/documents/extended-warranty-infinite.pdf",
-      "deadline": ""
-    },
-    {
-      "id": "law-us-independent-repair-cannot-void-warranty",
-      "source_type": "statutory",
-      "title": "Getting it fixed somewhere else can't cancel your warranty",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "footwear",
-          "apparel",
-          "bag",
-          "watch",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "bike",
-          "outdoor",
-          "toy",
-          "other"
-        ],
-        "regions": [
-          "US"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 999.0,
-      "window_note": "Works the whole time the maker's own warranty is still running. Check the warranty card or the maker's website for how long that is. A sticker over a screw, or fine print saying only their shop may open it, does not end your warranty by itself. If they point at the broken seal, don't accept that as the whole answer — make them connect the opening to the actual fault.",
-      "what_you_get": "Your warranty keeps working. The maker still has to do the free repair or replacement even though a local shop opened it up, or you put in a part that wasn't their brand. The only way they get out of it is by showing that the outside part or the outside repair is what actually caused this fault.",
-      "confidence": "certain",
-      "how_to_claim": "Call the maker's warranty line and open a normal warranty claim. Don't volunteer where it's been. If they refuse because someone else touched it, ask them to put the refusal in writing and say the sentence below.",
-      "contact": "",
-      "script_hint": "Federal law says you can't void my warranty just because someone else worked on it or I used a different brand of part — unless you can show that part or that repair is what actually broke it. So which is it?",
-      "source_url": "https://www.law.cornell.edu/cfr/text/16/700.10",
       "deadline": ""
     },
     {
@@ -8450,7 +8631,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "Only while the full warranty runs. Look at the top of your warranty paper — it has to say \"Full\" (like \"Full One-Year Warranty\"). If it says \"Limited\", this one doesn't apply to you. write to them, list the dates of every failed repair, and say you are choosing a refund (or a replacement) because it's your choice under the law.",
+      "window_note": "Only while the full warranty runs. Look at the top of your warranty paper — it has to say \"Full\" (like \"Full One-Year Warranty\"). If it says \"Limited\", this one doesn't apply to you. Write to them, list the dates of every failed repair, and say you are choosing a refund (or a replacement) because it's your choice under the law.",
       "what_you_get": "After the company has had a fair number of tries and still can't fix it, you choose: your money back, or a brand new one. Free. They also can't charge you for the repair itself, and the only thing they're allowed to ask of you is that you tell them it's broken.",
       "confidence": "certain",
       "how_to_claim": "Count your repair attempts and find the dates. Call the warranty line, say how many times it has been in, and ask for the refund-or-replace choice in writing.",
@@ -8578,7 +8759,7 @@
       },
       "window_months": 999.0,
       "window_note": "California only. Works while the written warranty is still running. Most people have never heard this applies to a fridge or a laptop, but it does. Ask the maker or the shop in writing for a repair under the Song-Beverly Act. If it ends up in court, you generally have about 4 years from the purchase date. Once it's past 30 days, or after two or three failed fixes, ask in writing for a replacement or a refund and attach your log. Warranty repairs have to be finished within 30 days, unless you agree in writing to wait longer.",
-      "what_you_get": "If the maker can't fix it after a fair number of tries, California law makes them replace it or hand back what you paid, minus a small amount for the use you already got out of it.",
+      "what_you_get": "If the maker can't fix it after a fair number of tries, California law makes them replace it or hand back what you paid, minus a small amount for the use you already got out of it. Warranty repairs have to be finished within 30 days, unless you agree in writing to wait longer.",
       "confidence": "certain",
       "how_to_claim": "Keep every repair ticket — dates matter more than anything else here. Then write to the maker, not the store, list the dates it went in for the same fault, and ask for a replacement or a refund.",
       "contact": "",
@@ -8805,7 +8986,7 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "Minnesota only, for gear sold on or after 1 July 2021. Cars, medical devices, farm and construction gear, game consoles and home battery systems are left out. Minnesota's version covers appliances, which New York's does not. including software updates needed for the repair.",
+      "window_note": "Minnesota only, for gear sold on or after 1 July 2021. Cars, medical devices, farm and construction gear, game consoles and home battery systems are left out. Minnesota's version covers appliances, which New York's does not. Including software updates needed for the repair.",
       "what_you_get": "You or an independent shop can buy the parts and tools and get the repair documents on fair terms — and the maker has to have them ready within 60 days of the product first going on sale in Minnesota.",
       "confidence": "certain",
       "how_to_claim": "Ask the maker, or have your repair shop ask, for the specific part, tool or manual. Keep any refusal in writing — refusing breaks Minnesota's deceptive trade practices law, so report it to the Minnesota Attorney General.",
@@ -9278,57 +9459,6 @@
       "deadline": ""
     },
     {
-      "id": "batteries-uk-first-six-months-presumed-faulty",
-      "source_type": "statutory",
-      "title": "UK: a fault in the first 6 months is assumed to be their fault",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "footwear",
-          "apparel",
-          "bag",
-          "watch",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "bike",
-          "outdoor",
-          "toy",
-          "other"
-        ],
-        "regions": [
-          "UK"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 6,
-      "window_note": "First 30 days you can simply hand it back for a refund. First 6 months the shop has to prove you wrong. After 6 months the job of proving it falls on you. In England and Wales you have up to 6 years to take it to court.",
-      "what_you_get": "A repair, a replacement, a partial refund, or your money back, from the shop that sold it, not the maker.",
-      "confidence": "certain",
-      "how_to_claim": "Go back to the shop that sold it, not the manufacturer. In the first 30 days ask to reject it for a full refund. Between 30 days and 6 months, say the fault is presumed to have been there when you bought it, so they must prove otherwise. Past 6 months you need evidence, such as an engineer's report, that the fault was built in. Be aware they can lawfully refuse anything that is honest wear and tear.",
-      "contact": "https://www.businesscompanion.info/en/quick-guides/goods/selling-and-supplying-goods",
-      "script_hint": "This fault appeared within six months of delivery, so under the Consumer Rights Act it's assumed the fault was there when I received it unless you can prove otherwise.",
-      "source_url": "https://www.businesscompanion.info/en/quick-guides/goods/selling-and-supplying-goods",
-      "deadline": ""
-    },
-    {
       "id": "batteries-toyota-hybrid-battery-ten-years",
       "source_type": "manufacturer",
       "title": "Toyota hybrid batteries get 10 years, and it follows the car",
@@ -9386,57 +9516,6 @@
       "contact": "https://www.apple.com/support/products/iphone/",
       "script_hint": "I have AppleCare+, so this should be the $29 screen repair service fee, not a full price screen replacement.",
       "source_url": "https://www.apple.com/support/products/iphone/",
-      "deadline": ""
-    },
-    {
-      "id": "cards-intl-uk-consumer-rights-act",
-      "source_type": "statutory",
-      "title": "UK: the shop must repair or replace it, and the first 6 months are on them",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "watch",
-          "bike",
-          "outdoor",
-          "toy",
-          "footwear",
-          "apparel",
-          "bag",
-          "other"
-        ],
-        "regions": [
-          "UK"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 6,
-      "window_note": "First 30 days: hand it back for a full refund. First 6 months: the shop has to prove it was fine when sold. After that you can still claim for up to 6 years in England, Wales and Northern Ireland, but you may need to show the fault was there from the start.",
-      "what_you_get": "Faulty goods are the seller's problem, not the manufacturer's. The shop that took your money must repair or replace the item free. In the first 6 months the shop has to prove the fault was not there when you bought it, rather than you having to prove it was. In the first 30 days you can simply reject it and get all your money back.",
-      "confidence": "certain",
-      "how_to_claim": "Go back to the shop that sold it, in writing if you can, and say the goods were not of satisfactory quality under the Consumer Rights Act 2015. Ask for a repair or a replacement, and keep a copy of what you sent.",
-      "contact": "",
-      "script_hint": "Under the Consumer Rights Act 2015 these goods were not of satisfactory quality. It is under 6 months old, so it is for you to show it was not faulty when sold. Please repair or replace it free of charge.",
-      "source_url": "https://www.legislation.gov.uk/ukpga/2015/15/section/19",
       "deadline": ""
     },
     {
@@ -10983,7 +11062,7 @@
         ]
       },
       "window_months": 84.0,
-      "window_note": "How long depends on the model: TR3 and DR3 get 3 years, TR5, DR5, TC5, DC5, FF7, DF7 and SF7 get 5 years, and TR7 and DR7 rear-control models get 7 years. Counted from the day it was installed. The cover also passes to a new owner if you sell the machine.",
+      "window_note": "How long depends on the model: TR3 and DR3 get 3 years, TR5, DR5, TC5, DC5, FF7, DF7 and SF7 get 5 years, and TR7 and DR7 rear-control models get 7 years. Counted from the day it was installed. The cover also passes to a new owner if you sell the machine. Watch out: if you never registered it within the first year, cover starts 30 days after it left the factory, not when you bought it.",
       "what_you_get": "Speed Queen pays for both the part and the repair person for 3, 5 or 7 years depending on your model - years after other brands stop at one.",
       "confidence": "certain",
       "how_to_claim": "Find your model number on the machine, check which group it falls into, then contact your Speed Queen dealer or an Alliance Laundry Systems authorised service company and ask for warranty service.",
@@ -11012,7 +11091,7 @@
         ]
       },
       "window_months": 24.0,
-      "window_note": "2 years from purchase or delivery for cordless vacuums, fans, heaters, purifiers, humidifiers, hair dryers, stylers, straighteners and audio. Dyson Renewed (refurbished) machines get 6 months or 1 year instead. No receipt? Dyson dates it 90 days after the machine was made. A battery that simply holds less charge than when new is not covered, but a battery or machine that has actually failed is. it only counts if you bought from Dyson or an authorised seller.",
+      "window_note": "2 years from purchase or delivery for cordless vacuums, fans, heaters, purifiers, humidifiers, hair dryers, stylers, straighteners and audio. Dyson Renewed (refurbished) machines get 6 months or 1 year instead. No receipt? Dyson dates it 90 days after the machine was made. A battery that simply holds less charge than when new is not covered, but a battery or machine that has actually failed is. It only counts if you bought from Dyson or an authorised seller.",
       "what_you_get": "Two years of free parts and labour - and that includes the battery in a cordless vacuum, which is the part that usually goes first.",
       "confidence": "certain",
       "how_to_claim": "Call the Dyson Helpline on 1-866-693-9766 with the model name, serial number and where and when you bought it. Say the battery or motor is failing.",

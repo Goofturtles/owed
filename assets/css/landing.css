@@ -347,26 +347,6 @@
 .sc-title { font-size: var(--step-4); margin-top: .55rem; padding-bottom: .06em; }
 .sc-lede { margin-top: 1rem; }
 
-.sc-index { margin: clamp(1.5rem, 3vw, 2.25rem) 0 0; }
-.sc-row {
-  display: grid;
-  grid-template-columns: 1.1rem minmax(0, 1fr) max-content;
-  align-items: center;
-  gap: .6rem;
-  padding-block: .85rem;
-  border-top: 1px solid var(--line);
-  font-size: var(--step-0);
-  color: var(--ink-3);
-}
-.sc-row:last-child { border-bottom: 1px solid var(--line); }
-/* the dot in the gutter is the only marker; the row itself never moves */
-.sc-row-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: transparent;
-}
-.sc-row.is-on { color: var(--ink); font-weight: 600; }
-.sc-row.is-on .sc-row-dot { background: var(--accent); }
-.sc-row-meta { font-size: var(--step--1); color: var(--ink-3); font-weight: 400; }
 .sc-cta { margin-top: clamp(1.5rem, 3vw, 2rem); }
 
 .sc-shot { margin: 0; position: relative; }
@@ -455,11 +435,19 @@
 .prem-row:nth-child(2) .prem-fig { color: var(--ink-2); }
 .prem-row:nth-child(3) .prem-fig { color: var(--ink-3); }
 
-.prem-text {
-  padding-top: .5em;        /* optically level with the figure's cap */
-  font-size: var(--step-0);
-  line-height: 1.6;
+.prem-text { padding-top: .55em; }        /* optically level with the figure's cap */
+.prem-label {
+  font-size: var(--step-1);
+  line-height: 1.35;
+  letter-spacing: -.008em;
   color: var(--ink-2);
+}
+/* the nuance lives in a footnote, the way Amplemarket and Spade caption a figure */
+.prem-foot {
+  margin-top: .55rem;
+  font-size: var(--step--2);
+  letter-spacing: .02em;
+  color: var(--ink-3);
 }
 
 /* the conclusion the three premises are for */
@@ -614,6 +602,12 @@
   position: relative; z-index: 1;
   font-size: var(--step-0); line-height: 1.55; margin-top: .6rem;
   max-width: 42ch;
+}
+.tile-foot {
+  position: relative; z-index: 1;
+  margin-top: .7rem;
+  font-size: var(--step--2); letter-spacing: .02em;
+  color: #46504D;                       /* measured on the blue tile, see .tile-n */
 }
 @media (max-width: 900px) {
   .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1353,7 +1347,7 @@
   position: relative;
   height: 320vh;
   /* fixed, not themed — black in light mode too */
-  --city-ground: #080A09;
+  --city-ground: #101312;
   --city-fg: #F5F4EC;
   background: var(--city-ground);
   border-bottom: 1px solid var(--city-ground);
@@ -1376,40 +1370,41 @@
 }
 .city-copy .eyebrow { color: #9E9D95; }   /* 7.3:1 on the ground */
 .city-title {
-  font-size: var(--step-4);
+  /* full-screen statement beats in the reference set run 5-6vw (Aboard 5,
+     Eat Hungry Tiger 6); Nike's 9vw is a poster, too loud for this page */
+  font-size: clamp(2.5rem, 5.5vw, 6rem);
+  line-height: 1.05;
   margin-top: .6rem;
-  letter-spacing: -.022em;
+  letter-spacing: -.024em;
   color: var(--city-fg);
-  display: grid;              /* both lines share one cell and cross-fade */
+  display: grid;              /* both lines share one cell and hand over */
   place-items: center;
+  max-width: 18ch;
+  margin-inline: auto;
 }
 .city-title > span {
   grid-area: 1 / 1;
   display: block;
   padding-bottom: .09em;      /* descender room inside the sticky overflow box */
 }
-.city-title em { font-style: italic; }
-.city-title .iw { display: inline-block; }
-.city.is-near .city-title .iw { will-change: opacity, transform, filter; }
+/* the one emphasised phrase: italic serif in the dark accent, because the
+   themed --accent is forest green and measured under 3:1 on this ground */
+.city-title em { font-style: italic; color: var(--dk-accent); }
+.city.is-near .city-l1, .city.is-near .city-l2 { will-change: opacity, transform; }
 
-/* The handover runs word by word: each word carries its own --i so it rises
-   and sharpens a beat after the one before, rather than a whole line landing
-   at once. --p is the scroll progress through the section. */
-/* Spread wide across the scroll: each word gets its own stretch rather than
-   the whole line resolving in a quarter of the section. Word five lands around
-   two thirds of the way through, so there is time to read it. */
-.js-p .city-l2 .iw {
-  --t: clamp(0, calc((var(--p, 0) - .26 - var(--i, 0) * .06) * 7), 1);
+/* Line by line, not word by word: the references that reveal per word carry
+   five or six loose words; eight words in two tight clauses read as two units.
+   Rise + fade only - no blur, no bounce, for text (Kowalski). --p is the scroll
+   progress through the pinned section. */
+.js-p .city-l1 {
+  --t: clamp(0, calc((.36 - var(--p, 0)) * 7), 1);
   opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 20px));
-  filter: blur(calc((1 - var(--t)) * 7px));
+  transform: translateY(calc((1 - var(--t)) * -18px));
 }
-.js-p .city-l1 .iw {
-  /* leaves in the order it arrived, so the two lines cross rather than cut */
-  --t: clamp(0, calc((.32 - var(--p, 0) + var(--i, 0) * .035) * 8), 1);
+.js-p .city-l2 {
+  --t: clamp(0, calc((var(--p, 0) - .30) * 7), 1);
   opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * -16px));
-  filter: blur(calc((1 - var(--t)) * 6px));
+  transform: translateY(calc((1 - var(--t)) * 24px));
 }
 .js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.2 - var(--p, 0) * 2.6), 1); }
 
@@ -1420,47 +1415,38 @@
   max-width: 48ch; margin-inline: auto;
 }
 .js-p .city-sub {
-  --t: clamp(0, calc((var(--p, 0) - .70) * 6), 1);
+  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
   opacity: var(--t);
   transform: translateY(calc((1 - var(--t)) * 16px));
 }
 
-/* the five sources light up one at a time as you travel */
+/* The five sources, all visible at once. Every statement reference shows its
+   tags together (a static row, or a marquee); a chip that cycles is a moving
+   target and hides four of five proof points at any moment. They arrive after
+   the second line, 60ms-class stagger expressed in scroll progress. */
 .city-tags {
   position: absolute; z-index: 2;
   left: 50%; bottom: clamp(1.5rem, 5vh, 3rem);
   transform: translateX(-50%);
-  display: grid;
-  place-items: center;
-  min-height: 2.1rem;
-  width: min(520px, 90%);
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: .6rem;
+  width: min(820px, 92%);
 }
 .city-tags li {
-  grid-area: 1 / 1;
   font-family: var(--mono);
-  font-size: var(--step--1);
-  letter-spacing: .04em;
-  /* the beat is fixed black in BOTH themes, so these cannot use themed
-     tokens - the pills measured 19.85:1 in light and 1.12:1 in dark */
-  color: #4A4C52;
-  background: #FFFFFF;
-  border: 1px solid #E2E1DB;
+  font-size: var(--step-mono);
+  letter-spacing: .03em;
+  /* the beat is fixed dark in BOTH themes, so these cannot use themed tokens */
+  color: #15161A;
+  background: #F7F6F2;
   border-radius: var(--radius-pill);
-  padding: .42rem .95rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .45);
+  padding: .5rem .9rem;
   white-space: nowrap;
-  opacity: 0;
 }
-/* Without JS --p never moves, so the cycle would leave all five invisible.
-   Show the first one only: a real, readable static state. */
-.city-tags li:first-child { opacity: 1; }
 .js-p .city-tags li {
-  /* window must be at least the spacing between --ct values (~.16) or the
-     tags leave dead gaps where nothing is shown at all */
-  opacity: min(
-    clamp(0, calc((var(--p, 0) - var(--ct)) * 26), 1),
-    clamp(0, calc((var(--ct) + 0.17 - var(--p, 0)) * 26), 1)
-  );
+  --t: clamp(0, calc((var(--p, 0) - .56 - var(--ct, 0) * .04) * 9), 1);
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 8px));
 }
 
 @media (max-width: 700px) { .city { height: 260vh; } }
@@ -1482,11 +1468,11 @@
                gap: .5rem; justify-content: center; margin-top: 1.75rem; width: auto; }
   /* .js-p .city-tags li out-specifies a bare selector here, so this has to
      win explicitly or the five sources stay invisible under reduced motion */
-  .city-tags li { opacity: 1 !important; }
+  .city-tags li { opacity: 1 !important; transform: none !important; }
   .city-title { display: block; }
   .city-l1 { display: none; }
-  .city-l2 .iw, .city-sub, .city-copy .eyebrow {
-    opacity: 1 !important; transform: none !important; filter: none !important; }
+  .city-l2, .city-sub, .city-copy .eyebrow {
+    opacity: 1 !important; transform: none !important; }
 }
 
 /* ============================================================
@@ -1727,6 +1713,10 @@
   letter-spacing: -.022em;
   padding-bottom: .04em;
 }
+.saves-fig { margin: 1.25rem 0 0; display: grid; gap: .9rem; }
+.saves-fig .xv { width: min(100%, 460px); height: auto; display: block; }
+.xv-t text { font: 500 12px var(--mono); fill: var(--ink-3); letter-spacing: .02em; }
+.saves-cap { font-size: var(--step-0); line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
 .saves-lede {
   margin-top: .9rem;
   font-size: var(--step-1);

@@ -1,7 +1,7 @@
 {
   "deduplicated": "2026-09-02",
   "before": 445,
-  "after": 315,
+  "after": 318,
   "merges": [
     {
       "survivor": "appliance-speedqueen-rust-lifetime",
@@ -20,7 +20,8 @@
       ],
       "reason": "Same programme: the tiered Speed Queen parts-and-labour warranty (3 yrs TR3/DR3, 5 yrs 5-series/TC5/FF7, 7 yrs TR7/DR7). The '7yr-full' rule is titled for the 7000 Series but its own window_note already spells out the 5- and 3-year tiers, so it is the same right with a narrower title. Same brand, regions (US/CA), window_months (84), remedy (free parts + labour). Not separate rights - one warranty bond, one beneficiary. Survivor chosen because its title and model table describe the whole programme accurately (a TR3 or TC5 owner would be misled by '7 full years') and it carries the transferability point; the 7yr rule's stronger fields are carried over below.",
       "notes": [
-        "contact taken from appliance-speedqueen-7yr-full"
+        "contact taken from appliance-speedqueen-7yr-full",
+        "re-audit carried: Watch out: if you never registered it within the first year, cover sta"
       ]
     },
     {
@@ -179,7 +180,8 @@
       "reason": "All four describe the identical right: Consumer Credit Act 1974 s.75 joint-and-several liability of a UK credit card issuer for a purchase with a cash price over GBP 100 and up to GBP 30,000. Same beneficiary (UK credit-card buyer), same remedy (repair/replacement/refund from the card company), same region (UK), same window_months (72), no deadline on any. law-intl-uk-section-75 and law-intl-uk-section-75-credit-card are two near-identical explanations that even share the legislation.gov.uk source_url. The part-payment rule is not a different section of the statute - it is the same s.75 right explained for the deposit-only scenario, and the survivor's script_hint already asserts 'I paid at least part of it on this credit card'; a user would see Section 75 twice. Survivor chosen because it is confidence 'certain', has the fullest what_you_get (bust/ignoring seller, debit/charge-card/Amex-charge-card exclusions), the most accurate window_note (no statutory cut-off, six-year Limitation Act practical limit), the most actionable how_to_claim (card company must investigate itself), and the plainest specific title.",
       "notes": [
         "carried: If they turn you down, take it to the Financial Ombudsman Se",
-        "carried: Debit cards do not count - for those, ask about chargeback i"
+        "carried: Debit cards do not count - for those, ask about chargeback i",
+        "re-audit carried: Pay even a tiny slice — a £20 deposit on a £3,000 kitchen — and the ca"
       ]
     },
     {
@@ -523,7 +525,8 @@
         "window_months differ: survivor 999.0, law-us-ca-thirty-day-repair-or-refund 48.0 (kept survivor)",
         "carried: If it ends up in court, you generally have about 4 years fro",
         "carried: Once it's past 30 days, or after two or three failed fixes, ",
-        "carried: Warranty repairs have to be finished within 30 days, unless "
+        "carried: Warranty repairs have to be finished within 30 days, unless ",
+        "re-audit carried: Warranty repairs have to be finished within 30 days, unless you agree "
       ]
     },
     {
@@ -582,14 +585,6 @@
         "carried: Check your own model, as terms can differ.",
         "carried: The repair has to be done by a Samsung authorised service ce"
       ]
-    },
-    {
-      "survivor": "appliance-samsung-washer-motor-10yr",
-      "merged": [
-        "programs-samsung-washer-dryer-motor-10-year"
-      ],
-      "reason": "Both describe Samsung's 10-year Digital Inverter motor parts warranty on US laundry appliances, window 120, same contact and warranty page. Survivor is confidence certain with the purchase-date condition and proof-of-purchase requirement spelled out. The merged rule is 'likely' and vaguer. CAVEAT for owner: the two disagree - the survivor says washers bought on/after 1 April 2026 only; the merged rule says washers AND dryers with no purchase-date cut-off. One is incomplete; the Samsung warranty page should be re-checked before the dryer claim is added.",
-      "notes": []
     },
     {
       "survivor": "programs-lg-washer-direct-drive-motor-10-year",
@@ -840,44 +835,6 @@
       ]
     },
     {
-      "survivor": "cards-us-chase-freedom-flex-cell-phone",
-      "merged": [
-        "cards-us-chase-cell-phone"
-      ],
-      "reason": "Both describe Chase Freedom Flex cell phone protection: pay the phone bill with the card, $800 per claim after $50 deductible, 2 claims / $1,000 per 12 months. Same right. Survivor cites the Freedom Flex benefits guide PDF, gives exact windows (report within 60 days, papers within 90, police report within 48 hours) and the administrator number; the merged rule hedges ('normally give you 60 to 90 days') and has no contact. Because the merged rule is 'certain' on the same terms and the survivor cites the primary guide, raise the survivor's confidence to 'certain'.",
-      "notes": [
-        "carried: Other Chase cards like Ink Business Preferred have their own"
-      ]
-    },
-    {
-      "survivor": "cards-us-citi-extended-warranty",
-      "merged": [
-        "citi-extended-warranty-us"
-      ],
-      "reason": "Both describe Citi's own Extended Warranty benefit: +24 months on the maker's warranty, total cover capped at 7 years (window 84 on both), $10,000 per item, documents within 180 days, with the caveat that Citi stripped it from many cards. Same right. Both 'likely'. Survivor cites a specific Guide to Protection Benefits PDF and gives a claims phone plus the claims portal; the merged rule cites only the cardbenefits.citi.com landing page. (Citi Strata Elite's Mastercard-administered doubling benefit is a different programme with different terms and is kept separate.)",
-      "notes": [
-        "carried: Citi cut most of these benefits on 22 September 2019, then a"
-      ]
-    },
-    {
-      "survivor": "cards-us-capitalone-extended-warranty",
-      "merged": [
-        "cards-us-capitalone-venture-x-extended-warranty",
-        "cards-us-capitalone-visa-signature-extended-warranty",
-        "cards-us-capitalone-world-elite-extended-warranty"
-      ],
-      "reason": "Four rules for Capital One's extended warranty benefit. The umbrella rule already covers every Capital One card across Visa, Mastercard and Discover and gives both administrator numbers. The Venture X and Visa Signature rules describe the identical Visa-network terms (3-year-or-less warranty, +1 year, 60-day report, 90-day form, same 1-844-288-2140 administrator) and differ only by card tier PDF; the World Elite rule is the Mastercard-network flavour (doubles up to 24 months) that the umbrella already names. A Capital One Visa holder currently sees the same right three times. All four are 'certain'. Survivor is the umbrella because it is the only one that spans all Capital One networks and names the full card list; the specific windows it lacks are appended below. Network-generic Visa and World Elite Mastercard rules are kept separately as fallbacks for other issuers.",
-      "notes": [
-        "window_months differ: survivor 48.0, cards-us-capitalone-venture-x-extended-warranty 51.0 (kept survivor)",
-        "window_months differ: survivor 48.0, cards-us-capitalone-visa-signature-extended-warranty 51.0 (kept survivor)",
-        "carried: Only works on maker warranties of 3 years or less. Call with",
-        "carried: You can also register the warranty ahead of time by calling ",
-        "window_months differ: survivor 48.0, cards-us-capitalone-world-elite-extended-warranty 50.0 (kept survivor)",
-        "carried: Works on maker or store warranties of 24 months or less and ",
-        "carried: Their damage and theft cover is separate and smaller: $1,000"
-      ]
-    },
-    {
       "survivor": "cards-us-wellsfargo-cell-phone",
       "merged": [
         "cards-us-wells-fargo-cell-phone"
@@ -999,6 +956,23 @@
       "notes": [
         "regions unioned"
       ]
+    },
+    {
+      "survivor": "law-intl-uk-six-month-presumption",
+      "merged": [
+        "batteries-uk-first-six-months-presumed-faulty",
+        "cards-intl-uk-consumer-rights-act"
+      ],
+      "reason": "all three are the Consumer Rights Act s.19(14) six-month presumption (re-audit)",
+      "notes": []
+    },
+    {
+      "survivor": "us-third-party-parts-cant-void-warranty",
+      "merged": [
+        "law-us-independent-repair-cannot-void-warranty"
+      ],
+      "reason": "16 CFR 700.10 is the FTC's reading of 15 USC 2302(c); what_you_get near-verbatim (re-audit)",
+      "notes": []
     }
   ],
   "skipped": [],
@@ -1080,6 +1054,44 @@
       "why": [
         "Both rules printed in full (see tool output). Field-by-field check of what only law-us-ny-right-to-repair carried:\n\nCARRIED by survivor or field notes (no loss): region US; brands/payment '*'; window 999 / \"no deadline tied to when you bought it\"; contact URL identical (AG consumer complaint form); "
       ]
+    },
+    {
+      "survivor": "appliance-samsung-washer-motor-10yr",
+      "merged": [
+        "programs-samsung-washer-dryer-motor-10-year"
+      ],
+      "why": [
+        "re-audit: survivor is washers bought from 1 Apr 2026; merged rule covered washers and dryers with no date gate - different scope"
+      ]
+    },
+    {
+      "survivor": "cards-us-capitalone-extended-warranty",
+      "merged": [
+        "cards-us-capitalone-venture-x-extended-warranty",
+        "cards-us-capitalone-visa-signature-extended-warranty",
+        "cards-us-capitalone-world-elite-extended-warranty"
+      ],
+      "why": [
+        "re-audit: Venture X, Visa Signature and World Elite terms differ (doubling vs +1 year, 90 vs 180 day proof); stacking them misdescribes each"
+      ]
+    },
+    {
+      "survivor": "cards-us-chase-freedom-flex-cell-phone",
+      "merged": [
+        "cards-us-chase-cell-phone"
+      ],
+      "why": [
+        "re-audit: merged generic Chase rule added visa to a Mastercard product's payment methods"
+      ]
+    },
+    {
+      "survivor": "cards-us-citi-extended-warranty",
+      "merged": [
+        "citi-extended-warranty-us"
+      ],
+      "why": [
+        "re-audit: merge added amex to Citi's payment methods; Citi issues no Amex-network cards in the US"
+      ]
     }
   ],
   "clock": {
@@ -1092,15 +1104,13 @@
       "law-us-mmwa-implied-duration-cap"
     ],
     "untimed": [
-      "us-vehicle-safety-recall-free-repair",
-      "programs-nhtsa-vehicle-recall-vin",
       "california-warranty-adjustment-program-refund",
-      "law-us-ca-right-to-repair-parts",
-      "law-us-ca-right-to-repair-parts",
+      "cards-intl-uk-ombudsman-escalation",
       "eu-phone-tablet-spare-parts",
       "law-intl-ca-qc-repair-three-months",
-      "cards-intl-uk-ombudsman-escalation",
-      "cards-intl-uk-ombudsman-escalation"
+      "law-us-ca-right-to-repair-parts",
+      "programs-nhtsa-vehicle-recall-vin",
+      "us-vehicle-safety-recall-free-repair"
     ]
   }
 }
