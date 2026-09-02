@@ -719,6 +719,15 @@
   padding: clamp(1.25rem, 3vw, 2.5rem);
 }
 .ch-panel .script-card {
+  /* a fixed-white object on a fixed-green field: every token its children
+     read is pinned to the light palette, in both themes. Pinning only the
+     background left the dark-theme ink on a white card - body text 2.32:1,
+     marks 1.71:1, a near-black head and foot. */
+  --card: #FFFFFF; --paper-2: #F1F0EB; --line: #E2E1DB;
+  --ink: #15161A; --ink-2: #4A4C52; --ink-3: #63666E;
+  --accent: #0B5C3A; --accent-soft: #E3F0E8; --accent-line: #C3DFD0;
+  --warn: #8A5406;
+  color-scheme: light;
   margin: 0;
   background: #FFFFFF;
   border: 0;
@@ -1691,6 +1700,7 @@
    padding that no content sits inside the band.
    ============================================================ */
 .how, .script-sec, .city, .cta { position: relative; }
+.script-sec > .ch-grid { position: relative; z-index: 1; }
 
 /* content rides above the bands */
 .how > .wrap,
@@ -1699,7 +1709,7 @@
 .city > * { position: relative; z-index: 1; }
 
 .how::before, .how::after,
-.script-sec::after,
+.script-sec::before, .script-sec::after,
 .city::before,
 .cta::before, .cta::after {
   content: "";
@@ -1721,9 +1731,10 @@
 /* the black beat is preceded by the checks section */
 .city::before { top: 0; background: linear-gradient(to bottom, var(--paper), transparent); }
 
-/* the lit stage meets the black beat above - already the same tone - and the
-   earth section below */
-.script-sec::after { bottom: 0; background: linear-gradient(to top, var(--paper), transparent); }
+/* the script section sits on paper now: it meets the black beat above and
+   the earth section below, both on the page ground */
+.script-sec::before { top: 0;    background: linear-gradient(to bottom, #080A09, transparent); }
+.script-sec::after  { bottom: 0; background: linear-gradient(to top, var(--paper), transparent); }
 
 /* the closing field sits between the FAQ and the footer, both on paper */
 .cta::before { top: 0;    background: linear-gradient(to bottom, var(--paper), transparent); }
