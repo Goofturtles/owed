@@ -32,7 +32,7 @@ Cover hides in five places, and the rulebook covers all five:
 4. Quiet manufacturer service programmes that repair a known fault free, out of warranty, without announcing it.
 5. Consumer law where you live, which regularly outlasts the printed warranty.
 
-Version 1 of the rulebook holds 445 rules: 176 manufacturer warranties, 130 statutory rules, 67 card benefits, 18 settlements, 18 retailer policies and 3 service programmes. All 445 link to the page they came from. Every rule carries a confidence value, and 54 are marked "likely" rather than "certain" because I could only confirm them from a secondary source. The app shows that instead of hiding it.
+Version 1 of the rulebook holds 315 rules: 150 manufacturer warranties, 78 statutory rules, 42 card benefits, 15 settlements, 3 repair programmes and 27 shop policies. All 315 link to the page they came from. Every rule carries a confidence value, and 54 are marked "likely" rather than "certain" because I could only confirm them from a secondary source. The app shows that instead of hiding it.
 
 Your shelf saves what you own. When the rulebook grows, everything on the shelf is re-checked and new matches are flagged as new. A counter tracks items kept out of landfill, and it only moves when you mark a claim actually won.
 
@@ -84,7 +84,7 @@ The research took longer than the code. Rules were read off primary or issuer-pu
 ## Accomplishments that we're proud of
 
 - Zero matches says zero. The empty state does not pad itself with vaguely relevant rules to look busy.
-- All 445 rules link to their source. If Owed is wrong, you can catch it in one click.
+- All 315 rules link to their source. If Owed is wrong, you can catch it in one click.
 - Blank fields stayed blank. Two rules have no contact number, because I never saw one on a page I trusted and would not paste one from memory.
 - The scripts are short. A long script does not get read out loud, so they run about four sentences and end by asking for the deadline.
 - Rules police their own deadlines. One settlement in the book had a claim deadline one day after I wrote it, and it removes itself when that date passes.

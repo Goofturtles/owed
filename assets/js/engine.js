@@ -98,7 +98,10 @@
       if (isFinite(d) && d < Date.now()) deadlinePassed = true;
     }
 
-    if (timing === 'closed' && rule.source_type !== 'statutory') return null;
+    // A closed clock closes the rule, whatever its source. The one exception is a
+    // statutory FLOOR (window_kind 'floor' in the data): a legal minimum that
+    // national law may extend, kept past its window as a long shot.
+    if (timing === 'closed' && rule.window_kind !== 'floor') return null;
     if (deadlinePassed) return null;
 
     // score
@@ -109,6 +112,7 @@
         at.payment_methods.indexOf('*') === -1) score += 1.5;
     if (pay === 'maybe') score -= 0.5;
     if (timing === 'closing') score -= 0.5;
+    if (timing === 'closed') score -= 1;      // only floors get here
     if (rule.source_type === 'settlement') score += 1;   // real money, time-limited
     if (rule.source_type === 'program') score += 0.5;
 
@@ -130,8 +134,8 @@
     var timed = isFinite(win) && win < 900;
     if (timed && timing === 'open') reason.push('you are still inside the window');
     if (timed && timing === 'closing') reason.push('the window is nearly up');
-    if (timing === 'closed' && rule.source_type === 'statutory') {
-      reason.push('the printed warranty has run out, but this may still apply');
+    if (timing === 'closed') {
+      reason.push('the legal minimum has passed, but some places give longer \u2014 worth asking');
     }
     if (!timed && rule.source_type === 'statutory') {
       reason.push('this is the law where you live, whatever the warranty card says');

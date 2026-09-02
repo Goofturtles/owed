@@ -1,0 +1,1106 @@
+{
+  "deduplicated": "2026-09-02",
+  "before": 445,
+  "after": 315,
+  "merges": [
+    {
+      "survivor": "appliance-speedqueen-rust-lifetime",
+      "merged": [
+        "appliance-speedqueen-tub-lifetime"
+      ],
+      "reason": "Both describe the identical Alliance Laundry Systems warranty-bond term: lifetime limited cover on the washer stainless tub/outer tub and dryer cylinder/bulkheads against rust or corrosion, same brand, same US/CA regions, same window_months 999, same remedy (free part). The only differences are wording and which edition of the same bond PDF is cited (2020 vs 2021). A user would see one right twice.",
+      "notes": [
+        "carried: The cabinet has its own separate 5-year cover against rustin"
+      ]
+    },
+    {
+      "survivor": "appliance-speedqueen-3-7yr-full",
+      "merged": [
+        "appliance-speedqueen-7yr-full"
+      ],
+      "reason": "Same programme: the tiered Speed Queen parts-and-labour warranty (3 yrs TR3/DR3, 5 yrs 5-series/TC5/FF7, 7 yrs TR7/DR7). The '7yr-full' rule is titled for the 7000 Series but its own window_note already spells out the 5- and 3-year tiers, so it is the same right with a narrower title. Same brand, regions (US/CA), window_months (84), remedy (free parts + labour). Not separate rights - one warranty bond, one beneficiary. Survivor chosen because its title and model table describe the whole programme accurately (a TR3 or TC5 owner would be misled by '7 full years') and it carries the transferability point; the 7yr rule's stronger fields are carried over below.",
+      "notes": [
+        "contact taken from appliance-speedqueen-7yr-full"
+      ]
+    },
+    {
+      "survivor": "amex-buyers-assurance-canada",
+      "merged": [
+        "cards-intl-ca-amex-buyers-assurance"
+      ],
+      "reason": "Both describe the identical benefit: American Express Canada's Buyer's Assurance Protection Plan, which doubles the manufacturer's warranty by up to one extra year on warranties of 5 years or less, for CA cardholders who charged the purchase to an Amex card, claimed via 1-800-243-0198 / info.submitclaims.client.insure within 45 days with documents within 60 days. Same beneficiary, same remedy, same region, same insurer contact. The source_urls differ only because one cites the Green Card certificate and the other the Cobalt Card certificate — the same programme wording across two card COIs. A user would see one right twice. The window_months mismatch (72 vs 999) is a data error on the merged-away rule: the benefit plainly has a clock (maker's warranty + up to one year), so 999 'no clock' is wrong; keep the survivor's 72. Survivor chosen because it is 'certain', has the plainer specific title, correct window_months, and includes the phone number directly in how_to_claim.",
+      "notes": [
+        "window_months differ: survivor 72, cards-intl-ca-amex-buyers-assurance 999.0 (kept survivor)",
+        "carried: If the manufacturer goes bankrupt, the extra year starts fro",
+        "carried: They may ask you to get a repair estimate."
+      ]
+    },
+    {
+      "survivor": "lifetime-jansport-packs",
+      "merged": [
+        "jansport-lifetime-backpack"
+      ],
+      "reason": "Both rules describe JanSport's single lifetime warranty programme: same brand, same beneficiary (original owner), same remedy (free repair or replacement of manufacturing faults in zips, seams, hardware), same region (US), same window (999), same contact (1-800-426-9227), same claim route (online form, you post it in, they post it back). A user would see one programme twice. Survivor is 'certain' confidence, has the more complete how_to_claim (wash the bag first, 3-4 week turnaround, phone/email alternatives), the more complete window_note (product scope, clothing/pins excluded, cooler bags 5 years) and a current source_url (/pages/warranty vs the older /customer-service/warranty.html).",
+      "notes": []
+    },
+    {
+      "survivor": "eu-two-year-legal-guarantee",
+      "merged": [
+        "law-intl-eu-two-year-guarantee",
+        "batteries-eu-two-year-legal-guarantee",
+        "cards-intl-eu-two-year-legal-guarantee",
+        "cards-intl-eu-legal-guarantee",
+        "law-intl-eu-warranty-expired-not-the-end"
+      ],
+      "reason": "All six describe the identical right: the EU legal (conformity) guarantee under Directive 2019/771 Art. 10 — seller liable for two years from delivery, remedy is free repair/replacement then price reduction/refund, region EU, window 24 months, deadline empty, all 'certain', five of six cite the same Your Europe page. 'law-intl-eu-warranty-expired-not-the-end' is not a separate section of the statute; it is the same two-year seller guarantee framed as 'the maker's expired warranty does not end it', which the survivor's title and what_you_get already state ('whatever the brand's card says' / 'can never shrink it'). Survivor chosen because it is 'certain', has the broadest applies_to (brands *, categories *), the only real contact (ECC-Net), cites the Directive in script_hint, and its window_note already carries the first-year burden and longer-national-period caveats.",
+      "notes": [
+        "carried: A few countries also expect you to tell the seller within tw",
+        "carried: That includes paying to take the old one back, and taking ou",
+        "carried: Second-hand goods from a trader are covered too.",
+        "carried: If the manufacturer tells you that you're out of warranty, s"
+      ]
+    },
+    {
+      "survivor": "cards-intl-eu-first-year-no-proof-needed",
+      "merged": [
+        "law-intl-eu-first-year-burden",
+        "law-intl-eu-first-year-presumption"
+      ],
+      "reason": "All three describe the same right: the Art. 11 Directive 2019/771 reversed burden of proof — a fault appearing within 12 months of delivery is presumed to have existed at delivery, seller must disprove. Same region (EU), same window (12), same remedy (no proof needed → seller must repair/replace), same identical category lists, all 'certain', no deadline. Different source_urls are just three views of the same article (Your Europe page, EUR-Lex text, legislation.gov.uk mirror). Survivor is the most complete: cites Article 11, explains what happens after year one, tells the user to claim in writing, and links the primary EUR-Lex text.",
+      "notes": [
+        "carried: If the seller says you must have broken it, or asks you to p",
+        "carried: Countries are allowed to make it 24 months and some have - F"
+      ]
+    },
+    {
+      "survivor": "law-intl-eu-repair-adds-a-year",
+      "merged": [
+        "law-intl-eu-repair-adds-year"
+      ],
+      "reason": "Both describe the identical right: under Directive 2024/1799's amendment to the Sale of Goods Directive, choosing repair over replacement within the legal guarantee extends the guarantee by 12 months, once, for goods bought on or after 31 July 2026, EU-wide, claimed from the seller. Same law, beneficiary, remedy, region, identical category lists, both 'certain', no deadline. window_months differ (36 vs 24) but that is a data-modelling difference (36 = 2-year guarantee + 1 extra year; 24 = the base guarantee inside which you must choose repair), not a different right — a user would plainly see one thing twice. Survivor has the plainer title and the more complete window_note (once only, whole product not just the repaired part, some countries give longer) and notes the seller's duty to inform.",
+      "notes": [
+        "window_months differ: survivor 36.0, law-intl-eu-repair-adds-year 24.0 (kept survivor)",
+        "contact taken from law-intl-eu-repair-adds-year"
+      ]
+    },
+    {
+      "survivor": "cpsc-recalled-product-free-remedy",
+      "merged": [
+        "programs-cpsc-recall-search-us",
+        "programs-cpsc-recall-lookup-us",
+        "mobility-cpsc-recall-free-remedy"
+      ],
+      "reason": "All four describe the same right: the free remedy (repair, replacement or refund, company's choice) owed on any product recalled through the US CPSC. Same law (Consumer Product Safety Act recall remedies), same beneficiary (any US owner, brands '*'), same region (US), same window_months (999 / no clock), same confidence (certain), same source_url (https://www.cpsc.gov/Recalls). The four titles are just four phrasings of 'search the CPSC recall list, the fix is free'. Survivor chosen because it is the only one with a real phone contact ((800) 638-2772), the SaferProducts.gov escalation path, and the explicit no-receipt point.",
+      "notes": [
+        "carried: Have the model number handy (on a label on the product) beca",
+        "carried: Even if the recall was announced years ago, you can still cl",
+        "carried: Strollers, bikes, e-bike and scooter batteries, camping stov"
+      ]
+    },
+    {
+      "survivor": "mobility-carseat-recall-free-remedy",
+      "merged": [
+        "mobility-nhtsa-carseat-recall-free"
+      ],
+      "reason": "Both describe the same right: a recalled child car seat / booster must be repaired, replaced or refunded free by the maker under the NHTSA recall law (49 U.S.C. 30120, car seats being motor-vehicle equipment). Same region (US), same window_months (999), same confidence (certain), same claim route (look up model number at nhtsa.gov/recalls, call the maker, register the seat). The merged rule only narrows brands to 11 named makers, which is a subset of the survivor's '*'. Survivor chosen for brands '*', the more accurate window_note (explains the 15-year statutory cutoff and why it never bites for car seats), and the statute as source_url. Kept separate from the vehicle-recall group: different product/beneficiary (seat owners, not vehicle owners), different window (999 vs 180) and different claim route (maker mails a kit vs dealer booking).",
+      "notes": [
+        "carried: — free, including posting you the fix kit.",
+        "carried: Free recall fixes don't expire and don't depend on you havin"
+      ]
+    },
+    {
+      "survivor": "law-intl-uk-six-month-presumption",
+      "merged": [
+        "law-intl-uk-six-month-burden",
+        "cards-intl-uk-six-month-fault-presumption"
+      ],
+      "reason": "All three are the Consumer Rights Act 2015 s.19(14) reverse burden of proof: UK, all brands/categories/payment methods, window_months 6, same source_url (legislation.gov.uk section/19), confidence certain, remedy = shop must prove the fault was not present at delivery. A user would see the same right three times under three phrasings. Survivor chosen because it cites s.19(14) precisely and its window_note carries the accurate carve-out that the presumption does not apply to the 30-day short-term right to reject.",
+      "notes": [
+        "contact taken from law-intl-uk-six-month-burden",
+        "carried: After six months you can still claim, but then it's on you t",
+        "carried: If they refuse and you paid by credit card, forward the very"
+      ]
+    },
+    {
+      "survivor": "retailer-costco-satisfaction-no-deadline",
+      "merged": [
+        "retailer-costco-no-deadline-most-items"
+      ],
+      "reason": "Both describe Costco's US satisfaction guarantee with no time limit on non-electronics (window 999, full refund, same source page a_id/1191, both 'certain'). Survivor has the richer window_note (lists the never-returnable items) and a filled contact field.",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-costco-electronics-90-day-refund",
+      "merged": [
+        "retailer-costco-90-days-electronics"
+      ],
+      "reason": "Both are Costco's US 90-day return window on electronics and major appliances (window 3, full refund, same source page a_id/1191, both 'certain'). Survivor lists the covered product types, has a contact, and mentions the online-return route.",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-rei-member-one-year",
+      "merged": [
+        "retailer-rei-member-one-year-return"
+      ],
+      "reason": "Both are REI's US 365-day Co-op member satisfaction return (90 days non-member), window 12, refund or swap, same source rei.com/help/returns, both 'certain'. Survivor's how_to_claim carries the no-receipt-with-member-number and $7.99 mail-back details the other lacks.",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-ikea-365-day-returns",
+      "merged": [
+        "retailer-ikea-365-day-return"
+      ],
+      "reason": "Both are IKEA US's 365-day unopened / 180-day opened return policy (window 12, full refund, same source URL, same phone, both 'certain'). Survivor includes the government photo ID requirement and the fuller exclusion list (dirty/stained/altered items).",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-bestbuy-member-60-days",
+      "merged": [
+        "retailer-bestbuy-member-60-day-return"
+      ],
+      "reason": "Both are the My Best Buy Plus/Total 60-day return window vs 15 standard (window 2, US, refund or same-item swap, same bestbuy.com policy page, both 'certain'). Survivor carries the 23 Feb 2026 effective date, the wipe-your-data warning, the free FedEx label and a phone contact.",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-mec-no-time-limit",
+      "merged": [
+        "retailer-mec-no-time-limit-return"
+      ],
+      "reason": "Both are MEC's Canadian Rocksolid Guarantee no-time-limit return (window 999, CA, refund or gift card/store credit, same source mec.ca/en/explore/returns-faq, both 'certain'). Survivor has the fuller exclusion list (food, fuel, bear spray) and the send-photos-first warranty tip.",
+      "notes": []
+    },
+    {
+      "survivor": "cards-intl-uk-section-75",
+      "merged": [
+        "law-intl-uk-section-75",
+        "law-intl-uk-section-75-credit-card",
+        "cards-intl-uk-section-75-part-payment"
+      ],
+      "reason": "All four describe the identical right: Consumer Credit Act 1974 s.75 joint-and-several liability of a UK credit card issuer for a purchase with a cash price over GBP 100 and up to GBP 30,000. Same beneficiary (UK credit-card buyer), same remedy (repair/replacement/refund from the card company), same region (UK), same window_months (72), no deadline on any. law-intl-uk-section-75 and law-intl-uk-section-75-credit-card are two near-identical explanations that even share the legislation.gov.uk source_url. The part-payment rule is not a different section of the statute - it is the same s.75 right explained for the deposit-only scenario, and the survivor's script_hint already asserts 'I paid at least part of it on this credit card'; a user would see Section 75 twice. Survivor chosen because it is confidence 'certain', has the fullest what_you_get (bust/ignoring seller, debit/charge-card/Amex-charge-card exclusions), the most accurate window_note (no statutory cut-off, six-year Limitation Act practical limit), the most actionable how_to_claim (card company must investigate itself), and the plainest specific title.",
+      "notes": [
+        "carried: If they turn you down, take it to the Financial Ombudsman Se",
+        "carried: Debit cards do not count - for those, ask about chargeback i"
+      ]
+    },
+    {
+      "survivor": "cards-intl-uk-ombudsman-escalation",
+      "merged": [
+        "cards-intl-uk-financial-ombudsman"
+      ],
+      "reason": "Both describe the same right: a UK consumer's free referral of a rejected bank/card-company complaint (Section 75 or chargeback) to the Financial Ombudsman Service after a final response or eight weeks of silence. Same beneficiary, same remedy (FOS can order refund/repair/compensation), same region (UK), same window_months (72), no deadline on either, both confidence 'certain'. Survivor chosen for the richer what_you_get (lists what FOS can actually order and why naming it reopens claims), the more specific how_to_claim, a contact that is the actual complaint-submission form, and the full category list. The merged rule's title is a paraphrase of the same thing.",
+      "notes": [
+        "carried: You get 6 months from the date on the bank's final response ",
+        "carried: They get 8 weeks for most complaints and 15 days for payment"
+      ]
+    },
+    {
+      "survivor": "mobility-uppababy-carseat-10yr",
+      "merged": [
+        "mobility-uppababy-3yr-stroller-lifetime-carseat"
+      ],
+      "reason": "Same programme written twice: UPPAbaby's manufacturer warranty (3 years strollers / life of seat up to 10 years from manufacture), same brand, same US+CA region, same window_months 120, same source_url https://uppababy.com/warranty/, same remedy (free repair or replacement parts for manufacturing defects). Survivor chosen for confidence 'certain' and the more complete how_to_claim (receipt from authorised shop + serial number + manufacture date). The merged rule's only unique data is a phone contact and a non-transferability caveat.",
+      "notes": [
+        "carried: Neither passes on if you sell it."
+      ]
+    },
+    {
+      "survivor": "mobility-britax-carseat-1yr-stroller-2yr",
+      "merged": [
+        "mobility-britax-carseat-stroller"
+      ],
+      "reason": "Same programme written twice: Britax US manufacturer warranty, 1 year car seats / 2 years strollers from purchase, same source_url https://us.britax.com/support/warranty-returns-policy, same region US, same window_months 24, same remedy (repair or free replacement parts for manufacturing faults), same contact 1-888-427-4829 and same weekday 10am-4pm Eastern hours. Both are 'certain'; survivor chosen because its title, how_to_claim and script_hint are clean text (the merged rule has mojibake � in its title, how_to_claim and script_hint) and its how_to_claim is equally complete. The merged rule's only unique content is a misuse exclusion and the brand alias 'bob gear'.",
+      "notes": [
+        "carried: Damage from misuse or from not following the manual isn't co"
+      ]
+    },
+    {
+      "survivor": "lifetime-lodge-cast-iron",
+      "merged": [
+        "lodge-cast-iron-lifetime"
+      ],
+      "reason": "Both rules are Lodge's 'Made Right' limited lifetime warranty on cast iron / carbon steel: same manufacturer programme, same US region, same window (999; 999.0 is just float formatting of the same value), same beneficiary (original owner or new-gift recipient, home use only), same remedy (free replacement), same source_url (lodgecastiron.com/pages/lodge-promise) and same phone contact 1-833-563-4387. A user seeing both sees one warranty twice. Both are 'certain'; the survivor has the more complete what_you_get (covers cracks/warps/casting faults, enamel chips, and lists exclusions: rust, sticking, drops, overheating, dishwasher), the more complete how_to_claim (Lodge pays return postage), and a plainer, more specific title.",
+      "notes": []
+    },
+    {
+      "survivor": "le-creuset-cast-iron-lifetime",
+      "merged": [
+        "lifetime-le-creuset-cast-iron"
+      ],
+      "reason": "Both rules are Le Creuset's Lifetime Limited Warranty on enameled cast iron: same manufacturer programme, same US region, same window (999 / 999.0), same beneficiary (original purchaser, home use only), same remedy (repair or replace for defects in materials or workmanship), same source_url (lecreuset.com/warranty.html). One right written twice. Survivor is 'certain' vs 'likely', carries a real phone contact (1-877-273-8738) rather than repeating the URL in the contact field, and has the plainer, more specific title and the clearer scope note (excludes non-stick and non-cast-iron parts).",
+      "notes": [
+        "carried: only counts for the person who bought it"
+      ]
+    },
+    {
+      "survivor": "batteries-apple-applecare-under-80",
+      "merged": [
+        "batteries-applecare-80-percent"
+      ],
+      "reason": "Both rules describe the identical right: the AppleCare+ battery service benefit (free battery replacement once Maximum Capacity is below 80%), same beneficiary (AppleCare+ plan holder), same remedy (new battery, no fee), same regions (US, CA, UK, EU), same brand, both confidence 'certain'. A user would see one benefit twice. The survivor cites the actual AppleCare+ terms document as source_url and the specific battery-replacement contact page, and carries the 'only the original battery counts' caveat; the merged rule's only advantages are the Mac how-to steps and the 3-year Mac plan window, which are unioned below.",
+      "notes": [
+        "window_months differ: survivor 24.0, batteries-applecare-80-percent 36.0 (kept survivor)",
+        "carried: Mac plans are usually 3 years.",
+        "carried: On a Mac hold Option, click the Apple menu, choose System In",
+        "carried: ask for battery service under AppleCare+"
+      ]
+    },
+    {
+      "survivor": "batteries-laptop-battery-shorter-than-laptop",
+      "merged": [
+        "batteries-laptop-battery-warranty-is-shorter"
+      ],
+      "reason": "Both describe Dell's separate 1-year notebook battery warranty (same source_url KB 000123808, same brand dell, same 12-month window, same regions US/CA/UK/EU, both 'certain', same remedy: free replacement battery inside the battery's own window). Two titles for one programme.",
+      "notes": []
+    },
+    {
+      "survivor": "batteries-power-tool-battery-shorter-than-tool",
+      "merged": [
+        "batteries-powertool-battery-shorter-than-tool"
+      ],
+      "reason": "Both describe the Milwaukee REDLITHIUM battery-pack warranty being ~3 years versus the tool's 5 years (same brand, same source page, same 36-month window, same regions US/CA, both 'likely', same remedy: free repair/replacement of the pack inside its own window). IDs differ only by a hyphen.",
+      "notes": [
+        "carried: If you have no receipt they can read the manufacturing date ",
+        "carried: You do not have to register the tool first."
+      ]
+    },
+    {
+      "survivor": "batteries-dewalt-free-service-worn-parts",
+      "merged": [
+        "batteries-dewalt-free-service-covers-worn-parts"
+      ],
+      "reason": "Both describe DeWalt's one-year Free Service Contract that replaces parts worn by normal use (same brand, same source_url, same 12-month window, same regions US/CA, both 'certain', same remedy, same script strategy of asking for the service contract rather than a warranty repair).",
+      "notes": [
+        "carried: After that, worn parts are on you.",
+        "carried: The limited warranty rejects wear. The free service contract"
+      ]
+    },
+    {
+      "survivor": "lifetime-dewalt-mechanics-tools",
+      "merged": [
+        "dewalt-hand-tool-lifetime"
+      ],
+      "reason": "Both describe DeWalt's lifetime warranty on mechanics/hand tools (same brand, same source_url dewalt.com/support/warranty, same window 999, same region US, both 'certain', same remedy: free replacement tool). One is the shorter early write-up, the other the fuller one.",
+      "notes": [
+        "carried: Mechanics tools (wrenches, sockets, ratchets) have a full li"
+      ]
+    },
+    {
+      "survivor": "batteries-wear-parts-usually-excluded",
+      "merged": [
+        "batteries-wear-parts-are-never-covered"
+      ],
+      "reason": "Both are the same generic 'wear items are excluded from every warranty' note, citing the same Milwaukee warranty page as the example, same 999 window, same regions US/CA/UK/EU, both 'certain'. Neither is a distinct programme; a user would see the same exclusion explained twice. Survivor is the more useful version because it also tells the user how to reframe an early failure as a defect.",
+      "notes": [
+        "carried: Milwaukee, for example, spells out that carbon brushes, chuc",
+        "carried: Instead, buy the replacement part, which is usually cheap, a"
+      ]
+    },
+    {
+      "survivor": "uk-six-year-claim-window",
+      "merged": [
+        "law-intl-uk-six-year-window",
+        "batteries-uk-durability-six-years",
+        "law-intl-uk-six-year-limit"
+      ],
+      "reason": "All four describe one right: the UK buyer's ability to bring a Consumer Rights Act 2015 s.9 satisfactory-quality/durability claim against the RETAILER for up to six years after purchase (five in Scotland), i.e. the Limitation Act 1980 s.5 clock applied to a CRA claim. Same statute pairing, same beneficiary (the buyer), same remedy (repair/replacement, then price reduction or refund, via small claims if refused), same region (UK), same window_months (72), no deadline on any. Two rules cite CRA s.9 and two cite Limitation Act s.5 as source_url, but that is two halves of the same right, not two rights — none of them is the 30-day reject or the six-month presumption rule (batteries-uk-durability-six-years mentions those only as asides inside a six-year-durability rule). A user shown any two of these would be reading the same thing twice. Survivor chosen because it is 'certain', has brands/categories/payment_methods all '*' (a superset of the others' lists), the most accurate window_note (Scotland, six-month burden shift, and the 'six years is a claim window not a lifespan promise' caveat), a how_to_claim that names section 9 and the small-claims track, a working helpline number, and the plainest title. The 'batteries-' id prefix on the merged rule is misleading: its body is generic, not battery-specific.",
+      "notes": [
+        "carried: After the first 6 months you do have to show the fault was t",
+        "carried: Get an independent repairer to write down what failed and wh",
+        "carried: In the first 30 days you can simply reject the item and get ",
+        "carried: A £900 washing machine that dies at year three is a fair arg"
+      ]
+    },
+    {
+      "survivor": "hyundai-kia-acu-airbag-settlement",
+      "merged": [
+        "settlement-hyundai-kia-airbag-brain"
+      ],
+      "reason": "Both rules are the same ZF-TRW airbag control unit class settlement for Hyundai/Kia (acusettlement.com/hyundaikia): identical source_url, deadline 2027-04-08, contact 1-866-287-0740, brands, region US, remedy (up to $350/$150 residual payment, out-of-pocket reimbursement, 10-year part warranty). Two write-ups of one right. Survivor has the plainer, more specific title, the 14 April 2025 ownership-date eligibility condition, and the covered model list, which the merged rule lacks.",
+      "notes": [
+        "carried: You can claim even if you sold the car or it was a lease."
+      ]
+    },
+    {
+      "survivor": "elec-nintendo-joycon-drift-free-repair",
+      "merged": [
+        "programs-nintendo-joycon-drift-free-repair",
+        "batteries-nintendo-joycon-drift-free-repair"
+      ],
+      "reason": "All three describe the identical Nintendo programme: free out-of-warranty repair of drifting Joy-Con sticks ('responsiveness syndrome'), same source_url (nintendo.com/en-gb Joy-Con repair page), same brand, same regions UK+EU, window_months 999 on all three, no deadline on any, confidence 'certain' on all three. The cluster hint's 'UK/EU vs US' split does not exist in the data - every rule is regions [UK, EU]. A user seeing any two would be seeing one right twice. Survivor chosen for the most complete and accurate window_note (names the EEA and Switzerland explicitly, states wear-and-tear is covered) and the plainest region-bearing title; categories already include both 'console' and 'toy'.",
+      "notes": [
+        "carried: Don't open the controller yourself or use non-Nintendo parts",
+        "carried: They can still refuse if the damage came from a drop, a thir",
+        "carried: with Nintendo covering the postage"
+      ]
+    },
+    {
+      "survivor": "law-intl-ca-qc-durability",
+      "merged": [
+        "ca-qc-legal-warranty-durability",
+        "cards-intl-ca-quebec-durability-warranty",
+        "law-intl-qc-durability",
+        "batteries-quebec-reasonable-durability"
+      ],
+      "reason": "All five describe the same right: Quebec Consumer Protection Act ss. 37/38 legal warranty of reasonable durability (with s.53 letting you go after merchant or manufacturer). Same beneficiary (Quebec consumer), same remedy (free repair / replacement / refund, no fixed clock, window_months 999), same region CA, no deadline on any. A user would see one law written five ways. Survivor chosen because it is 'certain', cites the official OPC page, has the most complete how_to_claim (written notice, store OR manufacturer, store cannot make you phone the maker first, formal demand letter, Small Claims), the plainest title, and a phone contact. ca-qc-legal-warranty-durability is also 'certain' but its title ('strongest rule in North America') is a slogan and its source is Educaloi rather than the OPC; batteries-quebec-reasonable-durability is only 'likely' with a narrower category list.",
+      "notes": [
+        "carried: Quebec's consumer office and the courts commonly treat a fri",
+        "carried: Quebec's consumer office (OPC) will walk you through the let",
+        "carried: A $2,500 fridge dying at four years is a strong case; a $60 "
+      ]
+    },
+    {
+      "survivor": "law-intl-ca-durability-provinces",
+      "merged": [
+        "ca-durability-implied-warranty",
+        "law-intl-ca-bc-durability"
+      ],
+      "reason": "All three share the same source_url (BC Sale of Goods Act) and describe the same right: the statutory implied warranty that goods be durable for a reasonable period, non-waivable in a retail sale, remedy repair/replacement/refund from the seller, window_months 999, region CA, no deadline. ca-durability-implied-warranty is a 'Canada' generic that in fact quotes only BC s.18/s.20 (its title over-claims — Ontario and Alberta have no durability term) and is only 'likely'; law-intl-ca-bc-durability is the same BC rule alone. The survivor is 'certain', names the provinces that actually have it (BC, Saskatchewan, New Brunswick), carries the court-deadline warning and the NB gift-recipient point, and has a working contact. Since regions are only CA-granular, a Canadian user would otherwise see three cards for one rule.",
+      "notes": [
+        "carried: every province also has a deadline for going to court — usua",
+        "carried: Applies to items bought or leased from a business, not from "
+      ]
+    },
+    {
+      "survivor": "law-us-ca-right-to-repair-parts",
+      "merged": [
+        "law-us-ca-parts-must-stay-available",
+        "us-state-right-to-repair-parts"
+      ],
+      "reason": "All three describe the same California duty (SB 244 Right to Repair Act, which amends Civil Code 1793.03): maker must keep parts, tools and repair documents available on fair terms for 7 years (wholesale >= $100) / 3 years ($50-$99.99) counted from last manufacture. law-us-ca-parts-must-stay-available is the same right under a second title with the Civil Code 1793.03 URL instead of the bill URL; both are window_months 84, confidence certain, region US. us-state-right-to-repair-parts is a 'US states' umbrella whose window_note is the California 3yr/7yr thresholds, whose source_url is the same CA SB 244 bill, and whose other content (NY/MN/OR/CO) is fully carried by the four state-specific survivors in this cluster, so a US user would see the California right twice. Its window_months 999 vs the survivor's 84 reflects the umbrella framing, not a different right; 84 (7 years from last build) is the correct value for the surviving California rule. Survivor chosen for the most complete window_note (start date 1 July 2024, covers products made after 1 July 2021, console + alarm/fire exclusions) and a how_to_claim that names the enforcers (city attorney, DA, AG).",
+      "notes": [
+        "carried: so a model that's still on shelves buys you much longer than",
+        "carried: If they refuse, get the refusal in writing — the refusal its",
+        "window_months differ: survivor 84.0, us-state-right-to-repair-parts 999 (kept survivor)",
+        "carried: Laws are live in California, New York, Minnesota, Oregon and"
+      ]
+    },
+    {
+      "survivor": "law-us-mn-digital-fair-repair",
+      "merged": [
+        "law-us-mn-right-to-repair"
+      ],
+      "reason": "Both are Minnesota Statutes 325E.72 (Digital Fair Repair Act): same source_url, same 60-days-from-first-sale duty, same 1 July 2021 coverage date, same exclusions (cars, medical, farm, consoles, energy storage/home batteries), same AG enforcement via deceptive-trade-practices law, identical category lists, window 999, region US. Survivor picked for confidence 'certain'; the merged rule is 'likely'.",
+      "notes": [
+        "carried: including software updates needed for the repair."
+      ]
+    },
+    {
+      "survivor": "law-us-co-right-to-repair",
+      "merged": [
+        "law-us-co-right-to-repair-electronics"
+      ],
+      "reason": "Both are Colorado HB24-1121 (Consumer Right to Repair for digital electronics): same source_url, in force 1 January 2026 for gear first made and sold/used in Colorado on or after 1 July 2021, parts/tools/documentation on request, refusal is a deceptive trade practice reported to the Colorado AG, identical category lists, both 'certain', window 999, region US. Survivor picked because it is more complete: it also carries the parts-pairing ban and its separate 1 January 2026 coverage date, which the merged rule omits.",
+      "notes": []
+    },
+    {
+      "survivor": "law-us-or-right-to-repair-parts-pairing",
+      "merged": [
+        "us-parts-pairing-ban"
+      ],
+      "reason": "us-parts-pairing-ban is a two-state umbrella for the parts-pairing subsection of Oregon SB 1596 and Colorado HB24-1121. Both halves are already stated, with their dates, in the state rules: the Oregon survivor's what_you_get covers the pairing ban for gear first made and sold after 1 January 2025 (blocking, throttling, undismissable warnings), and law-us-co-right-to-repair covers Colorado's ban for gear after 1 January 2026. Since regions are only 'US' (no state granularity), every US user would see the Oregon pairing ban twice. Merged into the Oregon rule because that is the fuller pairing-ban treatment (both 'certain', window 999) and carries the important caveat that Oregon AG fines only apply from 1 July 2027; the Colorado half survives in the CO group. Its source_url is the Colorado bill, already the CO survivor's URL.",
+      "notes": [
+        "carried: Fingerprint and face-unlock sensors are the one carve-out.",
+        "carried: , check the date your device was made or first sold, then sa"
+      ]
+    },
+    {
+      "survivor": "apple-15in-macbook-pro-battery-recall",
+      "merged": [
+        "programs-apple-macbook-pro-15-battery-recall"
+      ],
+      "reason": "Both rules are the same Apple 15-inch MacBook Pro Battery Recall Program (MacBook Pro Retina 15-inch Mid 2015, sold Sept 2015-Feb 2017): same manufacturer safety recall, same beneficiary (any owner, regions *), same remedy (free battery replacement), same window (999/no clock, no deadline), both confidence certain, both point at the same support.apple.com/15-inch-macbook-pro-battery-recall page. A user would see one programme twice. Survivor chosen for the plainer, more specific title and the more complete how_to_claim (About This Mac model check + serial checker + back-up advice).",
+      "notes": [
+        "contact taken from programs-apple-macbook-pro-15-battery-recall"
+      ]
+    },
+    {
+      "survivor": "apple-iphone-14-plus-rear-camera",
+      "merged": [
+        "programs-apple-iphone-14-plus-rear-camera"
+      ],
+      "reason": "Both rules are the same Apple 'iPhone 14 Plus Service Program for Rear Camera Issue': same beneficiary (iPhone 14 Plus owners, units made 10 Apr 2023 - 28 Apr 2024), same remedy (free rear camera repair), same 36-month window from first sale, same regions (*), same source page (canonical vs en-us URL of one document), both confidence 'certain', no deadline on either. A user seeing both would see one programme twice. Survivor chosen because its window_note and how_to_claim are more complete (it also covers the refund route for people who already paid) and its title names the programme plainly.",
+      "notes": [
+        "contact taken from programs-apple-iphone-14-plus-rear-camera"
+      ]
+    },
+    {
+      "survivor": "programs-apple-mac-mini-2023-no-power",
+      "merged": [
+        "apple-mac-mini-2023-no-power"
+      ],
+      "reason": "Both rules are the same Apple 'Mac mini (2023) Service Program for No Power Issue': identical source_url (one has an en-us locale prefix), identical 36-month window from first sale, identical M2 build-date range (16 June to 23 November 2024), same beneficiary (Apple Mac mini owners), same remedy (free out-of-warranty repair), same regions (*). A user would see one programme twice. Survivor chosen because it has a filled contact field, a plainer and more specific title naming the model and chip, a how_to_claim that tells the user where the serial number is, and a what_you_get that states the repair is out-of-warranty.",
+      "notes": [
+        "carried: Apple may make you get it fixed in the country you bought it"
+      ]
+    },
+    {
+      "survivor": "us-third-party-parts-cant-void-warranty",
+      "merged": [
+        "law-us-mmwa-third-party-parts",
+        "batteries-us-no-forced-brand-parts",
+        "law-us-third-party-supplies-allowed",
+        "batteries-no-brand-parts-required-us"
+      ],
+      "reason": "All five are the MMWA anti-tying rule, 15 U.S.C. 2302(c): a US warranty cannot be conditioned on brand parts, brand consumables (ink/filters/bags/batteries) or brand service, and void-if-removed stickers are unlawful. Same statute, same beneficiary (any US warranty holder), same remedy (warranty stays alive / repair must be honoured), same region. law-us-third-party-supplies-allowed only narrows the example to consumables, which is the same right applied to the same section. Survivor is 'certain', cites the section and the FTC enforcement actions, has categories '*' and a reportfraud contact. law-us-mmwa-third-party-parts's window_months 48 is a data inconsistency (it encodes the litigation limitation period, not a deadline on the right; its own note says it works while the warranty runs) — keep 999.",
+      "notes": [
+        "window_months differ: survivor 999, law-us-mmwa-third-party-parts 48.0 (kept survivor)",
+        "carried: They can only refuse if that outside part or repair is what ",
+        "carried: A maker can only require their own brand if they hand it to ",
+        "carried: ask them to prove that supply caused this fault — that proof"
+      ]
+    },
+    {
+      "survivor": "law-us-implied-merchantability-four-years",
+      "merged": [
+        "us-implied-warranty-merchantability",
+        "law-us-implied-warranty-merchantability"
+      ],
+      "reason": "All three are the UCC 2-314 implied warranty of merchantability against the seller, US, ~4-year window (48 months), remedy repair/replace/refund from the shop, works with no written warranty and covers used goods bought from a business. Two cite the same UCC page, the third cites the FTC guide but describes the identical right. Survivor is 'certain', cites UCC 2-314 directly, and has the most accurate window_note (clock runs from delivery; some contracts shorten to 1 year). us-implied-warranty-merchantability is only 'likely' and mixes in the separate 15 U.S.C. 2308 non-disclaimer point, which is already its own rule (see the 2308 group).",
+      "notes": [
+        "contact taken from law-us-implied-warranty-merchantability",
+        "carried: It does not cover damage from misuse, accidents, or normal w"
+      ]
+    },
+    {
+      "survivor": "law-us-mmwa-implied-warranty-survives",
+      "merged": [
+        "batteries-us-implied-warranty-survives"
+      ],
+      "reason": "Both are 15 U.S.C. 2308: a company that gives any written warranty (or sells a service contract) cannot disclaim the implied warranty of merchantability. Same statute, beneficiary, remedy, region; same FTC source_url. Window 48 vs 999 differs only because one encodes the litigation limitation and the other 'no clock' — not a real difference in the right. Survivor has the fuller how_to_claim (what to do when the written warranty ran out or excludes the fault) and a contact.",
+      "notes": [
+        "window_months differ: survivor 48.0, batteries-us-implied-warranty-survives 999.0 (kept survivor)",
+        "carried: If the written one is a 'limited' warranty the company may c",
+        "carried: then escalate to your state attorney general's consumer prot"
+      ]
+    },
+    {
+      "survivor": "us-mmwa-company-pays-your-lawyer",
+      "merged": [
+        "law-us-mmwa-lawyer-fees",
+        "law-us-warranty-lawyer-fees-shift"
+      ],
+      "reason": "All three are the MMWA fee-shifting provision, 15 U.S.C. 2310(d)(2): if a consumer wins a warranty suit the court can order the company to pay attorney's fees and costs. Same statute, beneficiary, remedy, region; all 'certain'. Survivor cites the exact subsection, has categories '*', and its 999 window is the correct encoding (the right rides on the underlying claim, no clock of its own); the 48 on the merged rules is the underlying UCC limitation period, not a deadline on this right.",
+      "notes": [
+        "window_months differ: survivor 999, law-us-mmwa-lawyer-fees 48.0 (kept survivor)",
+        "contact taken from law-us-mmwa-lawyer-fees",
+        "carried: small claims court is cheap and you don't need a lawyer",
+        "window_months differ: survivor 999, law-us-warranty-lawyer-fees-shift 48.0 (kept survivor)",
+        "carried: give them a date to reply by"
+      ]
+    },
+    {
+      "survivor": "law-us-full-warranty-refund-or-replace",
+      "merged": [
+        "law-us-mmwa-full-warranty-refund-choice"
+      ],
+      "reason": "Both are 15 U.S.C. 2304(a)(4): under a warranty designated 'Full', after a reasonable number of failed repair attempts the consumer chooses refund or replacement. Same statute, beneficiary, remedy, region, both 'certain'. Survivor cites the statute directly and its 999 window matches the right (runs while the Full warranty runs); the merged rule's 48 contradicts its own window_note ('Applies for as long as the full warranty runs'). The merged rule's extra sentence about serving subsequent owners is the separate rule law-us-full-warranty-follows-the-product, kept apart.",
+      "notes": [
+        "window_months differ: survivor 999.0, law-us-mmwa-full-warranty-refund-choice 48.0 (kept survivor)",
+        "contact taken from law-us-mmwa-full-warranty-refund-choice",
+        "carried: write to them, list the dates of every failed repair, and sa"
+      ]
+    },
+    {
+      "survivor": "law-us-ca-implied-warranty-up-to-one-year",
+      "merged": [
+        "law-us-ca-implied-warranty-one-year"
+      ],
+      "reason": "Both are California Civil Code 1791.1(c): the Song-Beverly implied warranty of merchantability on new goods runs as long as the express warranty, never less than 60 days nor more than one year. Same section, beneficiary (California buyer of new consumer goods), remedy, region, window (12), same source_url, both 'certain'. Survivor cites the subsection, gives the concrete 90-day example and the California small-claims tip.",
+      "notes": [
+        "carried: It matches the written warranty length in between."
+      ]
+    },
+    {
+      "survivor": "law-us-ca-lemon-law-covers-everyday-goods",
+      "merged": [
+        "us-ca-song-beverly-repair-replace-refund",
+        "law-us-ca-thirty-day-repair-or-refund"
+      ],
+      "reason": "All three are California Civil Code 1793.2(d)(1): if the manufacturer cannot conform the goods after a reasonable number of attempts it must replace them or reimburse the price less use. Same section, beneficiary, remedy (replace or refund), region. us-ca-song-beverly-repair-replace-refund is a data error on its own terms: its title/what_you_get/script_hint are 1793.2(d) but its window_months 12, window_note (60 days to one year, used goods 30 days to 3 months) and source_url are the 1791.1 implied-warranty duration — the refund right is not capped at 12 months, it runs while the written warranty runs. law-us-ca-thirty-day-repair-or-refund bundles 1793.2(b) (30-day repair) with 1793.2(d); its script_hint ends in a refund demand, and the 30-day half is already carried by the kept-separate law-us-ca-30-day-repair-deadline, so keeping it would show the user both rights twice. Survivor is 'certain', cites 1793.2(d)(1), correct source_url and 999 window, and the key how_to_claim advice (date every repair ticket, write to the maker).",
+      "notes": [
+        "window_months differ: survivor 999.0, us-ca-song-beverly-repair-replace-refund 12 (kept survivor)",
+        "carried: Ask the maker or the shop in writing for a repair under the ",
+        "window_months differ: survivor 999.0, law-us-ca-thirty-day-repair-or-refund 48.0 (kept survivor)",
+        "carried: If it ends up in court, you generally have about 4 years fro",
+        "carried: Once it's past 30 days, or after two or three failed fixes, ",
+        "carried: Warranty repairs have to be finished within 30 days, unless "
+      ]
+    },
+    {
+      "survivor": "whirlpool-fridge-wire-harness-settlement",
+      "merged": [
+        "settlement-whirlpool-fridge-door-wires-past",
+        "settlement-whirlpool-fridge-door-wires-future"
+      ],
+      "reason": "All three describe one settlement (Costa v. Whirlpool, RefrigeratorSettlement.com): same defect (freezer-door wire harness on 2018-2021 side-by-side fridges), same class (US buyers of Whirlpool/Maytag/KitchenAid/JennAir), same remedy (free door, free fitting in years 2-4, or 30-50% cash / 35-75% repair reimbursement), same 84-month coverage window, same source_url. The 'past' and 'future' entries are not different rights, they are the two claim procedures of one settlement split on the 5 May 2026 incident date, and the survivor already states both procedures (file by 2 Nov 2026 for existing breaks; phone within 90 days for breaks after 5 May 2026) in its window_note and how_to_claim, so a user seeing all three sees one right three times. The empty deadline on the 'future' entry is not a data error but it does not create a distinct right either; the survivor carries deadline 2026-11-02 plus the 90-day rule in text, which is the correct representation. Survivor chosen because it is confidence 'certain', carries the most complete window_note/how_to_claim (both claim paths), a phone contact, the deadline, and the extra fridge-replacement remedy (25-50% back if you bought a new fridge) that neither merged rule mentions.",
+      "notes": [
+        "carried: (they pay the fitting too if it broke in years 2 to 4)",
+        "carried: Have your receipt or repair bill handy if you have one.",
+        "carried: Ring Whirlpool on 1-844-667-2929, or email refset2026@Whirlp"
+      ]
+    },
+    {
+      "survivor": "lifetime-darn-tough-socks",
+      "merged": [
+        "darn-tough-lifetime-socks"
+      ],
+      "reason": "Both rules are Darn Tough's single Unconditional Lifetime Guarantee: same programme, same source_url (darntough.com/pages/our-unconditional-lifetime-guarantee), same claim portal (warranty.darntough.com), same remedy (emailed credit code for the full value of the socks, free shipping), same region (US), same window (999 / no clock), no deadline on either, both confidence 'certain'. A user would see one benefit twice. Survivor chosen for the more complete what_you_get (accidental damage covered, dyed/altered socks and seconds/irregulars excluded), the extra 'several pairs on one claim' detail in window_note, the extra brand alias, and the plainer, more specific title. Cosmetic note: survivor's window_months is 999.0 (float) - normalise to integer 999 to match the corpus.",
+      "notes": []
+    },
+    {
+      "survivor": "law-intl-uk-repair-then-refund",
+      "merged": [
+        "law-intl-uk-one-repair-then-refund"
+      ],
+      "reason": "Both rules are the same right: the Consumer Rights Act 2015 section 24 'final right to reject' (price reduction or refund) after the trader's single failed repair/replacement attempt. Same statute section and source_url, same beneficiary (UK consumer), same remedy (money back / price reduction), same region (UK only), same window_months (72), no deadline on either, identical brands/categories/payment_methods. The titles differ only by the word 'your'. A user would see one right twice. Survivor chosen because it has a contact (Citizens Advice consumer helpline), a fuller window_note (30-day sequencing, 6-month no-deduction rule with the cars exception) and a more actionable how_to_claim (write, keep the date, write again when the repair fails).",
+      "notes": [
+        "carried: Starts the moment the shop has had one go at fixing it or sw",
+        "carried: You do not have to accept a second attempt."
+      ]
+    },
+    {
+      "survivor": "programs-lg-fridge-linear-compressor-10-year",
+      "merged": [
+        "appliance-lg-fridge-compressor-10yr",
+        "programs-lg-fridge-compressor-10-year"
+      ],
+      "reason": "All three describe LG US refrigerator Linear/Inverter compressor cover: 10 years parts, 5 years labour, certain, window 120, region US. Same programme, same remedy, same beneficiary. Survivor cites LG's official warranty PDF (Warranty_REF.pdf), carries the phone contact 1-800-243-0000 (the other two have empty contact), and has the clearest years 1-5 / 6-10 window_note.",
+      "notes": [
+        "carried: Ask them to confirm in writing that the part is covered befo",
+        "carried: Terms vary by model, so check your own model number on LG's ",
+        "carried: book a repair through LG rather than a random local engineer"
+      ]
+    },
+    {
+      "survivor": "appliance-samsung-fridge-compressor-10yr",
+      "merged": [
+        "programs-samsung-fridge-compressor-10-year",
+        "programs-samsung-fridge-inverter-compressor-10-year"
+      ],
+      "reason": "All three are Samsung US refrigerator Digital Inverter compressor cover: 10 years parts, sealed system 5 years labour, 1 year everything else; all certain, window 120, US. Survivor has the phone contact 1-800-726-7864, the refrigerator-specific Samsung warranty URL, and a plain three-tier window_note. programs-samsung-fridge-inverter-compressor-10-year uses the same source_url but its contact is just that URL again.",
+      "notes": [
+        "carried: Check your own model, as terms can differ.",
+        "carried: The repair has to be done by a Samsung authorised service ce"
+      ]
+    },
+    {
+      "survivor": "appliance-samsung-washer-motor-10yr",
+      "merged": [
+        "programs-samsung-washer-dryer-motor-10-year"
+      ],
+      "reason": "Both describe Samsung's 10-year Digital Inverter motor parts warranty on US laundry appliances, window 120, same contact and warranty page. Survivor is confidence certain with the purchase-date condition and proof-of-purchase requirement spelled out. The merged rule is 'likely' and vaguer. CAVEAT for owner: the two disagree - the survivor says washers bought on/after 1 April 2026 only; the merged rule says washers AND dryers with no purchase-date cut-off. One is incomplete; the Samsung warranty page should be re-checked before the dryer claim is added.",
+      "notes": []
+    },
+    {
+      "survivor": "programs-lg-washer-direct-drive-motor-10-year",
+      "merged": [
+        "appliance-lg-washer-motor-10yr"
+      ],
+      "reason": "Both are LG US washer Direct Drive Motor (stator/rotor) 10-year parts warranty, 3 years on the stainless drum, 1 year on the rest; certain, window 120, US. Survivor cites LG's official front-load warranty PDF, has the phone contact 1-800-243-0000 (merged rule's contact is empty) and states plainly that labour is paid after year 1.",
+      "notes": [
+        "carried: Find the model and serial number, usually inside the door fr"
+      ]
+    },
+    {
+      "survivor": "batteries-apple-standard-warranty-defect-not-fade",
+      "merged": [
+        "batteries-apple-warranty-defect-not-old-age"
+      ],
+      "reason": "Both are the same right: Apple's one-year limited warranty applied to a defective (not worn) battery, certain, window 12, regions US/CA/UK/EU, same beneficiary and remedy. Titles are near-identical. Survivor cites the warranty document itself and gives the plainer symptom test (swelling, sudden shutdown, will not charge). The merged rule adds the charge-cycle argument, which should be folded in.",
+      "notes": [
+        "carried: In the EU and UK your legal rights run longer than Apple's o"
+      ]
+    },
+    {
+      "survivor": "google-consumer-hardware-one-year",
+      "merged": [
+        "batteries-google-pixel-one-year-wear-excluded"
+      ],
+      "reason": "Both are Google's one-year consumer hardware limited warranty: certain, window 12, regions US/CA, same remedy (repair/replace/refund), same 90-day refurbished caveat. The 'wear excluded' rule is just the same warranty restated with an exclusion emphasised. Survivor has the plainer title, the g.co/warrantyclaim how_to, and broader brand list.",
+      "notes": [
+        "carried: Damage or decline that comes from normal everyday use is spe"
+      ]
+    },
+    {
+      "survivor": "appliance-dyson-cordless-2yr",
+      "merged": [
+        "appliance-dyson-2yr-cordless",
+        "dyson-limited-warranty"
+      ],
+      "reason": "appliance-dyson-cordless-2yr and appliance-dyson-2yr-cordless are the identical right: Dyson US 2-year parts-and-labour warranty on cordless vacuums, air treatment and hair tools; certain, window 24, same contact and source_url, near-identical product lists. dyson-limited-warranty is the generic Dyson warranty (window 24) restating the same 2-year cover plus the 5-year corded tier; the corded tier is already its own rule (appliance-dyson-corded-vacuum-5yr, kept), so the generic rule is a second copy of the 2-year right. Survivor has the most useful title ('battery included'), the phone number in how_to, and the refurbished caveat.",
+      "notes": [
+        "carried: No receipt? Dyson dates it 90 days after the machine was mad",
+        "carried: A battery that simply holds less charge than when new is not",
+        "carried: it only counts if you bought from Dyson or an authorised sel"
+      ]
+    },
+    {
+      "survivor": "appliance-dyson-third-party-repair-ok",
+      "merged": [
+        "appliance-dyson-independent-repair-ok"
+      ],
+      "reason": "Identical right: Dyson's written statement that independent repair or third-party parts do not void the warranty; certain, window 60, US, same contact and source_url, same 2yr/5yr window_note. Survivor has the plainer title and puts the phone number in how_to_claim.",
+      "notes": [
+        "carried: If that repair later goes wrong, the damage the outside repa",
+        "carried: Quote Dyson's own warranty page back at them."
+      ]
+    },
+    {
+      "survivor": "patagonia-ironclad-guarantee",
+      "merged": [
+        "lifetime-patagonia-ironclad"
+      ],
+      "reason": "Both rules are the same manufacturer programme (Patagonia Ironclad Guarantee), same beneficiary (any owner of a Patagonia product), same remedy (repair/replacement/refund if it doesn't perform; fair-price repair for plain wear), same region (US), same window (999 = no clock), same confidence (certain), no deadline on either. A user seeing both would see one guarantee twice. Survivor chosen for the plainer, more specific title, the official help.patagonia.com source, and a how_to_claim that includes the ~10-week repair timing.",
+      "notes": [
+        "carried: For repairs, contact the Worn Wear team — they also publish "
+      ]
+    },
+    {
+      "survivor": "eu-phone-tablet-spare-parts",
+      "merged": [
+        "law-intl-eu-phone-parts-seven-years"
+      ],
+      "reason": "Both rules describe the identical statutory right: Regulation (EU) 2023/1670 (ecodesign for smartphones, cordless phones and tablets) obliging makers to keep spare parts on sale for at least 7 years after the model leaves the market, for products placed on the EU market from 20 June 2025. Same source_url, same region (EU), same categories (phone, tablet), brands *, payment_methods *, same beneficiary (any owner / repairer), same remedy (order the part, escalate citing the ecodesign rules). A user seeing both would see one thing twice. Survivor chosen because it names the regulation number in script_hint, carries an escalation path (market surveillance authority / ECC) and a contact URL, and its window_months=999 correctly models the clock (7 years runs from END OF SALES of the model, which is not knowable from the purchase date), whereas the merged rule's window_months=84 misrepresents the clock as running from purchase (its own window_note admits 'often far longer than 7 years after you bought yours') and its window_note/how_to_claim contain mojibake ('�' for an em dash) — both plainly data errors, so the window difference is not a reason to keep them separate.",
+      "notes": [
+        "window_months differ: survivor 999, law-intl-eu-phone-parts-seven-years 84.0 (kept survivor)",
+        "carried: Batteries, screens, front and rear cameras, charging ports, ",
+        "carried: Check the maker's free-access website — they are required to"
+      ]
+    },
+    {
+      "survivor": "programs-health-canada-recall-lookup",
+      "merged": [
+        "programs-health-canada-recall-search-ca"
+      ],
+      "reason": "Both rules are the same programme: the Government of Canada recalls and safety alerts database at recalls-rappels.canada.ca. Same region (CA), same beneficiary (owner of any recalled consumer product), same remedy (whatever the notice offers: free repair/replacement/refund), same window_months (999), no deadline on either, same confidence (certain), identical contact and source_url, identical brands ['*'] and payment_methods ['*'], and identical category sets (only order differs). The survivor has the plainer benefit-led title ('Check any Canadian product for a recall - free fix or refund'), a more complete how_to_claim (notes the database also covers CFIA and Transport Canada, and to ring the company on the notice), and a stronger script_hint.",
+      "notes": [
+        "carried: The database is updated every day and holds thousands of act",
+        "carried: Match the model number on your product to the one in the not",
+        "carried: You can also sign up for email alerts."
+      ]
+    },
+    {
+      "survivor": "law-us-registration-card-not-required",
+      "merged": [
+        "law-us-mmwa-registration-card"
+      ],
+      "reason": "Both rules are the same statutory right: 16 CFR 700.7 (FTC Magnuson-Moss interpretation) that requiring a returned registration card is an unreasonable duty under a full warranty. Same source_url, same region (US), brands *, payment_methods *, same remedy (warranty honoured on receipt/other proof of purchase date), same beneficiary, same confidence (likely), no deadline on either. The only substantive divergence is window_months (48 vs 999); the right has no independent clock and lasts as long as the underlying warranty, so 48 on law-us-mmwa-registration-card is a data error, not a distinct right. Survivor chosen for the correct window_months (999) and the better how_to_claim ('Claim as normal...' plus the fallback proof of purchase step), and the plainer title.",
+      "notes": [
+        "window_months differ: survivor 999.0, law-us-mmwa-registration-card 48.0 (kept survivor)",
+        "contact taken from law-us-mmwa-registration-card"
+      ]
+    },
+    {
+      "survivor": "programs-uk-opss-recall-lookup",
+      "merged": [
+        "programs-uk-opss-recall-search"
+      ],
+      "reason": "Both rules describe the same UK programme: looking up your product on the OPSS Product Safety Alerts, Reports and Recalls list on GOV.UK, then contacting the party the notice names for the stated remedy (free repair / replacement / refund). Same region (UK), same beneficiary (any owner of a recalled product), same remedy, same window (999 = no clock), both confidence 'certain', brands and payment_methods both '*'. Only the titles, wording and category lists differ. 'lookup' survives: its title says what the user gets, its what_you_get lists the actual remedies, and its how_to_claim adds the email-alert sign-up.",
+      "notes": [
+        "carried: New alerts are added regularly, so search again whenever som",
+        "carried: You can filter by product type and by whether it's an alert,"
+      ]
+    },
+    {
+      "survivor": "law-us-independent-repair-cannot-void-warranty",
+      "merged": [
+        "law-us-warranty-void-sticker-not-enforceable"
+      ],
+      "reason": "Both rules are the same right: 16 CFR 700.10 (FTC anti-tying rule under Magnuson-Moss), US only, any brand, life of the maker's warranty, confidence 'certain', identical remedy (warranty stays in force unless the maker shows the outside part/repair/opening caused the fault) and near-identical script line. The 'warranty void if opened' sticker is the FTC's well-known application of this exact provision, not a separate section or a separate benefit, so the two entries are one right under two titles. Survivor chosen because its window_note and how_to_claim are more complete (tells the user to get the refusal in writing, not to volunteer service history), and its category list is a strict superset of the merged rule's.",
+      "notes": [
+        "carried: A sticker over a screw, or fine print saying only their shop",
+        "carried: If they point at the broken seal, don't accept that as the w"
+      ]
+    },
+    {
+      "survivor": "law-intl-uk-30-day-reject",
+      "merged": [
+        "uk-30-day-right-to-reject"
+      ],
+      "reason": "Both rules are the Consumer Rights Act 2015 s.22 short-term right to reject: same statute section, same source_url, same region (UK), same beneficiary (buyer of faulty goods), same remedy (full refund from the retailer), same window (1 month / 30 days), both confidence certain, no deadline on either. A user would see one right twice. Survivor chosen for the plainer, more specific title, the fuller how_to_claim (in writing, retailer not manufacturer, refuse forced repair), the labelled contact (Citizens Advice, England and Wales), and the more accurate window_note (clock runs from the day after ownership/delivery/installation, shorter for perishables).",
+      "notes": []
+    },
+    {
+      "survivor": "retailer-ikea-long-warranties",
+      "merged": [
+        "retailer-ikea-long-product-warranties"
+      ],
+      "reason": "Both describe the identical IKEA US limited-warranty programme: same source_url (ikea.com/us/en/customer-service/returns-claims/guarantee/), same region (US), same window_months (300), same contact (1-888-888-4532), same remedy (free repair or replacement of manufacturing/material faults, receipt required), same beneficiary (any IKEA buyer), no deadline on either. Only the wording and the list of example products differ. The survivor has the more complete what_you_get (explicitly names what is covered - sagging mattresses, split seams, broken springs - and what is excluded - wear, scratches, bad assembly), a window_note that states when the clock starts and that the original receipt is needed, a how_to_claim that includes the useful 'say it is a warranty claim, not a return' tip, and the plainer, more specific title.",
+      "notes": []
+    },
+    {
+      "survivor": "cards-us-visa-extended-warranty",
+      "merged": [
+        "visa-extended-protection-us",
+        "cards-us-visa-signature-infinite-extended-warranty"
+      ],
+      "reason": "All three describe the network-level Visa Signature / Visa Infinite Extended Warranty Protection benefit in the US: maker warranty of 3 years or less gets 1 extra year, $10,000/$50,000 caps, report within 60 days, paperwork within 90. Two cite the identical Visa PDF (extended-warranty-infinite.pdf); the third cites Capital One's Visa Signature guide but describes the same generic Visa benefit ('the wording is nearly identical across banks'). Survivor is the only 'certain' one and carries the Visa Benefit Administrator number.",
+      "notes": [
+        "carried: once the item breaks you have only 60 days to phone, and 90 ",
+        "window_months differ: survivor 48.0, cards-us-visa-signature-infinite-extended-warranty 51.0 (kept survivor)",
+        "carried: Banks pick which Visa benefits to switch on, so check your o"
+      ]
+    },
+    {
+      "survivor": "visa-purchase-security-us",
+      "merged": [
+        "cards-us-visa-purchase-security"
+      ],
+      "reason": "Both are the network-level Visa Purchase Security benefit (US): theft/damage within 90 days of purchase, call within 60 days, $10,000 per claim / $50,000 total. Same right, same beneficiary, same remedy. Survivor chosen for accuracy: it cites Visa's consumer Infinite guide and the same Visa Benefit Administrator number (1-888-221-3289) as the Visa extended-warranty rule, whereas the merged rule cites a *business*-card guide and a different phone number. The merged rule is 'certain' on identical terms, so the survivor's confidence should be raised from 'likely' to 'certain'.",
+      "notes": [
+        "carried: It even covers the deductible your home insurance would make",
+        "carried: If you have home or renters insurance, you have to file with"
+      ]
+    },
+    {
+      "survivor": "cards-us-mastercard-extended-warranty-standard",
+      "merged": [
+        "mastercard-extended-warranty-us"
+      ],
+      "reason": "mastercard-extended-warranty-us is a generic Mastercard Extended Warranty rule that folds both tiers (standard: doubles warranties of 12 months or less; World/World Elite: doubles up to 24 months) into one entry. Both tiers already exist as separate, 'certain' rules in the corpus (this survivor and cards-us-mastercard-world-elite-extended-warranty), so a plain-Mastercard user sees the same programme twice. It is merged into the standard-tier rule because that is the baseline any Mastercard has; the World Elite half is carried by the separate World Elite rule (kept). Same administrator (1-800-627-8372 / mycardbenefits.com), same 60-day report / 180-day documents.",
+      "notes": [
+        "window_months differ: survivor 24.0, mastercard-extended-warranty-us 48 (kept survivor)",
+        "carried: On World and World Elite cards it works on warranties up to ",
+        "carried: the maker's warranty and a repair estimate from an authorise"
+      ]
+    },
+    {
+      "survivor": "amex-extended-warranty-us",
+      "merged": [
+        "cards-us-amex-extended-warranty"
+      ],
+      "reason": "Both cite the identical Amex EW Benefit Guide PDF (EW-Benefit-Guide_314-399_EDT-10.20_REV_4.24) and describe the same benefit: +1 year on maker warranties of 5 years or less, $10,000/$50,000, notify within 30 days, proof within 60. Both 'certain'. Survivor has the more complete window_note (Oct 2020 cut from 2 years to 1) and a how_to_claim that states the 30-day deadline explicitly.",
+      "notes": [
+        "window_months differ: survivor 72, cards-us-amex-extended-warranty 73.0 (kept survivor)"
+      ]
+    },
+    {
+      "survivor": "amex-purchase-protection-us",
+      "merged": [
+        "cards-us-amex-purchase-protection-premium",
+        "cards-us-amex-purchase-protection"
+      ],
+      "reason": "All three describe Amex Purchase Protection for the standard/premium tier: damage, theft or loss within 90 days of purchase, notify within 30 days, proof within 60, $10,000 per item / $50,000 per year, $500 natural-disaster cap. Two cite the identical PP guide (316-404 REV 4.24); the third cites the Jan-2020 revision of the same 316-404 guide. Same right, same remedy. Survivor is 'certain', cites the current guide revision, names the lost-item cover and the disaster cap, and has the fullest how_to_claim (police report first, home-insurance details). cards-us-amex-purchase-protection-everyday is NOT merged: it cites a different benefit guide (316-401) with a $1,000 cap for named entry-level cards.",
+      "notes": [
+        "window_months differ: survivor 3, cards-us-amex-purchase-protection-premium 4.0 (kept survivor)",
+        "carried: Some entry-level Amex cards cap it at $1,000 per incident in"
+      ]
+    },
+    {
+      "survivor": "cards-us-amex-return-protection",
+      "merged": [
+        "amex-return-protection-us"
+      ],
+      "reason": "Both cite the identical Amex Return Protection guide PDF (RP_Benefit_Guide_Rev_10-20) and describe the same benefit: store refuses return, call within 90 days of purchase, $300 per item / $1,000 per year, same phone number. Survivor is 'certain' (merged rule is 'likely') and its window_note already carries the 30-day paperwork and 30-day mail-in details.",
+      "notes": [
+        "carried: The item must be unused and in working order."
+      ]
+    },
+    {
+      "survivor": "chase-extended-warranty-us",
+      "merged": [
+        "cards-us-chase-extended-warranty",
+        "cards-us-chase-sapphire-reserve-extended-warranty",
+        "cards-us-chase-sapphire-preferred-extended-warranty",
+        "cards-us-chase-freedom-flex-extended-warranty"
+      ],
+      "reason": "Five rules for one benefit: Chase Extended Warranty Protection. Every one states identical terms (maker warranty 3 years or less, +1 year, 4-year total cap, report within 90 days, documents within 120, $10,000 per item / $50,000 per account). The two generic rules cite the identical chase.com URL. The three card-specific rules (Sapphire Reserve BGC11388, Sapphire Preferred BGC11387, Freedom Flex BGC11363) differ from each other only by the benefit-administrator phone number; because matching is by network (visa/mastercard), any Chase Visa holder sees the Reserve and Preferred rules together with both generic ones, i.e. the same right four times. Survivor is 'certain', has a contact (chasecardbenefits.com), covers both networks, and has the plainest title.",
+      "notes": [
+        "carried: Chase adds one extra year on top of the maker's warranty on ",
+        "window_months differ: survivor 48, cards-us-chase-sapphire-reserve-extended-warranty 51.0 (kept survivor)",
+        "window_months differ: survivor 48, cards-us-chase-sapphire-preferred-extended-warranty 51.0 (kept survivor)",
+        "window_months differ: survivor 48, cards-us-chase-freedom-flex-extended-warranty 51.0 (kept survivor)"
+      ]
+    },
+    {
+      "survivor": "chase-purchase-protection-us",
+      "merged": [
+        "cards-us-chase-purchase-protection",
+        "cards-us-chase-sapphire-reserve-purchase-protection",
+        "cards-us-chase-sapphire-preferred-purchase-protection",
+        "cards-us-chase-freedom-flex-purchase-protection"
+      ],
+      "reason": "Five rules for one benefit: Chase Purchase Protection. All state the same terms (damage/theft within 120 days of purchase, 90 days in New York, report within 90 days, documents within 120). The two generic rules cite the identical chase.com URL; the card-specific ones differ only in per-item cap ($10,000 Reserve vs $500 Preferred/Freedom Flex) and phone number, which the generic rule already summarises. Same right, same remedy, same region. Survivor is 'certain', has a contact, both networks, plain title.",
+      "notes": [
+        "carried: Sapphire Preferred and Freedom pay up to $500 an item, Sapph",
+        "window_months differ: survivor 4, cards-us-chase-sapphire-reserve-purchase-protection 7.0 (kept survivor)",
+        "carried: For theft, file a police report first.",
+        "window_months differ: survivor 4, cards-us-chase-sapphire-preferred-purchase-protection 7.0 (kept survivor)",
+        "window_months differ: survivor 4, cards-us-chase-freedom-flex-purchase-protection 7.0 (kept survivor)"
+      ]
+    },
+    {
+      "survivor": "cards-us-chase-sapphire-reserve-return-protection",
+      "merged": [
+        "cards-us-chase-return-protection"
+      ],
+      "reason": "Both describe Chase Sapphire Reserve Return Protection only: store refuses return, call within 90 days of purchase, documents within 60 days, $500 per item / $1,000 per year, item must be like-new. Both 'certain'. Survivor cites the Reserve benefits guide PDF and has the administrator phone number; the merged rule cites a chase.com explainer and has no contact.",
+      "notes": [
+        "carried: be ready to show the shop's return policy or that they turne"
+      ]
+    },
+    {
+      "survivor": "cards-us-chase-freedom-flex-cell-phone",
+      "merged": [
+        "cards-us-chase-cell-phone"
+      ],
+      "reason": "Both describe Chase Freedom Flex cell phone protection: pay the phone bill with the card, $800 per claim after $50 deductible, 2 claims / $1,000 per 12 months. Same right. Survivor cites the Freedom Flex benefits guide PDF, gives exact windows (report within 60 days, papers within 90, police report within 48 hours) and the administrator number; the merged rule hedges ('normally give you 60 to 90 days') and has no contact. Because the merged rule is 'certain' on the same terms and the survivor cites the primary guide, raise the survivor's confidence to 'certain'.",
+      "notes": [
+        "carried: Other Chase cards like Ink Business Preferred have their own"
+      ]
+    },
+    {
+      "survivor": "cards-us-citi-extended-warranty",
+      "merged": [
+        "citi-extended-warranty-us"
+      ],
+      "reason": "Both describe Citi's own Extended Warranty benefit: +24 months on the maker's warranty, total cover capped at 7 years (window 84 on both), $10,000 per item, documents within 180 days, with the caveat that Citi stripped it from many cards. Same right. Both 'likely'. Survivor cites a specific Guide to Protection Benefits PDF and gives a claims phone plus the claims portal; the merged rule cites only the cardbenefits.citi.com landing page. (Citi Strata Elite's Mastercard-administered doubling benefit is a different programme with different terms and is kept separate.)",
+      "notes": [
+        "carried: Citi cut most of these benefits on 22 September 2019, then a"
+      ]
+    },
+    {
+      "survivor": "cards-us-capitalone-extended-warranty",
+      "merged": [
+        "cards-us-capitalone-venture-x-extended-warranty",
+        "cards-us-capitalone-visa-signature-extended-warranty",
+        "cards-us-capitalone-world-elite-extended-warranty"
+      ],
+      "reason": "Four rules for Capital One's extended warranty benefit. The umbrella rule already covers every Capital One card across Visa, Mastercard and Discover and gives both administrator numbers. The Venture X and Visa Signature rules describe the identical Visa-network terms (3-year-or-less warranty, +1 year, 60-day report, 90-day form, same 1-844-288-2140 administrator) and differ only by card tier PDF; the World Elite rule is the Mastercard-network flavour (doubles up to 24 months) that the umbrella already names. A Capital One Visa holder currently sees the same right three times. All four are 'certain'. Survivor is the umbrella because it is the only one that spans all Capital One networks and names the full card list; the specific windows it lacks are appended below. Network-generic Visa and World Elite Mastercard rules are kept separately as fallbacks for other issuers.",
+      "notes": [
+        "window_months differ: survivor 48.0, cards-us-capitalone-venture-x-extended-warranty 51.0 (kept survivor)",
+        "window_months differ: survivor 48.0, cards-us-capitalone-visa-signature-extended-warranty 51.0 (kept survivor)",
+        "carried: Only works on maker warranties of 3 years or less. Call with",
+        "carried: You can also register the warranty ahead of time by calling ",
+        "window_months differ: survivor 48.0, cards-us-capitalone-world-elite-extended-warranty 50.0 (kept survivor)",
+        "carried: Works on maker or store warranties of 24 months or less and ",
+        "carried: Their damage and theft cover is separate and smaller: $1,000"
+      ]
+    },
+    {
+      "survivor": "cards-us-wellsfargo-cell-phone",
+      "merged": [
+        "cards-us-wells-fargo-cell-phone"
+      ],
+      "reason": "Both describe Wells Fargo Cellular Telephone Protection: pay the monthly phone bill with the card, $600 per claim minus $25 deductible, 2 claims / $1,200 per 12 months, report within 60 days, same administrator (1-800-316-8051 / mycardbenefits.assurant.com). Both 'certain'. Survivor cites the Guide to Benefits PDF and has the fuller what_you_get (coverage start rule, every line on the bill covered, cosmetic cracks excluded) and both networks.",
+      "notes": [
+        "carried: send documents within 120 days.",
+        "carried: Lost phones are not covered."
+      ]
+    },
+    {
+      "survivor": "mobility-tempur-mattress-10yr",
+      "merged": [
+        "batteries-mattress-sag-depth-threshold"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "mobility-radpower-ebike-2yr",
+      "merged": [
+        "mobility-radpower-ebike-battery-2yr",
+        "batteries-ebike-battery-cycle-cap"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "programs-apple-service-programs-check",
+      "merged": [
+        "programs-apple-service-program-serial-check"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "osprey-all-mighty-guarantee",
+      "merged": [
+        "mobility-osprey-allmighty",
+        "lifetime-osprey-all-mighty-guarantee"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "cards-intl-uk-eu-chargeback",
+      "merged": [
+        "cards-intl-uk-chargeback"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "appliance-irobot-battery-included-1yr",
+      "merged": [
+        "appliance-irobot-1yr-battery-included"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "appliance-bosch-dishwasher-rust-lifetime",
+      "merged": [
+        "appliance-bosch-dishwasher-tub-lifetime"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "mobility-graco-1yr-replace-free",
+      "merged": [
+        "mobility-graco-1yr"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "mobility-bugaboo-4yr-registered",
+      "merged": [
+        "mobility-bugaboo-2plus2-years"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "mobility-bigagnes-lifetime-plus-cheap-repairs",
+      "merged": [
+        "mobility-bigagnes-lifetime"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    },
+    {
+      "survivor": "programs-whirlpool-family-recall-check",
+      "merged": [
+        "programs-whirlpool-family-recall-and-service-check"
+      ],
+      "reason": "same policy stated per region (judge: same right); regions unioned",
+      "notes": [
+        "regions unioned"
+      ]
+    }
+  ],
+  "skipped": [],
+  "refuted_by_review": [
+    {
+      "survivor": "cards-intl-ca-cibc-extended-protection",
+      "merged": [
+        "cards-intl-ca-cibc-extended-warranty"
+      ],
+      "why": [
+        "Rules printed in full (data/coverage.json):\n\nSURVIVOR cards-intl-ca-cibc-extended-protection — title \"CIBC Visa cards double the maker's warranty, up to one extra full year\"; brands ['*']; categories 22 incl. 'bag'; regions ['CA']; payment_methods ['visa']; window_months 999; window_note: extra cove"
+      ]
+    },
+    {
+      "survivor": "law-intl-eu-manufacturer-must-repair",
+      "merged": [
+        "eu-right-to-repair-directive",
+        "law-intl-eu-producer-must-repair"
+      ],
+      "why": [
+        "All three rules read in full from C:/Users/arjun/Music/Documents/Desktop/Website/owed/data/coverage.json (summarised here because the full text is above in the transcript):\n\nSURVIVOR law-intl-eu-manufacturer-must-repair — statutory, certain, EU, brands *, categories [appliance-large, tv, vacuum, pow"
+      ]
+    },
+    {
+      "survivor": "programs-nhtsa-vehicle-recall-vin",
+      "merged": [
+        "us-vehicle-safety-recall-free-repair",
+        "programs-nhtsa-vin-recall-check-us"
+      ],
+      "why": [
+        "All three rules printed in full above (from C:/Users/arjun/Music/Documents/Desktop/Website/owed/data/coverage.json). Structured fields (brands *, categories other, regions US, payment_methods *, confidence certain, deadline empty) are identical, so nothing is lost there; the field notes correctly ke"
+      ]
+    },
+    {
+      "survivor": "law-intl-uk-free-repair-or-replace",
+      "merged": [
+        "cards-intl-uk-consumer-rights-act",
+        "batteries-uk-first-six-months-presumed-faulty"
+      ],
+      "why": [
+        "All three rules printed from C:/Users/arjun/Music/Documents/Desktop/Website/owed/data/coverage.json (id, source_type, title, applies_to, window_months, window_note, what_you_get, confidence, how_to_claim, contact, script_hint, source_url, deadline):\n\n1) SURVIVOR law-intl-uk-free-repair-or-replace — "
+      ]
+    },
+    {
+      "survivor": "retailer-costco-two-year-warranty-extension",
+      "merged": [
+        "retailer-costco-second-year-warranty"
+      ],
+      "why": [
+        "Both rules printed in full from C:/Users/arjun/Music/Documents/Desktop/Website/owed/data/coverage.json (notes saved to .../scratchpad/dedup/costco-two-year-refute.txt).\n\nSURVIVOR retailer-costco-two-year-warranty-extension: retailer; title \"Costco doubles the maker's warranty to 2 years on TVs, comp"
+      ]
+    },
+    {
+      "survivor": "law-intl-ca-qc-good-working-order",
+      "merged": [
+        "ca-qc-good-working-order",
+        "cards-intl-ca-quebec-good-working-order-2026",
+        "law-intl-qc-good-working-order"
+      ],
+      "why": [
+        "All four rules read from C:/Users/arjun/Music/Documents/Desktop/Website/owed/data/coverage.json (all statutory, brands *, regions CA, payment_methods *, deadline \"\"):\n\nSURVIVOR law-intl-ca-qc-good-working-order — title \"Quebec: 3 to 6 years of free repair on appliances and electronics\"; categories a"
+      ]
+    },
+    {
+      "survivor": "law-intl-ca-qc-parts-availability",
+      "merged": [
+        "ca-qc-parts-and-repair-availability",
+        "law-intl-qc-parts-availability"
+      ],
+      "why": [
+        "All three rules printed in full above (data/coverage.json). Field-by-field loss check against the merge as specified (survivor law-intl-ca-qc-parts-availability text kept; categories -> ['*']; two sentences appended from law-intl-qc; survivor date corrected to 5 Oct 2025; canlii as secondary cite if"
+      ]
+    },
+    {
+      "survivor": "law-us-ny-digital-fair-repair",
+      "merged": [
+        "law-us-ny-right-to-repair"
+      ],
+      "why": [
+        "Both rules printed in full (see tool output). Field-by-field check of what only law-us-ny-right-to-repair carried:\n\nCARRIED by survivor or field notes (no loss): region US; brands/payment '*'; window 999 / \"no deadline tied to when you bought it\"; contact URL identical (AG consumer complaint form); "
+      ]
+    }
+  ],
+  "clock": {
+    "floors": [
+      "cards-intl-eu-first-year-no-proof-needed",
+      "cards-intl-eu-linked-credit",
+      "eu-two-year-legal-guarantee",
+      "law-intl-eu-repair-adds-a-year",
+      "law-intl-fr-repair-extends-guarantee",
+      "law-us-mmwa-implied-duration-cap"
+    ],
+    "untimed": [
+      "us-vehicle-safety-recall-free-repair",
+      "programs-nhtsa-vehicle-recall-vin",
+      "california-warranty-adjustment-program-refund",
+      "law-us-ca-right-to-repair-parts",
+      "law-us-ca-right-to-repair-parts",
+      "eu-phone-tablet-spare-parts",
+      "law-intl-ca-qc-repair-three-months",
+      "cards-intl-uk-ombudsman-escalation",
+      "cards-intl-uk-ombudsman-escalation"
+    ]
+  }
+}

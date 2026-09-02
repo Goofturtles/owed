@@ -70,7 +70,7 @@ owed/
 ├── app.html              The app itself: shelf, four-question wizard, results, script.
 ├── favicon.svg           Inline SVG mark.
 ├── data/
-│   └── coverage.json     The rulebook. 445 hand-collected rules, each with a source URL.
+│   └── coverage.json     The rulebook. 315 hand-collected rules, each with a source URL.
 └── assets/
     ├── css/
     │   ├── base.css      Design tokens, palette, type scale, light and dark themes, shared elements.
@@ -200,7 +200,7 @@ Change the item to a Sony product 14 months old and the maker's warranty vanishe
 
 ## The rulebook
 
-`data/coverage.json`. One version field, one generated date, one flat array of rules. Flat on purpose: the engine walks all 445 rules on every match, which at this size is instant and keeps the file readable by a human.
+`data/coverage.json`. One version field, one generated date, one flat array of rules. Flat on purpose: the engine walks all 315 rules on every match, which at this size is instant and keeps the file readable by a human.
 
 ```json
 {
@@ -292,7 +292,7 @@ The engine is written to run in Node with only a `global.window` shim, which mak
 
 ## What is in the rulebook today
 
-445 rules, every one with a source URL.
+315 rules, every one with a source URL.
 
 | By where the cover comes from | Count |
 |---|---|
@@ -336,7 +336,7 @@ The re-match loop uses `owed:seen`: when the rulebook grows, an item's fresh mat
 
 Stated plainly, because a tool about fine print should not have any.
 
-- **The rulebook is hand-collected, so it is deep rather than complete.** 445 rules is a real corpus, not a stub, but it is not the world. Unusual brands or models can return nothing. When that happens the app says so plainly and keeps the item on your shelf for re-matching. It does not invent a match to fill the screen.
+- **The rulebook is hand-collected, so it is deep rather than complete.** 315 rules is a real corpus, not a stub, but it is not the world. Unusual brands or models can return nothing. When that happens the app says so plainly and keeps the item on your shelf for re-matching. It does not invent a match to fill the screen.
 - **Coverage is strongest for the US and Canada.** UK and EU rules are present but thin. A UK user with an unusual item will often see only the two or three statutory rules.
 - **This is an information tool, not legal advice.** Every rule links to its published source so you can read it yourself and decide.
 - **Card benefits changed a lot between 2018 and 2025.** Many issuers removed extended warranty entirely. A card rule is a prompt to check your own benefit guide, not a guarantee that your specific card still has it. This is why almost all card rules are marked `likely` rather than `certain`.
@@ -359,7 +359,7 @@ Owed makes the free repair the easy option by removing the research step.
 
 ## Built during the hackathon vs brought in
 
-**Built during the three days:** all of it, apart from the two lines below. Every HTML file, every stylesheet, the design system, the motion layer, the rule engine, the local store, the catalog and its guessers, the auth flow, the app controller, and all 445 rules in `coverage.json`.
+**Built during the three days:** all of it, apart from the two lines below. Every HTML file, every stylesheet, the design system, the motion layer, the rule engine, the local store, the catalog and its guessers, the auth flow, the app controller, and all 315 rules in `coverage.json`.
 
 **Libraries: none.** No framework, no bundler, no CSS library, no polyfills, no `node_modules`. There is no `package.json` because there is nothing to install. Everything is vanilla HTML, CSS and ES5-compatible JavaScript in IIFEs.
 
