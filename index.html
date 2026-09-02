@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788326760">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788326760">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788326760">
-<script src="assets/js/theme.js?v=1788326760"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788328108">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788328108">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788328108">
+<script src="assets/js/theme.js?v=1788328108"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -266,9 +266,9 @@
       </div>
 
       <figure class="sc-shot">
-        <img class="shot-light" src="assets/img/app-shot.webp?v=1788326760" width="1500" height="1000"
+        <img class="shot-light" src="assets/img/app-shot.webp?v=2788328108" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
-        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788326760" width="1500" height="1000"
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=2788328108" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
         <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
       </figure>
@@ -326,49 +326,62 @@
   </section>
 
   <!-- ============ HOW IT WORKS ============
-       Copied from Railway's "How the program works": one bordered card
-       inset on the dark ground, a centred title, a single narrow column of
-       numbered steps whose outlined circles are joined by a vertical spine,
-       and one centred link at the foot. Only the words and the colours are
-       ours. -->
-  <section class="section how is-dark" id="how">
+       After Norma, Airtasker, Browserbase, Hims, V7 and Windsurf (Mobbin): a
+       light section, header stack on the left, one row of four equal white
+       tiles told apart from the paper by fill alone (no hairline - the
+       majority pattern), each with a small mono numeral, a 2-4 word title, a
+       body of a dozen words at most, and a REAL crop of the product in a well
+       filling the bottom of the tile, bleeding off its bottom and right edge.
+       No connector line: the four-up references with crops draw none. Motion:
+       fade + 16px rise on intersection, 300ms Material emphasized-decelerate,
+       50ms stagger; hover slides the crop up 12px; reduced motion = opacity. -->
+  <section class="section how" id="how">
     <div class="wrap">
-      <div class="rw-card">
-        <h2 class="display rw-title">How Owed works</h2>
+      <header class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="display section-title">Four questions, then a phone call.</h2>
+      </header>
 
-        <ol class="rw-steps" role="list">
-          <li class="rw-step">
-            <span class="rw-n" aria-hidden="true">1</span>
-            <div class="rw-text">
-              <h3 class="rw-step-title">Tell it what broke</h3>
-              <p class="rw-step-body">The thing, the brand, roughly when you bought it, and how you paid. Four taps, and no receipt needed.</p>
-            </div>
-          </li>
-          <li class="rw-step">
-            <span class="rw-n" aria-hidden="true">2</span>
-            <div class="rw-text">
-              <h3 class="rw-step-title">It checks everyone who might owe you</h3>
-              <p class="rw-step-body">The maker, your card, open payouts, repair programmes and the law where you live &mdash; all at once, against 318 rules.</p>
-            </div>
-          </li>
-          <li class="rw-step">
-            <span class="rw-n" aria-hidden="true">3</span>
-            <div class="rw-text">
-              <h3 class="rw-step-title">Get the words to say</h3>
-              <p class="rw-step-body">A short script with the rule named in it, who to contact, and any deadline on top. Read it out loud.</p>
-            </div>
-          </li>
-          <li class="rw-step">
-            <span class="rw-n" aria-hidden="true">4</span>
-            <div class="rw-text">
-              <h3 class="rw-step-title">Keep a shelf of your stuff</h3>
-              <p class="rw-step-body">Save what you own once. Next time you open Owed, any new payout or repair programme that covers it is flagged as new.</p>
-            </div>
-          </li>
-        </ol>
+      <ol class="hw-grid" role="list">
+        <li class="hw-tile">
+          <p class="hw-n mono" aria-hidden="true">01</p>
+          <h3 class="hw-title">Answer four questions</h3>
+          <p class="hw-body">What broke, who made it, roughly when, how you paid.</p>
+          <figure class="hw-well">
+            <img class="hw-light" src="assets/img/how-01.webp?v=2" width="1120" height="1306" alt="" loading="lazy" decoding="async">
+            <img class="hw-dark" src="assets/img/how-01-dark.webp?v=2" width="1120" height="1306" alt="" loading="lazy" decoding="async">
+          </figure>
+        </li>
+        <li class="hw-tile">
+          <p class="hw-n mono" aria-hidden="true">02</p>
+          <h3 class="hw-title">See who owes you</h3>
+          <p class="hw-body">Every lead labelled strong, worth asking or long shot.</p>
+          <figure class="hw-well">
+            <img class="hw-light" src="assets/img/how-02.webp?v=2" width="998" height="560" alt="" loading="lazy" decoding="async">
+            <img class="hw-dark" src="assets/img/how-02-dark.webp?v=2" width="998" height="560" alt="" loading="lazy" decoding="async">
+          </figure>
+        </li>
+        <li class="hw-tile">
+          <p class="hw-n mono" aria-hidden="true">03</p>
+          <h3 class="hw-title">Read the script</h3>
+          <p class="hw-body">The rule named, the deadline on top, in plain words.</p>
+          <figure class="hw-well">
+            <img class="hw-light" src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="" loading="lazy" decoding="async">
+            <img class="hw-dark" src="assets/img/how-03-dark.webp?v=2" width="820" height="1738" alt="" loading="lazy" decoding="async">
+          </figure>
+        </li>
+        <li class="hw-tile">
+          <p class="hw-n mono" aria-hidden="true">04</p>
+          <h3 class="hw-title">Keep it on your shelf</h3>
+          <p class="hw-body">Re-checked against the latest book each time you open Owed.</p>
+          <figure class="hw-well">
+            <img class="hw-light" src="assets/img/how-04.webp?v=2" width="544" height="1800" alt="" loading="lazy" decoding="async">
+            <img class="hw-dark" src="assets/img/how-04-dark.webp?v=2" width="544" height="1800" alt="" loading="lazy" decoding="async">
+          </figure>
+        </li>
+      </ol>
 
-        <a class="rw-more" href="app.html?demo=1">See it with a demo shelf &rarr;</a>
-      </div>
+      <a class="btn btn-accent hw-cta" href="auth.html?mode=signup">Start with your broken thing</a>
     </div>
   </section>
 
@@ -795,10 +808,10 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788326760"></script>
-<script src="assets/js/landing.js?v=1788326760"></script>
-<script src="assets/js/scroll.js?v=1788326760"></script>
-<script src="assets/js/scene.js?v=1788326760"></script>
-<script src="assets/js/motion.js?v=1788326760"></script>
+<script src="assets/js/catalog.js?v=1788328108"></script>
+<script src="assets/js/landing.js?v=1788328108"></script>
+<script src="assets/js/scroll.js?v=1788328108"></script>
+<script src="assets/js/scene.js?v=1788328108"></script>
+<script src="assets/js/motion.js?v=1788328108"></script>
 </body>
 </html>

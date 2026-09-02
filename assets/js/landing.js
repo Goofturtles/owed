@@ -153,7 +153,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.sc-copy, .sc-shot, .section-head, .prem-row, .tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
+    '.sc-copy, .sc-shot, .section-head, .prem-row, .tile, .hw-tile, .hw-tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
   );
 
   var io = null;
@@ -578,6 +578,16 @@
     } else {
       live = true; praf = requestAnimationFrame(glide);
     }
+  })();
+
+  /* ---------- how it works: the tile in view lights its label ---------- */
+  (function hwLive() {
+    var tiles = document.querySelectorAll('.hw-tile');
+    if (!tiles.length || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { en.target.classList.toggle('is-live', en.intersectionRatio >= .5); });
+    }, { threshold: [0, .5, 1] });
+    Array.prototype.forEach.call(tiles, function (t) { io.observe(t); });
   })();
 
   /* ---------- one FAQ open at a time ---------- */
