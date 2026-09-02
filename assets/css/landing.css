@@ -584,6 +584,69 @@
 }
 
 /* ============================================================
+   what we check - Tines' bento re-skinned per the density research
+   (Retool, Daylight, ClickUp, Figma icon grids; see DESIGN-REFERENCES.md)
+
+   Five white cards on the paper, told apart by a hairline, each with one
+   single-stroke ink icon, a mono numeral, a short title and one sentence.
+   A 2 + 3 bento: the two "wide" cards share the first row, the other three
+   the second. Pastel is reserved for the earth pills, so the tint classes
+   in the markup stay inert. The block was lost when the how-it-works rules
+   were regenerated; restored 2 Sept 2026.
+   ============================================================ */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+.tile {
+  grid-column: span 2;
+  display: flex; flex-direction: column;
+  min-height: 240px;
+  padding: 24px 24px 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: box-shadow .3s var(--ease), transform .3s cubic-bezier(.05, .7, .1, 1);
+}
+.tile.wide { grid-column: span 3; }
+.tile:hover { box-shadow: var(--shadow-lg); }
+.tile-ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.tile-ico svg { width: 24px; height: 24px; }
+.tile-n {
+  margin-top: auto; padding-top: 1.25rem;
+  font-size: var(--step--2); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.tile-title {
+  margin-top: .45rem;
+  font-family: var(--display);
+  font-size: var(--step-1); font-weight: 600; letter-spacing: -.012em; line-height: 1.25;
+  color: var(--ink);
+}
+.tile-text {
+  margin-top: .4rem;
+  font-size: 15px; line-height: 1.5; color: var(--ink-2);
+  max-width: 34ch;
+}
+@media (max-width: 1023px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile, .tile.wide { grid-column: span 1; min-height: 0; }
+}
+@media (max-width: 640px) {
+  .bento { grid-template-columns: 1fr; gap: 12px; }
+  .tile { padding: 20px; }
+  .tile-text { font-size: 16px; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
+
+/* ============================================================
    script showcase - copied from Charma
 
    A very large headline breaking into short lines down the left, a

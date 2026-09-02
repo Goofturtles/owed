@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Your shelf — Owed</title>
 <meta name="description" content="Check what you own for free repairs, refunds and payouts you can still claim.">
@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788363810">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788363810">
-<link rel="stylesheet" href="assets/css/app.css?v=1788363810">
-<script src="assets/js/theme.js?v=1788363810"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788365600">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788365600">
+<link rel="stylesheet" href="assets/css/app.css?v=1788365600">
+<script src="assets/js/theme.js?v=1788365600"></script>
 </head>
 <body class="app-body" data-tab="things">
 <a class="skip-link" href="#appMain">Skip to content</a>
@@ -124,7 +124,8 @@
           <p class="wiz-help" id="wizHelp1">Type it as you&rsquo;d say it out loud.</p>
           <input class="input wiz-input" id="wizName" type="text" aria-labelledby="wizQ1" aria-describedby="wizHelp1" placeholder="e.g. Sony headphones" autocomplete="off">
           <p class="wiz-err" id="wizErr" hidden>Type or pick something first.</p>
-          <div class="opt-list opt-grid" id="catChips" role="group" aria-label="Or pick what kind of thing it is"></div>
+          <p class="wiz-or" aria-hidden="true">or pick what kind of thing it is</p>
+          <div class="opt-list opt-tiles" id="catChips" role="group" aria-label="Or pick what kind of thing it is"></div>
         </div>
 
         <div class="wiz-step" data-step="2">
@@ -132,19 +133,20 @@
           <p class="wiz-help" id="wizHelp2">The brand on the box. If you&rsquo;re not sure, skip it.</p>
           <input class="input wiz-input" id="wizBrand" type="text" aria-labelledby="wizQ2" aria-describedby="wizHelp2" placeholder="e.g. Sony" autocomplete="off" list="brandList">
           <datalist id="brandList"></datalist>
-          <div class="opt-list opt-grid" id="brandChips" role="group" aria-label="Or pick a brand"></div>
+          <p class="wiz-or" aria-hidden="true">or pick a common one</p>
+          <div class="opt-list opt-cards" id="brandChips" role="group" aria-label="Or pick a brand"></div>
         </div>
 
         <div class="wiz-step" data-step="3">
           <h1 class="wiz-q" id="wizQ3">When did you get it?</h1>
           <p class="wiz-help">A guess is fine. No receipt needed.</p>
-          <div class="opt-list" id="ageOpts" role="group" aria-labelledby="wizQ3"></div>
+          <div class="opt-list opt-cards" id="ageOpts" role="group" aria-labelledby="wizQ3"></div>
         </div>
 
         <div class="wiz-step" data-step="4">
           <h1 class="wiz-q" id="wizQ4">How did you pay?</h1>
           <p class="wiz-help">This one matters &mdash; cards quietly add cover most people never claim.</p>
-          <div class="opt-list" id="payOpts" role="group" aria-labelledby="wizQ4"></div>
+          <div class="opt-list opt-tiles opt-tiles-4" id="payOpts" role="group" aria-labelledby="wizQ4"></div>
           <label class="wiz-broken">
             <input type="checkbox" id="wizBroken" checked>
             <span>It&rsquo;s broken or playing up right now</span>
@@ -152,7 +154,7 @@
         </div>
 
         <div class="wiz-foot">
-          <button class="btn btn-accent btn-lg btn-block" id="wizNext" type="button">Continue</button>
+          <button class="btn btn-accent btn-lg wiz-next" id="wizNext" type="button">Continue</button>
           <button class="wiz-skip" id="wizSkip" type="button">Skip this question</button>
         </div>
       </div>
@@ -224,10 +226,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/catalog.js?v=1788363810"></script>
-<script src="assets/js/store.js?v=1788363810"></script>
-<script src="assets/js/engine.js?v=1788363810"></script>
-<script src="assets/js/app.js?v=1788363810"></script>
-<script src="assets/js/motion.js?v=1788363810"></script>
+<script src="assets/js/catalog.js?v=1788365600"></script>
+<script src="assets/js/store.js?v=1788365600"></script>
+<script src="assets/js/engine.js?v=1788365600"></script>
+<script src="assets/js/app.js?v=1788365600"></script>
+<script src="assets/js/motion.js?v=1788365600"></script>
 </body>
 </html>

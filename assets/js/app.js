@@ -155,7 +155,12 @@
   });
 
   el.signOut.addEventListener('click', function () {
-    S.signOut();
+    // the list lives only in this browser; on a shared computer it must not
+    // pass to the next person who signs up here
+    var clear = window.confirm('Sign out and remove your things from this device?\n\n' +
+      'Your list lives only in this browser — there is no copy anywhere else.\n' +
+      'Press Cancel to sign out but keep the list here for next time.');
+    S.signOut({ clear: clear });
     location.href = 'index.html';
   });
 
@@ -448,7 +453,7 @@
   }
 
   wizEls.ageOpts.innerHTML = C.AGES.map(function (a) {
-    return optRow('data-age="' + a.id + '"', '', a.label, false);
+    return optRow('data-age="' + esc(a.id) + '"', '', a.label, false);
   }).join('') + optRow('data-age="none"', '', CANT_REMEMBER, false);
 
   wizEls.payOpts.innerHTML = C.PAYMENTS.map(function (p) {
@@ -915,7 +920,7 @@
           '<button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') +
             ' aria-describedby="' + tid + '">Details ' + ico(wide ? 'next' : 'chevron', 16) + '</button>' +
         '</div>' +
-        '<div class="rc-side"><button class="btn ' + (wide ? 'btn-ghost' : 'btn-accent') + '" type="button" data-script aria-describedby="' + tid + '">Get the words to say</button></div>' +
+        '<div class="rc-side"><button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get the words to say</button></div>' +
       '</div>' +
       '<div class="rc-body" hidden>' +
         '<p class="rc-get">' + esc(r.what_you_get) + '</p>' +

@@ -76,8 +76,13 @@
     return user;
   }
 
-  function signOut() {
-    try { localStorage.removeItem(KEY_USER); } catch (e) {}
+  // opts.clear also wipes the shelf: on a shared computer the next person who
+  // signs up here must not inherit the previous person's list of possessions
+  function signOut(opts) {
+    try {
+      localStorage.removeItem(KEY_USER);
+      if (opts && opts.clear) { localStorage.removeItem(KEY_SHELF); localStorage.removeItem(KEY_SEEN); }
+    } catch (e) {}
   }
 
   function updateUser(patch) {

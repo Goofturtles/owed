@@ -61,7 +61,7 @@
 
   /* surfaces */
   --field:      #FFFFFF;
-  --field-line: #CFCEC7;
+  --field-line: #918F88;   /* 3.2:1 on the field: the box edge must exist for older eyes (WCAG 1.4.11) */
 
   --shadow-sm: 0 1px 2px rgba(21, 22, 26, .05);
   --shadow-md: 0 4px 14px rgba(21, 22, 26, .07), 0 1px 3px rgba(21, 22, 26, .04);
@@ -176,7 +176,7 @@
   --info-soft:   #111C26;
 
   --field:      #1E2321;
-  --field-line: #3E453F;
+  --field-line: #6C736E;   /* 3.3:1 on the dark field */
 
   /* The ramp is deliberately NOT re-declared for dark. These tints paint
      objects that always carry fixed dark ink, and flipping them put dark ink
