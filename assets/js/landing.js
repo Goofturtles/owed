@@ -426,6 +426,78 @@
     var pills = field.querySelectorAll('.pf-pill');
     var ticking = false;
 
+    /* The fall. Twelve objects drop from above the field, land, bounce and
+       settle - once, when the field is half in view. The drop is Material 3's
+       long2 (500ms) on the emphasized-accelerate curve (gravity reads as
+       ease-in); the bounce is a damped spring with Framer Motion's defaults
+       (stiffness 100, damping 10, mass 1), integrated per frame, with a 0.32
+       restitution on landing. Far tier first, then mid, then near, 55ms apart,
+       so the pile builds from the back. */
+    var fieldH = field.getBoundingClientRect().height || 480;
+    for (var s0 = 0; s0 < pills.length; s0++) {
+      pills[s0].style.setProperty('--fy', (-(fieldH + 140)) + 'px');
+      pills[s0].style.setProperty('--fr', (pills[s0].style.getPropertyValue('--rot') || '0deg').trim());
+    }
+    function accel(t) { return cubic(t, .3, 0, .8, .15); }      // M3 emphasized-accelerate
+    function cubic(t, x1, y1, x2, y2) {
+      // solve x(u)=t by bisection, return y(u)
+      var lo = 0, hi = 1, u = t;
+      for (var k = 0; k < 18; k++) {
+        u = (lo + hi) / 2;
+        var x = 3 * (1 - u) * (1 - u) * u * x1 + 3 * (1 - u) * u * u * x2 + u * u * u;
+        if (x < t) lo = u; else hi = u;
+      }
+      return 3 * (1 - u) * (1 - u) * u * y1 + 3 * (1 - u) * u * u * y2 + u * u * u;
+    }
+    function fall(el, delay) {
+      var start = -(fieldH + 140);
+      var rot = parseFloat(el.style.getPropertyValue('--rot')) || 0;
+      var t0 = null, phase = 0, y = 0, v = 0, last = 0;
+      var K = 100, C = 10, M = 1, E = .32, DROP = 500;
+      function step(now) {
+        if (t0 === null) t0 = now + delay;
+        var t = now - t0;
+        if (t < 0) { requestAnimationFrame(step); return; }
+        if (phase === 0) {
+          var e = accel(Math.min(1, t / DROP));
+          el.style.setProperty('--fy', (start * (1 - e)).toFixed(1) + 'px');
+          el.style.setProperty('--fr', (rot * (1 - e)).toFixed(2) + 'deg');
+          if (t >= DROP) {
+            // landing velocity from the curve's end slope, reversed with restitution
+            var e2 = accel(Math.max(0, (DROP - 16) / DROP));
+            var vLand = start * (e2 - 1) / 16;               // px per ms, downward positive
+            v = -Math.abs(vLand) * E; y = 0; phase = 1; last = now;
+          }
+          requestAnimationFrame(step); return;
+        }
+        var dt = Math.min(32, now - last) / 1000; last = now;    // seconds
+        var a = (-K * y - C * v * 1000) / M / 1000;             // v is px/ms
+        v += a * dt; y += v * dt * 1000;
+        el.style.setProperty('--fy', y.toFixed(2) + 'px');
+        el.style.setProperty('--fr', (y * .06).toFixed(2) + 'deg');
+        if (Math.abs(y) < .3 && Math.abs(v) < .002) {
+          el.style.setProperty('--fy', '0px'); el.style.setProperty('--fr', '0deg'); return;
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    var fell = false;
+    function dropAll() {
+      if (fell) return; fell = true;
+      var order = Array.prototype.slice.call(pills).sort(function (a, b) { return depth(a) - depth(b); });
+      for (var i = 0; i < order.length; i++) fall(order[i], i * 55);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es, io) {
+        es.forEach(function (en) { if (en.intersectionRatio >= .5) { dropAll(); io.disconnect(); } });
+      }, { threshold: [0, .5, 1] }).observe(field);
+      // failsafe: whatever happens, the pills are on the ground 6s after load
+      setTimeout(dropAll, 6000);
+    } else {
+      dropAll();
+    }
+
     function depth(el) {
       // near things travel furthest, which is what sells the depth
       return el.classList.contains('pf-far') ? 14

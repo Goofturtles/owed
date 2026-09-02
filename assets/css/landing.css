@@ -231,40 +231,58 @@
 }
 .finder-doc-pp { font-size: var(--step--2); color: var(--ink-3); flex-shrink: 0; }
 
+/* Every digital document facsimile in the reference set (Stripe, Mercury,
+   Midday, Wave, Intercom, Figma, Deel) is a grotesque sans at one-half to
+   two-thirds of the UI size, ragged right, two tones: grey for the run,
+   ink for what matters. None is monospaced, none is cropped at the edge. */
 .finder-wall {
-  padding: 1rem .2rem 1.15rem 0;
-  -webkit-mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
-          mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
+  padding: 1.1rem 1.5rem 1.2rem 1.6rem;
+  display: grid; row-gap: .55rem;
 }
 .finder-wall p {
   position: relative;
-  font-family: var(--mono);
-  font-size: var(--step--2);
-  line-height: 2.1;
-  color: var(--ink-2);
-  opacity: .82;
-  white-space: nowrap;
-  padding-inline: 1.4rem .95rem;
+  font-family: var(--sans);
+  font-size: var(--step-mono);
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: 64ch;
+  padding: 0 .6rem 0 .9rem;
+  /* lines that are not the point stay two lines tall, so the sheet keeps a
+     fixed height as the wall wraps */
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
   transition: opacity .4s var(--ease), color .4s var(--ease);
 }
-.finder-wall p:nth-child(even) { padding-left: 2.4rem; }
 
 /* the marked line: a highlighter swipe plus a margin marker */
+/* the marked line: full text, body-size ink, a highlighter fill behind the
+   run (square corners, text colour left alone - Dovetail, Descript, Evernote)
+   and Owed's own margin bar. 400ms emphasized-decelerate is Material 3's
+   medium4 token; the bar takes medium1 (250ms). */
 .finder-wall p[data-hit] {
+  display: block; -webkit-line-clamp: unset;
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink-2);
+  padding: .3rem .6rem .3rem .9rem;
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: 0% 100%;
-  transition: background-size .6s var(--ease-out), opacity .4s var(--ease), color .4s var(--ease);
+  transition: background-size .4s cubic-bezier(.05, .7, .1, 1), opacity .4s var(--ease), color .4s var(--ease);
 }
 .finder-wall p[data-hit]::before {
-  content: ""; position: absolute; left: 0; top: 12%; bottom: 12%; width: 3px;
+  content: ""; position: absolute; left: 0; top: 10%; bottom: 10%; width: 3px;
   background: var(--accent);
   transform: scaleY(0); transform-origin: 50% 50%;
-  transition: transform .45s var(--ease-out);
+  transition: transform .25s cubic-bezier(.05, .7, .1, 1);
 }
-.finder-wall p.is-hit { opacity: 1; color: var(--accent); background-size: 100% 100%; }
+.finder-wall p.is-hit { color: var(--ink); background-size: 100% 100%; }
 .finder-wall p.is-hit::before { transform: scaleY(1); }
+/* the operative phrase inside the line, the way Figma and Intercom bold a
+   defined term */
+.finder-wall p b { font-weight: 600; color: var(--ink); }
 
 /* ---- the margin note ---- */
 .finder-note-out {
@@ -322,9 +340,9 @@
   .finder-verdict { font-size: var(--step-1); }
 }
 @media (max-width: 560px) {
-  .finder-wall p { font-size: var(--step--2); line-height: 2; }
-  /* the one line the section exists to show must be readable in full */
-  .finder-wall p[data-hit] { white-space: normal; line-height: 1.6; padding-block: .3rem; }
+  .finder-wall { padding-inline: 1rem 1rem; row-gap: .45rem; }
+  .finder-wall p { font-size: var(--step--2); }
+  .finder-wall p[data-hit] { font-size: var(--step--1); }
   .finder-doc-pp { display: none; }
 }
 
@@ -809,9 +827,12 @@
 
 .pillfield {
   position: relative;
-  height: clamp(380px, 40vw, 470px);
+  height: clamp(400px, 42vw, 520px);
   margin-top: clamp(1rem, 2.5vw, 2rem);
+  overflow: visible;
 }
+/* until the script has placed the fall, nothing shows above the field */
+.earth { overflow: hidden; }
 .pf-aurora {
   position: absolute; left: 50%; top: 50%;
   width: min(1040px, 94%); aspect-ratio: 2 / 1;
@@ -824,15 +845,19 @@
   pointer-events: none;
 }
 
+/* --py is the scroll slide (linear, reader-driven), --fy / --fr the fall the
+   script runs once: offset above the field and twice the rest rotation, both
+   dropping to zero as the pill lands and settles. */
 .pf-pill {
   position: absolute; left: var(--x); top: var(--y);
-  transform: translate3d(0, var(--py, 0px), 0) rotate(var(--rot)) scale(var(--s, 1));
+  transform: translate3d(0, calc(var(--py, 0px) + var(--fy, 0px)), 0)
+             rotate(calc(var(--rot) + var(--fr, 0deg))) scale(var(--s, 1));
   transform-origin: center;
   display: inline-flex; align-items: center;
-  max-width: min(330px, 42vw);
-  padding: .62rem 1.1rem;
+  max-width: min(360px, 40vw);
+  padding: .8rem 1.2rem;
   border-radius: 999px;
-  font-size: var(--step--1); line-height: 1.38; font-weight: 500;
+  font-size: var(--step-0); line-height: 1.35; font-weight: 500;
   color: #1B2320;
   text-wrap: pretty;
   overflow: hidden;
@@ -840,6 +865,7 @@
   box-shadow:
     inset 0 1.5px 0 rgba(255,255,255,.78),
     inset 0 -9px 15px rgba(0,0,0,.09),
+    0 0 0 1px rgba(27, 35, 32, .10),
     0 18px 34px -12px rgba(24, 48, 36, .45);
 }
 /* the highlight that makes it read as a moulded object rather than a tag */
@@ -866,8 +892,10 @@
     0 26px 44px -14px rgba(24, 48, 36, .5);
 }
 
-.pf-far  { --s: .74; filter: blur(5px);   opacity: .52; z-index: 1; }
-.pf-mid  { --s: .88; filter: blur(1.8px); opacity: .78; z-index: 2; }
+/* Cosmos' three tiers: scale first, blur and opacity only on the far tier;
+   the mid tier stays sharp so eight of twelve labels are readable */
+.pf-far  { --s: .55; filter: blur(2px); opacity: .6; z-index: 1; }
+.pf-mid  { --s: .75; z-index: 2; }
 .pf-near { --s: 1;   z-index: 3; }
 
 .pf-mint  { background: linear-gradient(158deg, #CDEFDE, var(--il-mint)); }
