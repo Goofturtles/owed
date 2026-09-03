@@ -942,3 +942,5 @@
 .rail-row { display: grid !important; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 12px; padding: 7px 0 !important; margin: 0; border: 0 !important; }
 .rail-row > span:last-child { font-size: 15px; color: var(--ink-2); }
 @media (min-width: 1200px) { .rail-foot { padding: 0 22px 0 !important; margin-bottom: -2px; font-size: 14px; line-height: 44px; } }
+
+.scr-send-note { flex-basis: 100%; margin: 10px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-3); }

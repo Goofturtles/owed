@@ -1486,7 +1486,9 @@
         '</div>' +
         '<div class="doc-foot">' +
           '<button class="btn btn-accent" type="button" id="copyScript">Copy script</button>' +
+          '<button class="btn btn-ghost" type="button" id="sendScript">Send it</button>' +
           '<button class="btn btn-ghost" type="button" id="markWon">Mark as won</button>' +
+          '<p class="scr-send-note">Send it opens your email app or their claim page with the words ready. Owed itself sends nothing and keeps no copy.</p>' +
         '</div>' +
       '</div>';
 
@@ -1525,6 +1527,30 @@
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(scrCurrent.script.text).then(done, failed);
       } else { failed(); }
+      return;
+    }
+    if (e.target.closest('#sendScript')) {
+      // through Owed = straight to them, from the reader's own email app or their page;
+      // there is no server here, so nothing is sent on their behalf or stored
+      var rule = scrCurrent.match.rule, text = scrCurrent.script.text;
+      var contact = String(rule.contact || '').trim();
+      var subject = 'Claim under ' + rule.title + (current.item && current.item.name ? ' — ' + current.item.name : '');
+      var putOnClipboard = function (then) {
+        // the clipboard call can hang behind a permission prompt: never let that block the send
+        var fired = false, go = function () { if (!fired) { fired = true; then(); } };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(go, go); else go();
+        setTimeout(go, 500);
+      };
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
+        location.href = 'mailto:' + contact + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+        toast('Opening your email app with the message ready.');
+      } else if (/^https?:\/\//i.test(contact)) {
+        putOnClipboard(function () { window.open(contact, '_blank', 'noopener'); toast('Words copied. Paste them into their form or chat.'); });
+      } else if (/^\+?[\d\s().-]{7,}$/.test(contact)) {
+        putOnClipboard(function () { toast('Words copied. Call ' + contact + ' and read them out.'); if (/Mobi|Android/i.test(navigator.userAgent)) location.href = 'tel:' + contact.replace(/[^\d+]/g, ''); });
+      } else {
+        putOnClipboard(function () { toast('Words copied. Their contact is on the rule’s source page.'); if (rule.source_url) window.open(rule.source_url, '_blank', 'noopener'); });
+      }
       return;
     }
     if (e.target.closest('#markWon')) {
