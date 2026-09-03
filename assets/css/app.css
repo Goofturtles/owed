@@ -767,3 +767,41 @@
 
 :root[data-theme="dark"] .side { background: #0D0D0D; border-right-color: #262626; }
 :root[data-theme="dark"] .rail-list li { border-color: #262626; color: var(--ink); }
+
+/* rename: a ghost icon button beside Edit, an inline field while editing */
+.res-rename { width: 44px; height: 44px; padding: 0; display: inline-grid; place-items: center; margin-right: 8px; }
+.res-rename-input { font: inherit; font-size: 20px; font-weight: 700; letter-spacing: -.01em; width: 100%; max-width: 420px; height: 36px; padding: 0 8px; border: 1px solid var(--accent); border-radius: 8px; background: var(--card, #FFF); color: var(--ink); outline: none; box-shadow: 0 0 0 3px rgba(0, 113, 227, .18); }
+/* the rail's two blocks share one edge and one rhythm */
+.rail-card { padding: 0; }
+.rail-block { padding: 20px 20px 10px; border-bottom: 1px solid var(--line); }
+.rail-block .rail-title { margin: 0 0 4px; }
+.rail-legend .rail-title { padding: 18px 20px 6px; margin: 0; }
+.rail-list li { padding: 10px 0; }
+.rail-list li:first-child { border-top: 0; }
+/* question one: the model field sits under the tiles, full width */
+.wiz-fallback { margin-top: 12px; }
+
+/* ---------- air: the owner wanted more room without losing fullness ---------- */
+.pane-head { min-height: 76px; padding: 14px 28px; gap: 18px; }
+.res-summary { margin: 28px 0 18px; }
+.res-filters, .filters, .chips { margin-bottom: 22px; gap: 10px; }
+.rgroup { margin-bottom: 24px; }
+.rgroup-head { min-height: 44px; padding: 8px 28px; }
+.rc-row { padding: 20px 28px; }
+.rgroup-note { padding: 14px 28px 6px; }
+.rgroup-toggle { min-height: 52px; padding: 0 28px; }
+.side { padding-top: 6px; }
+.xrow, .srow { min-height: 50px; margin: 2px 8px; border-radius: 12px; }
+.sg-head { margin-top: 6px; }
+.side .btn-primary, .side .btn-accent, #newCheck, .sg-new { width: calc(100% - 32px); margin: 8px 16px 14px; height: 50px; border-radius: 14px; font-size: 17px; }
+.side-foot, .sg-foot { padding: 10px 16px 18px; }
+.rail-card { margin: 16px 16px 0; }
+.rail-block { padding: 22px 22px 12px; }
+.rail-legend .rail-title { padding: 20px 22px 8px; }
+.rail-row { padding: 14px 22px; }
+.rail-foot { padding: 18px 22px; }
+.wiz-body { gap: 0; }
+.wiz-help { margin-bottom: 18px; }
+.wiz-progress { margin-bottom: 22px; }
+.wiz-more { margin-top: 14px; }
+.wiz-foot { margin-top: 16px; }

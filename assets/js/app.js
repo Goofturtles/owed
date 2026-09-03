@@ -167,6 +167,33 @@
     else renderShelf();
   });
 
+  /* ---------- rename a saved thing in place ---------- */
+  var renameBtn = document.getElementById('resRename');
+  if (renameBtn) renameBtn.addEventListener('click', function () {
+    var item = current.item; if (!item) return;
+    var title = document.getElementById('resTitle');
+    if (title.querySelector('input')) return;
+    var old = item.name || '';
+    var input = document.createElement('input');
+    input.type = 'text'; input.value = old; input.className = 'res-rename-input'; input.setAttribute('aria-label', 'New name');
+    title.textContent = ''; title.appendChild(input); input.focus(); input.select();
+    var done = false;
+    function finish(save) {
+      if (done) return; done = true;
+      var name = input.value.trim();
+      if (save && name && name !== old) {
+        S.updateItem(item.id, { name: name });
+        renderShelf();
+        showResults(S.getItem(item.id) || item, true);
+        toast('Renamed.');
+      } else {
+        title.textContent = old;
+      }
+    }
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); finish(true); } if (e.key === 'Escape') finish(false); });
+    input.addEventListener('blur', function () { finish(true); });
+  });
+
   el.signOut.addEventListener('click', function () {
     // the list lives only in this browser; on a shared computer it must not
     // pass to the next person who signs up here
@@ -578,7 +605,7 @@
     showPhoto(wiz.photo, wiz.photo ? 'Photo saved with this item.' : '');
     wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
     // the typed answers show only when there is something in them
-    setFallback(1, !!(wiz.name || wiz.photo || opts.focusInput));
+    setFallback(1, true);   // the model field always shows: specific things get specific rules
     setFallback(2, !!(wiz.brand && !brandIsCommon(wiz.brand)));
     renderCatRows();
     renderBrandRows();
@@ -1188,10 +1215,13 @@
     if (moreBtn) {
       var box = moreBtn.previousElementSibling;
       if (box) {
-        box.hidden = false;
-        var firstToggle = box.querySelector('[data-toggle]');
-        if (firstToggle) firstToggle.focus();
-        moreBtn.remove();
+        var opening = box.hidden;
+        box.hidden = !opening;
+        if (!moreBtn.dataset.show) moreBtn.dataset.show = moreBtn.textContent;
+        moreBtn.textContent = opening ? 'Hide long shots' : moreBtn.dataset.show;
+        moreBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+        if (opening) { var firstToggle = box.querySelector('[data-toggle]'); if (firstToggle) firstToggle.focus(); }
+        else moreBtn.scrollIntoView({ block: 'nearest' });
       }
       return;
     }
