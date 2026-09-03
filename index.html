@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.pexels.com; media-src 'self' blob: https://d8j0ntlcm91z4.cloudfront.net https://videos.pexels.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Owed — somebody already owes you a free repair</title>
 <meta name="description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts, repair programmes and consumer law — and tells you who still has to fix it for free, plus the words to say.">
 <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788368400">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788368400">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788368400">
-<script src="assets/js/theme.js?v=1788368400"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="assets/css/base.css?v=1788377000">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788377000">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788377000">
+<script src="assets/js/theme.js?v=1788377000"></script>
 </head>
 <body>
 <!-- ============ spot illustrations ============
@@ -93,103 +93,80 @@
 
 <main id="main" tabindex="-1">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="hero-wash" aria-hidden="true"></div>
+  <!-- ============ THE FILM: one sticky scene, three chapters ============
+       Ported from the owed-cinematic build (React + Tailwind + WebCodecs) into
+       this page's vanilla stack. A scroll-scrubbed film that never plays
+       itself: the <video> is seeked towards a smoothed scroll position on
+       every animation frame (the always-present path in the original; its
+       decoded-frame bank needs a bundler). Three text compositions fade in
+       and out in sequence with the original's curves; a chapter rail on the
+       right; chapter three carries the working "what broke?" field. -->
+  <section class="film" id="film" aria-label="Owed, in three chapters">
+    <div class="film-sticky">
+      <video class="film-video"
+             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260821_114821_a8ca298f-be2c-4613-a4dd-51b69e16bbde.mp4"
+             muted playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
+      <div class="film-still" aria-hidden="true"></div>
 
-    <div class="wrap hero-inner">
-      <a class="hero-chip" href="#checks" data-enter
-         aria-label="318 rules across the five places cover hides. See what we check.">
-        <span class="hero-chip-n tnum">318</span>
-        <span class="hero-chip-t">rules across the five places cover hides</span>
-        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
-      </a>
+      <div class="film-overlay">
+        <!-- chapter 1: the promise. Left aligned, vertically centred, navy on cloud. -->
+        <section class="film-scene film-s1" aria-label="The promise">
+          <div class="film-copy">
+            <h1 class="film-title stg">Somebody already owes you a free repair.</h1>
+            <p class="film-kicker stg stg-2">Find the cover you already have.</p>
+          </div>
+          <button class="film-next stg stg-3" type="button" data-go="places" aria-label="See what Owed checks">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </section>
 
-      <h1 class="display hero-title" data-split>Somebody already owes you <em>a free repair.</em></h1>
+        <!-- chapter 2: the five places. Centred, navy. -->
+        <section class="film-scene film-s2" aria-label="The five places" aria-hidden="true" inert>
+          <div class="film-copy film-copy-c">
+            <h2 class="film-title film-title-2 stg"><span>Five places cover hides.</span> <span class="film-dim">One place to check.</span></h2>
+            <ul class="film-places stg stg-2" role="list" aria-label="What Owed checks">
+              <li>Maker warranties</li><li>Card cover</li><li>Unclaimed payouts</li><li>Repair programmes</li><li>Consumer law</li>
+            </ul>
+            <p class="film-sub stg stg-3">What broke. Who made it. When you got it. How you paid.</p>
+          </div>
+        </section>
 
-      <p class="hero-sub" data-enter>
-        Owed reads the warranty you lost, the card you paid with, the payouts nobody
-        collects and the law where you live &mdash; then writes the words to say.
-      </p>
+        <!-- chapter 3: the action. Right-aligned block, white type over the dark sea. -->
+        <section class="film-scene film-s3" aria-label="See what you are owed" aria-hidden="true" inert>
+          <div class="film-copy film-copy-r">
+            <p class="film-kicker film-kicker-w stg">Your things. Your cover.</p>
+            <h2 class="film-title film-title-w stg stg-2">Before you replace it,<br>see what you&rsquo;re owed.</h2>
+            <form class="hero-try film-try stg stg-3" id="tryForm" action="auth.html" method="get" novalidate>
+              <label class="sr-only" for="tryItem">What broke?</label>
+              <div class="hero-try-field">
+                <svg class="hero-try-ico" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m13.5 13.5 3 3"/></svg>
+                <input class="hero-try-input" id="tryItem" name="item" type="text"
+                       placeholder="What broke? Sony headphones, Whirlpool dishwasher…"
+                       autocomplete="off" spellcheck="false">
+                <button class="btn btn-accent hero-try-btn" type="submit">Check it</button>
+              </div>
+            </form>
+            <p class="film-note stg stg-4">Free, and no account needed to try. Nothing you type leaves your browser. <a class="film-link" href="app.html?demo=1">Open the demo shelf</a></p>
+            <div class="try-result" id="tryResult" role="status" aria-live="polite" hidden></div>
+          </div>
+        </section>
 
-      <form class="hero-try" id="tryForm" action="auth.html" method="get" novalidate data-enter>
-        <label class="sr-only" for="tryItem">What broke?</label>
-        <div class="hero-try-field">
-          <svg class="hero-try-ico" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m13.5 13.5 3 3"/></svg>
-          <input class="hero-try-input" id="tryItem" name="item" type="text"
-                 placeholder="What broke? Sony headphones, Whirlpool dishwasher…"
-                 autocomplete="off" spellcheck="false">
-          <button class="btn btn-accent hero-try-btn" type="submit">Check it</button>
-        </div>
-      </form>
-
-      <p class="hero-note" data-enter>Free, and no account needed to try. Nothing you type leaves your browser.</p>
-
-      <div class="hero-art" aria-hidden="true">
-        <span class="ha ha-1"><svg viewBox="0 0 64 64"><use href="#ic-headphones"/></svg></span>
-        <span class="ha ha-2"><svg viewBox="0 0 64 64"><use href="#ic-washer"/></svg></span>
-        <span class="ha ha-3"><svg viewBox="0 0 64 64"><use href="#ic-card"/></svg></span>
-        <span class="ha ha-4"><svg viewBox="0 0 64 64"><use href="#ic-laptop"/></svg></span>
-        <span class="ha ha-5"><svg viewBox="0 0 64 64"><use href="#ic-kettle"/></svg></span>
-        <span class="ha ha-6"><svg viewBox="0 0 64 64"><use href="#ic-receipt"/></svg></span>
-      </div>
-
-      <div class="try-result" id="tryResult" role="status" aria-live="polite" hidden></div>
-    </div>
-  </section>
-
-  <!-- ============ THE STACK: a flythrough of the paperwork ============ -->
-  <section class="stack" id="stack" data-guided aria-label="How deep the paperwork goes">
-
-    <div class="stack-sticky">
-      <!-- the static frame anyone without WebGL (or with reduced motion) sees -->
-      <div class="stack-still" aria-hidden="true"></div>
-      <canvas class="stack-canvas" aria-hidden="true"></canvas>
-
-      <div class="stack-caps">
-        <p class="stack-cap" data-cap data-from="0" data-to="0.22">
-          Every warranty. Every card benefit. Every payout nobody collects.
-        </p>
-        <p class="stack-cap" data-cap data-from="0.22" data-to="0.66">
-          <b class="tnum">318</b> rules deep, and none of it is written for you.
-        </p>
-        <p class="stack-cap" data-cap data-from="0.66" data-to="1.01">
-          One of them says your repair is <em>free.</em>
-        </p>
-      </div>
-
-      <div class="stack-cards" aria-hidden="true">
-        <div class="scard" style="--sx:-38%; --sy:-34%; --sd:1.35; --sat:.06">
-          <span class="scard-tick"></span>
-          <b>The shop may still owe the repair</b>
-          <i>England &middot; 6 years to bring a claim</i>
-        </div>
-        <div class="scard" style="--sx:36%; --sy:-38%; --sd:.85; --sat:.20">
-          <span class="scard-tick"></span>
-          <b>One more year of cover</b>
-          <i>Your credit card &middot; after the maker's ran out</i>
-        </div>
-        <div class="scard" style="--sx:-40%; --sy:33%; --sd:1.6; --sat:.36">
-          <span class="scard-tick"></span>
-          <b>Free repair, parts and labour</b>
-          <i>Quebec legal guarantee &middot; 3 to 6 years</i>
-        </div>
-        <div class="scard" style="--sx:38%; --sy:36%; --sd:1.05; --sat:.52">
-          <span class="scard-tick"></span>
-          <b>A payout nobody collected</b>
-          <i>Class action &middot; while the window is open</i>
+        <!-- the chapter rail: next, three dots, back to the top -->
+        <div class="film-rail" role="group" aria-label="Chapters">
+          <button class="film-rail-btn" type="button" data-go="next" aria-label="Next chapter">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </button>
+          <button class="film-dot" type="button" data-go="promise" data-dot aria-label="Chapter 1: the promise" aria-current="true"><i></i></button>
+          <button class="film-dot" type="button" data-go="places" data-dot aria-label="Chapter 2: the five places"><i></i></button>
+          <button class="film-dot" type="button" data-go="action" data-dot aria-label="Chapter 3: see what you are owed"><i></i></button>
+          <button class="film-rail-btn film-rail-up" type="button" data-go="promise" aria-label="Back to the top">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+          </button>
         </div>
       </div>
-
-      <span class="stack-hint mono" aria-hidden="true">scroll</span>
-
-      <div class="scroll-cue">
-        <span>Keep scrolling</span>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
-             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"/>
-        </svg>
-      </div>
+      <!-- the last stretch of the track dissolves the whole scene into the
+           page ground, so the section below arrives on paper with no seam -->
+      <div class="film-fade" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -267,12 +244,33 @@
       </div>
 
       <figure class="sc-shot">
-        <img class="shot-light" src="assets/img/app-shot.webp?v=1788368400" width="1500" height="1000"
+        <img class="shot-light" src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
-        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788368400" width="1500" height="1000"
+        <img class="shot-dark" src="assets/img/app-shot-dark.webp?v=1788377000" width="1500" height="1000"
              alt="" loading="lazy" decoding="async">
         <figcaption class="sr-only">The Owed app: a pair of Sony headphones matched to credit-card extended warranties, each labelled worth asking.</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER: the problem ============
+       Full-bleed footage between the readable sections; the film's voice
+       for the heading, a plain sentence under it. Footage attaches only
+       when the chapter comes near (landing.js chapters()). -->
+  <section class="chapter chapter-problem" aria-label="Most people replace it" style="--focus: 50% 45%">
+    <div class="chapter-media" aria-hidden="true">
+      <img src="https://images.pexels.com/videos/6754827/pexels-photo-6754827.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" width="1600" height="900" loading="lazy" decoding="async">
+      <video data-src="https://videos.pexels.com/video-files/6754827/6754827-hd_1920_1080_25fps.mp4" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
+    </div>
+    <div class="chapter-scrim" aria-hidden="true"></div>
+    <button class="chapter-play" type="button" aria-label="Play the footage" hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+    </button>
+    <a class="chapter-credit" href="https://www.pexels.com/video/close-up-view-of-a-broken-iphone-6754827/" target="_blank" rel="noopener">Footage: Tima Miroshnichenko</a>
+    <div class="chapter-copy">
+      <p class="chapter-eyebrow stg">What usually happens</p>
+      <h2 class="chapter-title stg stg-2">Most people replace it.</h2>
+      <p class="chapter-lede stg stg-3">The cover they already paid for sits unclaimed in a warranty, a card benefit, a payout or the law. Owed reads all four before you spend a penny.</p>
     </div>
   </section>
 
@@ -435,37 +433,23 @@
     </div>
   </section>
 
-  <!-- ============ THE CITY: everywhere cover hides ============ -->
-  <section class="city" id="city" data-guided aria-label="Everywhere cover hides">
-    <div class="city-sticky">
-      <div class="city-copy">
-        <p class="eyebrow">Fine print</p>
-        <h2 class="display city-title">
-          <span class="city-l1">Nobody reads it.</span>
-          <span class="city-l2">Owed reads <em>all of it.</em></span>
-        </h2>
-        <p class="city-sub">
-          Rules spread across five places you would never think to look &mdash; so you only
-          ever read one sentence.
-        </p>
-      </div>
-
-      <ul class="city-tags" aria-hidden="true">
-        <li style="--ct:0">The maker&rsquo;s warranty</li>
-        <li style="--ct:1">The card you paid with</li>
-        <li style="--ct:2">Payouts you can still claim</li>
-        <li style="--ct:3">Quiet repair programmes</li>
-        <li style="--ct:4">The law where you live</li>
-      </ul>
-
-      <div class="scroll-cue">
-        <span>Keep scrolling</span>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
-             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"/>
-        </svg>
-      </div>
-
+  <!-- ============ CHAPTER: the statement ============
+       The "Nobody reads it" beat as a chapter: a slow macro across dense
+       print in one lamp's light, the five places named under the heading. -->
+  <section class="chapter chapter-statement" id="city" aria-label="Nobody reads it. Owed reads all of it." style="--focus: 50% 50%">
+    <div class="chapter-media" aria-hidden="true">
+      <img src="https://images.pexels.com/videos/5283822/pexels-photo-5283822.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" width="1600" height="844" loading="lazy" decoding="async">
+      <video data-src="https://videos.pexels.com/video-files/5283822/5283822-hd_2048_1080_24fps.mp4" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
+    </div>
+    <div class="chapter-scrim" aria-hidden="true"></div>
+    <button class="chapter-play" type="button" aria-label="Play the footage" hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+    </button>
+    <a class="chapter-credit" href="https://www.pexels.com/video/macro-shot-of-a-book-page-5283822/" target="_blank" rel="noopener">Footage: K</a>
+    <div class="chapter-copy">
+      <p class="chapter-eyebrow stg">Fine print</p>
+      <h2 class="chapter-title stg stg-2">Nobody reads it. <em>Owed reads all of it.</em></h2>
+      <p class="chapter-lede stg stg-3">Rules spread across five places you would never think to look: the maker&rsquo;s warranty, the card you paid with, payouts you can still claim, quiet repair programmes and the law where you live.</p>
     </div>
   </section>
 
@@ -740,18 +724,25 @@
     </div>
   </section>
 
-  <!-- ============ CTA ============
-       After Circle and MindMarket: a full-bleed accent field, the headline
-       first with nothing above it, a bone pill carrying the accent as its
-       ink, and the reassurance line close under the action rather than
-       floating off as its own band. No video: none of the strong closes
-       in the reference set put motion behind the last sentence. -->
-  <section class="cta">
-    <div class="cta-inner">
-      <h2 class="display cta-title">Before you buy a new one, check who owes you the old&nbsp;one.</h2>
-      <div class="cta-actions">
-        <a class="btn btn-lg btn-onfield-solid" href="auth.html?mode=signup">Start free</a>
-        <a class="cta-link" href="app.html?demo=1">See it with a demo shelf &rarr;</a>
+  <!-- ============ CHAPTER: the closing ============
+       The last call as a chapter: a repair bench in warm light, the heading
+       that opened the old green card, the same two actions. -->
+  <section class="chapter chapter-closing" aria-label="Before you buy a new one, check who owes you the old one" style="--focus: 50% 45%">
+    <div class="chapter-media" aria-hidden="true">
+      <img src="https://images.pexels.com/videos/7030718/auto-repair-fixed-handy-mobile-camera-7030718.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="" width="1600" height="900" loading="lazy" decoding="async">
+      <video data-src="https://videos.pexels.com/video-files/7030718/7030718-hd_1920_1080_24fps.mp4" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
+    </div>
+    <div class="chapter-scrim" aria-hidden="true"></div>
+    <button class="chapter-play" type="button" aria-label="Play the footage" hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+    </button>
+    <a class="chapter-credit" href="https://www.pexels.com/video/a-person-repairing-electronics-7030718/" target="_blank" rel="noopener">Footage: M 511</a>
+    <div class="chapter-copy">
+      <p class="chapter-eyebrow stg">Before you start</p>
+      <h2 class="chapter-title stg stg-2">Before you buy a new one, check who owes you the old&nbsp;one.</h2>
+      <div class="chapter-actions stg stg-3">
+        <a class="btn btn-lg btn-accent" href="auth.html?mode=signup">Start free</a>
+        <a class="chapter-link" href="app.html?demo=1">See it with a demo shelf &rarr;</a>
       </div>
     </div>
   </section>
@@ -805,10 +796,8 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788368400"></script>
-<script src="assets/js/landing.js?v=1788368400"></script>
-<script src="assets/js/scroll.js?v=1788368400"></script>
-<script src="assets/js/scene.js?v=1788368400"></script>
-<script src="assets/js/motion.js?v=1788368400"></script>
+<script src="assets/js/catalog.js?v=1788377000"></script>
+<script src="assets/js/landing.js?v=1788377000"></script>
+<script src="assets/js/motion.js?v=1788377000"></script>
 </body>
 </html>

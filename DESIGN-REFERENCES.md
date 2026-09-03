@@ -17,7 +17,46 @@ Hover and press states cannot be read from Mobbin stills, so they were measured 
 
 Cards on both pages (`.rcard`, `.tile`, `.hw-tile`) rise 1px with a soft shadow on hover; footer and script links draw an underline in from the left (250ms). Result cards and tiles only animate under `@media (hover: hover)`.
 
+### Buttons and colour fields, measured on nine big brands (2 September 2026, live in the browser)
+
+apple.com (via Mobbin sections), stripe.com, notion.com, airbnb.com, revolut.com, figma.com, shopify.com, nike.com, dyson.com — primary call-to-action computed styles read from each live page:
+
+| Brand | Fill | Gradient | Shadow | Radius | Height | Label | Hover transition |
+|---|---|---|---|---|---|---|---|
+| Apple | flat blue | none | none | pill | ~40 | 17/400 | colour |
+| Stripe | flat #533AFD | none | none | 4px | 48 | 16/400 | bg/colour 300ms cubic-bezier(.25,1,.5,1) |
+| Notion | flat #0075DE | none | none | 8px | 36–38 | 16/500 | bg/colour 200ms |
+| Airbnb | flat | none | none | pill | 40 | 14/500 | shadow/transform 250ms cubic-bezier(.2,0,0,1) |
+| Revolut | flat white / #1F1F1F | none | none | pill | 42 | 16/500 | bg/colour/opacity 300ms cubic-bezier(.15,.5,.5,1) |
+| Figma | flat black | none | none (secondary: 1px inset hairline) | 8px | 46 | 16–18/330–400 | bg/shadow 180ms ease-out |
+| Shopify | flat white | none | none | pill | 44–56 | 16–18/550 | 150ms cubic-bezier(.4,0,.2,1) |
+| Nike | flat white | none | none | pill | 36 | 16/500 | colour |
+| Dyson | flat #333 | none | none | 4px | 66 | 18/500 | colour |
+
+Nine of nine: one flat colour, no gradient, no drop shadow; hover is a colour change (Airbnb adds a press transform). → Owed's `.btn` is a flat pill at 44/52px, label 16px weight 500, hover lightens and press darkens over 220ms on Stripe's curve; the earlier sheen, inner light, lift and spring were removed. Colour fields (the script panel, the closing card) are flat with at most one broad soft wash, after Apple Health's mood screens; the Owed nav keeps its blur glass and hairline border like Apple's.
+
 ## Landing page
+
+### The film (the opening: one sticky scene, three chapters)
+
+Ported on 3 September 2026 from the owner's `owed-cinematic` build (React + Tailwind + WebCodecs) into this page's vanilla stack, replacing the earlier hero and the WebGL document flythrough. A scroll-scrubbed film over a 500vh track (400vh on phones): the `<video>` is seeked towards a smoothed scroll position on every frame (exponential smoothing, tau 8, snap at 2ms) and never played; three text compositions fade in and out on the original's curves (chapter 1 fades 0.20–0.28, chapter 2 lives 0.32–0.63, chapter 3 rises 0.67–0.75); children enter on a 0.8s ease-out stagger (0 / 150 / 300 / 400ms) once a chapter is 30% in, and reset in 0.2s on the way out so scrolling back replays them. The film's four colours (navy #1D3045 on cloud, white on the dark sea) are fixed and do not follow the page theme. The type is the film's own voice — Geist 300 uppercase, tracked — used nowhere else on the page. Chapter three carries the working "what broke?" field as glass over the sea; the chapter rail (next, three dots, back up) sits bottom-right and turns white over the sea, as does the nav's glass. Reduced motion: no stagger, one still per chapter. The film ends by dissolving into the page ground over the last tenth of the track (a paper layer whose opacity follows the scroll, smoothed), while the fine-print section rises over it, so the page arrives with no seam. (A WebGL paper-burn ending was built and verified on 3 September 2026, then withdrawn at the owner's request; `assets/js/burn.js` stays on disk, unreferenced.)
+
+### Cinematic chapters (the problem, the statement, the closing)
+
+Three chapters of real footage between the readable sections, built from twelve Mobbin references studied on 2 September 2026. What they share, and what Owed copies: mid-page chapters are inset rounded cards, never a full-bleed 100vh (Zoox, Titan, Lightship, Fauna Robotics, Loom, Zipline, Blue Apron); bands run 45–75vh (Blue Apron ~45, Dropbox ~58, IKEA and Zoox ~60, Dropbox Paper ~70); copy on footage is white, light, two lines, and legible because the footage is dark where the type sits (Lightship, Waabi, Daylight), with at most a gradient under the text block (Rivian) and never a text shadow; the hand-off is a hard edge onto the page colour with generous top padding (Blue Apron, IKEA, Dropbox Paper); phones keep real video with cover framing (Lightship, Zoox, Waabi, Oura, Rivian). Owed's card: margin 12–24px, radius 20px, height clamp(480px, 68vh, 760px) (phones clamp(420px, 72svh, 640px)), a poster under a looping muted video that attaches within one viewport, fades in on play and settles from a 4% enlargement over six seconds, a 12% wash plus a bottom gradient under the text only, mono eyebrow, Geist 300 uppercase heading (the film's voice, the owner's call) at clamp(32px, 4.2vw, 56px) bottom-left, one plain sentence, one white pill where there is an action, a small footage credit top-right. Reduced motion and save-data: poster only with a centred play ring that starts the film with native controls (Blue Apron, Dropbox Paper). Footage, free and real, from Pexels: the problem = a cracked phone macro (Tima Miroshnichenko, 6754827); the statement = a slow macro across a printed page in lamplight (K, 5283822); the closing = hands at a repair bench (M 511, 7030718). Optional replacements rendered on the owner's GPU are specified in `RENDERS.md`.
+
+- [Blue Apron](https://mobbin.com/sites/sections/6ec6fe52-1942-4fd5-94ed-b1c88c8a692b) — inset video band ~45vh, white two-line headline, light haze not a scrim
+- [Zoox](https://mobbin.com/sites/sections/20682e5f-c100-420a-9fa4-c903409d30ed) — inset rounded video card ~60vh, portrait cut on phones
+- [Lightship](https://mobbin.com/sites/sections/a5fa6838-ff45-42cc-8e90-b513fd69a5e7) — 12px inset, 16px radius, white light headline over dusk footage, dark-glass pill
+- [Waabi](https://mobbin.com/sites/sections/0345226a-541f-4607-89b7-b6e0923cb872) — type over the dark half of the frame, no scrim; phone gets its own cut
+- [Daylight](https://mobbin.com/sites/sections/f9f781dc-03d5-4372-bd1e-56415d63a1bf) — mono eyebrow, light headline, legibility from the grade
+- [Rivian](https://mobbin.com/sites/sections/bf0f7a92-09c8-4358-8108-5af7ef657836) — the one explicit gradient-to-dark under the text
+- [Dropbox Paper](https://mobbin.com/sites/sections/10e69996-df8c-4a86-bfb9-03693d9323f3) — hard edge, then the readable section resumes on white
+- [IKEA](https://mobbin.com/sites/sections/53a34728-f3c4-46e0-81b5-2daf235a5dc5) — media pure image, type pure page
+
+### Buttons, second pass (2 September 2026)
+
+Owner's rule: no green buttons. The primary button is now ink on paper (black in the light theme, white in the dark one), after the white and black pills measured on Revolut, Shopify, Nike and Figma. The green remains the status and link colour only.
 
 ### Hero and WebGL flythrough
 

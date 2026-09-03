@@ -312,55 +312,54 @@ main:focus:not(:focus-visible) { outline: none; }
   gap: 8px;
   border-radius: var(--radius-pill);
   font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 600;
+  /* 16px at weight 500: the label size and weight seven of nine big brands
+     use (Apple, Notion, Airbnb, Revolut, Nike, Shopify, Dyson - measured live) */
+  font-size: 16px;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -.006em;
   border: 1px solid transparent;
   white-space: nowrap;
   text-decoration: none;
-  transition: background-color .18s var(--ease), border-color .18s var(--ease),
-              color .18s var(--ease), box-shadow .18s var(--ease),
-              opacity .18s var(--ease), transform .18s var(--ease);
+  /* Stripe's hover curve: an ease-out over 220ms */
+  transition: background-color .22s cubic-bezier(.25, 1, .5, 1), border-color .22s cubic-bezier(.25, 1, .5, 1),
+              color .22s cubic-bezier(.25, 1, .5, 1), box-shadow .22s cubic-bezier(.25, 1, .5, 1),
+              opacity .22s cubic-bezier(.25, 1, .5, 1), transform .18s var(--ease);
 }
-/* the button answers the pointer the way Aardvark Book Club's does (Awwwards
-   Site of the Day, 30 Aug 2026, measured live): the fill grows a little on a
-   springy curve, and settles smaller on press */
-@media (hover: hover) {
-  .btn:not(.btn-quiet):not(.is-dim):hover {
-    transform: scale(1.025);
-    transition-timing-function: cubic-bezier(.34, 1.56, .64, 1);
-    transition-duration: .32s;
-  }
-}
-.btn:not(.btn-quiet):active { transform: scale(.98); transition-duration: .1s; transition-timing-function: ease-out; }
+/* Apple's buttons do not move: hover is a lighter fill, press a darker one.
+   The only motion is a short settle on press. */
+.btn:not(.btn-quiet):active { transform: scale(.985); transition-duration: .1s; transition-timing-function: ease-out; }
 @media (prefers-reduced-motion: reduce) {
-  .btn:hover, .btn:active { transform: none !important; }
+  .btn:active { transform: none !important; }
 }
 .btn-lg { height: 52px; padding: 0 32px; font-size: 16px; }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
 
 /* primary and accent are the same button: one action colour site-wide */
+/* The primary button is ink on paper: black in the light theme, white in
+   the dark one (Revolut, Shopify, Nike, Figma - measured live, 2 Sept 2026).
+   One flat fill, no sheen, no shadow; hover lifts the tone a step, press
+   drops it. The green stays for status and links, never for buttons. */
 .btn-primary,
 .btn-accent {
-  background-color: var(--accent);
-  /* a faint top light so the pill reads as a made object, not a flat fill */
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, .11), rgba(255, 255, 255, 0) 60%);
-  color: var(--accent-ink);
+  background: var(--ink);
+  color: var(--paper);
   border-color: transparent;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
+  box-shadow: none;
 }
 .btn-primary:hover,
 .btn-accent:hover {
-  background-color: var(--accent-hover);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 8px 18px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--ink) 84%, var(--paper));
+  box-shadow: none;
 }
 .btn-primary:active,
 .btn-accent:active {
-  background: var(--accent-press);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+  background: color-mix(in srgb, var(--ink) 94%, #000);
+  box-shadow: none;
 }
+:root[data-theme="dark"] .btn-primary:active,
+:root[data-theme="dark"] .btn-accent:active { background: color-mix(in srgb, var(--ink) 80%, var(--paper)); }
 
 /* secondary — only the fill differs */
 .btn-ghost {

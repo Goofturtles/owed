@@ -366,8 +366,8 @@
 /* "not ready yet": a soft fill instead of opacity, so the label stays 7:1.
    It stays focusable — clicking it explains what is missing. */
 .btn.is-dim, .btn.is-dim:hover {
-  background: var(--accent-soft); color: var(--accent);
-  border-color: var(--accent-line); box-shadow: none;
+  background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink-2);
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent); box-shadow: none;
 }
 /* wide: four across, taller tiles, and the eight-option grids fill two rows exactly */
 @media (min-width: 1100px) {

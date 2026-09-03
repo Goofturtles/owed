@@ -8,18 +8,253 @@
 
   /* ---------- sticky nav ---------- */
   var nav = document.getElementById('nav');
-  var darkCard = document.querySelector('.city-sticky');
+  var darkBands = document.querySelectorAll('.city-sticky, .chapter:not(.chapter-light)');
+  var filmEl = document.getElementById('film');
   var onScroll = function () {
     if (!nav) return;
     nav.classList.toggle('is-stuck', window.scrollY > 8);
-    // dark glass while the pill floats over the dark statement card
-    if (darkCard) {
-      var r = darkCard.getBoundingClientRect();
-      nav.classList.toggle('on-dark', r.top < 72 && r.bottom > 20);
+    // dark glass while the pill floats over a dark band (the statement card,
+    // a dark chapter) or over the film's dark chapter (data-dark from its loop)
+    var dark = false;
+    for (var i = 0; i < darkBands.length && !dark; i++) {
+      var r = darkBands[i].getBoundingClientRect();
+      dark = r.top < 72 && r.bottom > 20;
     }
+    if (!dark && filmEl && filmEl.dataset.dark === '1') {
+      var fr = filmEl.getBoundingClientRect();
+      dark = fr.bottom > 72;
+    }
+    nav.classList.toggle('on-dark', dark);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* ---------- the film: scroll-scrubbed video, three chapters ----------
+     Ported from owed-cinematic/src/App.tsx + useVideoScrub.ts. Progress p is
+     scrollY over the track's scroll span; the video is seeked towards a
+     smoothed p * duration (tau 8) on every frame and is never played. */
+  (function film() {
+    if (!filmEl) return;
+    var video = filmEl.querySelector('.film-video');
+    var overlay = filmEl.querySelector('.film-overlay');
+    var scenes = filmEl.querySelectorAll('.film-scene');
+    var dots = filmEl.querySelectorAll('[data-dot]');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var CH = { promise: 0, places: 0.43, how: 0.48, action: 0.83 };
+
+    function span() { return Math.max(1, filmEl.offsetHeight - window.innerHeight); }
+    function progress() {
+      var top = filmEl.getBoundingClientRect().top;
+      return Math.min(1, Math.max(0, -top / span()));
+    }
+    /* the original's visibility curves: each text is fully gone before the next appears */
+    function s1(p) { return p < 0.2 ? 1 : Math.max(0, 1 - (p - 0.2) / 0.08); }
+    function s2(p) {
+      if (p < 0.32) return 0;
+      if (p < 0.4) return (p - 0.32) / 0.08;
+      if (p < 0.55) return 1;
+      return Math.max(0, 1 - (p - 0.55) / 0.08);
+    }
+    function s3(p) {
+      if (p < 0.67) return 0;
+      if (p < 0.75) return (p - 0.67) / 0.08;
+      return 1;
+    }
+
+    filmEl.classList.add('is-js');   // the stagger only hides things once this loop can show them again
+
+    var duration = 0, current = 0, target = 0, last = performance.now(), lastChapter = -1;
+    var sceneOn = [null, null, null];
+    if (video) {
+      var onMeta = function () { if (isFinite(video.duration) && video.duration > 0) duration = video.duration; };
+      video.addEventListener('loadedmetadata', onMeta);
+      if (video.readyState >= 1) onMeta();
+      video.addEventListener('loadeddata', function () { filmEl.classList.add('is-live'); });
+      if (video.readyState >= 2) filmEl.classList.add('is-live');
+      video.addEventListener('error', function () { filmEl.classList.remove('is-live'); });
+      /* the whole file is only fetched once the reader shows intent to move,
+         and never on a connection that asked to save data */
+      var saveData = !!(navigator.connection && navigator.connection.saveData);
+      var upgraded = false;
+      var upgrade = function () {
+        if (upgraded || saveData) return;
+        upgraded = true;
+        video.preload = 'auto';
+        try { video.load(); } catch (e) { /* keep metadata */ }
+      };
+      ['scroll', 'touchstart', 'keydown', 'wheel', 'pointerdown'].forEach(function (ev) {
+        window.addEventListener(ev, upgrade, { passive: true, once: true });
+      });
+    }
+
+    /* the dissolve to paper over the last tenth of the track, smoothed so a
+       fast scroll never jumps it */
+    var fadeSmooth = 0;
+
+    /* the loop only runs while the film is on screen */
+    var visible = true, running = false;
+    function tick(now) {
+      if (!visible) { running = false; return; }
+      var dt = Math.min(0.1, Math.max(0, (now - last) / 1000));
+      last = now;
+      var p = progress();
+      var ops = [s1(p), s2(p), s3(p)];
+      for (var i = 0; i < scenes.length; i++) {
+        var sc = scenes[i], o = ops[i] || 0, on = o > 0.3;
+        sc.style.opacity = o;
+        sc.style.visibility = o <= 0 ? 'hidden' : '';
+        if (sceneOn[i] !== on) {
+          sceneOn[i] = on;
+          sc.classList.toggle('is-show', on);
+          sc.classList.toggle('is-on', on);
+          sc.setAttribute('aria-hidden', String(!on));
+          if (on) sc.removeAttribute('inert'); else sc.setAttribute('inert', '');
+        }
+      }
+      // the dissolve to paper: nothing until 0.9, complete at 1
+      var fadeTarget = Math.min(1, Math.max(0, (p - 0.9) / 0.1));
+      fadeSmooth += (fadeTarget - fadeSmooth) * (1 - Math.exp(-dt * 6));
+      if (Math.abs(fadeTarget - fadeSmooth) < 0.001) fadeSmooth = fadeTarget;
+      var fade = reduce ? fadeTarget : fadeSmooth;
+      filmEl.style.setProperty('--fade', fade.toFixed(3));
+      var fading = fade > 0.005;
+      filmEl.classList.toggle('is-fading', fading);
+      filmEl.classList.toggle('is-faded', fade >= 0.999);
+      filmEl.classList.toggle('is-mid', p > 0.25 && !fading);
+      // the chapter text is unseen while it dissolves: out of the tab order too
+      if (overlay && overlay.hasAttribute('inert') !== fading) {
+        if (fading) overlay.setAttribute('inert', ''); else overlay.removeAttribute('inert');
+      }
+      var dark = p > 0.6 && !fading;
+      filmEl.classList.toggle('is-dark', dark);
+      var flag = dark ? '1' : '0';
+      if (filmEl.dataset.dark !== flag) { filmEl.dataset.dark = flag; onScroll(); }
+      var chapter = p < 0.3 ? 0 : p < 0.65 ? 1 : 2;
+      if (chapter !== lastChapter) {
+        lastChapter = chapter;
+        for (var d = 0; d < dots.length; d++) {
+          if (d === chapter) dots[d].setAttribute('aria-current', 'true'); else dots[d].removeAttribute('aria-current');
+        }
+      }
+      if (video && duration > 0) {
+        // reduced motion: three stills, one per chapter, instead of a camera move
+        target = (reduce ? [0, 0.43, 0.83][chapter] : p) * duration;
+        if (reduce) current = target;
+        else {
+          current += (target - current) * (1 - Math.exp(-dt * 8));
+          if (Math.abs(target - current) < 0.002) current = target;
+        }
+        if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) {
+          try { video.currentTime = current; } catch (e) { /* not seekable yet */ }
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    function start() {
+      if (running) return;
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(tick);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visible = es[es.length - 1].isIntersecting;
+        if (visible) start();
+      }, { rootMargin: '120px 0px' }).observe(filmEl);
+    }
+    start();
+
+    /* chapter buttons: scroll the track to a point on 0-1 */
+    filmEl.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-go]');
+      if (!b) return;
+      var key = b.dataset.go, v;
+      if (key === 'next') {
+        var p = progress();
+        v = p < 0.3 ? CH.places : p < 0.65 ? CH.action : 1;
+      } else {
+        v = CH[key];
+      }
+      if (typeof v !== 'number') return;
+      window.scrollTo({ top: filmEl.offsetTop + v * span(), behavior: reduce ? 'auto' : 'smooth' });
+    });
+  })();
+
+  /* ---------- cinematic chapters: lazy looping footage, a light drift ----------
+     Footage is attached only when a chapter comes within half a screen and
+     paused when it leaves; the entrance stagger fires once a third of it is
+     in view. Reduced motion keeps the poster still and skips the drift. */
+  (function chapters() {
+    var list = document.querySelectorAll('.chapter');
+    if (!list.length) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+    var still = reduce || saveData;   // poster only, a play ring starts it on request
+    Array.prototype.forEach.call(list, function (ch) {
+      ch.classList.add('is-js');
+      if (still) {
+        ch.classList.add('is-still');
+        var ring = ch.querySelector('.chapter-play');
+        if (ring) ring.hidden = false;   // the markup keeps it hidden until this path needs it
+      }
+      var v = ch.querySelector('video');
+      if (v) {
+        v.addEventListener('playing', function () { ch.classList.add('is-playing'); });
+        v.addEventListener('pause', function () { if (!still) ch.classList.remove('is-playing'); });
+      }
+    });
+
+    function attach(v) {
+      if (!v.getAttribute('src')) { v.src = v.dataset.src; v.load(); }
+    }
+    function play(v) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* autoplay refused: the poster stays */ });
+    }
+
+    /* footage arrives within one viewport and plays once a third is in view */
+    var near = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var v = en.target.querySelector('video[data-src]');
+        if (!v || still) return;
+        if (en.isIntersecting) attach(v);
+      });
+    }, { rootMargin: '100% 0px' });
+    var show = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var ch = en.target;
+        // the copy sits in the card's last third, so it only leaves with the card
+        if (en.intersectionRatio >= 0.3) ch.classList.add('is-show');
+        else if (!en.isIntersecting) ch.classList.remove('is-show');
+        var v = ch.querySelector('video[data-src]');
+        if (!v || still) return;
+        if (en.intersectionRatio >= 0.3) { attach(v); play(v); }
+        else if (!en.isIntersecting && v.getAttribute('src')) v.pause();
+      });
+    }, { threshold: [0, 0.3, 1] });
+    Array.prototype.forEach.call(list, function (ch) { near.observe(ch); show.observe(ch); });
+
+    /* the play ring (reduced motion / save-data) is a play-pause toggle; the
+       footage stays decorative, so nothing hidden from assistive tech is
+       ever made focusable */
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('.chapter-play');
+      if (!b) return;
+      var ch = b.closest('.chapter'), v = ch && ch.querySelector('video[data-src]');
+      if (!v) return;
+      attach(v);
+      if (v.paused) {
+        ch.classList.add('is-playing');
+        b.setAttribute('aria-pressed', 'true');
+        b.setAttribute('aria-label', 'Pause the footage');
+        play(v);
+      } else {
+        v.pause();
+        b.setAttribute('aria-pressed', 'false');
+        b.setAttribute('aria-label', 'Play the footage');
+      }
+    });
+  })();
 
   /* ---------- mobile menu ---------- */
   var toggle = document.getElementById('navToggle');
@@ -113,7 +348,7 @@
 
       result.hidden = false;
       result.innerHTML =
-        '<h2 class="try-h">' + t.heading + '</h2>' +
+        '<h3 class="try-h">' + t.heading + '</h3>' +
         '<p class="muted try-sub">Four questions in the app narrow this to the ones worth asking about.</p>' +
         '<ul>' + items + '</ul>' +
         '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">Check my ' +
