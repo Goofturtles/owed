@@ -380,7 +380,7 @@
 @media (prefers-reduced-motion: reduce) { .auth-ring { animation: none; transform: rotateX(-10deg) rotateY(20deg); } }
 
 /* Emergent's panel, measured: blue top, a white-cyan bloom in the middle, teal at the foot */
-.auth-panel { background: radial-gradient(90% 55% at 50% 52%, #CDEBF8 0%, rgba(205, 235, 248, .55) 35%, rgba(205, 235, 248, 0) 70%), linear-gradient(180deg, #4F8FF7 0%, #6FB0F4 32%, #A6DDEE 58%, #8FD6C6 100%) !important; }
+.auth-panel { background: radial-gradient(62% 26% at 38% 50%, #D6FEFE 0%, rgba(214,254,254,.75) 40%, rgba(214,254,254,0) 100%), linear-gradient(180deg, #1548AC 0%, #1350BA 10%, #175FCB 20%, #1A68D4 25%, #2183E0 30%, #21B7E4 35%, #22CBED 40%, #21E1F5 45%, #25FAFC 50%, #28F8F6 55%, #2AEEEC 60%, #25C9E5 65%, #239EDD 70%, #219CCB 80%, #1D9CBA 90%, #1D99AE 100%) !important; }
 .auth-panel::before, .auth-panel::after { display: none !important; }
 /* every tile shows an icon from both sides, so the ring reads all the way round */
 .auth-tile { backface-visibility: visible; }
