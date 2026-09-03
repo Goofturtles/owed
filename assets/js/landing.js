@@ -7,6 +7,19 @@
   var C = window.OwedCatalog;
 
   /* ---------- sticky nav ---------- */
+  /* signed in already: the page says so — no "Sign in", and "Start free"
+     becomes the way back to the shelf */
+  (function signedIn() {
+    var u = null;
+    try { u = JSON.parse(localStorage.getItem('owed:user') || 'null'); } catch (e) { u = null; }
+    if (!u || !u.name || u.name === 'You') return;
+    document.querySelectorAll('a[href^="auth.html"]').forEach(function (l) {
+      if (/sign in/i.test(l.textContent)) { l.hidden = true; return; }
+      l.href = 'app.html';
+      if (/start free|find my repair|get my script/i.test(l.textContent)) l.textContent = 'Open my shelf';
+    });
+  })();
+
   var nav = document.getElementById('nav');
   var darkBands = document.querySelectorAll('.on-dark-band');   /* none on the SaaS page; the film sets its own flag */
   var filmEl = document.getElementById('film');
