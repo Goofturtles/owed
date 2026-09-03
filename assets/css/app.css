@@ -944,3 +944,8 @@
 @media (min-width: 1200px) { .rail-foot { padding: 0 22px 0 !important; margin-bottom: -2px; font-size: 14px; line-height: 44px; } }
 
 .scr-send-note { flex-basis: 100%; margin: 10px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+
+/* rail: its first heading sits level with the Start row; the script has no box */
+.rail-card { margin-top: 54px !important; }
+.rail .scr-lines { border: 0; background: transparent; padding: 0; margin-top: 14px; }
+@media (min-width: 1200px) { .rail { padding-bottom: 8px; } }
