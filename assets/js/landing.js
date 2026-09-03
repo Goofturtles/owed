@@ -71,7 +71,11 @@
       e.preventDefault();
       var d = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
       if (!running) { current = window.scrollY; target = current; }
-      target = Math.min(max(), Math.max(0, target + d));
+      // the soft landing at both ends: within 600px of the top or the bottom,
+      // heading toward it, each wheel tick counts for less the closer you get
+      var m = max(), toEdge = d > 0 ? (m - target) : target, ZONE = 600;
+      if (toEdge < ZONE) d *= 0.3 + 0.7 * Math.pow(Math.max(0, toEdge) / ZONE, 1.4);
+      target = Math.min(m, Math.max(0, target + d));
       if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
     }, { passive: false });
     // anything else that moves the page (keys, scrollbar, anchors) resets the target
