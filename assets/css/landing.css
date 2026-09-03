@@ -505,7 +505,7 @@
 @media (prefers-reduced-motion: reduce) {
   .sources-list { animation: none; flex-wrap: wrap; white-space: normal; gap: 10px 28px; }
   .sources-list[aria-hidden] { display: none; }
-  .sources-track { mask-image: none; -webkit-mask-image: none; margin: 0; padding: 6px 0; }
+  .sources-track { mask-image: none; -webkit-mask-image: none; margin: 0; padding: 6px 0; overflow: visible; }   /* the wrapped list must never be clipped */
   .sources-pause { display: none; }   /* nothing moves, so there is nothing to pause */
 }
 
