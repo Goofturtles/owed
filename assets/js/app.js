@@ -268,6 +268,42 @@
     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
   })();
 
+  /* ---------- the rail is resizable: drag its left edge, double-click to reset ---------- */
+  (function railResize() {
+    var rail = document.getElementById('rail'), app = document.querySelector('.app');
+    if (!rail || !app) return;
+    var KEY = 'owed:railw', MIN = 300, MAX = 680;
+    var saved = 0; try { saved = parseInt(localStorage.getItem(KEY) || '0', 10); } catch (e) {}
+    if (saved >= MIN && saved <= MAX) app.style.setProperty('--rail-w', saved + 'px');
+    var h = document.createElement('button');
+    h.type = 'button'; h.className = 'rail-resize'; h.setAttribute('aria-label', 'Resize the side panel'); h.title = 'Drag to resize · double-click to reset';
+    rail.insertBefore(h, rail.firstChild);
+    var startX = 0, startW = 0;
+    function width() { return rail.getBoundingClientRect().width; }
+    h.addEventListener('pointerdown', function (e) {
+      startX = e.clientX; startW = width(); h.setPointerCapture(e.pointerId);
+      h.classList.add('is-dragging'); app.classList.add('is-resizing');
+    });
+    h.addEventListener('pointermove', function (e) {
+      if (!h.classList.contains('is-dragging')) return;
+      var w = Math.min(MAX, Math.max(MIN, startW + (startX - e.clientX)));
+      app.style.setProperty('--rail-w', w + 'px');
+    });
+    function end() {
+      if (!h.classList.contains('is-dragging')) return;
+      h.classList.remove('is-dragging'); app.classList.remove('is-resizing');
+      try { localStorage.setItem(KEY, String(Math.round(width()))); } catch (e) {}
+    }
+    h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
+    h.addEventListener('dblclick', function () { app.style.removeProperty('--rail-w'); try { localStorage.removeItem(KEY); } catch (e) {} });
+    // keyboard: arrows nudge the width
+    h.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowLeft' ? 24 : e.key === 'ArrowRight' ? -24 : 0; if (!d) return;
+      e.preventDefault(); var w = Math.min(MAX, Math.max(MIN, width() + d)); app.style.setProperty('--rail-w', w + 'px');
+      try { localStorage.setItem(KEY, String(w)); } catch (x) {}
+    });
+  })();
+
   /* ---------- rename a saved thing in place ---------- */
   var renameBtn = document.getElementById('resRename');
   if (renameBtn) renameBtn.addEventListener('click', function () {

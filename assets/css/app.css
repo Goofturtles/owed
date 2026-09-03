@@ -550,7 +550,7 @@
 .detail[hidden] { display: none; }
 
 @media (min-width: 1200px) {
-  .app { grid-template-columns: 275px minmax(0, 1fr) 378px; }
+  .app { grid-template-columns: 275px minmax(0, 1fr) var(--rail-w, 378px); }
   .rail {
     display: block;
     position: sticky; top: 0; max-height: 100vh; overflow-y: auto;
@@ -1009,4 +1009,13 @@
 @media (min-width: 1200px) {
   .rail .doc-foot { background: transparent !important; backdrop-filter: blur(22px) saturate(1.2) !important; -webkit-backdrop-filter: blur(22px) saturate(1.2) !important; border-top: 0 !important; }
   :root[data-theme="dark"] .rail .doc-foot { background: transparent !important; }
+}
+
+/* the rail's left edge is a drag handle: pull it to widen the panel (double-click resets) */
+@media (min-width: 1200px) {
+  .rail { position: sticky; }
+  .rail-resize { position: absolute; left: -4px; top: 0; bottom: 0; width: 9px; cursor: col-resize; z-index: 5; background: transparent; border: 0; padding: 0; }
+  .rail-resize::after { content: ""; position: absolute; left: 4px; top: 0; bottom: 0; width: 1px; background: var(--line); transition: background .15s ease, width .15s ease; }
+  .rail-resize:hover::after, .rail-resize.is-dragging::after { width: 3px; left: 3px; background: var(--accent); }
+  .app.is-resizing { user-select: none; cursor: col-resize; }
 }
