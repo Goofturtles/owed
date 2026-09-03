@@ -898,3 +898,21 @@
 /* the rail block: no background, sitting centred in the column */
 .rail-card { background: transparent !important; margin: 4px auto 0 !important; width: calc(100% - 40px); }
 :root[data-theme="dark"] .rail-card { background: transparent !important; }
+
+/* ---------- Ask anything: a small sheet in the corner ---------- */
+.ask { position: fixed; right: 20px; bottom: 20px; z-index: 60; width: min(400px, calc(100vw - 32px)); max-height: min(640px, calc(100vh - 40px)); display: flex; flex-direction: column; background: var(--card, #FFF); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .22); overflow: hidden; }
+.ask[hidden] { display: none; }
+.ask-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 12px 20px; border-bottom: 1px solid var(--line); }
+.ask-title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+.ask-log { flex: 1; overflow: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+.ask-note { margin: 0 0 6px; font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+.ask-msg { max-width: 92%; padding: 10px 14px; border-radius: 14px; font-size: 16px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; }
+.ask-msg.me { align-self: flex-end; background: var(--ink); color: var(--paper, #FFF); border-bottom-right-radius: 4px; }
+.ask-msg.bot { align-self: flex-start; background: #F5F5F7; color: var(--ink); border-bottom-left-radius: 4px; }
+:root[data-theme="dark"] .ask-msg.bot { background: #1A1A1A; }
+.ask-msg.wait { color: var(--ink-3); }
+.ask-form { display: flex; gap: 8px; padding: 12px 12px 12px 16px; border-top: 1px solid var(--line); }
+.ask-input { flex: 1; min-width: 0; height: 44px; padding: 0 14px; border: 1px solid var(--line-2, #D4D4D4); border-radius: 9999px; font: inherit; font-size: 16px; background: var(--card, #FFF); color: var(--ink); }
+.ask-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 113, 227, .18); }
+.ask-send { width: 44px; height: 44px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
+@media (max-width: 768px) { .ask { right: 12px; left: 12px; bottom: 76px; width: auto; max-height: calc(100vh - 100px); } }

@@ -171,6 +171,79 @@
   var back2 = document.getElementById('wizBack2');
   if (back2) back2.addEventListener('click', function () { wizEls.back.click(); });
 
+  /* ---------- Ask anything: a free, keyless AI helper (Pollinations, OpenAI-style
+     endpoint), grounded with the reader's current item and its top rules ---------- */
+  (function askAnything() {
+    var panel = document.getElementById('askPanel'), row = document.getElementById('askRow');
+    var log = document.getElementById('askLog'), form = document.getElementById('askForm'), input = document.getElementById('askInput');
+    if (!panel || !row || !form) return;
+    var history = [];
+    function open() { panel.hidden = false; row.setAttribute('aria-expanded', 'true'); input.focus(); }
+    function close() { panel.hidden = true; row.setAttribute('aria-expanded', 'false'); row.focus(); }
+    row.addEventListener('click', function () { panel.hidden ? open() : close(); });
+    document.getElementById('askClose').addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
+    function add(kind, text) {
+      var p = document.createElement('p'); p.className = 'ask-msg ' + kind; p.textContent = text;
+      log.appendChild(p); log.scrollTop = log.scrollHeight; return p;
+    }
+    function grounding() {
+      var lines = ['You are the helper inside Owed, a free tool that finds who owes someone a free repair (maker warranties, card benefits, repair programmes, consumer law) and writes the words to say. Answer in plain, short sentences for an older reader. Never invent a rule, a deadline or a phone number; if unsure, say what to check. Say it is information, not legal advice, only if asked about legal weight.'];
+      var it = current.item;
+      if (it) {
+        lines.push('The reader is looking at: ' + (it.name || '') + ' (' + (it.brand || 'brand unknown') + ', ' + (C.categoryLabel(it.category) || '') + ', ' + (E.agePhrase(it.ageMonths) || 'age unknown') + ', region ' + (it.region || 'US') + ').');
+        var top = (current.matches || []).filter(function (m) { return !isLongShot(m); }).slice(0, 6);
+        if (top.length) lines.push('Rules Owed found for it: ' + top.map(function (m) { return m.rule.title + ' (' + m.strength + '; ' + firstClause(m.rule.window_note, 10) + ')'; }).join(' | '));
+      }
+      return lines.join('\n');
+    }
+    var session = null;
+    function onDevice(q) {
+      var LM = window.LanguageModel || (window.ai && window.ai.languageModel);
+      if (!LM) return Promise.reject(new Error('no model'));
+      var ready = session ? Promise.resolve(session) : Promise.resolve(LM.availability ? LM.availability() : 'available').then(function (a) {
+        if (a === 'unavailable' || a === 'no') throw new Error('unavailable');
+        return LM.create({ initialPrompts: [{ role: 'system', content: grounding() }] });
+      }).then(function (s) { session = s; return s; });
+      return ready.then(function (s) { return s.prompt(q); }).then(function (t) { t = String(t || '').trim(); if (!t) throw new Error('empty'); return t; });
+    }
+    // no model: the rulebook answers with what it has — the rules found for the item, then Owed's own short answers
+    var CANNED = [
+      [/receipt|proof|statement|invoice/i, 'You usually do not need the paper receipt. A card statement, an order email or the serial number is enough for most makers and card benefits. Card benefits do want the statement.'],
+      [/legal|lawyer|court|sue|advice/i, 'Owed points at published rules; it is information, not legal advice. Every rule links to its source so you can read it yourself.'],
+      [/data|privacy|store|server|account/i, 'Nothing you type leaves this browser. Your shelf is saved on this device only. Sign out clears it if you ask it to.'],
+      [/free|cost|pay|price/i, 'Owed is free. No cut of anything you claim, nothing sold.'],
+      [/how long|deadline|window|expire|late/i, 'Each rule has its own window. Open the rule: the Window row says how long you have, and the deadline shows on top of the script when there is one.'],
+      [/script|say|call|phone|email/i, 'Pick a rule and press Get script. It writes who to ask, the rule by name and the words to say. Copy it, or read it out.']
+    ];
+    function localAnswer(q) {
+      var out = [];
+      var top = (current.matches || []).filter(function (m) { return !isLongShot(m); });
+      var words = q.toLowerCase().split(/[^a-z0-9]+/).filter(function (w) { return w.length > 3; });
+      var hits = top.filter(function (m) { var t = (m.rule.title + ' ' + (m.rule.what_you_get || '') + ' ' + (m.rule.how_to_claim || '')).toLowerCase(); return words.some(function (w) { return t.indexOf(w) >= 0; }); }).slice(0, 2);
+      hits.forEach(function (m) { out.push(m.rule.title + ': ' + firstClause(m.rule.what_you_get || m.rule.window_note, 22) + '.'); });
+      for (var c = 0; c < CANNED.length; c++) { if (CANNED[c][0].test(q)) { out.push(CANNED[c][1]); break; } }
+      if (!out.length) out.push(top.length ? 'The best lead for this item is “' + top[0].rule.title + '”. Open it for the window, the contact and the script.' : 'Check something first and the rulebook can answer about it. For general questions, the Help page covers receipts, deadlines and data.');
+      return out.join('\n\n');
+    }
+    function answer(q) {
+      return onDevice(q).catch(function () { return localAnswer(q); });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim(); if (!q) return;
+      input.value = '';
+      add('me', q); history.push({ role: 'user', content: q });
+      var wait = add('bot wait', 'Thinking…');
+      answer(q).then(function (text) {
+        wait.className = 'ask-msg bot'; wait.textContent = text;
+        history.push({ role: 'assistant', content: text });
+        log.scrollTop = log.scrollHeight;
+      });
+    });
+  })();
+
   /* ---------- rename a saved thing in place ---------- */
   var renameBtn = document.getElementById('resRename');
   if (renameBtn) renameBtn.addEventListener('click', function () {

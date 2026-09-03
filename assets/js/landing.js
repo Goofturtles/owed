@@ -158,11 +158,12 @@
       var w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
       if (w === W && h === H) return;
       W = w; H = h; canvas.width = w; canvas.height = h; drawn = -1;
+      for (var q = 0; q < N; q++) { if (bitmaps[q]) { try { bitmaps[q].close(); } catch (e) {} bitmaps[q] = null; } }
     }
     /* Chrome evicts decoded 1080p images from its cache, so drawing an Image
        can force a synchronous re-decode (10-20ms) — that was the scroll lag.
        Keep a window of ready-decoded bitmaps around the current frame. */
-    var bitmaps = new Array(N), decoding = new Array(N), AHEAD = 28, KEEP = 48;
+    var bitmaps = new Array(N), decoding = new Array(N), AHEAD = 8, KEEP = 14, bmW = 0, bmH = 0;
     var canBitmap = typeof window.createImageBitmap === 'function';
     function ensureBitmaps(c) {
       if (!canBitmap) return;
@@ -174,7 +175,10 @@
           if (i < 0 || i >= N || !frames[i] || bitmaps[i] || decoding[i]) continue;
           decoding[i] = 1; started++;
           (function (i) {
-            createImageBitmap(frames[i]).then(function (b) {
+            // decoded at the size it will be drawn (cover geometry), so a bitmap
+            // costs the stage's pixels, not 1080p's, and drawImage needs no scaling
+            var sc = Math.max(W / FW, H / FH);
+            createImageBitmap(frames[i], { resizeWidth: Math.round(FW * sc), resizeHeight: Math.round(FH * sc), resizeQuality: 'high' }).then(function (b) {
               bitmaps[i] = b; decoding[i] = 0;
               if (i === drawn) drawn = -1;   // repaint from the crisp decoded copy
             }, function () { decoding[i] = 0; });
@@ -194,7 +198,8 @@
       drawn = i;
       // cover: the frame fills the stage the way object-fit: cover would
       var s = Math.max(W / FW, H / FH), dw = FW * s, dh = FH * s;
-      ctx.drawImage(bitmaps[i] || frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
+      if (bitmaps[i]) ctx.drawImage(bitmaps[i], Math.round((W - dw) / 2), Math.round((H - dh) / 2));
+      else ctx.drawImage(frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
     }
     pump();
     window.addEventListener('resize', function () { drawn = -1; }, { passive: true });
@@ -255,10 +260,12 @@
         // eases out the moment the reader scrolls, so the scrub takes over
         if (p !== pPrev) { lastMove = now; pPrev = p; }
         var idle = !reduce && (now - lastMove > 700);
-        idleAmp += ((idle ? 1 : 0) - idleAmp) * (1 - Math.exp(-dt * (idle ? 0.9 : 5)));
         var base = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
-        var drift = idleAmp * 8 * Math.sin(now / 1000 * (2 * Math.PI / 7));
-        target = Math.min(N - 1, Math.max(0, base + drift));
+        // idle: the film simply plays on from here (4 fps, up to 60 frames);
+        // on scroll the extra frames ease away and the scrub takes over
+        if (idle) idleAmp = Math.min(60, idleAmp + dt * 4);
+        else idleAmp += (0 - idleAmp) * (1 - Math.exp(-dt * 4));
+        target = Math.min(N - 1, Math.max(0, base + idleAmp));
         if (reduce) current = target;
         else {
           current += (target - current) * (1 - Math.exp(-dt * 6));
