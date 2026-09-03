@@ -729,3 +729,38 @@
 }
 
 @media (min-width: 1200px) { .corner-help { display: none; } }
+
+/* ---------- shell: full width, tinted sidebar (the owner: too much white at the sides, sidebar not white) ---------- */
+.sg, .sidebar, aside[id="sidebar"] { background: #F5F5F7; border-right: 1px solid #EAEAEA; }
+.rail-block { padding: 16px 16px 8px; }
+.rail-list { list-style: none; margin: 8px 0 0; padding: 0; }
+.rail-list li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 16px; line-height: 1.35; color: var(--ink); }
+.rail-list li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+
+/* ---------- the question fits one screen: compact stack, 4-up tiles, no page scroll ---------- */
+.wiz-body { padding: 8px 16px 12px; max-width: 560px; min-height: calc(100vh - 124px); justify-content: center; }
+.wiz-ico { width: 36px; height: 36px; margin-bottom: 10px; } .wiz-ico svg { width: 36px; height: 36px; }
+.wiz-q { font-size: 26px; margin-bottom: 4px; }
+.wiz-help { margin-bottom: 14px; }
+.wiz-progress { margin-bottom: 18px; }
+.wiz-step.is-on .opts, .wiz-step.is-on .opt-grid, .wiz-step.is-on [role="radiogroup"] { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.opt { padding: 10px 6px; min-height: 0; }
+.opt img, .opt-photo { width: 40px; height: 40px; }
+.wiz-more { margin-top: 10px; }
+.wiz-foot { margin-top: 12px; }
+@media (max-width: 900px) { .wiz-body { min-height: 0; } .wiz-step.is-on .opts, .wiz-step.is-on .opt-grid, .wiz-step.is-on [role="radiogroup"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- results rows: title, pill, button — nothing else ---------- */
+.rc-row { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+.rc-col1, .rc-reason, .rc-ask, .rc-when { display: none !important; }
+.rc-main { min-width: 0; }
+.rc-title { font-size: 17px; font-weight: 600; letter-spacing: -.012em; line-height: 1.3; }
+.rc-title .rc-details { all: unset; cursor: pointer; font: inherit; color: inherit; display: inline; }
+.rc-title .rc-details:hover { color: var(--accent); }
+.rc-title .rc-details:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.rc-meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.rc-meta .rc-src { font-size: 16px; color: var(--ink-2); }
+.rc-side { display: flex; align-items: center; gap: 12px; flex: none; }
+
+.side { background: #F5F5F7; border-right: 1px solid #EAEAEA; }
+.app { max-width: none; margin: 0; width: 100%; }

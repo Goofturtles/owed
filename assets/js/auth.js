@@ -65,7 +65,17 @@
     location.href = url;
   });
 
-  /* ---------- photo carousel ---------- */
+  /* ---------- the icon ring: one pause control (WCAG 2.2.2) ---------- */
+  var ring = document.getElementById('ring'), ringBtn = document.getElementById('ringPause');
+  if (ring && ringBtn) {
+    ringBtn.addEventListener('click', function () {
+      var p = ring.classList.toggle('is-paused');
+      ringBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      ringBtn.setAttribute('aria-label', p ? 'Resume the spinning icons' : 'Pause the spinning icons');
+    });
+  }
+
+  /* ---------- photo carousel (gone; guarded below) ---------- */
   var carousel = document.getElementById('carousel');
   if (!carousel) return;
   var slides = Array.prototype.slice.call(carousel.querySelectorAll('.auth-slide'));

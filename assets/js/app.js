@@ -1094,18 +1094,13 @@
 
     return '<article class="rcard ' + s.cls + (isStart ? ' is-start' : '') + '" data-rule="' + esc(r.id) + '">' +
       '<div class="rc-row">' +
-        '<div class="rc-col1">' + col1 +
-          '<button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') +
-            ' aria-describedby="' + tid + '">Details ' + ico(wide ? 'next' : 'chevron', 16) + '</button>' +
-          pill(m.strength) +
-        '</div>' +
         '<div class="rc-main">' +
           (isStart ? '<span class="rc-start">Start here</span>' : '') +
-          '<h3 class="rc-title" id="' + tid + '">' + esc(r.title) + '</h3>' +
-          (m.reason ? '<p class="rc-reason" title="' + esc(cap(m.reason)) + '">' + esc(cap(m.reason)) + '</p>' : '') +
-          (ASK_WHO[r.source_type] ? '<p class="rc-ask">Ask: ' + esc(ASK_WHO[r.source_type]) + '</p>' : '') +
+          '<h3 class="rc-title" id="' + tid + '"><button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') + '>' + esc(r.title) + '</button></h3>' +
+          '<div class="rc-meta"><span class="rc-src">' + esc(SRC_WORD[r.source_type] || 'A rule') + (win ? ' · ' + esc(win) : '') + '</span>' +
+            (r.deadline ? '<span class="rc-deadline">By ' + esc(fmtDate(r.deadline)) + '</span>' : '') + '</div>' +
         '</div>' +
-        '<div class="rc-side"><button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get script</button></div>' +
+        '<div class="rc-side">' + pill(m.strength) + '<button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get script</button></div>' +
       '</div>' +
       '<div class="rc-body" hidden>' + docBody(m) + '</div>' +
     '</article>';

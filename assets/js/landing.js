@@ -51,7 +51,7 @@
     /* the frames play over the first F of the track and hold the last frame;
        the rest of the track is dwell for the third chapter (the owner: it
        "disappears way too fast" when the film and the text ended together) */
-    var F = 0.85;
+    var F = 0.92;
     function q(p) { return Math.min(1, p / F); }
     var CH = { promise: 0, places: 0.43 * F, how: 0.48 * F, action: 0.83 * F };
 
@@ -169,7 +169,7 @@
       last = now;
       var p = progress();
       // the text and the scrim follow a smoothed progress so wheel steps do not snap them
-      ps += (p - ps) * (1 - Math.exp(-dt * 10));
+      ps += (p - ps) * (1 - Math.exp(-dt * 8));
       if (Math.abs(p - ps) < 0.0005) ps = p;
       var ops = [s1(ps), s2(ps), s3(ps)];
       for (var i = 0; i < scenes.length; i++) {
@@ -212,7 +212,7 @@
         target = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
         if (reduce) current = target;
         else {
-          current += (target - current) * (1 - Math.exp(-dt * 8));
+          current += (target - current) * (1 - Math.exp(-dt * 6));
           if (Math.abs(target - current) < 0.01) current = target;
         }
         paint(current);
