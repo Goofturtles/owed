@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1789220000">
-<link rel="stylesheet" href="assets/css/motion.css?v=1789220000">
-<link rel="stylesheet" href="assets/css/app.css?v=1789220000">
-<script src="assets/js/theme.js?v=1789220000"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1789230000">
+<link rel="stylesheet" href="assets/css/motion.css?v=1789230000">
+<link rel="stylesheet" href="assets/css/app.css?v=1789230000">
+<script src="assets/js/theme.js?v=1789230000"></script>
 </head>
 <body class="app-body" data-tab="things">
 <a class="skip-link" href="#appMain">Skip to content</a>
@@ -92,8 +92,25 @@
         <svg class="util-dots" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
         <label class="sr-only" for="regionPick">Where you live</label>
         <select class="util-select" id="regionPick">
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
+          <optgroup label="United States">
+            <option value="US">United States (any state)</option>
+            <option value="US|US-CA">California</option>
+            <option value="US|US-MA">Massachusetts</option>
+            <option value="US|US-MN">Minnesota</option>
+            <option value="US|US-NY">New York</option>
+            <option value="US|US-OR">Oregon</option>
+            <option value="US|US-XX">Another state</option>
+          </optgroup>
+          <optgroup label="Canada">
+            <option value="CA">Canada (any province)</option>
+            <option value="CA|CA-ON">Ontario</option>
+            <option value="CA|CA-QC">Quebec</option>
+            <option value="CA|CA-BC">British Columbia</option>
+            <option value="CA|CA-AB">Alberta</option>
+            <option value="CA|CA-SK">Saskatchewan</option>
+            <option value="CA|CA-NB">New Brunswick</option>
+            <option value="CA|CA-XX">Another province</option>
+          </optgroup>
           <option value="UK">United Kingdom</option>
           <option value="EU">European Union</option>
         </select>
@@ -321,10 +338,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/catalog.js?v=1789220000"></script>
-<script src="assets/js/store.js?v=1789220000"></script>
-<script src="assets/js/engine.js?v=1789220000"></script>
-<script src="assets/js/app.js?v=1789220000"></script>
-<script src="assets/js/motion.js?v=1789220000"></script>
+<script src="assets/js/catalog.js?v=1789230000"></script>
+<script src="assets/js/store.js?v=1789230000"></script>
+<script src="assets/js/engine.js?v=1789230000"></script>
+<script src="assets/js/app.js?v=1789230000"></script>
+<script src="assets/js/motion.js?v=1789230000"></script>
 </body>
 </html>

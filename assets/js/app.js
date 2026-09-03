@@ -148,17 +148,28 @@
     }
   };
 
-  el.regionPick.value = user.region || 'US';
+  /* the select carries region|province: a province or state narrows the law to
+     what applies there (an Ontario reader no longer sees Quebec's rules) */
+  if (!user.subregion && (user.region || 'US') === 'CA') {
+    // first run in Canada: the time zone gives the province for most readers; Toronto's zone is Ontario's
+    var tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+    var guess = { 'America/Toronto': 'CA-ON', 'America/Vancouver': 'CA-BC', 'America/Edmonton': 'CA-AB', 'America/Regina': 'CA-SK', 'America/Winnipeg': 'CA-XX', 'America/Halifax': 'CA-XX', 'America/Moncton': 'CA-NB', 'America/St_Johns': 'CA-XX' }[tz];
+    if (guess) { S.updateUser({ subregion: guess }); user = S.getUser(); }
+  }
+  el.regionPick.value = (user.region || 'US') + (user.subregion ? '|' + user.subregion : '');
+  if (el.regionPick.selectedIndex < 0) el.regionPick.value = user.region || 'US';
 
   /* the select sits invisibly over the region pill; the pill shows its label */
   function syncRegionName() {
     var o = el.regionPick.options[el.regionPick.selectedIndex];
-    if (el.regionName) el.regionName.textContent = o ? o.text : '';
+    var g = o && o.parentElement && o.parentElement.tagName === 'OPTGROUP' ? o.parentElement.label : '';
+    if (el.regionName) el.regionName.textContent = o ? (g && o.value.indexOf('|') > 0 ? o.text + ', ' + g : o.text) : '';
   }
   syncRegionName();
 
   el.regionPick.addEventListener('change', function () {
-    S.updateUser({ region: el.regionPick.value });
+    var parts = el.regionPick.value.split('|');
+    S.updateUser({ region: parts[0], subregion: parts[1] || '' });
     user = S.getUser();
     syncRegionName();
     toast('Region set to ' + el.regionPick.options[el.regionPick.selectedIndex].text);
@@ -397,6 +408,7 @@
     var copy = {};
     Object.keys(item).forEach(function (k) { copy[k] = item[k]; });
     copy.region = user.region || item.region || 'US';
+    copy.subregion = user.subregion || '';
     return copy;
   }
 
@@ -1011,6 +1023,7 @@
       payment: wiz.payment || 'unknown',
       broken: wiz.broken,
       region: user.region || 'US',
+      subregion: user.subregion || '',
       photo: wiz.photo || null    // a small JPEG data URL; lives only in this browser
     };
 

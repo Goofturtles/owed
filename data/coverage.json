@@ -1493,6 +1493,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 999,
@@ -1577,6 +1580,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999,
@@ -1611,6 +1617,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 72,
@@ -3286,6 +3295,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-MA"
         ]
       },
       "window_months": 48.0,
@@ -3380,6 +3392,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 999,
@@ -3423,6 +3438,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-NY"
         ]
       },
       "window_months": 999.0,
@@ -3465,6 +3483,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-OR"
         ]
       },
       "window_months": 999.0,
@@ -3619,6 +3640,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999.0,
@@ -3652,6 +3676,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 72.0,
@@ -3694,6 +3721,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999.0,
@@ -3732,6 +3762,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999,
@@ -3783,6 +3816,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-NB"
         ]
       },
       "window_months": 999.0,
@@ -3834,6 +3870,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-ON"
         ]
       },
       "window_months": 999.0,
@@ -6150,6 +6189,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999.0,
@@ -7626,6 +7668,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999.0,
@@ -7661,6 +7706,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 72.0,
@@ -7704,6 +7752,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 999.0,
@@ -7732,6 +7783,11 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-BC",
+          "CA-SK",
+          "CA-NB"
         ]
       },
       "window_months": 999.0,
@@ -7774,6 +7830,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "CA-SK"
         ]
       },
       "window_months": 999.0,
@@ -8755,6 +8814,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 999.0,
@@ -8803,6 +8865,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 999.0,
@@ -8851,6 +8916,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 999.0,
@@ -8902,6 +8970,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CA"
         ]
       },
       "window_months": 12.0,
@@ -8940,6 +9011,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-NY"
         ]
       },
       "window_months": 999.0,
@@ -8983,6 +9057,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-MN"
         ]
       },
       "window_months": 999.0,
@@ -9649,6 +9726,9 @@
         ],
         "payment_methods": [
           "any-credit"
+        ],
+        "subregions": [
+          "CA-QC"
         ]
       },
       "window_months": 6.0,

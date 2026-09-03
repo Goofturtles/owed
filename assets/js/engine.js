@@ -70,6 +70,8 @@
 
     if (!has(at.categories, item.category)) return null;
     if (!has(at.regions, item.region)) return null;
+    // a rule tied to a province or state applies only there; with no province chosen it stays (region-wide view)
+    if (at.subregions && at.subregions.length && item.subregion && at.subregions.indexOf(item.subregion) < 0) return null;
 
     var bm = brandMatches(rule, item.brand);
     if (bm === false) return null;
