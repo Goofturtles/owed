@@ -894,3 +894,7 @@
 
 .side .brand:hover, .side .side-brand:hover, .side .xrow-brand:hover, .side a.brand:hover { background: transparent !important; box-shadow: none !important; }
 @media (min-width: 1200px) { .rail { padding-bottom: 0 !important; } }
+
+/* the rail block: no background, sitting centred in the column */
+.rail-card { background: transparent !important; margin: 4px auto 0 !important; width: calc(100% - 40px); }
+:root[data-theme="dark"] .rail-card { background: transparent !important; }
