@@ -734,3 +734,9 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .env-eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mint-ink); }
 .env-eyebrow .t-mint { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
 :root[data-theme="dark"] .env-eyebrow { color: #58DDA0; }
+
+/* the pause button swaps to a play glyph while paused */
+.proof-pause .ico-play { display: none; }
+.proof-pause[aria-pressed="true"] .ico-pause { display: none; }
+.proof-pause[aria-pressed="true"] .ico-play { display: block; }
+.proof-pause[aria-pressed="true"] { color: var(--accent); border-color: var(--accent-line); }
