@@ -396,3 +396,5 @@
 @media (prefers-reduced-motion: reduce) { .auth-panel-video { display: none; } .auth-panel { background: #1F4DA8 url("../img/panel-poster.webp") center / cover no-repeat !important; } }
 
 .auth-badge { position: absolute !important; z-index: 2; }
+
+@media (max-width: 820px) { .auth-panel { min-height: 380px; } .auth-panel-head { padding-top: 56px; } }

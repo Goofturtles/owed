@@ -799,3 +799,11 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .faq-item.reveal.in summary svg { opacity: 1; transform: none; transition: opacity .5s ease .5s, transform .6s cubic-bezier(.16, 1, .3, 1) .5s; }
 .faq-head.reveal { transform: translateY(24px) scale(.97); }
 @media (prefers-reduced-motion: reduce) { .faq-item.reveal { background-size: 100% 1px; transform: none; } .faq-item.reveal summary svg { opacity: 1; transform: none; } }
+
+/* phones: every control at least 44px tall */
+@media (max-width: 768px) {
+  .nav-actions .btn, .nav .btn { min-height: 44px; }
+  .proof-pause { width: 44px; height: 44px; }
+  .env-strip .btn, .btn-34 { min-height: 44px; padding: 0 18px; }
+  .film-rail-btn, .film-dot { min-width: 44px; min-height: 44px; }
+}
