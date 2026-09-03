@@ -12,7 +12,11 @@
   var filmEl = document.getElementById('film');
   var onScroll = function () {
     if (!nav) return;
-    nav.classList.toggle('is-stuck', window.scrollY > 8);
+    // no bar at all over the film; the glass appears once the page has
+    // covered the film (the owner: "no bg when it fades out, then add the bar")
+    var sheet = document.querySelector('.film + section');
+    var edge = sheet ? sheet.getBoundingClientRect().top <= 72 : window.scrollY > 8;
+    nav.classList.toggle('is-stuck', edge);
     // dark glass while the pill floats over a dark band (the statement card,
     // a dark chapter) or over the film's dark chapter (data-dark from its loop)
     var dark = false;
@@ -44,22 +48,37 @@
     var scenes = filmEl.querySelectorAll('.film-scene');
     var dots = filmEl.querySelectorAll('[data-dot]');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var CH = { promise: 0, places: 0.43, how: 0.48, action: 0.83 };
+    /* the frames play over the first F of the track and hold the last frame;
+       the rest of the track is dwell for the third chapter (the owner: it
+       "disappears way too fast" when the film and the text ended together) */
+    var F = 0.72;
+    function q(p) { return Math.min(1, p / F); }
+    var CH = { promise: 0, places: 0.43 * F, how: 0.48 * F, action: 0.83 * F };
 
-    function span() { return Math.max(1, filmEl.offsetHeight - window.innerHeight); }
+    /* the track = scrub + hold (p runs 0..1 over it) + one cover screen in
+       which the white page rides up over the held frame (Apple's portal /
+       garage-door curtain: hold, then an opaque block with a negative margin;
+       no cross-fade). Heights come from the sticky element, not innerHeight,
+       so the iOS toolbar collapsing cannot jump the frame. */
+    var stick = filmEl.querySelector('.film-sticky');
+    function vh() { return stick ? stick.offsetHeight : window.innerHeight; }
+    function span() { return Math.max(1, filmEl.offsetHeight - vh() * 2); }
+    function cover() { var top = filmEl.getBoundingClientRect().top; return Math.min(1, Math.max(0, (-top - span()) / vh())); }
     function progress() {
       var top = filmEl.getBoundingClientRect().top;
       return Math.min(1, Math.max(0, -top / span()));
     }
     /* the original's visibility curves: each text is fully gone before the next appears */
-    function s1(p) { return p < 0.2 ? 1 : Math.max(0, 1 - (p - 0.2) / 0.08); }
+    function s1(p) { p = q(p); return p < 0.2 ? 1 : Math.max(0, 1 - (p - 0.2) / 0.08); }
     function s2(p) {
+      p = q(p);
       if (p < 0.32) return 0;
       if (p < 0.4) return (p - 0.32) / 0.08;
       if (p < 0.55) return 1;
       return Math.max(0, 1 - (p - 0.55) / 0.08);
     }
     function s3(p) {
+      p = q(p);
       if (p < 0.67) return 0;
       if (p < 0.75) return (p - 0.67) / 0.08;
       return 1;
@@ -71,12 +90,14 @@
     var sceneOn = [null, null, null];
 
     /* ---- the frame bank ---- */
-    var N = 121, frames = new Array(N), loaded = 0, ctx = null, drawn = -1;
-    var W = 0, H = 0, FW = 1920, FH = 1080;
+    // every frame of the 24 fps clip on desktop (241 at 1920x1080, WebP q88);
+    // every second frame at 960x540 on phones and under Save-Data
     var small = window.innerWidth < 760 || (navigator.connection && navigator.connection.saveData);
+    var N = small ? 121 : 241, frames = new Array(N), loaded = 0, ctx = null, drawn = -1;
+    var W = 0, H = 0, FW = 1920, FH = 1080;
     var dir = 'assets/film/' + (small ? 'm' : 'd') + '/';
     if (small) { FW = 960; FH = 540; }
-    if (canvas) ctx = canvas.getContext('2d', { alpha: false });
+    if (canvas) { ctx = canvas.getContext('2d', { alpha: false }); ctx.imageSmoothingQuality = 'high'; }
 
     function frameSrc(i) { return dir + 'f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
     /* coarse first: 0, 120, 60, 30, 90, 15, 45 ... then every gap */
@@ -139,7 +160,6 @@
 
     /* the dissolve to paper over the last tenth of the track, smoothed so a
        fast scroll never jumps it */
-    var fadeSmooth = 0;
 
     /* the loop only runs while the film is on screen */
     var visible = true, running = false;
@@ -163,24 +183,21 @@
       }
       // the dissolve to white: nothing until the reader reaches the foot of
       // the track (owner's call), then over the last 4%
-      var fadeTarget = Math.min(1, Math.max(0, (p - 0.96) / 0.04));
-      fadeSmooth += (fadeTarget - fadeSmooth) * (1 - Math.exp(-dt * 6));
-      if (Math.abs(fadeTarget - fadeSmooth) < 0.001) fadeSmooth = fadeTarget;
-      var fade = reduce ? fadeTarget : fadeSmooth;
-      filmEl.style.setProperty('--fade', fade.toFixed(3));
-      var fading = fade > 0.005;
-      filmEl.classList.toggle('is-fading', fading);
-      filmEl.classList.toggle('is-faded', fade >= 0.999);
+      // the cover: the sheet's progress over the frame (0 = about to enter,
+      // 1 = fully over; the sticky releases there). Scroll is the only easing.
+      var cv = cover();
+      var fading = cv > 0;
+      filmEl.style.setProperty('--dim', (cv * 0.5).toFixed(3));   // Apple's scrim: the held frame dims under the sheet
+      filmEl.classList.toggle('is-covering', fading);
       filmEl.classList.toggle('is-mid', p > 0.25 && !fading);
-      // the chapter text is unseen while it dissolves: out of the tab order too
       if (overlay && overlay.hasAttribute('inert') !== fading) {
         if (fading) overlay.setAttribute('inert', ''); else overlay.removeAttribute('inert');
       }
-      var dark = p > 0.6 && !fading;
+      var dark = q(p) > 0.6 && cv < 1 - 72 / vh();   // white nav text until the sheet reaches the bar
       filmEl.classList.toggle('is-dark', dark);
       var flag = dark ? '1' : '0';
       if (filmEl.dataset.dark !== flag) { filmEl.dataset.dark = flag; onScroll(); }
-      var chapter = p < 0.3 ? 0 : p < 0.65 ? 1 : 2;
+      var chapter = q(p) < 0.3 ? 0 : q(p) < 0.65 ? 1 : 2;
       if (chapter !== lastChapter) {
         lastChapter = chapter;
         for (var d = 0; d < dots.length; d++) {
@@ -189,7 +206,7 @@
       }
       if (canvas) {
         // reduced motion: three stills, one per chapter, instead of a camera move
-        target = (reduce ? [0, 0.43, 0.83][chapter] : p) * (N - 1);
+        target = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
         if (reduce) current = target;
         else {
           current += (target - current) * (1 - Math.exp(-dt * 8));
@@ -220,7 +237,7 @@
       var key = b.dataset.go, v;
       if (key === 'next') {
         var p = progress();
-        v = p < 0.3 ? CH.places : p < 0.65 ? CH.action : 1;
+        v = q(p) < 0.3 ? CH.places : q(p) < 0.65 ? CH.action : 1;
       } else {
         v = CH[key];
       }
@@ -333,7 +350,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.proof-lead, .proof-names, .show-copy, .show-media, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
+    '.proof-head, .proof-track, .show-copy, .show-media, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *, .footer .wrap-1200 > *'
   );
 
   var io = null;
@@ -350,7 +367,7 @@
       el.classList.add('reveal');
       var sibs = el.parentElement ? el.parentElement.children : [el];
       var n = Array.prototype.indexOf.call(sibs, el);
-      el.style.transitionDelay = Math.min(n, 5) * 70 + 'ms';
+      el.style.transitionDelay = Math.min(n, 6) * 90 + 'ms';
     });
     io = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
