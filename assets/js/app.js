@@ -12,6 +12,7 @@
   // the three-column shell: rail + sidebar labels only from 1200px
   var wideMQ = window.matchMedia ? window.matchMedia('(min-width: 1200px)') : { matches: true, addEventListener: function () {} };
   function isWide() { return !!wideMQ.matches; }
+  var panelMode = 'rule';   // what the rail shows: 'rule' or 'script'
 
   var C = window.OwedCatalog;
   var S = window.OwedStore;
