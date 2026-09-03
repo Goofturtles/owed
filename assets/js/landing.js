@@ -49,19 +49,36 @@
     });
   })();
 
-  /* the foot of the page: the last 720px of scroll are damped, so the wheel
-     eases the reader to a stop instead of slamming into the end */
-  (function softLanding() {
-    var ZONE = 720;
+  /* inertial smooth scroll (the Lenis feel, inline because the CSP allows no CDN):
+     the wheel moves a target, the page eases toward it every frame, and the
+     clamp at the ends turns into a natural slow stop. Touch, keys and the
+     scrollbar stay native; off under reduced motion. */
+  (function smoothScroll() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    var target = window.scrollY, current = window.scrollY, running = false, last = 0;
+    function max() { return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
+    function frame(now) {
+      var dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now;
+      current += (target - current) * (1 - Math.exp(-dt * 6.5));   // Lenis' lerp ~0.1 per frame
+      if (Math.abs(target - current) < 0.4) { current = target; window.scrollTo(0, current); running = false; return; }
+      window.scrollTo(0, current);
+      requestAnimationFrame(frame);
+    }
     window.addEventListener('wheel', function (e) {
-      if (e.ctrlKey || e.deltaY <= 0) return;                 // zooming, or scrolling up: untouched
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      var left = max - window.scrollY;
-      if (left > ZONE || left <= 0) return;
+      if (e.ctrlKey) return;                                           // pinch-zoom
+      if (e.target.closest && e.target.closest('.proof-track, .nav-menu, textarea, [data-native-scroll]')) return;
       e.preventDefault();
-      var k = 0.18 + 0.82 * Math.pow(left / ZONE, 1.6);         // 1 at the zone's edge, ~0.18 at the very end
-      window.scrollBy(0, Math.min(left, e.deltaY * k));
+      var d = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+      if (!running) { current = window.scrollY; target = current; }
+      target = Math.min(max(), Math.max(0, target + d));
+      if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
     }, { passive: false });
+    // anything else that moves the page (keys, scrollbar, anchors) resets the target
+    window.addEventListener('scroll', function () {
+      // a scroll we did not make (anchor, keys, scrollbar, a script): adopt it instead of fighting it
+      if (!running || Math.abs(window.scrollY - current) > 2) { target = current = window.scrollY; running = false; }
+    }, { passive: true });
   })();
 
   var nav = document.getElementById('nav');
@@ -146,6 +163,7 @@
     var current = 0, target = 0, last = performance.now(), lastChapter = -1, ps = 0;
     var pPrev = -1, lastMove = performance.now(), idleAmp = 0, idlePos = 0;
     var cue = filmEl.querySelector('.film-cue');
+    var lastScroll = performance.now(), pScroll = -1;
     function activity() { lastMove = performance.now(); }
     ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, activity, { passive: true }); });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { lastMove = performance.now(); idleAmp = 0; idlePos = 0; drawn = -1; } });
@@ -359,7 +377,8 @@
            Any activity eases it back to the scrub frame; coming back to the
            tab snaps it back at once. */
         var idle = false;   // the film holds still; a scroll cue appears instead (below)
-        if (cue) cue.classList.toggle('is-on', !reduce && (now - lastMove > 2500) && p < 0.97 && cover() === 0);
+        if (p !== pScroll) { lastScroll = now; pScroll = p; }
+        if (cue) cue.classList.toggle('is-on', !reduce && (now - lastScroll > 2500) && p < 0.97 && cover() === 0);
         var LOOP = 48, FADE = 6, of = 0, alpha = 0;
         if (idle) {
           idlePos += dt * 4;

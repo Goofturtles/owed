@@ -949,3 +949,7 @@
 .rail-card { margin-top: 54px !important; }
 .rail .scr-lines { border: 0; background: transparent; padding: 0; margin-top: 14px; }
 @media (min-width: 1200px) { .rail { padding-bottom: 8px; } }
+
+/* the script's buttons stay in reach: pinned to the foot of the rail while the words scroll */
+.rail .doc-foot { position: sticky; bottom: 0; z-index: 2; background: var(--paper, #FFF); padding: 12px 0 10px; margin-top: 8px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; }
+.rail .doc-foot .btn { flex: 1 1 auto; }
