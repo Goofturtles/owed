@@ -130,6 +130,7 @@
 
     var current = 0, target = 0, last = performance.now(), lastChapter = -1, ps = 0;
     var pPrev = -1, lastMove = performance.now(), idleAmp = 0, idlePos = 0;
+    var cue = filmEl.querySelector('.film-cue');
     function activity() { lastMove = performance.now(); }
     ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, activity, { passive: true }); });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { lastMove = performance.now(); idleAmp = 0; idlePos = 0; drawn = -1; } });
@@ -342,7 +343,8 @@
            to its start through a 6-frame crossfade, so the loop has no cut.
            Any activity eases it back to the scrub frame; coming back to the
            tab snaps it back at once. */
-        var idle = !reduce && (now - lastMove > 10000);
+        var idle = false;   // the film holds still; a scroll cue appears instead (below)
+        if (cue) cue.classList.toggle('is-on', !reduce && (now - lastMove > 2500) && p < 0.97 && cover() === 0);
         var LOOP = 48, FADE = 6, of = 0, alpha = 0;
         if (idle) {
           idlePos += dt * 4;

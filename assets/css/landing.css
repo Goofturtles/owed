@@ -778,3 +778,14 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .nav-menu > [data-menu="out"] { color: #B42318; }
 .nav-sheet .nav-me-wrap { display: block; } .nav-sheet .nav-menu { position: static; box-shadow: none; border: 0; padding: 0 0 0 12px; }
 :root[data-theme="dark"] .nav-menu { background: #111; border-color: #262626; } :root[data-theme="dark"] .nav-menu-who { border-color: #262626; color: #A1A1AA; } :root[data-theme="dark"] .nav-menu-who b, :root[data-theme="dark"] .nav-menu > a, :root[data-theme="dark"] .nav-menu > button { color: #F5F5F7; } :root[data-theme="dark"] .nav-menu > a:hover, :root[data-theme="dark"] .nav-menu > button:hover { background: #1F1F1F; }
+
+/* the scroll cue: a mouse outline with a dropping dot, shown once the reader pauses on the film */
+.film-cue { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(8px); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #1D3045; opacity: 0; transition: opacity .6s ease, transform .6s ease; pointer-events: none; z-index: 3; }
+.film.is-dark .film-cue { color: #FFF; }
+.film-cue.is-on { opacity: .9; transform: translateX(-50%) translateY(0); }
+.film-cue-mouse { position: relative; width: 26px; height: 42px; border: 2px solid currentColor; border-radius: 14px; }
+.film-cue-mouse i { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: currentColor; animation: cue-drop 1.8s cubic-bezier(.4, 0, .2, 1) infinite; }
+@keyframes cue-drop { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 80% { transform: translateY(16px); opacity: 1; } 100% { transform: translateY(18px); opacity: 0; } }
+.film-cue-text { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+@media (prefers-reduced-motion: reduce) { .film-cue-mouse i { animation: none; } }
+@media (max-width: 768px) { .film-cue { bottom: 20px; } }
