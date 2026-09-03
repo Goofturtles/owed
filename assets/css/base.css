@@ -544,3 +544,7 @@ main:focus:not(:focus-visible) { outline: none; }
 .nav-links a:hover {
   background: color-mix(in srgb, var(--ink) 8%, transparent);
 }
+
+/* theme switch: surfaces and type cross-fade instead of snapping; the film is untouched */
+html, body, .side, .rail, .rail-card, .doc, .rcard, .rgroup-head, .opt, .pane-head, .main, .app, .env-card, .env-panel, .show-card, .proof, .show, .stats, .places, .env, .faq, .cta, .footer, .faq-item, .card, .auth-left, .auth-field, .auth-input, .btn-ghost, .btn-outline { transition: background-color .35s ease, color .35s ease, border-color .35s ease; }
+@media (prefers-reduced-motion: reduce) { html, body, .side, .rail-card, .doc, .rcard, .opt, .pane-head { transition: none; } }

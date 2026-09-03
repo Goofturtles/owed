@@ -167,6 +167,9 @@
     else renderShelf();
   });
 
+  var back2 = document.getElementById('wizBack2');
+  if (back2) back2.addEventListener('click', function () { wizEls.back.click(); });
+
   /* ---------- rename a saved thing in place ---------- */
   var renameBtn = document.getElementById('resRename');
   if (renameBtn) renameBtn.addEventListener('click', function () {
@@ -1017,7 +1020,17 @@
       startMarked = false;
       var leads = matches.filter(function (m) { return !isLongShot(m); });
       var longs = matches.filter(isLongShot);
-      resEls.groups.innerHTML = E.group(leads).map(renderGroup).join('') + renderLongShots(longs, !leads.length);
+      // only the best tier is open: strong first; worth asking folded under it
+      // (open only when nothing is strong); long shots folded unless they are all there is
+      var strongs = leads.filter(function (m) { return m.strength === 'strong'; });
+      var worths = leads.filter(function (m) { return m.strength !== 'strong'; });
+      if (strongs.length) {
+        resEls.groups.innerHTML = E.group(strongs).map(renderGroup).join('') +
+          renderFold(worths, false, 'Worth asking', 'Fits, with one thing to check.', 'worth asking') +
+          renderLongShots(longs, false);
+      } else {
+        resEls.groups.innerHTML = E.group(leads).map(renderGroup).join('') + renderLongShots(longs, !leads.length);
+      }
     }
 
     // remember which rules we have shown, so new ones can be flagged later
@@ -1066,19 +1079,22 @@
      list of real leads is never broken up by "show more" buttons. When there
      is no real lead, the long shots are the answer and stay open. */
   function renderLongShots(longs, open) {
-    if (!longs.length) return '';
-    var label = longs.length + (longs.length === 1 ? ' long shot' : ' long shots');
+    return renderFold(longs, open, 'Long shots', 'Probably not you. Kept so nothing is hidden.', 'long shot');
+  }
+  function renderFold(list, open, title, note, word) {
+    if (!list.length) return '';
+    var label = list.length + ' ' + (list.length === 1 ? word : (word === 'long shot' ? 'long shots' : word));
     return '<section class="rgroup rgroup-long">' +
       '<h2 class="rgroup-head">' +
         '<span class="rgroup-ico" aria-hidden="true">' + ico('box', 18) + '</span>' +
-        '<span class="rgroup-title">Long shots</span>' +
+        '<span class="rgroup-title">' + title + '</span>' +
         '<span class="sr-only">, </span>' +
-        '<span class="rgroup-count tnum">' + longs.length + '</span>' +
+        '<span class="rgroup-count tnum">' + list.length + '</span>' +
       '</h2>' +
-      '<p class="rgroup-note">Probably not you. Kept so nothing is hidden.</p>' +
+      '<p class="rgroup-note">' + note + '</p>' +
       '<div class="rgroup-list">' +
-        '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + longs.map(renderCard).join('') + '</div>' +
-        (open ? '' : '<button class="rgroup-toggle" type="button" data-more>Show ' + label + '</button>') +
+        '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + list.map(renderCard).join('') + '</div>' +
+        (open ? '' : '<button class="rgroup-toggle" type="button" data-more data-hide="Hide ' + (word === 'long shot' ? 'long shots' : word) + '" aria-expanded="false">Show ' + label + '</button>') +
       '</div>' +
     '</section>';
   }
@@ -1218,7 +1234,7 @@
         var opening = box.hidden;
         box.hidden = !opening;
         if (!moreBtn.dataset.show) moreBtn.dataset.show = moreBtn.textContent;
-        moreBtn.textContent = opening ? 'Hide long shots' : moreBtn.dataset.show;
+        moreBtn.textContent = opening ? (moreBtn.dataset.hide || 'Hide') : moreBtn.dataset.show;
         moreBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
         if (opening) { var firstToggle = box.querySelector('[data-toggle]'); if (firstToggle) firstToggle.focus(); }
         else moreBtn.scrollIntoView({ block: 'nearest' });
