@@ -244,6 +244,19 @@
     });
   })();
 
+  /* ---------- Help opens in a dialog instead of leaving the app ---------- */
+  (function helpDialog() {
+    var dlg = document.getElementById('helpDialog');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href="index.html#faq"]');
+      if (!a || dlg.contains(a)) return;
+      e.preventDefault(); dlg.showModal();
+    });
+    document.getElementById('helpClose').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  })();
+
   /* ---------- rename a saved thing in place ---------- */
   var renameBtn = document.getElementById('resRename');
   if (renameBtn) renameBtn.addEventListener('click', function () {

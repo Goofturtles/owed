@@ -916,3 +916,29 @@
 .ask-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 113, 227, .18); }
 .ask-send { width: 44px; height: 44px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
 @media (max-width: 768px) { .ask { right: 12px; left: 12px; bottom: 76px; width: auto; max-height: calc(100vh - 100px); } }
+
+/* ---------- Help: the questions in a dialog, no page change ---------- */
+.help { width: min(560px, calc(100vw - 32px)); max-height: min(720px, calc(100vh - 40px)); padding: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--card, #FFF); color: var(--ink); box-shadow: 0 30px 80px rgba(0, 0, 0, .28); }
+.help::backdrop { background: rgba(0, 0, 0, .45); backdrop-filter: blur(4px); }
+.help-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 16px 14px 24px; border-bottom: 1px solid var(--line); }
+.help-title { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.015em; }
+.help-body { padding: 8px 24px 20px; overflow: auto; max-height: calc(min(720px, 100vh - 40px) - 70px); }
+.help-item { border-bottom: 1px solid var(--line); }
+.help-item summary { list-style: none; cursor: pointer; min-height: 56px; display: flex; align-items: center; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.help-item summary::-webkit-details-marker { display: none; }
+.help-item summary::after { content: ""; margin-left: auto; width: 8px; height: 8px; border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3); transform: rotate(45deg); transition: transform .2s ease; }
+.help-item[open] summary::after { transform: rotate(-135deg); }
+.help-item summary:hover { color: var(--accent); }
+.help-item p { margin: 0 0 16px; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.help-more { margin: 18px 0 0; font-size: 15px; color: var(--ink-3); }
+.help-more a { color: var(--accent); }
+
+/* ---------- rail, cleaner: checklist with ticks, aligned legend, small print level with the sidebar tools ---------- */
+.rail-block { padding: 24px 22px 8px; border-bottom: 0; }
+.rail-block .rail-title, .rail-legend .rail-title { font-size: 18px; margin-bottom: 8px; }
+.rail-list li { border: 0 !important; padding: 7px 0; font-size: 15px; gap: 12px; }
+.rail-list li::before { width: 18px; height: 18px; border-radius: 50%; background: rgba(0, 113, 227, .12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230071E3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 7 9.5 17.5 4 12'/%3E%3C/svg%3E") center / 11px no-repeat; }
+.rail-legend { padding: 8px 22px 12px; }
+.rail-row { display: grid !important; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 12px; padding: 7px 0 !important; margin: 0; border: 0 !important; }
+.rail-row > span:last-child { font-size: 15px; color: var(--ink-2); }
+@media (min-width: 1200px) { .rail-foot { padding: 0 22px 0 !important; margin-bottom: -2px; font-size: 14px; line-height: 44px; } }
