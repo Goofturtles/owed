@@ -725,5 +725,5 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 :root[data-theme="dark"] .place-grid a, :root[data-theme="dark"] .cta-small a, :root[data-theme="dark"] .faq-item summary:hover, :root[data-theme="dark"] .faq-item summary:hover * { color: #2997FF !important; }
 
 /* the sheet that rides over the film has rounded leading corners */
-.proof { border-radius: 28px 28px 0 0; }
-@media (max-width: 768px) { .proof { border-radius: 20px 20px 0 0; } }
+.proof { border-radius: 44px 44px 0 0; box-shadow: 0 -18px 50px rgba(0, 0, 0, .22); }
+@media (max-width: 768px) { .proof { border-radius: 28px 28px 0 0; } }
