@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/css/base.css?v=1788430000">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788430000">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788440000">
 <link rel="stylesheet" href="assets/css/motion.css?v=1788430000">
 <script src="assets/js/theme.js?v=1788430000"></script>
 </head>
@@ -29,7 +29,7 @@
       <span class="brand-name">Owed</span>
     </a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#how">How it works</a>
+      <a href="#script">How it works</a>
       <a href="#checks">What we check</a>
       <a href="#earth">Environment</a>
       <a href="#faq">Questions</a>
@@ -43,7 +43,7 @@
     </button>
   </div>
   <div class="nav-sheet" id="navSheet">
-    <a href="#how">How it works</a>
+    <a href="#script">How it works</a>
     <a href="#checks">What we check</a>
     <a href="#earth">Environment</a>
     <a href="#faq">Questions</a>
@@ -125,7 +125,7 @@
   <!-- ============ READ FROM — Coda (Mobbin 75b6afeb) ============ -->
   <section class="proof" aria-labelledby="proofHead">
     <div class="wrap-1200 proof-head">
-      <h2 class="proof-lead" id="proofHead">Read from the fine print of <b class="tnum">318</b> rules at</h2>
+      <h2 class="proof-lead" id="proofHead">Read from the fine print at</h2>
       <button class="proof-pause" type="button" aria-pressed="false" data-pause aria-label="Pause the moving list">
         <svg viewBox="0 0 20 20" width="12" height="12" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="3.5" height="12" rx="1"/><rect x="11.5" y="4" width="3.5" height="12" rx="1"/></svg>
       </button>
@@ -143,13 +143,6 @@
   </section>
 
   <!-- ============ THE WHOLE APP — one picture (Notion's product shot under the strip, Mobbin b2bc7d7b) ============ -->
-  <section class="shot" aria-label="The Owed app">
-    <div class="wrap-1200">
-      <figure class="shot-card">
-        <img src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000" alt="The Owed app: your saved things on the left, who owes you in the middle, the rule and how to claim on the right." decoding="async">
-      </figure>
-    </div>
-  </section>
 
   <!-- ============ THE SCRIPT — Vercel "Centralized feedback" (Mobbin 892a4a8f) ============ -->
   <section class="show" id="script" aria-labelledby="showHead">
@@ -162,9 +155,15 @@
 
       <div class="show-media">
         <div class="show-card">
-          <!-- the faded product mock (Vercel greys its app to a wireframe so the panel pops) -->
-          <div class="show-clip">
-            <img src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000" alt="The Owed app, faded behind the callout." loading="lazy" decoding="async">
+          <!-- a grey wireframe (Vercel greys its app to shapes so the panel pops) -->
+          <div class="show-clip" aria-hidden="true">
+            <div class="wf-side"><i class="wf-logo"></i><i class="wf-btn"></i><i></i><i></i><i></i><i></i></div>
+            <div class="wf-main">
+              <div class="wf-top"><i></i><i class="wf-r"></i></div>
+              <div class="wf-row"><b></b><b></b><b></b></div>
+              <div class="wf-block"></div>
+              <div class="wf-lines"><i></i><i></i><i></i></div>
+            </div>
           </div>
           <!-- the pin on the mock, where the comment was left -->
           <span class="show-pin" aria-hidden="true"><b>1</b><i></i></span>
@@ -197,31 +196,12 @@
   <!-- ============ THE THREE SCREENS — Twenty's screenshot cards (Mobbin a29b4352) ============
        Three white cards, the real screen full-bleed at the top, a four-word
        caption under it. Nothing else. -->
-  <section class="screens" id="how" aria-labelledby="screensHead">
-    <div class="wrap-1200">
-      <h2 class="h2" id="screensHead">Four questions. One answer. The words to say.</h2>
-      <ul class="screen-grid" role="list">
-        <li class="screen-card">
-          <div class="screen-img"><img src="assets/img/how-01.webp?v=2" width="1120" height="1306" alt="Question 1 of 4: What broke? A text field and tiles for phone, laptop, headphones and appliances." loading="lazy" decoding="async"></div>
-          <p><span class="screen-n t-mint">1</span>Say what broke</p>
-        </li>
-        <li class="screen-card">
-          <div class="screen-img"><img src="assets/img/how-02.webp?v=2" width="998" height="560" alt="A result card: Lodge replaces cracked or warped cast iron free, with no end date, marked Strong." loading="lazy" decoding="async"></div>
-          <p><span class="screen-n t-sky">2</span>See who owes you</p>
-        </li>
-        <li class="screen-card">
-          <div class="screen-img"><img src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="The words to say: who to call, the rule, and a script with a copy button." loading="lazy" decoding="async"></div>
-          <p><span class="screen-n t-sand">3</span>Read the script</p>
-        </li>
-      </ul>
-    </div>
-  </section>
 
   <!-- ============ IN NUMBERS — Ramp (Mobbin b3c99307) ============ -->
   <section class="stats" aria-label="The rulebook in numbers">
     <div class="stats-in">
-      <div class="stat"><b class="tnum" data-count-to="318" data-count-dur="1200">318</b><span>rules in the book</span></div>
-      <div class="stat"><b class="tnum" data-count-to="194" data-count-dur="1000">194</b><span>brands named</span></div>
+      <div class="stat"><b class="tnum"><em data-count-to="300" data-count-dur="1200">300</em>+</b><span>rules in the book</span></div>
+      <div class="stat"><b class="tnum"><em data-count-to="190" data-count-dur="1000">190</em>+</b><span>brands named</span></div>
       <div class="stat"><b class="tnum">4</b><span>regions: US, Canada, UK, EU</span></div>
       <div class="stat"><b class="tnum">$0</b><span>to use, no account to look</span></div>
     </div>
@@ -272,43 +252,34 @@
 
       <div class="env-card">
         <ul class="env-cells" role="list">
-          <li><b class="c-green">80%</b><strong>battery a phone must keep after 800 cycles</strong><span>Regulation (EU) 2023/1670</span></li>
-          <li><b class="c-blue">7 <small>years</small></b><strong>spare parts kept on sale</strong><span>EU ecodesign, phones and tablets</span></li>
-          <li><b class="c-amber">+12 <small>months</small></b><strong>of guarantee for choosing repair</strong><span>EU right to repair, from 31 July 2026</span></li>
-          <li><b class="c-teal">3&ndash;6 <small>years</small></b><strong>of free appliance repair</strong><span>Quebec, from 5 October 2026</span></li>
+          <li><b>80%</b><strong>battery a phone must keep</strong><span>after 800 charges, EU rule 2023/1670</span></li>
+          <li><b>7 years</b><strong>of spare parts on sale</strong><span>EU ecodesign, phones and tablets</span></li>
+          <li><b>+12 months</b><strong>of guarantee for choosing repair</strong><span>EU right to repair, from 31 July 2026</span></li>
+          <li><b>3&ndash;6 years</b><strong>of free appliance repair</strong><span>Quebec, from 5 October 2026</span></li>
         </ul>
         <div class="env-strip">
           <p>A rule only helps if you know it exists.</p>
-          <a class="btn btn-accent btn-34" href="auth.html?mode=signup">Find my repair</a>
+          <a class="btn btn-accent btn-34 btn-pill" href="auth.html?mode=signup">Find my repair</a>
         </div>
       </div>
 
+      <!-- the reader's own figures: counts from data/coverage.json by region and age
+           (rules whose window is still open; "never run out" = no end date) -->
       <div class="env-card env-card-2">
-        <figure class="env-left">
-          <svg class="xv" viewBox="0 0 440 250" role="img" aria-labelledby="xvTitle">
-            <title id="xvTitle">An exploded view of a phone: the shell, the board with its copper, the battery and the screen.</title>
-            <g transform="translate(46 156)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#F5EBD6" stroke="#000" stroke-width="2.4"/><rect x="62" y="8" width="32" height="6" rx="3" fill="#000" opacity=".35"/></g>
-            <g transform="translate(64 114)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#D8EFF0" stroke="#000" stroke-width="2.4"/><path d="M18 22h44M18 38h70M18 54h30M74 54h26" stroke="#B45309" stroke-width="2.4" stroke-linecap="round"/><rect x="104" y="16" width="30" height="20" rx="3" fill="#000"/><rect x="110" y="46" width="24" height="12" rx="3" fill="#000" opacity=".7"/></g>
-            <g transform="translate(82 72)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#DDF3E6" stroke="#000" stroke-width="2.4"/><rect x="156" y="28" width="8" height="22" rx="2" fill="#000"/><path d="M22 39h60" stroke="#000" stroke-width="2.4" stroke-linecap="round" opacity=".5"/><path d="M52 24v30" stroke="#000" stroke-width="2.4" stroke-linecap="round" opacity=".5"/></g>
-            <g transform="translate(100 30)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#DCEBFA" stroke="#000" stroke-width="2.4"/><rect x="12" y="12" width="132" height="54" rx="7" fill="#FFF" opacity=".62"/></g>
-            <g stroke="#000" stroke-width="1.4" stroke-dasharray="3 4" fill="none" opacity=".5"><path d="M258 62h50"/><path d="M240 108h68"/><path d="M222 154h86"/><path d="M204 198h104"/></g>
-            <g class="xv-t"><text x="316" y="66">Screen</text><text x="316" y="112">Battery</text><text x="316" y="158">Board &amp; copper</text><text x="316" y="202">Shell</text></g>
-          </svg>
-          <figcaption>One fixed device is a screen, a battery, a board and its copper that never have to be made twice.</figcaption>
-        </figure>
-        <div class="env-right">
-          <div class="env-fig">
-            <b>276 <span class="dim">of 318</span></b>
-            <span>rules read in a primary source</span>
-            <i class="env-bar" aria-hidden="true"><i style="--w: 87%"></i></i>
+        <form class="env-left" id="envForm" data-table='{"US:0":[257,119],"US:12":[193,119],"US:24":[175,119],"US:60":[128,119],"CA:0":[98,46],"CA:12":[75,46],"CA:24":[67,46],"CA:60":[54,46],"UK:0":[45,12],"UK:12":[35,12],"UK:24":[27,12],"UK:60":[18,12],"EU:0":[46,18],"EU:12":[38,18],"EU:24":[28,18],"EU:60":[20,18]}'>
+          <h3>See what still covers you.</h3>
+          <div class="env-inputs">
+            <label><span>Where you live</span>
+              <select id="envRegion"><option value="US">United States</option><option value="CA">Canada</option><option value="UK">United Kingdom</option><option value="EU">European Union</option></select></label>
+            <label><span>How old it is</span>
+              <select id="envAge"><option value="0">Under a year</option><option value="12">1 to 2 years</option><option value="24">2 to 5 years</option><option value="60">Over 5 years</option></select></label>
           </div>
-          <div class="env-fig">
-            <b>1 <span class="dim">per claim</span></b>
-            <span id="envCount">thing kept in use. Owed counts only what you told it got fixed.</span>
-          </div>
+        </form>
+        <div class="env-right" aria-live="polite">
+          <div class="env-fig"><b><span id="envN">257</span> <span class="dim">rules</span></b><span>could still cover something that age, where you live</span></div>
+          <div class="env-fig"><b><span id="envPct">46%</span></b><span>of those never run out</span><i class="env-bar" aria-hidden="true"><i id="envBar" style="--w: 46%"></i></i></div>
         </div>
       </div>
-      <p class="env-note">No CO&#8322; estimate, no invented multiplier.</p>
     </div>
   </section>
 
@@ -364,7 +335,7 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
         <span class="brand-name">Owed</span>
       </a>
-      <p class="footer-status"><i aria-hidden="true"></i>Rulebook: 318 rules, deduplicated 2 Sept 2026</p>
+      <p class="footer-status"><i aria-hidden="true"></i>Every rule links to its published source</p>
     </div>
     <div class="footer-col">
       <h3>Product</h3>
@@ -375,7 +346,7 @@
     </div>
     <div class="footer-col">
       <h3>Learn</h3>
-      <a href="#how">How it works</a>
+      <a href="#script">How it works</a>
       <a href="#checks">What we check</a>
       <a href="#earth">Environment</a>
       <a href="#faq">Questions</a>
@@ -393,7 +364,7 @@
 </footer>
 
 <script src="assets/js/catalog.js?v=1788430000"></script>
-<script src="assets/js/landing.js?v=1788430000"></script>
+<script src="assets/js/landing.js?v=1788440000"></script>
 <script src="assets/js/motion.js?v=1788430000"></script>
 </body>
 </html>

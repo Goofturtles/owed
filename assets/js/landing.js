@@ -329,42 +329,11 @@
     });
   }
 
-  /* ---------- copy button ---------- */
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-copy]');
-    if (!btn) return;
-    var card = btn.closest('.script-card');
-    var body = card && card.querySelector('.script-body');
-    if (!body) return;
-    var text = Array.prototype.map.call(body.querySelectorAll('p:not(.sr-only)'), function (p) {
-      return p.innerText.trim();
-    }).join('\n');
-    // the button holds an icon as well as a label, so only the label swaps
-    var lbl = btn.querySelector('span') || btn;
-    var status = document.getElementById('copyStatus');
-    var done = function () {
-      var old = lbl.textContent;
-      lbl.textContent = 'Copied';
-      btn.classList.add('is-copied');
-      if (status) status.textContent = 'Script copied to the clipboard.';
-      setTimeout(function () {
-        lbl.textContent = old;
-        btn.classList.remove('is-copied');
-        if (status) status.textContent = '';
-      }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, done);
-    } else {
-      done();
-    }
-  });
-
   /* ---------- reveal on scroll ----------
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.proof-lead, .proof-names, .shot-card, .show-copy, .show-media, .screens .h2, .screen-card, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
+    '.proof-lead, .proof-names, .show-copy, .show-media, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
   );
 
   var io = null;
@@ -415,28 +384,27 @@
     });
   })();
 
-  /* ---------- beyond money: the one number Owed counts ----------
-     Read from this browser's own shelf (the same store the app writes):
-     items with at least one claim marked won. Self-reported, per
-     LIMITATIONS.md section 10; nothing here converts it to anything. */
-  (function envCount() {
-    var el = document.getElementById('envCount');
-    if (!el) return;
-    var n = 0;
-    try {
-      var shelf = JSON.parse(localStorage.getItem('owed:shelf') || '[]');
-      if (Array.isArray(shelf)) {
-        shelf.forEach(function (it) {
-          var c = it && it.claims;
-          if (!c || typeof c !== 'object') return;
-          for (var k in c) {
-            if (c[k] && c[k].state === 'won') { n++; break; }
-          }
-        });
-      }
-    } catch (e) { n = 0; }
-    if (n) {
-      el.textContent = n + (n === 1 ? ' thing' : ' things') + ' marked as fixed in this browser. Owed counts only what you told it.';
+  /* ---------- environment: the reader's own figures ----------
+     data-table holds counts from data/coverage.json (region x age bucket):
+     [rules still open, of those with no end date]. */
+  (function envCalc() {
+    var form = document.getElementById('envForm');
+    var region = document.getElementById('envRegion'), age = document.getElementById('envAge');
+    var n = document.getElementById('envN'), pct = document.getElementById('envPct'), bar = document.getElementById('envBar');
+    if (!form || !region || !age || !n) return;
+    var table;
+    try { table = JSON.parse(form.getAttribute('data-table') || '{}'); } catch (e) { return; }
+    function paint() {
+      var row = table[region.value + ':' + age.value];
+      if (!row) return;
+      var p = row[0] ? Math.round(row[1] / row[0] * 100) : 0;
+      n.textContent = row[0];
+      pct.textContent = p + '%';
+      if (bar) bar.style.setProperty('--w', p + '%');
     }
+    region.addEventListener('change', paint);
+    age.addEventListener('change', paint);
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    paint();
   })();
 })();
