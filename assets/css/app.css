@@ -550,7 +550,7 @@
 .detail[hidden] { display: none; }
 
 @media (min-width: 1200px) {
-  .app { grid-template-columns: 275px minmax(0, 1fr) var(--rail-w, 378px); }
+  .app { grid-template-columns: 275px minmax(0, 1fr) var(--rail-w, 680px); }
   .rail {
     display: block;
     position: sticky; top: 0; max-height: 100vh; overflow-y: auto;
@@ -1037,4 +1037,16 @@
   .scr-kv dd { margin: 0; font-size: 16px; line-height: 1.45; }
   .scr-kv dd a { white-space: nowrap; }
   .scr-kv dd a svg { vertical-align: -2px; }
+}
+
+/* the rule document in the narrow rail: each fact reads as a small label over its value, full width */
+@media (min-width: 1200px) {
+  .rail .doc-body dl, .rail .doc-body .doc-kv, .rail .scr-kv { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 16px 0; }
+  .rail .doc-body dl > div, .rail .scr-kv > div { display: grid; grid-template-columns: 1fr; gap: 3px; }
+  .rail .doc-body dt, .rail .scr-kv dt { font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+  .rail .doc-body dt svg, .rail .scr-kv dt svg { width: 14px; height: 14px; }
+  .rail .doc-body dd, .rail .scr-kv dd { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink); }
+  .rail .doc-body dd a { overflow-wrap: anywhere; }
+  .rail .doc-body dd a svg { vertical-align: -2px; margin-left: 2px; }
+  .rail .doc-body p, .rail .doc-body li { font-size: 16px; line-height: 1.5; }
 }

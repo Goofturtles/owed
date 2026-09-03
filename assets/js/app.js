@@ -274,7 +274,8 @@
     if (!rail || !app) return;
     var KEY = 'owed:railw', MIN = 300, MAX = 680;
     var saved = 0; try { saved = parseInt(localStorage.getItem(KEY) || '0', 10); } catch (e) {}
-    if (saved >= MIN && saved <= MAX) app.style.setProperty('--rail-w', saved + 'px');
+    // the panel opens at its widest; the handle can only bring it in from there
+    app.style.setProperty('--rail-w', (saved >= MIN && saved <= MAX ? saved : MAX) + 'px');
     var h = document.createElement('button');
     h.type = 'button'; h.className = 'rail-resize'; h.setAttribute('aria-label', 'Resize the side panel'); h.title = 'Drag to resize · double-click to reset';
     rail.insertBefore(h, rail.firstChild);
@@ -295,7 +296,7 @@
       try { localStorage.setItem(KEY, String(Math.round(width()))); } catch (e) {}
     }
     h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
-    h.addEventListener('dblclick', function () { app.style.removeProperty('--rail-w'); try { localStorage.removeItem(KEY); } catch (e) {} });
+    h.addEventListener('dblclick', function () { app.style.setProperty('--rail-w', MAX + 'px'); try { localStorage.removeItem(KEY); } catch (e) {} });
     // keyboard: arrows nudge the width
     h.addEventListener('keydown', function (e) {
       var d = e.key === 'ArrowLeft' ? 24 : e.key === 'ArrowRight' ? -24 : 0; if (!d) return;
