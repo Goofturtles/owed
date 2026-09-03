@@ -723,3 +723,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 :root[data-theme="dark"] .film-title, :root[data-theme="dark"] .film-kicker, :root[data-theme="dark"] .film-places { color: #1D3045; }
 :root[data-theme="dark"] .film-title-w, :root[data-theme="dark"] .film-copy-r { color: #FFF; }
 :root[data-theme="dark"] .place-grid a, :root[data-theme="dark"] .cta-small a, :root[data-theme="dark"] .faq-item summary:hover, :root[data-theme="dark"] .faq-item summary:hover * { color: #2997FF !important; }
+
+/* the sheet that rides over the film has rounded leading corners */
+.proof { border-radius: 28px 28px 0 0; }
+@media (max-width: 768px) { .proof { border-radius: 20px 20px 0 0; } }
