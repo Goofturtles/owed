@@ -969,3 +969,16 @@
 :root[data-theme="dark"] .ask-msg.wait { background-image: linear-gradient(100deg, #6E6E73 20%, #FFFFFF 50%, #6E6E73 80%); }
 @keyframes think-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
 @media (prefers-reduced-motion: reduce) { .ask-msg.wait { animation: none; color: var(--ink-3); background: none; } }
+
+/* the rail always scrolls when its content is taller than the window (a script open
+   in it); the empty state fits without a scrollbar */
+@media (min-width: 1200px) { .rail { overflow-y: auto !important; overscroll-behavior: contain; scrollbar-width: thin; } .rail-card { margin-top: 46px !important; } .rail-foot { padding-bottom: 6px !important; } }
+.rail .doc-foot { padding-bottom: 12px; }
+.rail .doc-foot .btn { flex: 1 1 calc(50% - 8px); min-width: 0; }
+
+/* the rail's card is the scrolling part (the rail itself is a fixed column with the small print at its foot) */
+@media (min-width: 1200px) {
+  .rail { overflow: hidden !important; display: flex; flex-direction: column; }
+  .rail-card { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding-bottom: 8px; }
+  .rail-foot { flex: none; }
+}
