@@ -766,3 +766,15 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .place-grid > li.reveal h3, .place-grid > li.reveal a { opacity: 0; transform: translateY(10px); }
 .place-grid > li.reveal.in h3, .place-grid > li.reveal.in a { opacity: 1; transform: none; transition: opacity .6s ease-out .25s, transform .7s cubic-bezier(.16, 1, .3, 1) .25s; }
 @media (prefers-reduced-motion: reduce) { .place-grid > li.reveal .tile, .place-grid > li.reveal h3, .place-grid > li.reveal a { opacity: 1; transform: none; } }
+
+/* "Hi, Name" and its settings menu */
+.nav-me-wrap { position: relative; display: inline-flex; }
+.nav-menu { position: absolute; top: calc(100% + 10px); right: 0; min-width: 240px; padding: 8px; background: #FFF; border: 1px solid #EAEAEA; border-radius: 12px; box-shadow: 0 16px 40px rgba(0, 0, 0, .14); z-index: 60; display: flex; flex-direction: column; }
+.nav-menu[hidden] { display: none; }
+.nav-menu-who { margin: 4px 10px 8px; padding-bottom: 10px; border-bottom: 1px solid #EAEAEA; font-size: 14px; color: #666; display: flex; flex-direction: column; gap: 2px; }
+.nav-menu-who b { color: #000; font-size: 15px; }
+.nav-menu > a, .nav-menu > button { display: block; width: 100%; text-align: left; padding: 10px 10px; border: 0; border-radius: 8px; background: none; font: inherit; font-size: 15px; font-weight: 500; color: #000; text-decoration: none; cursor: pointer; min-height: 44px; }
+.nav-menu > a:hover, .nav-menu > button:hover { background: #F5F5F7; }
+.nav-menu > [data-menu="out"] { color: #B42318; }
+.nav-sheet .nav-me-wrap { display: block; } .nav-sheet .nav-menu { position: static; box-shadow: none; border: 0; padding: 0 0 0 12px; }
+:root[data-theme="dark"] .nav-menu { background: #111; border-color: #262626; } :root[data-theme="dark"] .nav-menu-who { border-color: #262626; color: #A1A1AA; } :root[data-theme="dark"] .nav-menu-who b, :root[data-theme="dark"] .nav-menu > a, :root[data-theme="dark"] .nav-menu > button { color: #F5F5F7; } :root[data-theme="dark"] .nav-menu > a:hover, :root[data-theme="dark"] .nav-menu > button:hover { background: #1F1F1F; }

@@ -13,8 +13,37 @@
     var u = null;
     try { u = JSON.parse(localStorage.getItem('owed:user') || 'null'); } catch (e) { u = null; }
     if (!u || !u.name || u.name === 'You') return;
+    var first = (u.name || '').trim().split(/\s+/)[0];
     document.querySelectorAll('a[href^="auth.html"]').forEach(function (l) {
-      if (/sign in/i.test(l.textContent)) { l.hidden = true; return; }
+      if (/sign in/i.test(l.textContent)) {
+        // the sign-in button becomes "Hi, Name" and opens a small settings menu
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = l.className + ' nav-me'; btn.textContent = 'Hi, ' + first;
+        btn.setAttribute('aria-haspopup', 'menu'); btn.setAttribute('aria-expanded', 'false');
+        var menu = document.createElement('div');
+        menu.className = 'nav-menu'; menu.setAttribute('role', 'menu'); menu.hidden = true;
+        menu.innerHTML =
+          '<p class="nav-menu-who"><b></b><span></span></p>' +
+          '<a role="menuitem" href="app.html">Open my shelf</a>' +
+          '<a role="menuitem" href="auth.html">Change my name or email</a>' +
+          '<button role="menuitem" type="button" data-menu="theme">Switch light / dark</button>' +
+          '<a role="menuitem" href="index.html#faq">Help</a>' +
+          '<button role="menuitem" type="button" data-menu="out">Sign out</button>';
+        menu.querySelector('b').textContent = u.name; menu.querySelector('span').textContent = u.email || '';
+        var wrap = document.createElement('span'); wrap.className = 'nav-me-wrap';
+        l.parentNode.insertBefore(wrap, l); wrap.appendChild(btn); wrap.appendChild(menu); l.remove();
+        function setOpen(o) { menu.hidden = !o; btn.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+        btn.addEventListener('click', function () { setOpen(menu.hidden); });
+        document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) setOpen(false); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+        menu.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-menu]'); if (!b) return;
+          if (b.dataset.menu === 'theme') { var t = document.querySelector('.theme-btn'); if (t) t.click(); }
+          if (b.dataset.menu === 'out') { try { localStorage.removeItem('owed:user'); } catch (x) {} location.reload(); }
+          setOpen(false);
+        });
+        return;
+      }
       l.href = 'app.html';
       if (/start free|find my repair|get my script/i.test(l.textContent)) l.textContent = 'Open my shelf';
     });
@@ -100,7 +129,10 @@
     filmEl.classList.add('is-js');   // the stagger only hides things once this loop can show them again
 
     var current = 0, target = 0, last = performance.now(), lastChapter = -1, ps = 0;
-    var pPrev = -1, lastMove = performance.now(), idleAmp = 0;
+    var pPrev = -1, lastMove = performance.now(), idleAmp = 0, idlePos = 0;
+    function activity() { lastMove = performance.now(); }
+    ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { window.addEventListener(ev, activity, { passive: true }); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { lastMove = performance.now(); idleAmp = 0; idlePos = 0; drawn = -1; } });
     var sceneOn = [null, null, null];
 
     /* ---- the frame bank ---- */
@@ -114,6 +146,29 @@
     if (canvas) { ctx = canvas.getContext('2d', { alpha: false }); ctx.imageSmoothingQuality = 'medium'; }
 
     function frameSrc(i) { return dir + 'f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
+    /* the fast bank: 121 small frames (2 MB) load first and are what the eye
+       sees while scrolling; the 1080p frame is painted only once the scroll
+       settles. Decoding 960x540 is ~5ms, 1080p is 15-30ms — that was the lag. */
+    var LO_N = 121, lo = new Array(LO_N), loLoaded = 0, loQueue = [], loInflight = 0;
+    function loSrc(i) { return 'assets/film/m/f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
+    (function () { var o = [0, LO_N - 1, 60, 30, 90, 15, 45, 75, 105]; var seen = {}; o.forEach(function (i) { seen[i] = 1; loQueue.push(i); }); for (var i = 0; i < LO_N; i++) if (!seen[i]) loQueue.push(i); })();
+    function pumpLo() {
+      if (small) return;
+      while (loInflight < 6 && loQueue.length) {
+        (function (i) {
+          var img = new Image(); img.decoding = 'async'; loInflight++;
+          img.onload = function () { loInflight--; lo[i] = img; loLoaded++; if (loLoaded === 1) filmEl.classList.add('is-live'); drawn = -1; pumpLo(); };
+          img.onerror = function () { loInflight--; pumpLo(); };
+          img.src = loSrc(i);
+        })(loQueue.shift());
+      }
+    }
+    function nearestLo(f) {
+      var i = Math.round(f / 2);
+      if (lo[i]) return i;
+      for (var d = 1; d < LO_N; d++) { if (i - d >= 0 && lo[i - d]) return i - d; if (i + d < LO_N && lo[i + d]) return i + d; }
+      return -1;
+    }
     /* coarse first: 0, 120, 60, 30, 90, 15, 45 ... then every gap */
     function order() {
       var out = [], seen = {};
@@ -189,18 +244,40 @@
         if (bitmaps[m] && Math.abs(m - c) > KEEP) { try { bitmaps[m].close(); } catch (e) {} bitmaps[m] = null; }
       }
     }
-    function paint(f) {
+    var drawnKind = '', lastMotion = performance.now();
+    function paint(f, of, alpha) {
       if (!ctx) return;
       size();
-      var i = nearest(f);
-      ensureBitmaps(Math.round(f));
-      if (i < 0 || i === drawn) return;
-      drawn = i;
-      // cover: the frame fills the stage the way object-fit: cover would
+      var now = performance.now();
+      var settled = (now - lastMotion) > 160;
       var s = Math.max(W / FW, H / FH), dw = FW * s, dh = FH * s;
-      if (bitmaps[i]) ctx.drawImage(bitmaps[i], Math.round((W - dw) / 2), Math.round((H - dh) / 2));
-      else ctx.drawImage(frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
+      var i = nearest(f);
+      if (settled || small) ensureBitmaps(Math.round(f));
+      // sharp frame: only when settled and already decoded (never a sync 1080p decode mid-scroll)
+      var useHi = small || (settled && i >= 0 && (bitmaps[i] || !lo.length));
+      if (!useHi) {
+        var li = nearestLo(f);
+        if (li >= 0) {
+          if (drawnKind === 'lo' && drawn === li && !alpha) return;
+          drawn = li; drawnKind = 'lo';
+          var ls = Math.max(W / 960, H / 540), lw = 960 * ls, lh = 540 * ls;
+          ctx.drawImage(lo[li], (W - lw) / 2, (H - lh) / 2, lw, lh);
+          if (alpha > 0) { var lo2 = nearestLo(of); if (lo2 >= 0) { ctx.globalAlpha = alpha; ctx.drawImage(lo[lo2], (W - lw) / 2, (H - lh) / 2, lw, lh); ctx.globalAlpha = 1; } }
+          return;
+        }
+        if (i < 0) return;
+      }
+      if (i < 0) return;
+      if (drawnKind === 'hi' && i === drawn && !alpha) return;
+      drawn = i; drawnKind = 'hi';
+      var x = Math.round((W - dw) / 2), y = Math.round((H - dh) / 2);
+      if (bitmaps[i]) ctx.drawImage(bitmaps[i], x, y); else ctx.drawImage(frames[i], x, y, dw, dh);
+      if (alpha > 0) {
+        var oi = nearest(of);
+        if (oi >= 0) { ctx.globalAlpha = alpha; if (bitmaps[oi]) ctx.drawImage(bitmaps[oi], x, y); else ctx.drawImage(frames[oi], x, y, dw, dh); ctx.globalAlpha = 1; }
+      }
     }
+    pumpLo();
     pump();
     window.addEventListener('resize', function () { drawn = -1; }, { passive: true });
 
@@ -259,19 +336,32 @@
         // sine (±8 frames, 7s period — seamless by construction); the drift
         // eases out the moment the reader scrolls, so the scrub takes over
         if (p !== pPrev) { lastMove = now; pPrev = p; }
-        var idle = !reduce && (now - lastMove > 700);
         var base = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
-        // idle: the film simply plays on from here (4 fps, up to 60 frames);
-        // on scroll the extra frames ease away and the scrub takes over
-        if (idle) idleAmp = Math.min(60, idleAmp + dt * 4);
-        else idleAmp += (0 - idleAmp) * (1 - Math.exp(-dt * 4));
+        /* idle loop: after 10 s with no scroll, pointer or key, the film plays
+           on from the scrub frame at 4 fps over a 48-frame window and returns
+           to its start through a 6-frame crossfade, so the loop has no cut.
+           Any activity eases it back to the scrub frame; coming back to the
+           tab snaps it back at once. */
+        var idle = !reduce && (now - lastMove > 10000);
+        var LOOP = 48, FADE = 6, of = 0, alpha = 0;
+        if (idle) {
+          idlePos += dt * 4;
+          if (idlePos >= LOOP) idlePos = FADE + (idlePos - LOOP);
+          if (idlePos > LOOP - FADE) { alpha = (idlePos - (LOOP - FADE)) / FADE; of = base + (idlePos - (LOOP - FADE)); }
+          idleAmp = idlePos;
+        } else {
+          idleAmp += (0 - idleAmp) * (1 - Math.exp(-dt * 4));
+          if (idleAmp < 0.05) idleAmp = 0;
+          idlePos = idleAmp;
+        }
         target = Math.min(N - 1, Math.max(0, base + idleAmp));
-        if (reduce) current = target;
+        if (reduce || idle) current = target;
         else {
           current += (target - current) * (1 - Math.exp(-dt * 6));
           if (Math.abs(target - current) < 0.01) current = target;
         }
-        paint(current);
+        if (Math.abs(target - current) > 0.4 && !idle) lastMotion = now;
+        paint(current, Math.min(N - 1, Math.max(0, of)), alpha);
       }
       requestAnimationFrame(tick);
     }
@@ -435,16 +525,19 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { rootMargin: '200px 0px 0px 0px', threshold: 0.01 });
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.12 });   // fires once the piece is really in view, not at the first pixel
     Array.prototype.forEach.call(revealables, function (el) { io.observe(el); });
 
-    // Failsafe: if anything is still hidden a moment after load, show it.
-    window.addEventListener('load', function () {
-      setTimeout(revealAll, 900);
-    });
-    // a hard floor only for a load event that never comes; 2.5s used to
-    // reveal every section while the reader was still on the first one
-    setTimeout(revealAll, 6000);
+    // Failsafe: show what is on screen right now if the observer has not —
+    // never the whole page (that spent every intro before the reader got there).
+    function revealVisible() {
+      Array.prototype.forEach.call(revealables, function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.9 && r.bottom > 0) el.classList.add('in');
+      });
+    }
+    window.addEventListener('load', function () { setTimeout(revealVisible, 1200); });
+    setTimeout(revealVisible, 6000);
   }
 
 
