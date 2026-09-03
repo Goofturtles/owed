@@ -729,3 +729,8 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 @media (max-width: 768px) { .proof { border-radius: 28px 28px 0 0; } }
 
 @media (max-width: 768px) { .show-media.in .show-panel-field span { animation: none; width: auto; border-right: 0; } .show-media.in .show-panel-field svg { animation: none; } .proof-head { flex-wrap: wrap; } .h2 { font-size: clamp(30px, 8.5vw, 40px); } }
+
+/* the environment section announces itself: a green eyebrow with a leaf */
+.env-eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mint-ink); }
+.env-eyebrow .t-mint { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
+:root[data-theme="dark"] .env-eyebrow { color: #58DDA0; }

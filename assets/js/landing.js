@@ -87,6 +87,7 @@
     filmEl.classList.add('is-js');   // the stagger only hides things once this loop can show them again
 
     var current = 0, target = 0, last = performance.now(), lastChapter = -1, ps = 0;
+    var pPrev = -1, lastMove = performance.now(), idleAmp = 0;
     var sceneOn = [null, null, null];
 
     /* ---- the frame bank ---- */
@@ -97,7 +98,7 @@
     var W = 0, H = 0, FW = 1920, FH = 1080;
     var dir = 'assets/film/' + (small ? 'm' : 'd') + '/';
     if (small) { FW = 960; FH = 540; }
-    if (canvas) { ctx = canvas.getContext('2d', { alpha: false }); ctx.imageSmoothingQuality = 'high'; }
+    if (canvas) { ctx = canvas.getContext('2d', { alpha: false }); ctx.imageSmoothingQuality = 'medium'; }
 
     function frameSrc(i) { return dir + 'f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
     /* coarse first: 0, 120, 60, 30, 90, 15, 45 ... then every gap */
@@ -140,20 +141,47 @@
     }
     function size() {
       if (!canvas) return;
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);   // 2 doubled the fill cost for no visible gain
       var w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
       if (w === W && h === H) return;
       W = w; H = h; canvas.width = w; canvas.height = h; drawn = -1;
+    }
+    /* Chrome evicts decoded 1080p images from its cache, so drawing an Image
+       can force a synchronous re-decode (10-20ms) — that was the scroll lag.
+       Keep a window of ready-decoded bitmaps around the current frame. */
+    var bitmaps = new Array(N), decoding = new Array(N), AHEAD = 28, KEEP = 48;
+    var canBitmap = typeof window.createImageBitmap === 'function';
+    function ensureBitmaps(c) {
+      if (!canBitmap) return;
+      var started = 0;
+      for (var d = 0; d <= AHEAD && started < 3; d++) {
+        var cands = d ? [c + d, c - d] : [c];
+        for (var k = 0; k < cands.length && started < 3; k++) {
+          var i = cands[k];
+          if (i < 0 || i >= N || !frames[i] || bitmaps[i] || decoding[i]) continue;
+          decoding[i] = 1; started++;
+          (function (i) {
+            createImageBitmap(frames[i]).then(function (b) {
+              bitmaps[i] = b; decoding[i] = 0;
+              if (i === drawn) drawn = -1;   // repaint from the crisp decoded copy
+            }, function () { decoding[i] = 0; });
+          })(i);
+        }
+      }
+      for (var m = 0; m < N; m++) {
+        if (bitmaps[m] && Math.abs(m - c) > KEEP) { try { bitmaps[m].close(); } catch (e) {} bitmaps[m] = null; }
+      }
     }
     function paint(f) {
       if (!ctx) return;
       size();
       var i = nearest(f);
+      ensureBitmaps(Math.round(f));
       if (i < 0 || i === drawn) return;
       drawn = i;
       // cover: the frame fills the stage the way object-fit: cover would
       var s = Math.max(W / FW, H / FH), dw = FW * s, dh = FH * s;
-      ctx.drawImage(frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
+      ctx.drawImage(bitmaps[i] || frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
     }
     pump();
     window.addEventListener('resize', function () { drawn = -1; }, { passive: true });
@@ -209,7 +237,15 @@
       }
       if (canvas) {
         // reduced motion: three stills, one per chapter, instead of a camera move
-        target = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
+        // idle life: after 700ms without scrolling the frame drifts on a slow
+        // sine (±8 frames, 7s period — seamless by construction); the drift
+        // eases out the moment the reader scrolls, so the scrub takes over
+        if (p !== pPrev) { lastMove = now; pPrev = p; }
+        var idle = !reduce && (now - lastMove > 700);
+        idleAmp += ((idle ? 1 : 0) - idleAmp) * (1 - Math.exp(-dt * (idle ? 0.9 : 5)));
+        var base = (reduce ? [0, 0.43, 0.83][chapter] : q(p)) * (N - 1);
+        var drift = idleAmp * 8 * Math.sin(now / 1000 * (2 * Math.PI / 7));
+        target = Math.min(N - 1, Math.max(0, base + drift));
         if (reduce) current = target;
         else {
           current += (target - current) * (1 - Math.exp(-dt * 6));
