@@ -805,3 +805,6 @@
 .wiz-progress { margin-bottom: 22px; }
 .wiz-more { margin-top: 14px; }
 .wiz-foot { margin-top: 16px; }
+
+.side, .sg-body { overflow-x: hidden; }
+.xrow, .srow { width: auto; max-width: 100%; box-sizing: border-box; }
