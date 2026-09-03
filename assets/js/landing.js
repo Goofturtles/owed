@@ -8,7 +8,7 @@
 
   /* ---------- sticky nav ---------- */
   var nav = document.getElementById('nav');
-  var darkBands = document.querySelectorAll('.city-sticky, .chapter:not(.chapter-light)');
+  var darkBands = document.querySelectorAll('.on-dark-band');   /* none on the SaaS page; the film sets its own flag */
   var filmEl = document.getElementById('film');
   var onScroll = function () {
     if (!nav) return;
@@ -180,82 +180,6 @@
     });
   })();
 
-  /* ---------- cinematic chapters: lazy looping footage, a light drift ----------
-     Footage is attached only when a chapter comes within half a screen and
-     paused when it leaves; the entrance stagger fires once a third of it is
-     in view. Reduced motion keeps the poster still and skips the drift. */
-  (function chapters() {
-    var list = document.querySelectorAll('.chapter');
-    if (!list.length) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var saveData = !!(navigator.connection && navigator.connection.saveData);
-    var still = reduce || saveData;   // poster only, a play ring starts it on request
-    Array.prototype.forEach.call(list, function (ch) {
-      ch.classList.add('is-js');
-      if (still) {
-        ch.classList.add('is-still');
-        var ring = ch.querySelector('.chapter-play');
-        if (ring) ring.hidden = false;   // the markup keeps it hidden until this path needs it
-      }
-      var v = ch.querySelector('video');
-      if (v) {
-        v.addEventListener('playing', function () { ch.classList.add('is-playing'); });
-        v.addEventListener('pause', function () { if (!still) ch.classList.remove('is-playing'); });
-      }
-    });
-
-    function attach(v) {
-      if (!v.getAttribute('src')) { v.src = v.dataset.src; v.load(); }
-    }
-    function play(v) {
-      var p = v.play();
-      if (p && p.catch) p.catch(function () { /* autoplay refused: the poster stays */ });
-    }
-
-    /* footage arrives within one viewport and plays once a third is in view */
-    var near = new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        var v = en.target.querySelector('video[data-src]');
-        if (!v || still) return;
-        if (en.isIntersecting) attach(v);
-      });
-    }, { rootMargin: '100% 0px' });
-    var show = new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        var ch = en.target;
-        // the copy sits in the card's last third, so it only leaves with the card
-        if (en.intersectionRatio >= 0.3) ch.classList.add('is-show');
-        else if (!en.isIntersecting) ch.classList.remove('is-show');
-        var v = ch.querySelector('video[data-src]');
-        if (!v || still) return;
-        if (en.intersectionRatio >= 0.3) { attach(v); play(v); }
-        else if (!en.isIntersecting && v.getAttribute('src')) v.pause();
-      });
-    }, { threshold: [0, 0.3, 1] });
-    Array.prototype.forEach.call(list, function (ch) { near.observe(ch); show.observe(ch); });
-
-    /* the play ring (reduced motion / save-data) is a play-pause toggle; the
-       footage stays decorative, so nothing hidden from assistive tech is
-       ever made focusable */
-    document.addEventListener('click', function (e) {
-      var b = e.target.closest('.chapter-play');
-      if (!b) return;
-      var ch = b.closest('.chapter'), v = ch && ch.querySelector('video[data-src]');
-      if (!v) return;
-      attach(v);
-      if (v.paused) {
-        ch.classList.add('is-playing');
-        b.setAttribute('aria-pressed', 'true');
-        b.setAttribute('aria-label', 'Pause the footage');
-        play(v);
-      } else {
-        v.pause();
-        b.setAttribute('aria-pressed', 'false');
-        b.setAttribute('aria-label', 'Play the footage');
-      }
-    });
-  })();
-
   /* ---------- mobile menu ---------- */
   var toggle = document.getElementById('navToggle');
   if (toggle && nav) {
@@ -368,13 +292,16 @@
     }).join('\n');
     // the button holds an icon as well as a label, so only the label swaps
     var lbl = btn.querySelector('span') || btn;
+    var status = document.getElementById('copyStatus');
     var done = function () {
       var old = lbl.textContent;
       lbl.textContent = 'Copied';
       btn.classList.add('is-copied');
+      if (status) status.textContent = 'Script copied to the clipboard.';
       setTimeout(function () {
         lbl.textContent = old;
         btn.classList.remove('is-copied');
+        if (status) status.textContent = '';
       }, 1600);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -388,7 +315,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.sc-copy, .sc-shot, .section-head, .prem-row, .tile, .hw-tile, .hw-tile, .script-card, .earth-lead, .earth-honest, .faq-item, .cta-inner, .reg-row, .finder-doc, .finder-note-out'
+    '.product-shot, .sources-grid, .section-head, .prob-card, .feat-card, .hw-step, .hw-shot, .ck-col, .sc-left, .sc-fig, .env-card, .env-copy, .env-diagram, .env-chips, .reg-row, .faq-item, .cta-card'
   );
 
   var io = null;
@@ -434,7 +361,7 @@
      below is drawn from a rule in data/coverage.json; nothing here is
      an invented deadline.
 
-       0  cards-us-amex-extended-warranty
+       0  amex-extended-warranty-us
        1  uk-six-year-claim-window
        2  elec-nintendo-joycon-drift-free-repair
 
@@ -650,189 +577,67 @@
     }
   })();
 
-  /* ============================================================
-     earth - pill depth field
-
-     The pills drift with the scroll rather than on a loop of their
-     own. That is deliberate: scroll-linked movement is driven by the
-     reader, so there is no perpetual motion to have to offer a pause
-     control for, and nothing moves while the page is being read.
-     ============================================================ */
-  (function pillField() {
-    var field = document.getElementById('pillfield');
-    if (!field) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.matchMedia('(max-width: 760px)').matches) return;   // stacked there
-
-    var pills = field.querySelectorAll('.pf-pill');
-    var ticking = false;
-
-    /* The fall. Twelve objects drop from above the field, land, bounce and
-       settle - once, when the field is half in view. The drop is Material 3's
-       long2 (500ms) on the emphasized-accelerate curve (gravity reads as
-       ease-in); the bounce is a damped spring with Framer Motion's defaults
-       (stiffness 100, damping 10, mass 1), integrated per frame, with a 0.32
-       restitution on landing. Far tier first, then mid, then near, 55ms apart,
-       so the pile builds from the back. */
-    var fieldH = field.getBoundingClientRect().height || 480;
-    for (var s0 = 0; s0 < pills.length; s0++) {
-      pills[s0].style.setProperty('--fy', (-(fieldH + 140)) + 'px');
-      pills[s0].style.setProperty('--fr', (pills[s0].style.getPropertyValue('--rot') || '0deg').trim());
-    }
-    function accel(t) { return cubic(t, .3, 0, .8, .15); }      // M3 emphasized-accelerate
-    function cubic(t, x1, y1, x2, y2) {
-      // solve x(u)=t by bisection, return y(u)
-      var lo = 0, hi = 1, u = t;
-      for (var k = 0; k < 18; k++) {
-        u = (lo + hi) / 2;
-        var x = 3 * (1 - u) * (1 - u) * u * x1 + 3 * (1 - u) * u * u * x2 + u * u * u;
-        if (x < t) lo = u; else hi = u;
-      }
-      return 3 * (1 - u) * (1 - u) * u * y1 + 3 * (1 - u) * u * u * y2 + u * u * u;
-    }
-    function fall(el, delay) {
-      var start = -(fieldH + 140);
-      var rot = parseFloat(el.style.getPropertyValue('--rot')) || 0;
-      var t0 = null, phase = 0, y = 0, v = 0, last = 0;
-      var K = 100, C = 10, M = 1, E = .32, DROP = 500;
-      function step(now) {
-        if (t0 === null) t0 = now + delay;
-        var t = now - t0;
-        if (t < 0) { requestAnimationFrame(step); return; }
-        if (phase === 0) {
-          var e = accel(Math.min(1, t / DROP));
-          el.style.setProperty('--fy', (start * (1 - e)).toFixed(1) + 'px');
-          el.style.setProperty('--fr', (rot * (1 - e)).toFixed(2) + 'deg');
-          if (t >= DROP) {
-            // landing velocity from the curve's end slope, reversed with restitution
-            var e2 = accel(Math.max(0, (DROP - 16) / DROP));
-            var vLand = start * (e2 - 1) / 16;               // px per ms, downward positive
-            v = -Math.abs(vLand) * E; y = 0; phase = 1; last = now;
-          }
-          requestAnimationFrame(step); return;
-        }
-        var dt = Math.min(32, now - last) / 1000; last = now;    // seconds
-        var a = (-K * y - C * v * 1000) / M / 1000;             // v is px/ms
-        v += a * dt; y += v * dt * 1000;
-        el.style.setProperty('--fy', y.toFixed(2) + 'px');
-        el.style.setProperty('--fr', (y * .06).toFixed(2) + 'deg');
-        if (Math.abs(y) < .3 && Math.abs(v) < .002) {
-          el.style.setProperty('--fy', '0px'); el.style.setProperty('--fr', '0deg'); return;
-        }
-        requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-    var fell = false;
-    function dropAll() {
-      if (fell) return; fell = true;
-      var order = Array.prototype.slice.call(pills).sort(function (a, b) { return depth(a) - depth(b); });
-      for (var i = 0; i < order.length; i++) fall(order[i], i * 55);
-    }
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es, io) {
-        es.forEach(function (en) { if (en.intersectionRatio >= .5) { dropAll(); io.disconnect(); } });
-      }, { threshold: [0, .5, 1] }).observe(field);
-      // failsafe: whatever happens, the pills are on the ground 6s after load
-      setTimeout(dropAll, 6000);
-    } else {
-      dropAll();
-    }
-
-    function depth(el) {
-      // near things travel furthest, which is what sells the depth
-      return el.classList.contains('pf-far') ? 14
-           : el.classList.contains('pf-mid') ? 28 : 46;
-    }
-
-    function update() {
-      ticking = false;
-      var r = field.getBoundingClientRect();
-      var vh = window.innerHeight;
-      if (r.bottom < -300 || r.top > vh + 300) return;
-      // -1 above the fold .. +1 below it
-      var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
-      p = Math.max(-1, Math.min(1, p));
-      for (var i = 0; i < pills.length; i++) {
-        pills[i].style.setProperty('--py', (p * depth(pills[i])).toFixed(1) + 'px');
-      }
-    }
-    function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(update); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
-
-    /* Pointer parallax. Ambient by design: the ceiling is "you notice
-       something responded, you could not say what moved", so the near layer
-       tops out at 12px. Written to the `translate` property rather than
-       `transform` so it composes with each pill's rotation instead of
-       overwriting it. Fine pointers only - on touch there is no hover to
-       parallax against, and it would just cost frames. */
-    if (!window.matchMedia('(pointer: fine)').matches) return;
-
-    var tx = 0, ty = 0, cx = 0, cy = 0, live = false, praf = 0;
-
-    window.addEventListener('pointermove', function (e) {
-      tx = (e.clientX / window.innerWidth - .5) * 2;
-      ty = (e.clientY / window.innerHeight - .5) * 2;
-      if (live && !praf && !stacked.matches) praf = requestAnimationFrame(glide);
-    }, { passive: true });
-
-    var stacked = window.matchMedia('(max-width: 760px)');
-    function clearTranslate() {
-      for (var i = 0; i < pills.length; i++) pills[i].style.translate = '';
-    }
-    // below the breakpoint the pills are a plain wrapped row; a stale inline
-    // translate from the desktop layout would leave them nudged off-grid
-    if (stacked.addEventListener) {
-      stacked.addEventListener('change', function (e) { if (e.matches) clearTranslate(); });
-    }
-
-    function glide() {
-      if (!live || stacked.matches) { praf = 0; return; }
-      cx += (tx - cx) * .07;
-      cy += (ty - cy) * .07;
-      for (var i = 0; i < pills.length; i++) {
-        var el = pills[i];
-        var k = depth(el) / 46 * 12;          // 12 / 7 / 4px by layer
-        el.style.translate = (cx * k).toFixed(2) + 'px ' + (cy * k).toFixed(2) + 'px';
-      }
-      // settled: stop burning frames until the pointer moves again
-      if (Math.abs(tx - cx) < .0005 && Math.abs(ty - cy) < .0005) { praf = 0; return; }
-      praf = requestAnimationFrame(glide);
-    }
-
-    // only run the loop while the field is actually on screen
+  /* ---------- read from: pause the moving list (WCAG 2.2.2) ---------- */
+  (function sourcesPause() {
+    var btn = document.querySelector('[data-pause]');
+    var track = document.querySelector('.sources-track');
+    if (!btn || !track) return;
+    // the name stays "Pause the list"; aria-pressed carries the state
+    btn.addEventListener('click', function () {
+      var paused = track.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    });
+    // the loop only runs while the strip is on screen
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        es.forEach(function (en) {
-          live = en.isIntersecting;
-          if (live && !praf) praf = requestAnimationFrame(glide);
-        });
-      }, { threshold: 0 }).observe(field);
-    } else {
-      live = true; praf = requestAnimationFrame(glide);
+        es.forEach(function (en) { track.classList.toggle('is-off', !en.isIntersecting); });
+      }, { threshold: 0 }).observe(track);
     }
   })();
 
-  /* ---------- how it works: the tile in view lights its label ---------- */
-  (function hwLive() {
-    var tiles = document.querySelectorAll('.hw-tile');
-    if (!tiles.length || !('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { en.target.classList.toggle('is-live', en.intersectionRatio >= .5); });
-    }, { threshold: [0, .5, 1] });
-    Array.prototype.forEach.call(tiles, function (t) { io.observe(t); });
+  /* ---------- the script: a caption lights its number on the card ----------
+     Decorative coupling (Vercel, Grammarly): hovering caption N turns
+     marker N on the script card to the accent. The section reads fully
+     without it, so it is pointer-only and never required. */
+  (function scriptCallouts() {
+    var fig = document.querySelector('.sc-fig');
+    var caps = document.querySelectorAll('.sc-cap');
+    if (!fig || !caps.length) return;
+    function on(n) {
+      if (n) fig.setAttribute('data-on', n); else fig.removeAttribute('data-on');
+      Array.prototype.forEach.call(caps, function (c) {
+        c.classList.toggle('is-on', !!n && c.getAttribute('data-n') === n);
+      });
+    }
+    Array.prototype.forEach.call(caps, function (c) {
+      var n = c.getAttribute('data-n');
+      c.addEventListener('mouseenter', function () { on(n); });
+      c.addEventListener('mouseleave', function () { on(''); });
+    });
   })();
 
-  /* ---------- one FAQ open at a time ---------- */
-  var faqs = document.querySelectorAll('.faq-item');
-  Array.prototype.forEach.call(faqs, function (d) {
-    d.addEventListener('toggle', function () {
-      if (!d.open) return;
-      Array.prototype.forEach.call(faqs, function (other) {
-        if (other !== d) other.open = false;
-      });
-    });
-  });
+  /* ---------- beyond money: the one number Owed counts ----------
+     Read from this browser's own shelf (the same store the app writes):
+     items with at least one claim marked won. Self-reported, per
+     LIMITATIONS.md section 10; nothing here converts it to anything. */
+  (function envCount() {
+    var el = document.getElementById('envCount');
+    if (!el) return;
+    var n = 0;
+    try {
+      var shelf = JSON.parse(localStorage.getItem('owed:shelf') || '[]');
+      if (Array.isArray(shelf)) {
+        shelf.forEach(function (it) {
+          var c = it && it.claims;
+          if (!c || typeof c !== 'object') return;
+          for (var k in c) {
+            if (c[k] && c[k].state === 'won') { n++; break; }
+          }
+        });
+      }
+    } catch (e) { n = 0; }
+    if (n) {
+      el.textContent = 'In this browser so far: ' + n + (n === 1 ? ' thing' : ' things') + ' marked as fixed.';
+    }
+  })();
 })();

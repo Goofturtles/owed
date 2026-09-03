@@ -1,8 +1,10 @@
 /* ============================================================
    Owed — landing page
-   Floating pill nav, one enormous display serif with a real
-   italic, a soft mint pill for the thing you press, and one
-   signature piece of motion: fine print in, verdict out.
+   A floating pill nav, the scroll-scrubbed film, then a SaaS page:
+   one paper ground, white hairline cards, Geist 300 uppercase section
+   heads (owner's rule), plain sentences at 16px and up. Every block
+   below the film was rebuilt 3 Sept 2026 to the Mobbin evidence in
+   DESIGN-REFERENCES.md ("The SaaS page").
    ============================================================ */
 
 /* ---------------- floating pill nav ---------------- */
@@ -28,7 +30,7 @@
   transition: box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
 .nav.is-stuck .nav-pill { box-shadow: var(--shadow-lg); border-color: var(--line-2); }
-/* over the dark card the pill turns to dark glass instead of a grey slab */
+/* over the dark sea of the film the pill turns to dark glass instead of a grey slab */
 .nav.on-dark .nav-pill {
   background: color-mix(in srgb, #15181A 78%, transparent);
   border-color: rgba(242, 243, 240, .14);
@@ -97,6 +99,12 @@
   .nav-actions .btn { justify-content: center; }
   .nav-actions { padding-bottom: .35rem; }
 }
+/* The floating nav composited to 1.02:1 off the dark ground and its shadow is
+   black on near-black, so it did not float. A top inset hairline is what
+   reads as glass on a dark ground. */
+:root[data-theme="dark"] .nav-pill {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(242, 243, 240, .07);
+}
 
 /* ============================================================
    THE FILM — ported from the owed-cinematic build
@@ -137,108 +145,9 @@
 .film-fade { position: absolute; inset: 0; background: var(--paper); opacity: var(--fade, 0); pointer-events: none; }
 /* the section after the film rises over the dissolving scene instead of
    waiting under a screen of blank paper */
-.film + .finder { position: relative; z-index: 2; margin-top: -28vh; }
-@media (max-width: 900px) { .film + .finder { margin-top: -18vh; } }
+.film + .product { position: relative; z-index: 2; margin-top: -28vh; }
+@media (max-width: 900px) { .film + .product { margin-top: -18vh; } }
 
-/* ============================================================
-   CINEMATIC CHAPTERS — full-bleed footage between the readable sections
-
-   A chapter is one screen of looping footage (loaded only when it comes
-   near, paused when it leaves), a scrim so the type holds over any frame,
-   a film-voice heading, one plain sentence, sometimes one button. The
-   media drifts a few percent against the scroll; children enter on the
-   film's stagger once the chapter is a third in view. Phones get a shorter
-   band; reduced motion gets the poster and no drift.
-   ============================================================ */
-/* Built to the Mobbin evidence (2 Sept 2026, 12 references): mid-page
-   chapters are INSET rounded cards, 45-75vh, never a 100vh full-bleed
-   (Zoox, Titan, Lightship, Fauna, Loom, Zipline, Blue Apron); copy on
-   footage is white and light in two lines, bottom-left (Lightship, Waabi,
-   Rivian), legible because the footage is dark where the type sits, with
-   at most a gradient under the text block (Rivian) and never a text
-   shadow; the hand-off is a hard edge onto paper; phones keep real video.
-   The heading keeps the film's uppercase voice (owner's call). */
-.chapter {
-  position: relative; isolation: isolate;
-  margin: 0 clamp(12px, 1.5vw, 24px);
-  height: clamp(480px, 68vh, 760px);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  display: grid; align-items: end;
-  background: #0B100D; color: #F5F3EC;
-}
-.chapter-media { position: absolute; inset: 0; z-index: 0; }
-.chapter-media video, .chapter-media img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  object-position: var(--focus, 50% 50%);
-}
-/* the poster sits under the video; the video fades in only once it plays,
-   and settles from a 4% enlargement over six seconds while in view */
-.chapter-media video { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity .3s var(--ease), transform 6s linear; }
-.chapter.is-playing .chapter-media video { opacity: 1; transform: scale(1); }
-.chapter-scrim {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background:
-    linear-gradient(to top, rgba(6, 10, 8, .85) 0%, rgba(6, 10, 8, .55) 40%, transparent 70%),
-    rgba(0, 0, 0, .12);
-}
-.chapter-copy { position: relative; z-index: 2; width: min(1140px, 100% - 2 * clamp(24px, 4vw, 56px)); margin: 0 auto; padding: 0 0 clamp(24px, 4vw, 56px); }
-.chapter-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(245, 243, 236, .7); margin: 0 0 .9rem; }
-.chapter-title {
-  font-family: var(--display); font-weight: 300; text-transform: uppercase;
-  letter-spacing: .02em; line-height: 1.08;
-  font-size: clamp(32px, 4.2vw, 56px);
-  max-width: 18ch; color: #F5F3EC; padding-bottom: 4px;
-}
-.chapter-title em { font-style: normal; font-weight: inherit; color: var(--dk-accent); }   /* the film has no italics; the emphasised clause takes the mint */
-.chapter-lede { margin-top: .9rem; max-width: 40ch; font-size: clamp(16px, 1.2vw, 18px); line-height: 1.5; color: #F5F3EC; }
-.chapter-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem; margin-top: 1.5rem; }
-/* Lightship's glass pill: dark glass, hairline, white label */
-.chapter-actions .btn-glass {
-  height: 44px; padding: 0 22px; border-radius: var(--radius-pill);
-  background: rgba(0, 0, 0, .45); border: 1px solid rgba(255, 255, 255, .18);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  color: #FFFFFF; font-size: 15px; font-weight: 500;
-  display: inline-flex; align-items: center; text-decoration: none;
-  transition: background-color .2s var(--ease), border-color .2s var(--ease);
-}
-.chapter-actions .btn-glass:hover { background: rgba(0, 0, 0, .6); border-color: rgba(255, 255, 255, .32); }
-.chapter-actions .btn-accent { background: #F5F3EC; color: #15161A; }
-.chapter-actions .btn-accent:hover { background: #E4E1D8; }
-.chapter-link { color: rgba(245, 243, 236, .85); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(245, 243, 236, .4); min-height: 44px; display: inline-flex; align-items: center; }
-.chapter-link:hover { color: #FFFFFF; text-decoration-color: currentColor; }
-.chapter-credit {
-  position: absolute; right: .85rem; top: .85rem; z-index: 2;
-  padding: 6px 10px; border-radius: var(--radius-pill);
-  background: rgba(0, 0, 0, .55);
-  font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
-  color: #F5F3EC; text-decoration: none;
-}
-.chapter-credit:hover { background: rgba(0, 0, 0, .75); }
-/* reduced motion and save-data: the poster stays, one play ring starts the
-   film with native controls (Blue Apron, Dropbox Paper) */
-.chapter-play {
-  position: absolute; left: 50%; top: 50%; z-index: 3; transform: translate(-50%, -50%);
-  width: 56px; height: 56px; border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, .85); background: rgba(0, 0, 0, .35); color: #FFFFFF;
-  display: none; align-items: center; justify-content: center;
-}
-.chapter.is-still .chapter-play { display: flex; }
-.chapter.is-still .chapter-media video { opacity: 1; transform: none; transition: none; }
-.chapter :focus-visible { outline-color: #FFFFFF; }
-@media (max-width: 767px) {
-  .chapter { margin: 0 10px; height: clamp(420px, 72vh, 640px); height: clamp(420px, 72svh, 640px); border-radius: 16px; }
-  .chapter-copy { width: calc(100% - 40px); padding-bottom: 20px; }
-  .chapter-title { font-size: clamp(30px, 8.5vw, 34px); max-width: none; }
-  .chapter-lede { font-size: 15px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .chapter-media video { transition: opacity .2s ease; transform: none !important; }
-  .chapter .stg, .chapter.is-show .stg { transition: opacity .2s ease; transform: none; }
-}
-/* the readable section after a chapter starts on a hard edge with room */
-.chapter + .section { padding-top: clamp(72px, 10vh, 128px); }
-.chapter + .problem { border-top: 0; }   /* no hairline under a rounded card */
 .film-overlay { position: absolute; inset: 0; height: 100%; }
 @supports (height: 100svh) { .film-overlay { height: 100svh; } }
 
@@ -386,11 +295,11 @@
   .film-scene { transition: none; }
 }
 
-/* the try-it field — one pill with the mint button inside */
+/* the try-it field — one pill with the button inside */
 .hero-try { width: min(560px, 100%); margin-top: 1.85rem; }
 .hero-try-field {
   display: flex; align-items: center; gap: .5rem;
-  background: var(--card);
+  background: var(--field);
   border: 1px solid var(--field-line);
   border-radius: var(--radius-pill);
   padding: .32rem .32rem .32rem .95rem;
@@ -430,257 +339,27 @@
 .try-result li { display: flex; align-items: flex-start; gap: .55rem; font-size: var(--step--1); color: var(--ink-2); }
 .try-result .go { margin-top: 1rem; display: inline-flex; }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-/* ---------------- the finder: a marked-up page ----------------
-   Reworked away from the generic "tick circle + bold line + grey line" card.
-   That pattern, plus a verdict floating in space with nothing tying it to the
-   clause it came from, is what made this read as generated. It is now a
-   document with a margin annotation — which is literally what the product
-   does — and a rule physically connects the marked line to the note. */
-.finder {
-  /* the light run is one continuous ground now; a tonal step here read as
-     a hard seam right where the page should feel continuous */
-  padding: clamp(3.5rem, 8vw, 6rem) 0;
-}
-.finder-head { max-width: 42rem; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
-.finder-title {
-  font-size: var(--step-4);
-  margin-top: .55rem;
-  letter-spacing: -.022em;
-  padding-bottom: .06em;
-}
-.finder-title em { font-style: italic; color: var(--accent); }
-
-.finder-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-  position: relative;
-}
-
-/* ---- the document ---- */
-.finder-doc {
-  margin: 0;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 3px;                     /* paper, not an app panel */
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  position: relative;
-}
-/* a bound edge, so it reads as a page out of something longer */
-.finder-doc::before {
-  content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
-  background: linear-gradient(var(--accent-line), var(--line-2));
-  opacity: .7;
-}
-.finder-doc-bar {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  padding: .7rem 1rem .7rem 1.4rem;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-2);
-}
-.finder-doc-name {
-  font-size: var(--step--2); color: var(--ink-2); letter-spacing: .02em;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.finder-doc-pp { font-size: var(--step--2); color: var(--ink-3); flex-shrink: 0; }
-
-/* Every digital document facsimile in the reference set (Stripe, Mercury,
-   Midday, Wave, Intercom, Figma, Deel) is a grotesque sans at one-half to
-   two-thirds of the UI size, ragged right, two tones: grey for the run,
-   ink for what matters. None is monospaced, none is cropped at the edge. */
-.finder-wall {
-  padding: 1.1rem 1.5rem 1.2rem 1.6rem;
-  display: grid; row-gap: .55rem;
-}
-.finder-wall p {
-  position: relative;
-  font-family: var(--sans);
-  font-size: var(--step-mono);
-  line-height: 1.5;
-  color: var(--ink-3);
-  max-width: 64ch;
-  padding: 0 .6rem 0 .9rem;
-  /* lines that are not the point stay two lines tall, so the sheet keeps a
-     fixed height as the wall wraps */
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: opacity .4s var(--ease), color .4s var(--ease);
-}
-
-/* the marked line: a highlighter swipe plus a margin marker */
-/* the marked line: full text, body-size ink, a highlighter fill behind the
-   run (square corners, text colour left alone - Dovetail, Descript, Evernote)
-   and Owed's own margin bar. 400ms emphasized-decelerate is Material 3's
-   medium4 token; the bar takes medium1 (250ms). */
-.finder-wall p[data-hit] {
-  display: block; -webkit-line-clamp: unset;
-  font-size: var(--step--1);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--ink-2);
-  padding: .3rem .6rem .3rem .9rem;
-  background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-size: 0% 100%;
-  transition: background-size .4s cubic-bezier(.05, .7, .1, 1), opacity .4s var(--ease), color .4s var(--ease);
-}
-.finder-wall p[data-hit]::before {
-  content: ""; position: absolute; left: 0; top: 10%; bottom: 10%; width: 3px;
-  background: var(--accent);
-  transform: scaleY(0); transform-origin: 50% 50%;
-  transition: transform .25s cubic-bezier(.05, .7, .1, 1);
-}
-.finder-wall p.is-hit { color: var(--ink); background-size: 100% 100%; }
-.finder-wall p.is-hit::before { transform: scaleY(1); }
-/* the operative phrase inside the line, the way Figma and Intercom bold a
-   defined term */
-.finder-wall p b { font-weight: 600; color: var(--ink); }
-
-/* ---- the margin note ---- */
-.finder-note-out {
-  position: relative;
-  padding-left: 0;
-  /* rides down to meet the marked line; clamped so it can never run off */
-  margin-top: clamp(0rem, calc(var(--hit-y, 150px) - 1.05rem), 22rem);
-  transition: margin-top .55s var(--ease-out);
-}
-/* the connector: what actually ties the note to the clause */
-.finder-rule {
-  position: absolute; right: 100%; top: 1.05rem;
-  width: clamp(.6rem, 3vw, 2.75rem); height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent-line) 40%, var(--accent));
-}
-.finder-rule::after {
-  content: ""; position: absolute; right: -3px; top: -2.5px;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-}
-.finder-verdict {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: var(--step-3);
-  line-height: 1.16;
-  letter-spacing: -.02em;
-  color: var(--ink);
-  margin-top: .3rem;
-  padding-bottom: .05em;
-}
-.finder-note-out.is-swapping .finder-verdict, .finder-note-out.is-swapping .finder-meta, .finder-note-out.is-swapping .finder-for { opacity: 0; }
-.finder-verdict, .finder-meta, .finder-for { transition: opacity .3s var(--ease); }
-.finder-meta {
-  font-size: var(--step-0);
-  color: var(--ink-2);
-  line-height: 1.5;
-  margin-top: .5rem;
-  padding-top: .55rem;
-  border-top: 1px solid var(--line);
-}
-.finder-for { font-size: var(--step-mono); color: var(--ink-3); margin-top: .5rem; }
-
-.finder-foot {
-  font-size: var(--step--1); color: var(--ink-3);
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
-  padding-top: 1rem; border-top: 1px solid var(--line);
-}
-.finder-foot b { color: var(--accent); font-weight: 600; }
-
-/* while the example swaps, the note steps back rather than snapping */
-
-@media (max-width: 880px) {
-  .finder-grid { grid-template-columns: 1fr; }
-  .finder-note-out { margin-top: 1.5rem; padding-left: 0; }
-  .finder-rule { display: none; }       /* nothing to connect once stacked */
-  .finder-verdict { font-size: var(--step-1); }
-}
-@media (max-width: 560px) {
-  .finder-wall { padding-inline: 1rem 1rem; row-gap: .45rem; }
-  /* fewer filler lines on a phone; the three marked lines always stay */
-  .finder-wall p:not([data-hit]):nth-of-type(n+9) { display: none; }
-  .finder-wall p { font-size: var(--step--2); }
-  .finder-wall p[data-hit] { font-size: var(--step--1); }
-  .finder-doc-pp { display: none; }
+/* the hero teaser's tone dots and note (rendered by landing.js) */
+.try-result .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: .45rem; }
+.try-result .dot.ok { background: var(--accent); }
+.try-result .dot.maybe { background: var(--warn); }
+.try-result .try-sub { font-size: var(--step--1); }
+/* the field's focus ring is a box-shadow, which forced-colors mode strips */
+@media (forced-colors: active) {
+  .hero-try-input:focus { outline: 2px solid Highlight; outline-offset: 2px; }
 }
 
 /* ============================================================
-   product showcase — after Intercom
+   THE SAAS PAGE — shared rhythm and type
 
-   The shelf and the script were already a list beside a document, so
-   the section stops being one bordered panel and becomes exactly that:
-   a hairline-ruled index on the left, the app itself on the right,
-   cropped by the section edge so the UI stays at reading size instead
-   of being shrunk to fit a box. Losing the fake browser chrome buys
-   back the width that shrinking cost.
+   Section padding runs 56-88px top and bottom, so two sections meet
+   with 112-176px between them (Attio, Linear, Vercel, Notion run
+   120-170). Heads are split: heading left, lede right, one shared
+   right-column edge for every two-column block on the page.
    ============================================================ */
-.showcase {
-  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5rem);
-  overflow: hidden;                 /* the panel is cropped on purpose */
-  border-top: 1px solid var(--line);
-}
-.sc-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
-.sc-title { font-size: var(--step-4); margin-top: .55rem; padding-bottom: .06em; }
-.sc-lede { margin-top: 1rem; }
-
-.sc-cta { margin-top: clamp(1.5rem, 3vw, 2rem); }
-
-.sc-shot { margin: 0; position: relative; }
-.sc-shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-}
-/* desktop: only the sidebar and the results column, at reading size (the
-   whole three-pane shot shrank its smallest text to ~10px); the crop ends on
-   a fade into the page rather than through a row */
-@media (min-width: 900px) {
-  .sc-shot {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-right: 0;
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    background: var(--card);
-  }
-  .sc-shot img {
-    width: 168%; max-width: none;
-    border: 0; border-radius: 0; box-shadow: none;
-  }
-  .sc-shot::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--paper));
-    pointer-events: none;
-  }
-}
-/* the shot follows the theme — a light screenshot on a dark page is the
-   single most obvious "nobody looked at this" tell */
-.sc-shot .shot-dark { display: none; }
-:root[data-theme="dark"] .sc-shot .shot-light { display: none; }
-:root[data-theme="dark"] .sc-shot .shot-dark { display: block; }
-
-@media (min-width: 900px) {
-  .sc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* run the panel past the container's right edge; .showcase clips it, so
-     this never reaches the document and never causes a page scrollbar */
-  .sc-shot { width: calc(100% + clamp(2rem, 9vw, 9rem)); }
-}
-
-/* ---------------- sections ---------------- */
-.section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
-/* Split header, after Webflow: the heading holds the left, the lede sits to
-   the right of it. Every section used to stack eyebrow/heading/lede in one
-   centred-left column, which is what made thirteen sections read as one
-   uniform run no matter what was inside them. */
+.sx { padding: clamp(56px, 6.5vw, 88px) 0; }
 .section-head { max-width: 44rem; margin-bottom: clamp(2rem, 4vw, 2.75rem); }
 .section-head.split .section-title { max-width: 20ch; }
-/* one shared right-column edge for the whole page: every two-column block
-   is 1fr 1fr with the same gap, so the right block always starts at the same
-   x (Linear runs one vertical line down its page) */
 .section-head.split {
   max-width: none;
   display: grid;
@@ -689,7 +368,6 @@
   align-items: end;
   padding-bottom: 1.35rem;
 }
-/* 20ch broke 'Four answers, then a phone call.' onto four lines */
 .section-head.split .head-a { max-width: none; }
 .section-head.split .section-title { margin-top: .55rem; }
 .section-head.split .head-b { padding-bottom: .25rem; }
@@ -699,8 +377,7 @@
 }
 /* the film's voice carries every section head on this page (owner's call,
    3 Sept 2026): Geist 300, uppercase, gently tracked. Explanations under
-   them stay in plain sentences. The italic serif clause becomes a plain
-   accent-coloured phrase, since an uppercase italic serif reads as noise. */
+   them stay in plain sentences. */
 .display {
   font-weight: 300;
   text-transform: uppercase;
@@ -719,309 +396,408 @@
   margin: .55rem 0 0;
   padding-bottom: .06em;
 }
-.section-lede { margin-top: .9rem; }
+.section-lede { margin-top: .9rem; font-size: 18px; line-height: 1.5; }
+.section-lede b { color: var(--ink); font-weight: 500; }
 
-/* problem — after Instrument: a vertical stack of full-bleed ruled rows
-   rather than a row of three. The figure and its unit are ONE display
-   phrase on one line ("1 year"); a big numeral over a small caption is
-   what made these read as scores. The ink lightens down the stack, which
-   here is the argument: the cover fades. */
-.problem { border-top: 1px solid var(--line); }
-.problem-head { max-width: 46rem; }
-
-.prem { margin-top: clamp(2rem, 4vw, 3.25rem); }
-.prem-row {
-  display: grid;
-  /* the label hugs the figure (Klarna, Fluz, Spade set label beside or under
-     the number); a far-right column left the middle of the row empty */
-  grid-template-columns: repeat(2, minmax(0, 1fr));   /* fixed numeral column: every descriptor starts on the shared right edge */
-  column-gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-  padding-block: clamp(1.1rem, 2.4vw, 1.9rem);
-  border-top: 1px solid var(--line);
-}
-.prem-row:first-child { border-top: 0; }
-.prem-row:last-child { border-bottom: 1px solid var(--line); }
-
-.prem-fig {
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: -.035em;
-  /* the ladder walks the three defined ink steps, so every rung is a token
-     that already clears AA rather than an arbitrary opacity */
-  color: var(--ink);
-}
-
-.prem-text { padding-top: .55em; }        /* optically level with the figure's cap */
-.prem-label {
-  max-width: 40ch;
-  font-size: var(--step-1);
-  line-height: 1.35;
-  letter-spacing: -.008em;
-  color: var(--ink-2);
-}
-/* the nuance lives in a footnote, the way Amplemarket and Spade caption a figure */
-.prem-foot {
-  margin-top: .55rem;
-  font-size: 15px;              /* captions at 13px mid-grey sat under AA */
-  line-height: 1.5;
-  letter-spacing: .01em;
-  color: var(--ink-2);
-}
-
-/* the conclusion the three premises are for */
-.prem-end {
-  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-size: var(--step-3);
-  line-height: 1.2;
-  letter-spacing: -.025em;
-  max-width: 24ch;
-}
-.prem-end em { font-family: var(--serif); font-style: italic; letter-spacing: 0; color: var(--accent); }
-
-@media (max-width: 760px) {
-  .prem-row { grid-template-columns: 1fr; row-gap: .5rem; }
-  .prem-fig { font-size: clamp(2.4rem, 12vw, 3.4rem); }
-}
-
-/* ============================================================
-   how it works - after Norma, Airtasker, Browserbase, Hims, V7, Windsurf
-
-   Light section on the page ground. One row of four equal tiles, white on
-   paper with no border (fill-difference identity is the majority pattern),
-   radius 20, portrait 3:4. Top-down: mono label, title, one sentence, then a
-   well filling the bottom ~60% that holds a real app crop bleeding off the
-   well's bottom and right. The label of the tile in view turns accent.
-   ============================================================ */
-.how { position: relative; }
-/* two by two, near-square (Airtasker / Braintrust tiles sit at ~28% of the
-   viewport with a legible UI crop; four 273px tiles could not keep one element
-   of real app UI readable, which the research's own red team required) */
-.hw-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin: 0;
-}
-.hw-tile {
-  position: relative;
-  display: flex; flex-direction: column;
-  aspect-ratio: 4 / 3;
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 20px 20px 0;
-  overflow: hidden;
-  transition: transform .3s cubic-bezier(.05, .7, .1, 1), box-shadow .3s var(--ease);
-}
-.hw-tile:hover, .hw-tile:focus-within { box-shadow: var(--shadow-lg); }
-.hw-n {
-  font-size: var(--step--2); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--ink-3);
-  transition: color .2s cubic-bezier(.2, 0, 0, 1);
-}
-.hw-tile.is-live .hw-n { color: var(--ink-2); }   /* one grey for every index numeral on the page */
-.hw-title {
-  margin-top: .55rem;
-  font-family: var(--display);
-  font-size: var(--step-2); font-weight: 600; letter-spacing: -.015em; line-height: 1.2;
-  color: var(--ink);
-}
-.hw-body {
-  margin-top: .4rem;
-  font-size: 15px; line-height: 1.5; color: var(--ink-2);
-}
-/* the well: the bottom of the tile, clipped by the tile's own rounded edge */
-.hw-well {
-  margin: auto -20px 0 -20px;
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 52%;
-  background: var(--paper-2);
-  overflow: hidden;
-}
-.hw-well img {
-  position: absolute; left: 6%; top: 10%;
-  width: 96%; height: auto; max-width: none;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  box-shadow: 0 12px 30px -14px rgba(15, 30, 22, .28);
-  transition: transform .2s cubic-bezier(.2, 0, 0, 1);
-}
-.hw-tile:hover .hw-well img, .hw-tile:focus-within .hw-well img { transform: translateY(-12px); }
-/* the panel crop is narrow and the sidebar crop narrower still: shown at their
-   own scale so their type lands at body size, not blown up */
-.hw-tile:nth-child(3) .hw-well img { width: 78%; left: 11%; }
-.hw-tile:nth-child(4) .hw-well img { width: 56%; left: 22%; }
-/* the crop ends on a fade, never through a control */
-.hw-well::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 38%;
-  background: linear-gradient(to bottom, transparent, var(--paper-2));
-  pointer-events: none;
-}
-.hw-dark { display: none; }
-:root[data-theme="dark"] .hw-light { display: none; }
-:root[data-theme="dark"] .hw-dark { display: block; }
-.hw-cta { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
-
-/* entrance: fade + 16px rise, 300ms emphasized-decelerate, 50ms stagger */
-.hw-tile.reveal { opacity: 0; transform: translateY(16px); }
-.hw-tile.reveal.in {
-  opacity: 1; transform: none;
-  transition: opacity .3s cubic-bezier(.05, .7, .1, 1), transform .3s cubic-bezier(.05, .7, .1, 1);
-}
-.hw-tile.reveal:nth-child(2).in { transition-delay: .05s; }
-.hw-tile.reveal:nth-child(3).in { transition-delay: .1s; }
-.hw-tile.reveal:nth-child(4).in { transition-delay: .15s; }
-
-@media (max-width: 720px)  { .hw-grid { grid-template-columns: 1fr; } .hw-cta { width: 100%; } }
-@media (prefers-reduced-motion: reduce) {
-  .hw-tile.reveal { opacity: 1; transform: none; }
-  .hw-tile:hover .hw-well img { transform: none; }
-}
-
-/* ============================================================
-   what we check - Tines' bento re-skinned per the density research
-   (Retool, Daylight, ClickUp, Figma icon grids; see DESIGN-REFERENCES.md)
-
-   Five white cards on the paper, told apart by a hairline, each with one
-   single-stroke ink icon, a mono numeral, a short title and one sentence.
-   A 2 + 3 bento: the two "wide" cards share the first row, the other three
-   the second. Pastel is reserved for the earth pills, so the tint classes
-   in the markup stay inert. The block was lost when the how-it-works rules
-   were regenerated; restored 2 Sept 2026.
-   ============================================================ */
-.bento {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 16px;
-}
-.tile {
-  grid-column: span 2;
-  display: flex; flex-direction: column;
-  min-height: 240px;
-  padding: 24px 24px 22px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  transition: box-shadow .3s var(--ease), transform .3s cubic-bezier(.05, .7, .1, 1);
-}
-.tile.wide { grid-column: span 3; }
-.tile:hover { box-shadow: var(--shadow-lg); }
-.tile-ico {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--paper-2);
-  color: var(--ink);
-}
-.tile-ico svg { width: 24px; height: 24px; }
-/* the icon is the index here (the how tiles use the numeral); two index
-   devices on one card was one too many */
-.tile-n { display: none; }
-.tile-title {
-  margin-top: auto; padding-top: 1.25rem;
-  font-family: var(--display);
-  font-size: var(--step-1); font-weight: 600; letter-spacing: -.012em; line-height: 1.25;
-  color: var(--ink);
-}
-.tile-text {
-  margin-top: .4rem;
-  font-size: 15px; line-height: 1.5; color: var(--ink-2);
-  max-width: 34ch;
-}
-@media (max-width: 1023px) {
-  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tile, .tile.wide { grid-column: span 1; min-height: 0; }
-}
-@media (max-width: 640px) {
-  .bento { grid-template-columns: 1fr; gap: 12px; }
-  .tile { padding: 20px; }
-  .tile-text { font-size: 16px; max-width: none; }
-}
-@media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
-
-/* ============================================================
-   script showcase - copied from Charma
-
-   A very large headline breaking into short lines down the left, a
-   paragraph and an arrow link beneath it, and on the right one big
-   rounded colour panel with a white card floating inside it. Only the
-   words and the colours are ours; Charma's panel is red.
-   ============================================================ */
-.script-sec { overflow: hidden; }
-
-.ch-grid {
-  display: grid;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: center;        /* the copy sits level with the card, not above a void */
-}
-.ch-title {
-  font-size: clamp(2.3rem, 4.6vw, 3.9rem);
-  line-height: 1.06;
-  letter-spacing: -.032em;
-  /* Charma's column is narrow enough that the headline breaks every two or
-     three words; that broken column IS the look */
-  max-width: 11ch;
-  padding-bottom: .04em;
-}
-.ch-text {
-  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-size: var(--step-0);
-  line-height: 1.65;
-  color: var(--ink-2);
-  max-width: 42ch;
-}
-.ch-link {
+/* the one text link on the page: an underline that draws in from the left */
+.tlink {
   display: inline-block;
-  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
   font-size: var(--step-0);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -.01em;
   color: var(--ink);
   text-decoration: none;
-  transition: color .15s var(--ease);
-}
-.ch-link {
+  min-height: 44px; line-height: 44px;   /* a comfortable target without a box */
   background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat;
+  background-size: 0 1px; background-position: 0 calc(100% - 11px); background-repeat: no-repeat;
   transition: background-size .25s var(--ease), color .15s var(--ease);
 }
-.ch-link:hover { color: var(--accent); background-size: 100% 1px; }
-.ch-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.tlink:hover { color: var(--accent); background-size: 100% 1px; }
+.tlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-/* the colour panel, and the card floating inside it */
-.ch-panel {
-  /* a soft light from the top-left corner (Oevra's green closer); the flat
-     field read as a slab next to the page's cards */
-  background:
-    radial-gradient(140% 90% at 50% -10%, rgba(255, 255, 255, .09), rgba(255, 255, 255, 0) 60%),
-    var(--field-accent);
-  border-radius: var(--radius-xl);
-  padding: clamp(1.25rem, 3vw, 2.5rem);
+/* light and dark renditions of every product crop follow the theme
+   (:root lifts these above the `.product-shot img` style display rules) */
+:root .shot-dark { display: none; }
+:root[data-theme="dark"] .shot-light { display: none; }
+:root[data-theme="dark"] .shot-dark { display: block; }
+
+/* ============================================================
+   THE PRODUCT — the whole app at reading size, right under the film
+   (Attio, Notion, Linear, Sequence: one bare screenshot in a hairline
+   card, no browser chrome, a soft shadow because it is the hero shot)
+   ============================================================ */
+.product { padding-bottom: clamp(40px, 5vw, 64px); }
+.product-shot {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
 }
-.ch-panel .script-card {
-  /* a fixed-white object on a fixed-green field: every token its children
-     read is pinned to the light palette, in both themes. Pinning only the
-     background left the dark-theme ink on a white card - body text 2.32:1,
-     marks 1.71:1, a near-black head and foot. */
+.product-shot img { display: block; width: 100%; height: auto; }
+/* on a phone the desktop shot shrank its UI to 3px type; crop it at reading size instead */
+@media (max-width: 640px) {
+  .product-shot { aspect-ratio: 4 / 3; }
+  .product-shot img { width: 190%; max-width: none; }
+}
+:root[data-theme="dark"] .product-shot { border-color: var(--line-2); }
+
+/* ============================================================
+   READ FROM — the sources strip (Notion, Legora, Linear, Amie, Hilos)
+   Caption left, names as type in one grey to the right, a slow marquee
+   with a soft fade at both ends. Hover pauses it. Reduced motion gets a
+   static wrapped list. No box, no fill, no accent inside the strip.
+   ============================================================ */
+.sources { padding: 0 0 clamp(56px, 6.5vw, 88px); }
+.sources-grid {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+.sources-fact { margin-top: .45rem; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.sources-track {
+  position: relative;
+  display: flex; gap: 44px;
+  overflow: hidden;
+  padding: 6px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
+}
+.sources-list {
+  display: flex; gap: 44px; flex: none;
+  margin: 0; padding: 0; list-style: none;
+  white-space: nowrap;
+  animation: src-marquee 110s linear infinite;
+}
+.sources-track:hover .sources-list, .sources-track:focus-within .sources-list { animation-play-state: paused; }
+.sources-list li { font-size: 18px; line-height: 1.35; color: var(--ink-3); }
+.sources-group {
+  font-family: var(--mono); font-size: 11px !important; letter-spacing: .1em; text-transform: uppercase;
+  line-height: 1.2 !important;
+  align-self: center;
+  padding-left: 20px; border-left: 1px solid var(--line-2);
+}
+/* both copies keep every hairline: each list travels by its own width, so
+   any difference between them would snap at the wrap; the fade hides the
+   first one anyway */
+@keyframes src-marquee { to { transform: translateX(calc(-100% - 44px)); } }
+/* the pause control (WCAG 2.2.2): a small ghost pill under the fact line */
+.sources-pause {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px; height: 32px; padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); border-radius: var(--radius-pill);
+  background: none; color: var(--ink-2);
+  font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+  transition: border-color .15s var(--ease), color .15s var(--ease);
+}
+.sources-pause:hover { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 42%, transparent); }
+.sources-track.is-paused .sources-list,
+.sources-track.is-off .sources-list { animation-play-state: paused; }   /* paused by the reader, or off-screen */
+@media (max-width: 900px) {
+  .sources-grid { grid-template-columns: 1fr; gap: 20px; }
+  .sources-track { margin: 0 -1.25rem; padding: 6px 1.25rem; gap: 32px; mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
+  .sources-list { gap: 32px; }
+  .sources-list li { font-size: 16px; }
+  @keyframes src-marquee { to { transform: translateX(calc(-100% - 32px)); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sources-list { animation: none; flex-wrap: wrap; white-space: normal; gap: 10px 28px; }
+  .sources-list[aria-hidden] { display: none; }
+  .sources-track { mask-image: none; -webkit-mask-image: none; margin: 0; padding: 6px 0; }
+  .sources-pause { display: none; }   /* nothing moves, so there is nothing to pause */
+}
+
+/* ============================================================
+   THE PROBLEM — three white cards, one sentence each (Apple's
+   environment cards: the figure inside the sentence, not a scoreboard),
+   the source under a hairline
+   ============================================================ */
+.prob-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; padding: 0; list-style: none; }
+.prob-card {
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 210px;
+  padding: 28px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.prob-line { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.35; letter-spacing: -.01em; color: var(--ink-2); }
+.prob-fig {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(34px, 3vw, 44px); font-weight: 500; line-height: 1.1; letter-spacing: -.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.prob-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.5; color: var(--ink-3); }
+@media (max-width: 860px) {
+  .prob-grid { grid-template-columns: 1fr; gap: 12px; }
+  .prob-card { min-height: 0; padding: 22px; }
+}
+
+/* ============================================================
+   INSIDE OWED — the feature bento (Notion, Linear, Vercel, Twenty,
+   Klarna, Attio, Miro on Mobbin). White cards, one hairline, radius 16,
+   no shadow, 20px gutters; one hero card across two columns; real crops
+   bleeding off a card edge and fading into the card; title 20/500 and
+   one sentence at 16.
+   ============================================================ */
+.feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.feat-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  min-height: 360px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .2s var(--ease);
+}
+.feat-card:hover { border-color: var(--line-2); }
+.feat-hero { grid-column: span 2; min-height: 440px; }
+.feat-text { position: relative; z-index: 1; padding: 28px; }
+.feat-card h3 {
+  font-family: var(--display);
+  font-size: 20px; font-weight: 500; line-height: 1.25; letter-spacing: -.012em;
+  color: var(--ink);
+}
+.feat-card p { margin-top: 8px; font-size: 16px; line-height: 1.5; color: var(--ink-2); max-width: 44ch; }
+.feat-text .tlink { margin-top: 6px; }
+.feat-media { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.feat-media img {
+  position: absolute; left: 28px; top: 28px;
+  width: 112%; max-width: none; height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(21, 22, 26, .06);
+  transition: transform .3s var(--ease);
+}
+/* the crop ends on a fade into the card, never through a control */
+.feat-media::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--card));
+  pointer-events: none;
+}
+.feat-card:hover .feat-media img { transform: translate(-4px, -4px); }
+/* each crop at its own scale so the app's type lands near reading size */
+.feat-media[data-crop="wizard"] img { width: 104%; }
+.feat-media[data-crop="script"] img { width: 76%; }
+.feat-media[data-crop="sidebar"] img { width: 56%; }
+.feat-media[data-crop="result"] img { width: 112%; }
+/* the hero card: text above, the three-pane shot below it, bleeding off the
+   right and the bottom (Notion's bento, Linear's feature cards) */
+.feat-hero .feat-text { max-width: 600px; padding-bottom: 8px; }
+.feat-hero .feat-media { min-height: 220px; }
+.feat-hero .feat-media img { top: 12px; width: 104%; }
+@media (max-width: 1023px) {
+  .feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .feat-card { min-height: 340px; }
+  .feat-hero { min-height: 400px; }
+}
+@media (max-width: 700px) {
+  .feat-grid { grid-template-columns: 1fr; }
+  .feat-card, .feat-hero { grid-column: auto; min-height: 0; }
+  .feat-text { padding: 24px; }
+  .feat-media { flex: none; height: 210px; }
+  .feat-hero .feat-media { height: 220px; }
+  .feat-media img { left: 24px; top: 24px; }
+  .feat-card h3 { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feat-card:hover .feat-media img { transform: none; }
+}
+
+/* ============================================================
+   HOW IT WORKS — the stepper rail (Sequence, Runway, Attio, Grammarly)
+   A hairline rail with an ink dot per column, light two-digit numerals
+   3x the body, a 20/500 title and one sentence; then one shared shot in
+   a padded card, with three accent callouts sitting on the real UI.
+   Phones swap the shot for the crop under each step.
+   ============================================================ */
+.hw-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px 48px;
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 56px);
+}
+.hw-head .btn { margin-bottom: 4px; }
+.hw-pill {
+  display: inline-flex; align-items: center;
+  height: 30px; padding: 0 12px;
+  border: 1px solid var(--line-2); border-radius: var(--radius-pill);
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-2);
+}
+.hw-head .section-title { max-width: 22ch; margin-top: 1rem; }
+.hw-sub { margin-top: 1rem; font-size: 18px; line-height: 1.5; color: var(--ink-2); max-width: 56ch; }
+
+.hw-rail {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px;
+  margin: 0; padding: 0; list-style: none;
+  border-top: 1px solid var(--line);
+}
+.hw-step { position: relative; padding-top: 28px; }
+.hw-step::before {
+  content: ""; position: absolute; left: 0; top: -4.5px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ink);
+}
+.hw-n {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(40px, 4vw, 56px); line-height: 1; letter-spacing: -.01em;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.hw-title { margin-top: 14px; font-size: 20px; font-weight: 500; line-height: 1.3; letter-spacing: -.012em; color: var(--ink); }
+.hw-body { margin-top: 8px; font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 36ch; }
+.hw-crop { display: none; }
+
+.hw-shot {
+  position: relative;
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.hw-shot-in { position: relative; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.hw-shot-in img { display: block; width: 100%; height: auto; }
+.hw-badge {
+  position: absolute; left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: var(--paper);
+  font-size: 14px; font-weight: 500; line-height: 1;   /* a single digit */
+  display: grid; place-items: center;
+  box-shadow: 0 0 0 3px var(--card);
+  transition: transform .2s var(--ease);
+}
+/* hovering a step lifts its callout on the shot */
+.hw-rail:has(.hw-step:nth-child(1):hover) + .hw-shot .hw-badge[data-n="1"],
+.hw-rail:has(.hw-step:nth-child(2):hover) + .hw-shot .hw-badge[data-n="2"],
+.hw-rail:has(.hw-step:nth-child(3):hover) + .hw-shot .hw-badge[data-n="3"] { transform: translate(-50%, -50%) scale(1.18); }
+@media (max-width: 720px) {
+  .hw-head { grid-template-columns: 1fr; }
+  .hw-head .btn { width: 100%; margin: 0; }
+  .hw-rail { grid-template-columns: 1fr; gap: 0; border-top: 0; }
+  .hw-step {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px;
+    padding: 0 0 40px;
+  }
+  .hw-step::before { display: none; }
+  .hw-n { grid-column: 1; grid-row: 1 / span 3; font-size: 32px; padding-top: 3px; }
+  .hw-title { grid-column: 2; margin-top: 0; font-size: 19px; }
+  .hw-body { grid-column: 2; font-size: 16px; }
+  .hw-crop {
+    display: block; grid-column: 2;
+    margin: 16px 0 0; padding: 8px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  }
+  .hw-crop img { display: block; width: 100%; height: auto; border-radius: 6px; }
+  .hw-shot { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .hw-badge { transition: none; } }
+
+/* ============================================================
+   WHAT WE CHECK — five bare columns split by hairlines (Vercel, Stripe,
+   Square, Trawelt): line icon in the accent, mono numeral, 20/500 title,
+   one sentence at 16. No cards, no buttons.
+   ============================================================ */
+.ck-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.ck-col { border-left: 1px solid var(--line); padding: 4px 24px 0 20px; }
+.ck-ico { display: block; width: 24px; height: 24px; color: var(--accent); }
+.ck-n { margin-top: 28px; font-family: var(--mono); font-size: 13px; letter-spacing: .08em; color: var(--ink-3); }
+.ck-title { margin-top: 10px; font-size: 20px; font-weight: 500; line-height: 1.25; letter-spacing: -.012em; color: var(--ink); }
+.ck-body { margin-top: 12px; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 1100px) {
+  .ck-grid { grid-template-columns: 1fr; }
+  .ck-col {
+    display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 16px;
+    border-left: 0; border-top: 1px solid var(--line);
+    padding: 24px 0;
+  }
+  .ck-col:last-child { border-bottom: 1px solid var(--line); }
+  .ck-ico { grid-column: 1; grid-row: 1; }
+  .ck-n { grid-column: 1; grid-row: 2; margin-top: 8px; }
+  .ck-title { grid-column: 2; grid-row: 1; margin-top: 0; }
+  .ck-body { grid-column: 2; grid-row: 2; margin-top: 6px; max-width: 52ch; }
+}
+
+/* ============================================================
+   THE SCRIPT — captions beside the figure (Vercel, Sequence, Grammarly,
+   Linear's figure cards). Three numbered captions on the left, sticky;
+   the live script card on a one-step-deeper ground on the right, the
+   same three numbers pinned to the parts of the card they describe.
+   ============================================================ */
+/* clip, not hidden: a hidden overflow would make the section the scroll
+   container and stop the caption column sticking to the viewport */
+.script-sec { overflow: clip; }
+.sc-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 40px; align-items: start; }
+.sc-left { position: sticky; top: 96px; }
+.sc-caps { margin: 0; padding: 0; list-style: none; }
+.sc-cap {
+  display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+.sc-cap:first-child { border-top: 0; padding-top: 0; }
+.sc-num, .sc-mark {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--ink); color: var(--paper);
+  font-size: 14px; font-weight: 500; line-height: 1;   /* a single digit */
+  display: grid; place-items: center;
+  transition: background-color .18s ease-out;
+}
+.sc-cap h3 { font-size: 18px; font-weight: 500; line-height: 1.3; letter-spacing: -.01em; color: var(--ink); }
+.sc-cap p { margin-top: 6px; font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 36ch; }
+.sc-cap.is-on .sc-num { background: var(--accent); }
+.sc-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 28px; }
+
+.sc-fig {
+  position: relative;
+  padding: clamp(24px, 3.5vw, 40px);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  --sc-ring: var(--paper-2);   /* read here, before the card pins its own tokens */
+}
+/* the markers live inside the fixed-white card, so their colours are fixed too */
+.sc-mark {
+  position: absolute; z-index: 2;
+  background: #15161A; color: #F7F6F2;
+  box-shadow: 0 0 0 3px var(--sc-ring);
+}
+.sc-mark[data-n="1"] { left: -14px; top: 14px; }
+.sc-mark[data-n="3"] { right: -14px; top: 14px; }
+.sc-mark[data-n="2"] { left: -14px; top: 18px; }
+.sc-fig[data-on="1"] .sc-mark[data-n="1"],
+.sc-fig[data-on="2"] .sc-mark[data-n="2"],
+.sc-fig[data-on="3"] .sc-mark[data-n="3"] { background: #0B5C3A; }
+
+/* the card: a fixed-white object in both themes (it is the document the app
+   writes), so every token its children read is pinned to the light palette */
+.sc-fig .script-card {
   --card: #FFFFFF; --paper-2: #F1F0EB; --line: #E2E1DB;
   --ink: #15161A; --ink-2: #4A4C52; --ink-3: #63666E;
   --accent: #0B5C3A; --accent-soft: #E3F0E8; --accent-line: #C3DFD0;
   --warn: #8A5406;
   color-scheme: light;
+  position: relative;
   margin: 0;
   background: #FFFFFF;
-  border: 0;
-  border-radius: var(--radius);
-  box-shadow: 0 18px 40px -12px rgba(8, 40, 26, .35);
-  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px -12px rgba(21, 22, 26, .18);
 }
 .script-head {
+  position: relative;
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; flex-wrap: wrap;
   padding: .8rem 1.05rem;
   border-bottom: 1px solid var(--line);
   background: var(--paper-2);
+  border-radius: 12px 12px 0 0;
 }
 .script-to { display: flex; align-items: center; gap: .65rem; min-width: 0; }
 .script-avatar {
@@ -1042,7 +818,9 @@
 }
 .script-due i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; }
 
-.script-body { margin: 0; padding: 1.25rem 1.2rem; display: flex; flex-direction: column; gap: .85rem; }
+/* the wrapper carries marker 2: the renderer empties the blockquote itself */
+.script-body-wrap { position: relative; }
+.script-body { position: relative; margin: 0; padding: 1.25rem 1.2rem; display: flex; flex-direction: column; gap: .85rem; }
 /* the screen-reader copy of each line must not take a flex slot */
 .script-body p.sr-only { position: absolute; }
 .script-body p {
@@ -1077,389 +855,254 @@
   padding: .65rem .7rem .65rem 1.2rem;
   border-top: 1px solid var(--line);
   background: var(--paper-2);
+  border-radius: 0 0 12px 12px;
 }
 .script-src { font-size: var(--step--2); color: var(--ink-3); }
 .script-copy-btn { gap: .4rem; height: 36px; padding: 0 16px; font-size: 13px; }
 .script-copy-btn.is-copied { color: var(--accent); border-color: var(--accent); }
 
-/* the one addition to Charma's frame: the three scripts are real sourced
-   scenarios, and dropping two of them to match the reference exactly would
-   have deleted content */
+/* the three real scenarios, as a segmented row under the card (Mistral,
+   Superhuman: the active segment is filled ink) */
 .script-tabs {
   position: relative;
-  display: flex; gap: .25rem; flex-wrap: wrap; justify-content: center;
-  margin-top: clamp(1rem, 2vw, 1.5rem);
+  display: flex; gap: .25rem; flex-wrap: wrap;
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem);   /* above the card, so Tab lands on the new script */
   padding: .28rem;
-  background: rgba(255, 255, 255, .14);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
 }
 .script-tab {
   position: relative; z-index: 1;
   display: inline-flex; align-items: center; gap: .4rem;
-  padding: .45rem .7rem;
+  min-height: 40px; padding: .45rem .8rem;
   border-radius: var(--radius);
   font-size: var(--step--1); font-weight: 500;
-  color: rgba(255, 255, 255, .84);
+  color: var(--ink-2);
   white-space: nowrap;
-  transition: color .25s var(--ease);
+  transition: color .2s var(--ease), background-color .2s var(--ease);
 }
-.script-tab-n { font-size: var(--step--2); opacity: .7; }
-/* The active tab carries its own fill. A sliding pill measured its width
-   and x from the tab row, which breaks the moment three tabs wrap to two
-   lines inside the panel - it ended up oversized and sitting across the
-   wrong tabs. Charma has no tab row to copy here, so there is nothing lost
-   in using the simpler state. */
-.script-tab.is-on { color: var(--field-accent); background: #FFFFFF; }
-.script-tab:hover:not(.is-on) { color: var(--field-accent-ink); }
-.script-tab:focus-visible { outline: 2px solid var(--field-accent-ink); outline-offset: 2px; }
+.script-tab-n { font-size: var(--step--2); color: var(--ink-3); }   /* 5.7:1; the old 70% opacity sat at 3.9 */
+.script-tab.is-on { color: var(--paper); background: var(--ink); }
+.script-tab.is-on .script-tab-n { color: inherit; opacity: .8; }
+.script-tab:hover:not(.is-on) { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.script-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-@media (min-width: 900px) {
-  .ch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) {
+  .sc-grid { display: flex; flex-direction: column; gap: 28px; }
+  .sc-left { position: static; }
+  .sc-fig { order: -1; }
+  /* the card has no spare margin on a phone, so the markers sit in the
+     figure's padding, clear of the card's own text */
+  .sc-mark[data-n="1"], .sc-mark[data-n="2"] { left: -30px; }
+  .sc-mark[data-n="3"] { right: -30px; }
 }
 @media (max-width: 700px) {
   .script-head, .script-foot { padding-inline: .9rem; }
   .script-body { padding: 1.05rem .95rem; }
-  .script-tab { padding: .45rem .7rem; }
+  .sc-actions .btn { width: 100%; }
 }
-
-/* ============================================================
-   earth - the laws as objects
-
-   After Copilot Money: pills at three real depths, the far ones
-   small and blurred, the near ones sharp enough to read. After
-   Magnific: one soft aurora sitting behind them. They move with
-   the scroll, never on a loop of their own, so there is no
-   perpetual motion needing a pause control.
-   Every label is a verbatim rule title from data/coverage.json.
-   ============================================================ */
-.earth {
-  position: relative;
-  /* the aurora carries the colour here; the section itself stays on the
-     page ground so there is no seam to see */
-  overflow: hidden;
-}
-.earth-lead { margin-bottom: clamp(1rem, 2vw, 1.75rem); }
-
-.pillfield {
-  position: relative;
-  height: clamp(400px, 42vw, 520px);
-  margin-top: clamp(1rem, 2.5vw, 2rem);
-  overflow: visible;
-}
-/* until the script has placed the fall, nothing shows above the field */
-.earth { overflow: hidden; }
-.pf-aurora {
-  position: absolute; left: 50%; top: 50%;
-  width: min(1040px, 94%); aspect-ratio: 2 / 1;
-  transform: translate(-50%, -50%);
-  /* one soft glow in the brand green; the blue and amber made this the only
-     place on the page with colours the product never uses */
-  background: radial-gradient(40% 50% at 50% 50%, rgba(72, 198, 142, .34), transparent 70%);
-  filter: blur(46px);
-  pointer-events: none;
-}
-
-/* --py is the scroll slide (linear, reader-driven), --fy / --fr the fall the
-   script runs once: offset above the field and twice the rest rotation, both
-   dropping to zero as the pill lands and settles. */
-.pf-pill {
-  position: absolute; left: var(--x); top: var(--y);
-  transform: translate3d(0, calc(var(--py, 0px) + var(--fy, 0px)), 0)
-             rotate(calc(var(--rot) + var(--fr, 0deg))) scale(var(--s, 1));
-  transform-origin: center;
-  display: inline-flex; align-items: center;
-  max-width: min(360px, 40vw);
-  padding: .8rem 1.2rem;
-  border-radius: 999px;
-  font-size: var(--step-0); line-height: 1.35; font-weight: 500;
-  color: #1B2320;
-  text-wrap: pretty;
-  overflow: hidden;
-  will-change: transform;
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,.78),
-    inset 0 -9px 15px rgba(0,0,0,.09),
-    0 0 0 1px rgba(27, 35, 32, .10),
-    0 18px 34px -12px rgba(24, 48, 36, .45);
-}
-/* the highlight that makes it read as a moulded object rather than a tag */
-.pf-gloss {
-  position: absolute; inset: 1px 1px auto; height: 48%;
-  border-radius: 999px 999px 46% 46% / 999px 999px 100% 100%;
-  background: linear-gradient(180deg, rgba(255,255,255,.52), rgba(255,255,255,0));
-  pointer-events: none;
-}
-
-/* hover lifts the object and pulls it into focus; the blurred layers
-   sharpen, which is what makes them feel like they were always real
-   objects sitting further back rather than decoration */
-.pf-pill {
-  transition: filter .28s var(--ease-out), opacity .28s var(--ease-out),
-              box-shadow .28s var(--ease-out), scale .28s var(--ease-out);
-}
-.pf-pill:hover {
-  filter: none; opacity: 1; z-index: 4;
-  scale: 1.035;
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,.85),
-    inset 0 -9px 15px rgba(0,0,0,.09),
-    0 26px 44px -14px rgba(24, 48, 36, .5);
-}
-
-/* Cosmos' three tiers: scale first, blur and opacity only on the far tier;
-   the mid tier stays sharp so eight of twelve labels are readable */
-.pf-far  { --s: .55; filter: blur(2px); opacity: .6; z-index: 1; }
-.pf-mid  { --s: .75; z-index: 2; }
-.pf-near { --s: 1;   z-index: 3; }
-
-.pf-mint  { background: linear-gradient(158deg, #CDEFDE, var(--il-mint)); }
-.pf-blue  { background: linear-gradient(158deg, #D3E4F5, var(--il-blue)); }
-.pf-sand  { background: linear-gradient(158deg, #F2EADA, var(--il-sand)); }
-.pf-blush { background: linear-gradient(158deg, #CBE9EB, var(--il-blush)); }
-
-.pf-cap-mob { display: none; }
-@media (max-width: 760px) { .pf-cap-mob { display: inline; } }
-.pf-cap {
-  font-size: var(--step--2); color: var(--ink-3); letter-spacing: .02em;
-  margin-bottom: .9rem;
-}
-.earth-honest {
-  /* no rule of its own: the materials ledger above already closes with one */
-  margin-top: clamp(1.25rem, 3vw, 2rem);
-}
-.earth-honest p { font-size: var(--step--1); line-height: 1.7; color: var(--ink-2); max-width: 54ch; }
-.earth-honest .pf-cap { color: var(--ink-3); }
-
-/* On a phone the scattered field would collide with itself, so it becomes an
-   ordinary wrapped row and only the sharp layer survives. */
-@media (max-width: 760px) {
-  .pillfield {
-    height: auto;
-    display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
-    padding: 1.75rem 1.25rem .75rem;
-  }
-  .pf-pill {
-    position: relative; left: auto; top: auto;
-    transform: none !important; max-width: 100%;
-  }
-  .pf-cap-desk { display: none; }
-  .pf-far, .pf-mid { display: none; }
-  .pf-aurora { filter: blur(44px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* keep the composition - rotations, depths, shadows are static design,
-     not motion - and drop only the movement */
-  .pf-pill { transition: none !important; translate: none !important; }
-  .pf-pill:hover { scale: 1; }
-}
-
 @media (forced-colors: active) {
   /* the selected tab is marked only by a background pill, which HCM drops */
   .script-tab[aria-selected="true"] {
     text-decoration: underline; text-underline-offset: 4px;
     border: 1px solid CanvasText;
   }
-  
-  .pf-aurora, .pf-gloss { display: none; }
-  .pf-pill { border: 1px solid CanvasText; forced-color-adjust: none; }
-  .pf-far, .pf-mid { filter: none; opacity: 1; }
 }
 
 /* ============================================================
-   the rulebook index — after Waka Waka's furniture catalogue
-
-   Four hairline-ruled rows rather than four crop-marked cells. The
-   section is literally "what is in the rulebook", so an index page is
-   the metaphor rather than a decoration on top of one. Rows read across
-   where .problem reads down, so the page's two figure sections cannot be
-   confused. Everything sits on one baseline, which is what makes a
-   register look typeset rather than assembled.
+   BEYOND MONEY — the environment (Apple environment cards, Stripe
+   Climate's diagram + caption, Patagonia's sourced line, iFixit's
+   claim-as-link). Three white cards: figure, unit, label, hairline,
+   baseline, source. Then the schematic in a card with an honest
+   caption, the laws as flat chips, one closing line and one link.
    ============================================================ */
-.statband { border-block: 1px solid var(--line); padding: clamp(3.5rem, 8vw, 6rem) 0; }
-.reg-head {
-  font-size: var(--step-4);    /* every eyebrow'd section head at one size */
-  letter-spacing: -.025em;
-  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+.env-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; padding: 0; list-style: none; }
+.env-card {
+  display: flex; flex-direction: column;
+  min-height: 250px;
+  padding: 28px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
 }
-/* .problem already owns the ruled big-numeral ledger; the same device
-   twice on one page read as a repeat, so this is a four-up register
-   instead - figure over label over note, no rules between */
+.env-fig {
+  font-size: clamp(36px, 3vw, 44px); font-weight: 500; line-height: 1.1; letter-spacing: -.02em;
+  color: var(--ink);
+}
+.env-fig small { margin-left: 6px; font-size: 18px; font-weight: 400; letter-spacing: 0; color: var(--ink-2); }
+.env-label { margin-top: 8px; font-size: 16px; line-height: 1.4; color: var(--ink); }
+.env-q { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.env-src {
+  margin-top: auto; padding-top: 12px;
+  align-self: flex-start;
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--mono); font-size: 13px;
+  color: var(--accent);
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.env-src:hover { color: var(--ink); }
+.env-you { margin-top: auto; padding-top: 16px; font-size: 15px; line-height: 1.5; color: var(--ink-3); }
+
+.env-row {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px;
+  align-items: center;
+  margin-top: clamp(40px, 5vw, 56px);
+}
+.env-h3 {
+  margin-top: .55rem;
+  font-family: var(--display); font-weight: 300; text-transform: uppercase;
+  font-size: 22px; line-height: 1.2; letter-spacing: .04em;
+  color: var(--ink);
+}
+.env-p { margin-top: 1rem; font-size: 17px; line-height: 1.6; color: var(--ink-2); max-width: 46ch; }
+.env-diagram { margin: 0; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.env-diagram .xv { display: block; width: 100%; height: auto; }
+.xv-t text { font: 500 13px var(--mono); fill: var(--ink-2); letter-spacing: .02em; }
+.env-cap { margin-top: 10px; font-size: 14px; color: var(--ink-3); }
+
+.env-chips-lead { margin-top: clamp(40px, 5vw, 56px); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.env-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.env-chips li {
+  display: inline-flex; align-items: center;
+  min-height: 32px; padding: 5px 12px;
+  border: 1px solid var(--line-2); border-radius: var(--radius-pill);
+  background: var(--paper);
+  font-size: 14px; font-weight: 500; line-height: 1.35; color: var(--ink);
+}
+.env-close { margin-top: clamp(32px, 4vw, 40px); font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 56ch; }
+.env-close .tlink { margin-top: 4px; }
+@media (max-width: 900px) {
+  .env-cards { grid-template-columns: 1fr; gap: 12px; }
+  .env-card { min-height: 0; padding: 24px; }
+  .env-row { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (forced-colors: active) { .env-chips li { forced-color-adjust: none; border: 1px solid CanvasText; } }
+
+/* ============================================================
+   WHAT'S IN THE RULEBOOK — equal hairline cells (YLLW, Sana, Spade,
+   Duna): number top-left in Geist 300, the label under it, a note in
+   grey; a rule above and below the band and one between cells.
+   ============================================================ */
+.reg-head { max-width: 20ch; }
 .reg {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
 .reg-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  row-gap: .3rem;
-  align-content: start;
-  padding: 0;
-  border: 0;
+  display: grid; align-content: start; row-gap: 10px;
+  padding: 32px 28px 28px;
+  border-left: 1px solid var(--line);
 }
-/* Fluz and Wise separate the four cells with a vertical hairline */
-@media (min-width: 761px) {
-  .reg-row + .reg-row { border-left: 1px solid var(--line); padding-left: clamp(1.25rem, 2.5vw, 2rem); }
-}
-@media (max-width: 760px) { .reg { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; } }
-@media (max-width: 420px) { .reg { grid-template-columns: 1fr; } }
-.reg { counter-reset: reg; }
-/* the ordinal is decoration, so it is generated rather than read out as a term */
-.reg-row::before {
-  counter-increment: reg;
-  content: counter(reg, decimal-leading-zero);
-  font-family: var(--mono); font-size: var(--step--2); color: var(--ink-3); letter-spacing: .06em;
-}
+.reg-row:first-child { border-left: 0; padding-left: 0; }
 .reg-fig {
-  order: 1;
-  margin: 0;
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
-  line-height: 1;
-  letter-spacing: -.03em;
-  color: var(--accent);
+  order: 1; margin: 0;
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(40px, 4vw, 56px); line-height: 1.1; letter-spacing: -.02em;
+  color: var(--ink);
 }
-.reg-label { order: 2; margin: 0; font-size: var(--step-1); color: var(--ink); letter-spacing: -.01em; }
-.reg-note  { order: 3; margin: 0; font-size: var(--step--1); color: var(--ink-3); line-height: 1.5; }
-.reg-caveat {
-  margin-top: 1.4rem;
-  font-size: var(--step--1);
-  color: var(--ink-2);
-  max-width: 60ch;
-  line-height: 1.6;
+.reg-label { order: 2; margin: 0; font-size: 16px; line-height: 1.4; color: var(--ink); }
+.reg-note  { order: 3; margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-3); }
+.reg-caveat { margin-top: 20px; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 60ch; }
+@media (max-width: 720px) {
+  .reg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reg-row { padding: 24px 20px; }
+  .reg-row:nth-child(3) { border-left: 0; padding-left: 0; }
+  .reg-row:nth-child(n+3) { border-top: 1px solid var(--line); }
 }
-
-@media (max-width: 780px) {
-  .reg-row {
-    grid-template-columns: 2.25rem minmax(0, 1fr);
-    row-gap: .3rem;
-  }
-  .reg-fig { grid-column: 2; }
-  .reg-label { grid-column: 2; }
-  .reg-note { grid-column: 2; }
+@media (max-width: 420px) {
+  .reg { grid-template-columns: 1fr; }
+  .reg-row, .reg-row:nth-child(3) { border-left: 0; padding-left: 0; }
+  .reg-row + .reg-row { border-top: 1px solid var(--line); }
 }
 
 /* ============================================================
-   FAQ — after Farm Minerals
-
-   The heading moves out of the stack into its own column so the
-   questions become one ruled ledger at a proper reading measure. Six
-   rows is below the two-column threshold every reference used, so the
-   rows stay single-column. Open state is carried by the accent on the
-   question rather than by a panel tint - the one place on this page
-   where the accent means "you are here".
+   FAQ — heading left, ruled accordion right at about 1:2 (Harvest,
+   Wix, Teak); the first answer open; a plus that turns into a cross;
+   an escape hatch beside the heading.
    ============================================================ */
-.faq { border-top: 1px solid var(--line); }
-.faq-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); }
+.faq-grid {
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 720px);
+  justify-content: space-between; gap: 60px; align-items: start;
+}
+.faq-head { position: sticky; top: 96px; }
 .faq-head .section-title { margin-top: .55rem; }
-.faq-lede { margin-top: .9rem; max-width: 30ch; }
+.faq-help { margin-top: 1rem; font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 30ch; }
+.faq-help .tlink { margin-top: 2px; }
 
 .faq-list { display: flex; flex-direction: column; }
 .faq-item { border-bottom: 1px solid var(--line); }
 .faq-item:first-child { border-top: 1px solid var(--line); }
 .faq-item summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
-  padding-block: clamp(1rem, 2vw, 1.35rem);
+  display: grid; grid-template-columns: minmax(0, 1fr) 24px; column-gap: 20px; align-items: center;
+  padding: 22px 0;
   cursor: pointer;
   list-style: none;
   color: var(--ink);
-  font-size: var(--step-1);
-  letter-spacing: -.012em;
-  line-height: 1.35;
+  font-size: 18px; font-weight: 500; line-height: 1.35; letter-spacing: -.01em;
   transition: color .18s var(--ease);
 }
 .faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary h3 { font: inherit; letter-spacing: inherit; margin: 0; }   /* the question is a heading for navigation, styled as the row */
 .faq-item summary:hover { color: var(--accent); }
-.faq-item[open] summary { color: var(--accent); }
-.faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-
-/* the marker: a thin plus that loses its vertical stroke when open */
-.faq-item summary i { position: relative; width: 14px; height: 14px; flex: none; }
+.faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+/* the marker: a thin plus that turns into a cross when open */
+.faq-item summary i { position: relative; width: 20px; height: 20px; justify-self: end; }
 .faq-item summary i::before,
 .faq-item summary i::after {
   content: ""; position: absolute; top: 50%; left: 50%;
-  width: 13px; height: 1.5px; background: currentColor; border-radius: 2px;
+  width: 16px; height: 1.5px; background: currentColor; border-radius: 2px;
   transform: translate(-50%, -50%);
-  transition: transform .25s var(--ease), opacity .25s var(--ease);
+  transition: transform .2s var(--ease);
 }
 .faq-item summary i::after { transform: translate(-50%, -50%) rotate(90deg); }
-.faq-item[open] summary i::after { transform: translate(-50%, -50%) rotate(0); opacity: 0; }
+.faq-item[open] summary i::before { transform: translate(-50%, -50%) rotate(45deg); }
+.faq-item[open] summary i::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
-.faq-body { padding: 0 0 clamp(1.1rem, 2.2vw, 1.5rem); }
-/* pulled in short of the marker rather than sliding under it */
-.faq-body p { font-size: var(--step-0); color: var(--ink-2); line-height: 1.65; max-width: 60ch; }
-
-@media (min-width: 900px) {
-  .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+.faq-body { padding: 0 44px 26px 0; }
+.faq-body p { font-size: 17px; line-height: 1.6; color: var(--ink-2); max-width: 62ch; }
+@media (max-width: 860px) {
+  .faq-grid { grid-template-columns: 1fr; gap: 24px; }
+  .faq-head { position: static; }
+  .faq-item summary { padding: 18px 0; font-size: 17px; grid-template-columns: minmax(0, 1fr) 22px; }
+  .faq-body { padding-right: 0; }
 }
+@media (prefers-reduced-motion: reduce) { .faq-item summary i::before, .faq-item summary i::after { transition: none; } }
 
 /* ============================================================
-   CTA — after Circle and MindMarket
-
-   A flat accent field as the last thing before the footer. The headline
-   is the first element in the section: in six of six references nothing
-   sat above it, and the outlined pill that used to was a hero device
-   reused where the page needs to end. No video - none of the strong
-   closes put motion behind the last sentence.
+   CLOSING CTA — one rounded card on the page ground (Intercom, Aboard,
+   Homerun; Wix's black pill on a pale band). A pale tint of the accent,
+   a hairline in the same tint, the heading, one line, two pills.
    ============================================================ */
-.cta {
-  background: var(--paper);
-  padding: 0 clamp(12px, 2vw, 28px) clamp(3rem, 6vw, 5rem);
-  text-align: center;
-}
-/* the green field is an inset card on the page ground */
-.cta-inner {
+.cta { padding: 0 0 24px; }
+.cta-card {
   display: flex; flex-direction: column; align-items: center;
-  width: min(1140px, 100%); margin-inline: auto;
-  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 3rem);
-  /* Apple's colour field: flat, with at most one broad soft wash from the
-     top (Apple Health's mood screens) - no sheen, no edge light, no shadow */
-  background:
-    radial-gradient(140% 90% at 50% -10%, rgba(255, 255, 255, .09), rgba(255, 255, 255, 0) 60%),
-    var(--field-accent);
-  color: var(--field-accent-ink);
-  border-radius: var(--radius-xl);
+  padding: clamp(48px, 6vw, 72px) clamp(24px, 5vw, 64px);
+  text-align: center;
+  background: color-mix(in srgb, var(--accent) 9%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: 24px;
 }
-.cta-link {
-  display: inline-flex; align-items: center; min-height: 44px; padding: 0 .5rem;
-  font-size: var(--step-0); font-weight: 600; letter-spacing: -.01em;
-  color: var(--field-accent-ink); text-decoration: none;
-  opacity: .92; transition: opacity .15s var(--ease);
+.cta-title { margin-top: .6rem; font-size: clamp(28px, 3.4vw, 40px); max-width: 22ch; padding-bottom: .06em; }
+.cta-sub { margin-top: 14px; font-size: 18px; line-height: 1.5; color: var(--ink-2); max-width: 46ch; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+@media (max-width: 720px) {
+  .cta-card { border-radius: 20px; }
+  .cta-actions { flex-direction: column; width: 100%; }
+  .cta-actions .btn { width: 100%; height: 48px; }
 }
-.cta-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-.cta-link:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; border-radius: 4px; }
-.cta-title {
-  font-size: clamp(2rem, 4.4vw, 3.4rem);
-  line-height: 1.1;
-  letter-spacing: -.028em;
-  max-width: 22ch;
-  color: var(--field-accent-ink);
-  padding-bottom: .06em;
-}
-.cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; margin-top: clamp(1.5rem, 3vw, 2.1rem); }
-
-/* On the accent field the site's own green pill would disappear, so the
-   primary inverts: a bone pill carrying the accent as its ink. */
-.btn-onfield-solid {
-  background: var(--field-accent-ink); color: var(--field-accent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
-}
-.btn-onfield-solid:hover { background: #F1F0EB; }
-.cta .btn:focus-visible { outline-color: #FFFFFF; }
 
 /* ============================================================
-   footer — after Structured, with Garden's brand/columns split
+   footer — after Structured, with Garden's brand/columns split; a
+   hairline above it, 24px under the closing card
    ============================================================ */
 .footer {
-  /* no hairline: the CTA's fade above it is the transition, and a rule at the
-     foot of a fade is a line drawn through it */
   background: var(--paper);
+  border-top: 1px solid var(--line);
   padding: clamp(3rem, 6vw, 4.5rem) 0 1.75rem;
-  overflow: hidden;              /* the wordmark is cropped on purpose */
 }
 .footer-inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 4vw, 3rem); }
-
 .footer-top { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }
 .footer-brand .brand { text-decoration: none; }
 /* Garden sets the tagline at roughly twice the link size and lets it be the
@@ -1472,7 +1115,6 @@
   color: var(--ink);
   max-width: 22ch;
 }
-
 .footer-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem clamp(1rem, 3vw, 2.5rem); }
 .footer-col { display: flex; flex-direction: column; }
 /* Cloudflare Workers: each heading carries a hairline spanning only its own
@@ -1493,18 +1135,11 @@
   text-decoration: none;
   padding-block: .3rem;
   align-self: flex-start;
-  transition: color .14s var(--ease);
-}
-/* an underline that draws in from the left on hover */
-.footer-col a {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat;
   transition: background-size .25s var(--ease), color .15s var(--ease);
 }
 .footer-col a:hover { color: var(--ink); background-size: 100% 1px; }
-
-/* the ghosted wordmark is gone: a 250px watermark band read as a template
-   move (round-2 judges), and the brand link above already carries the name */
 .footer-base {
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
   display: grid; gap: .6rem 2rem;
@@ -1512,334 +1147,22 @@
   border-top: 1px solid var(--line);
 }
 .footer-fine { font-size: var(--step--1); color: var(--ink-3); line-height: 1.6; max-width: 62ch; }
-
 @media (min-width: 820px) {
   .footer-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); align-items: start; }
   .footer-base { grid-template-columns: 1fr auto; align-items: baseline; }
-  .footer-fine-r { text-align: right; }
 }
 @media (max-width: 560px) {
   .footer-cols { grid-template-columns: 1fr; }
 }
 
-/* the field's focus ring is a box-shadow, which forced-colors mode strips */
-@media (forced-colors: active) {
-  .hero-try-input:focus { outline: 2px solid Highlight; outline-offset: 2px; }
-}
-
-/* ============================================================
-   THE BLACK BEAT — plain black, one headline handing over to the
-   next word by word, and the five places cover hides naming
-   themselves underneath. No scene behind it.
-   ============================================================ */
-.city {
-  position: relative;
-  height: 180vh;                    /* the pin length; tuned in the preview */
-  --inset: clamp(12px, 2vw, 28px);
-  /* fixed, not themed - the card is dark in both themes */
-  --city-ground: #101312;
-  --city-fg: #F5F4EC;
-  background: var(--paper);
-  padding-block: var(--inset);
-}
-/* the dark card: pinned, inset from the page edge, rounded like the tiles */
-.city-sticky {
-  position: sticky; top: var(--inset);
-  /* capped: a 1000px card holding 220px of copy read as a scene that failed
-     to render (round-2 judges); no outer frame */
-  height: min(calc(100vh - 2 * var(--inset)), 680px);
-  height: min(calc(100svh - 2 * var(--inset)), 680px);
-  margin-inline: var(--inset);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  background: var(--city-ground);   /* flat, as Apple's black tiles are */
-  border-radius: var(--radius-xl);
-}
-
-.city-copy {
-  position: relative; z-index: 2;
-  width: min(720px, 100% - 2.5rem);
-  text-align: center;
-  color: var(--city-fg);
-}
-.city-copy .eyebrow { color: #9E9D95; }   /* 7.3:1 on the ground */
-.city-title {
-  /* full-screen statement beats in the reference set run 5-6vw (Aboard 5,
-     Eat Hungry Tiger 6); Nike's 9vw is a poster, too loud for this page */
-  font-size: clamp(2.5rem, 5.5vw, 6rem);
-  line-height: 1.05;
-  margin-top: .6rem;
-  letter-spacing: -.024em;
-  color: var(--city-fg);
-  display: grid;              /* both lines share one cell and hand over */
-  place-items: center;
-  max-width: 18ch;
-  margin-inline: auto;
-}
-.city-title > span {
-  grid-area: 1 / 1;
-  display: block;
-  padding-bottom: .09em;      /* descender room inside the sticky overflow box */
-}
-/* the one emphasised phrase: italic serif in the dark accent, because the
-   themed --accent is forest green and measured under 3:1 on this ground */
-.city-title em { font-style: italic; color: var(--dk-accent); }
-.city.is-near .city-l1, .city.is-near .city-l2 { will-change: opacity, transform; }
-
-/* Line by line, not word by word: the references that reveal per word carry
-   five or six loose words; eight words in two tight clauses read as two units.
-   Rise + fade only - no blur, no bounce, for text (Kowalski). --p is the scroll
-   progress through the pinned section. */
-.js-p .city-l1 {
-  --t: clamp(0, calc((.36 - var(--p, 0)) * 7), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * -18px));
-}
-.js-p .city-l2 {
-  --t: clamp(0, calc((var(--p, 0) - .30) * 7), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 24px));
-}
-.js-p .city-copy .eyebrow { opacity: clamp(0, calc(1.2 - var(--p, 0) * 2.6), 1); }
-
-.city-sub {
-  margin-top: 1rem;
-  font-size: var(--step-0);
-  color: #C8C7BF;                          /* 11.7:1 on the ground */
-  max-width: 48ch; margin-inline: auto;
-}
-.js-p .city-sub {
-  --t: clamp(0, calc((var(--p, 0) - .46) * 6), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 16px));
-}
-
-/* The five sources, all visible at once. Every statement reference shows its
-   tags together (a static row, or a marquee); a chip that cycles is a moving
-   target and hides four of five proof points at any moment. They arrive after
-   the second line, 60ms-class stagger expressed in scroll progress. */
-.city-tags {
-  position: absolute; z-index: 2;
-  left: 50%; bottom: clamp(1.5rem, 5vh, 3rem);
-  transform: translateX(-50%);
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: 8px;
-  width: min(820px, 92%);
-}
-.city-tags li {
-  /* chips in the reference set sit at ~63% of the button height with a
-     near-transparent fill and one hairline; sans, never mono */
-  font-family: var(--sans);
-  font-size: var(--step--1); font-weight: 500; line-height: 1.4;
-  height: 28px; display: inline-flex; align-items: center;
-  padding: 0 12px;
-  /* the card is fixed dark in BOTH themes, so these cannot use themed tokens */
-  color: #A8ABA6;
-  background: rgba(242, 243, 240, .04);
-  border: 1px solid rgba(242, 243, 240, .13);
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-}
-.js-p .city-tags li {
-  --t: clamp(0, calc((var(--p, 0) - .56 - var(--ct, 0) * .04) * 9), 1);
-  opacity: var(--t);
-  transform: translateY(calc((1 - var(--t)) * 8px));
-}
-
-@media (max-width: 700px) { .city { height: 150vh; } }
-
-@media (prefers-reduced-motion: reduce) {
-  .stack { height: auto; }
-  .stack-sticky { position: static; height: auto; min-height: 62vh; padding: 4rem 0; }
-  .stack-canvas { display: none; }
-  .stack-hint { display: none; }
-  .stack-cards { position: static; display: flex; flex-wrap: wrap; gap: .75rem;
-                 justify-content: center; margin-top: 2rem; }
-  .scard { position: static; transform: none; opacity: 1; }
-  .stack-sticky::after { display: none; }
-  .stack-caps { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 1.5rem; }
-  .stack-cap { position: static; opacity: 1; transform: none; }
-  .city { height: auto; }
-  .city-sticky { position: static; height: auto; min-height: 58vh; padding: 4rem 0; }
-  .city-tags { position: static; transform: none; display: flex; flex-wrap: wrap;
-               gap: .5rem; justify-content: center; margin-top: 1.75rem; width: auto; }
-  /* .js-p .city-tags li out-specifies a bare selector here, so this has to
-     win explicitly or the five sources stay invisible under reduced motion */
-  .city-tags li { opacity: 1 !important; transform: none !important; }
-  .city-title { display: block; }
-  .city-l1 { display: none; }
-  .city-l2, .city-sub, .city-copy .eyebrow {
-    opacity: 1 !important; transform: none !important; }
-}
-
-/* ============================================================
-   DARK SECTION
-   One hard break in the middle of the cream run, so the page has
-   a rhythm instead of thirteen variations on the same ground.
-   Fixed, not themed — it is dark in light mode too.
-   ============================================================ */
-
-/* After Overmind: on the dark ground ONE card is lit and the rest are held
-   back, rather than four equally murky cards competing. The lit one advances
-   on its own while the section is in view, and hovering pins it. */
-
-/* the chip fill is themed, so on the dark ground it was still painting a
-   near-white pill under light-grey text */
-
 /* ============================================================
    Dark-theme corrections — landing
-
    Every value below fixes something tuned for the light ground that had
-   no dark counterpart. Ratios quoted were measured in the browser.
+   no dark counterpart.
    ============================================================ */
-
-/* The most important input on the site was a hairline over an invisible
-   shadow: --card is 1.05:1 off the dark ground. --field is the raised
-   surface; in light both resolve to white, so light is unchanged. */
-.hero-try-field { background: var(--field); }
-
-/* The floating nav composited to 1.02:1 off the ground and its shadow is
-   black on near-black, so it did not float. A top inset hairline is what
-   reads as glass on a dark ground. */
-:root[data-theme="dark"] .nav-pill {
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(242, 243, 240, .07);
-}
-
-/* The document's bound edge is a signature detail that vanished:
-   --accent-line to --line-2 at 70% over --card is nothing on dark. */
-:root[data-theme="dark"] .finder-doc::before {
-  background: linear-gradient(#2F6B50, var(--line-2));
-  opacity: .9;
-}
-
-/* A dark screenshot on a dark page, with an invisible shadow and a 1.25:1
-   border, had no boundary at all. */
-:root[data-theme="dark"] .sc-shot img { border-color: var(--line-2); }
-
-/* Three saturated aurora blobs tuned for putty glow neon on near-black. */
-:root[data-theme="dark"] .pf-aurora { opacity: .55; }
-
-/* The pill and tile drop shadows are dark green, which grounds a pastel
-   object on putty and contributes nothing on near-black. A 1px dark rim is
-   what separates a light object from the glow behind it. */
-:root[data-theme="dark"] .pf-pill {
-  box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, .78),
-    inset 0 -9px 15px rgba(0, 0, 0, .09),
-    0 0 0 1px rgba(0, 0, 0, .45),
-    0 18px 34px -12px rgba(0, 0, 0, .55);
-}
-:root[data-theme="dark"] .tile { box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
-
-/* ============================================================
-   Ground plan
-
-   One paper ground for the whole page. The two coloured beats - the dark
-   statement and the green closer - sit on it as inset rounded cards
-   (Aboard's card variant; Tailscale, Homerun, TravelPerk), so the ground
-   never switches and nothing has to fade or cut. Sixteen of sixteen
-   reference ground changes were hard cuts; this avoids the question.
-   ============================================================ */
-.script-sec, .city, .cta { position: relative; }
-.script-sec > .ch-grid { position: relative; z-index: 1; }
-.city > .city-sticky { z-index: 1; }
-.script-sec, .earth, .cta { border-block: 0; }
-
-/* ============================================================
-   the materials case
-
-   Two facts, each with the primary source next to it. The stats band
-   claims every rule links to the page it came from; this is where that
-   is shown rather than said, so the source is a real link and looks
-   like one.
-   ============================================================ */
-.saves {
-  margin-top: clamp(2rem, 4vw, 3rem);
-  padding-top: clamp(1.5rem, 3vw, 2.25rem);
-  border-top: 1px solid var(--line);
-}
-.saves-title {
-  font-size: var(--step-4);
-  letter-spacing: -.022em;
-  padding-bottom: .04em;
-}
-.saves-eyebrow { grid-area: eye; }
-.saves-title { grid-area: title; }
-.saves-fig { grid-area: fig; margin: 0; display: grid; gap: .9rem; align-content: start; }
-.saves-list { grid-area: list; }
-@media (min-width: 900px) {
-  .saves {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "eye fig" "title fig" "list fig";
-    column-gap: clamp(2rem, 4vw, 4rem);
-    align-items: start;
-  }
-  .saves > * { max-width: none; }
-}
-.saves-fig .xv { width: 100%; height: auto; display: block; }   /* fills its column, left edge on the shared line */
-.xv-t text { font: 500 12px var(--mono); fill: var(--ink-3); letter-spacing: .02em; }
-.saves-cap { font-size: var(--step-0); line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
-.saves-lede {
-  margin-top: .9rem;
-  font-size: var(--step-1);
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 46ch;
-}
-.saves-list { margin-top: clamp(1.5rem, 3vw, 2rem); }
-.saves-row {
-  display: grid;
-  gap: .5rem 2rem;
-  padding-block: clamp(1rem, 2vw, 1.4rem);
-  border-top: 1px solid var(--line);
-}
-.saves-row:last-child { border-bottom: 1px solid var(--line); }
-.saves-fact {
-  font-size: var(--step-0);
-  line-height: 1.6;
-  color: var(--ink-2);
-  max-width: 60ch;
-}
-.saves-fact b { color: var(--ink); font-weight: 600; }
-.saves-src {
-  align-self: start;
-  font-size: var(--step--1);
-  color: var(--ink-3);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  transition: color .15s var(--ease);
-}
-.saves-src:hover { color: var(--accent); }
-
-@media (min-width: 860px) {
-  .saves-row { grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); align-items: start; }
-}
-
-/* ============================================================
-   Audit pass
-   ============================================================ */
-
-/* [V04] the earth blocks sit on the page's left column like every other
-   section; the measure is capped on the children, because capping a .wrap
-   just re-centres it */
-.earth-lead > *, .saves > *, .earth-honest > * { max-width: 44rem; }
-
-/* [V12] on the phone the desktop screenshot shrank to 350px and its UI to
-   3px type. Crop it at reading size instead, the way the desktop column does. */
-@media (max-width: 560px) {
-  .sc-shot {
-    aspect-ratio: 4 / 3; overflow: hidden;
-    border-radius: var(--radius-lg); border: 1px solid var(--line);
-    box-shadow: var(--shadow-xl);
-  }
-  .sc-shot img { width: 190%; max-width: none; border: 0; border-radius: 0; box-shadow: none; }
-}
-
-/* the hero teaser's tone dots and note (rendered by landing.js) */
-.try-result .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: .45rem; }
-.try-result .dot.ok { background: var(--accent); }
-.try-result .dot.maybe { background: var(--warn); }
-.try-result .try-sub { font-size: var(--step--1); }
+/* a dark screenshot on a dark page with a 1.25:1 border had no boundary */
+:root[data-theme="dark"] .feat-media img,
+:root[data-theme="dark"] .hw-shot-in,
+:root[data-theme="dark"] .hw-crop { border-color: var(--line-2); }
+:root[data-theme="dark"] .feat-media img { box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
+:root[data-theme="dark"] .sc-fig .script-card { box-shadow: 0 12px 32px -12px rgba(0, 0, 0, .6); }
