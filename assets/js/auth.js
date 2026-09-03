@@ -14,18 +14,21 @@
   var form = document.getElementById('authForm');
   var field = document.getElementById('fieldName');
   var nameInput = document.getElementById('name');
+  var emailInput = document.getElementById('email');
   var help = document.getElementById('authHelp');
   var submitLabel = document.getElementById('authSubmitLabel');
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var HELP_DEFAULT = 'Just a first name is fine.';
+  var HELP_DEFAULT = 'Both stay in this browser. Nothing is sent anywhere.';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   /* ---------- returning user ---------- */
   var existing = S.getUser();
   if (existing && existing.name && existing.name !== 'You') {
     nameInput.value = existing.name;
+    if (emailInput && existing.email) emailInput.value = existing.email;
     submitLabel.textContent = 'Continue as ' + existing.name;
-    help.textContent = 'Not you? Just change the name.';
+    help.textContent = 'Not you? Just change the details.';
   }
 
   function setError(msg) {
@@ -57,8 +60,15 @@
       nameInput.focus();
       return;
     }
-    if (existing) S.updateUser({ name: name });
-    else S.signUp(name, '', 'US');
+    var email = emailInput ? emailInput.value.trim() : '';
+    if (!email || !EMAIL_RE.test(email)) {
+      setError('Add an email that looks right, like you@example.com.');
+      if (emailInput) emailInput.focus();
+      return;
+    }
+    // re-read at submit time: the record may have been cleared since the page loaded
+    if (S.getUser()) S.updateUser({ name: name, email: email });
+    else S.signUp(name, email, 'US');
 
     var url = 'app.html';
     if (pendingItem) url += '?new=' + encodeURIComponent(pendingItem);

@@ -764,3 +764,6 @@
 
 .side { background: #F5F5F7; border-right: 1px solid #EAEAEA; }
 .app { max-width: none; margin: 0; width: 100%; }
+
+:root[data-theme="dark"] .side { background: #0D0D0D; border-right-color: #262626; }
+:root[data-theme="dark"] .rail-list li { border-color: #262626; color: var(--ink); }

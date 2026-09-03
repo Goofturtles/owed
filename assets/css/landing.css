@@ -666,3 +666,44 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 /* FAQ questions colour on hover (Apple blue), chevron follows */
 .faq-item summary { transition: color .15s ease; cursor: pointer; }
 .faq-item summary:hover, .faq-item summary:hover svg { color: var(--accent); }
+
+/* ================= dark theme (the references' idiom: Vercel/Linear/Attio at night —
+   black ground, #111 cards, 8% hairlines, white type, inverted buttons, blue kept) ================= */
+:root[data-theme="dark"] { --paper: #000; --ink: #F5F5F7; --ink-2: #D4D4D8; --ink-3: #A1A1AA; --line: #262626; }
+:root[data-theme="dark"] body, :root[data-theme="dark"] .proof, :root[data-theme="dark"] .stats, :root[data-theme="dark"] .places, :root[data-theme="dark"] .env, :root[data-theme="dark"] .faq, :root[data-theme="dark"] .footer { background: #000; color: #F5F5F7; }
+:root[data-theme="dark"] .h2, :root[data-theme="dark"] h1, :root[data-theme="dark"] h2, :root[data-theme="dark"] h3, :root[data-theme="dark"] .proof-lead b, :root[data-theme="dark"] .proof-names li, :root[data-theme="dark"] .stat b, :root[data-theme="dark"] .place-grid h3, :root[data-theme="dark"] .env-cells b, :root[data-theme="dark"] .env-cells strong, :root[data-theme="dark"] .env-strip p, :root[data-theme="dark"] .env-left h3, :root[data-theme="dark"] .env-fig b, :root[data-theme="dark"] .faq-item summary, :root[data-theme="dark"] .footer .brand, :root[data-theme="dark"] .footer-col h4 { color: #F5F5F7; }
+:root[data-theme="dark"] .proof-lead, :root[data-theme="dark"] .stat span, :root[data-theme="dark"] .env-cells span, :root[data-theme="dark"] .env-fig > span, :root[data-theme="dark"] .faq-item p, :root[data-theme="dark"] .footer-col a, :root[data-theme="dark"] .footer-status, :root[data-theme="dark"] .footer-small, :root[data-theme="dark"] .dim, :root[data-theme="dark"] .env-inputs label { color: #A1A1AA; }
+:root[data-theme="dark"] .show, :root[data-theme="dark"] .stats, :root[data-theme="dark"] .places, :root[data-theme="dark"] .env, :root[data-theme="dark"] .faq, :root[data-theme="dark"] .cta, :root[data-theme="dark"] .footer, :root[data-theme="dark"] .proof-track + *, :root[data-theme="dark"] .faq-item { border-color: #262626; }
+:root[data-theme="dark"] .band-dark { background: #0A0A0A; border-top: 1px solid #262626; }
+:root[data-theme="dark"] .btn-accent { background: #FFF; color: #000; }
+:root[data-theme="dark"] .btn-accent:hover { background: #E5E5E5; }
+:root[data-theme="dark"] .btn-outline { background: transparent; color: #F5F5F7; border-color: #333; }
+:root[data-theme="dark"] .nav.is-stuck { background: rgba(10, 10, 10, .6); border-bottom-color: rgba(255, 255, 255, .08); }
+:root[data-theme="dark"] .nav .brand, :root[data-theme="dark"] .nav-links a, :root[data-theme="dark"] .theme-btn { color: #F5F5F7; }
+:root[data-theme="dark"] .nav-actions .btn-outline { background: rgba(255, 255, 255, .06); }
+:root[data-theme="dark"] .proof-pause { background: #111; border-color: #333; color: #A1A1AA; }
+:root[data-theme="dark"] .proof-track { mask-image: linear-gradient(90deg, transparent, #000 96px, #000 calc(100% - 96px), transparent); }
+:root[data-theme="dark"] .show-card { background: #111; border-color: #262626; }
+:root[data-theme="dark"] .show-clip { background: #141414; border-color: #262626; }
+:root[data-theme="dark"] .wf-side { border-color: #222; }
+:root[data-theme="dark"] .wf-side i, :root[data-theme="dark"] .wf-top i, :root[data-theme="dark"] .wf-lines i { background: #2A2A2A; }
+:root[data-theme="dark"] .wf-side .wf-logo, :root[data-theme="dark"] .wf-side .wf-btn, :root[data-theme="dark"] .wf-top .wf-r, :root[data-theme="dark"] .wf-row b, :root[data-theme="dark"] .wf-block { background: #1F1F1F; }
+:root[data-theme="dark"] .show-panel, :root[data-theme="dark"] .show-pill { border: 1px solid #333; }
+:root[data-theme="dark"] .show-chips span { background: #222; border-color: #333; }
+:root[data-theme="dark"] .t-mint { background: rgba(11, 92, 58, .35); color: #58DDA0; } :root[data-theme="dark"] .t-sky { background: rgba(0, 113, 227, .3); color: #6DB2FF; } :root[data-theme="dark"] .t-sand { background: rgba(180, 83, 9, .3); color: #F5B36B; } :root[data-theme="dark"] .t-teal { background: rgba(14, 116, 144, .35); color: #67D3E8; } :root[data-theme="dark"] .t-rose { background: rgba(180, 35, 24, .3); color: #F58C85; }
+:root[data-theme="dark"] .env-panel { background: #0F0F0F; border: 1px solid #262626; }
+:root[data-theme="dark"] .env-panel .env-card, :root[data-theme="dark"] .env-card { background: #161616; box-shadow: none; }
+:root[data-theme="dark"] .env-cells li, :root[data-theme="dark"] .env-strip, :root[data-theme="dark"] .env-left, :root[data-theme="dark"] .env-cells li:nth-child(-n+2) { border-color: #262626; }
+:root[data-theme="dark"] .env-inputs select { background-color: #111; color: #F5F5F7; border-color: #333; }
+:root[data-theme="dark"] .env-bar { background: #2A2A2A; } :root[data-theme="dark"] .env-bar i { background: #FFF; }
+:root[data-theme="dark"] .place-grid a, :root[data-theme="dark"] .cta-small a, :root[data-theme="dark"] a.faq-link { color: #6DB2FF; }
+:root[data-theme="dark"] .faq-item summary:hover { color: #6DB2FF; }
+:root[data-theme="dark"] .cta { background: #0A0A0A; }
+:root[data-theme="dark"] .footer-col a:hover { color: #F5F5F7; }
+
+/* the foot of the page is black (the owner: it looked odd white under the dark close) */
+.footer { background: #0A0A0A; border-top: 1px solid #262626; color: #F5F5F7; }
+.footer .brand, .footer-col h4 { color: #F5F5F7; }
+.footer-col a, .footer-status, .footer-small, .footer p { color: #A1A1AA; }
+.footer-col a:hover { color: #F5F5F7; }
+.footer-rule, .footer hr { border-color: #262626; }
