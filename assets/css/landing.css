@@ -707,3 +707,19 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .footer-col a, .footer-status, .footer-small, .footer p { color: #A1A1AA; }
 .footer-col a:hover { color: #F5F5F7; }
 .footer-rule, .footer hr { border-color: #262626; }
+
+/* footer headings: whatever element they are, white on the black foot */
+.footer-col > :first-child, .footer-col h3, .footer-col h4, .footer-col strong, .footer-col b, .footer-head { color: #F5F5F7; }
+.footer .brand-mark, .footer .brand svg, .footer .brand i { outline: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
+/* FAQ hover reaches the text inside the summary */
+.faq-item summary:hover, .faq-item summary:hover * { color: var(--accent) !important; }
+/* dark theme: the accent stays blue (Apple's dark blue), and the nav keeps the film's
+   own colours while the film is under it — the video never changes */
+:root[data-theme="dark"] { --accent: #2997FF; --accent-soft: rgba(41, 151, 255, .18); --accent-line: rgba(41, 151, 255, .4); --sky-ink: #2997FF; }
+:root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .brand, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .nav-links a, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .theme-btn { color: #000; }
+:root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .btn-outline { background: rgba(255, 255, 255, .7); color: #000; border-color: #E5E5E5; }
+:root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .btn-accent { background: #000; color: #FFF; }
+:root[data-theme="dark"] .film, :root[data-theme="dark"] .film-sticky { background: #0B0F0C; }
+:root[data-theme="dark"] .film-title, :root[data-theme="dark"] .film-kicker, :root[data-theme="dark"] .film-places { color: #1D3045; }
+:root[data-theme="dark"] .film-title-w, :root[data-theme="dark"] .film-copy-r { color: #FFF; }
+:root[data-theme="dark"] .place-grid a, :root[data-theme="dark"] .cta-small a, :root[data-theme="dark"] .faq-item summary:hover, :root[data-theme="dark"] .faq-item summary:hover * { color: #2997FF !important; }
