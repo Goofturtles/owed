@@ -1092,7 +1092,6 @@
         '<span class="sr-only">, </span>' +
         '<span class="rgroup-count tnum">' + list.length + '</span>' +
       '</h2>' +
-      '<p class="rgroup-note">' + note + '</p>' +
       '<div class="rgroup-list">' +
         '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + list.map(renderCard).join('') + '</div>' +
         (open ? '' : '<button class="rgroup-toggle" type="button" data-more data-hide="Hide ' + (word === 'long shot' ? 'long shots' : word) + '" aria-expanded="false">Show ' + label + '</button>') +
