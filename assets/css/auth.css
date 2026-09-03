@@ -394,3 +394,5 @@
 .auth-panel-tint { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(31, 77, 168, .55) 0%, rgba(0, 113, 227, .18) 45%, rgba(20, 130, 128, .5) 100%); }
 .auth-panel > *:not(.auth-panel-video):not(.auth-panel-tint) { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .auth-panel-video { display: none; } .auth-panel { background: #1F4DA8 url("../img/panel-poster.webp") center / cover no-repeat !important; } }
+
+.auth-badge { position: absolute !important; z-index: 2; }
