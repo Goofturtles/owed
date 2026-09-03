@@ -51,7 +51,7 @@
     /* the frames play over the first F of the track and hold the last frame;
        the rest of the track is dwell for the third chapter (the owner: it
        "disappears way too fast" when the film and the text ended together) */
-    var F = 0.72;
+    var F = 0.85;
     function q(p) { return Math.min(1, p / F); }
     var CH = { promise: 0, places: 0.43 * F, how: 0.48 * F, action: 0.83 * F };
 
@@ -86,7 +86,7 @@
 
     filmEl.classList.add('is-js');   // the stagger only hides things once this loop can show them again
 
-    var current = 0, target = 0, last = performance.now(), lastChapter = -1;
+    var current = 0, target = 0, last = performance.now(), lastChapter = -1, ps = 0;
     var sceneOn = [null, null, null];
 
     /* ---- the frame bank ---- */
@@ -168,7 +168,10 @@
       var dt = Math.min(0.1, Math.max(0, (now - last) / 1000));
       last = now;
       var p = progress();
-      var ops = [s1(p), s2(p), s3(p)];
+      // the text and the scrim follow a smoothed progress so wheel steps do not snap them
+      ps += (p - ps) * (1 - Math.exp(-dt * 10));
+      if (Math.abs(p - ps) < 0.0005) ps = p;
+      var ops = [s1(ps), s2(ps), s3(ps)];
       for (var i = 0; i < scenes.length; i++) {
         var sc = scenes[i], o = ops[i] || 0, on = o > 0.3;
         sc.style.opacity = o;

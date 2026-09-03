@@ -9,6 +9,9 @@
    ============================================================ */
 (function () {
   'use strict';
+  // the three-column shell: rail + sidebar labels only from 1200px
+  var wideMQ = window.matchMedia ? window.matchMedia('(min-width: 1200px)') : { matches: true, addEventListener: function () {} };
+  function isWide() { return !!wideMQ.matches; }
 
   var C = window.OwedCatalog;
   var S = window.OwedStore;
@@ -133,6 +136,8 @@
     corpusNote: document.getElementById('corpusNote'),
     themeRow: document.getElementById('themeRow'),
     helpTitle: document.getElementById('helpTitle'),
+    startRow: document.getElementById('startRow'),
+    regionName: document.getElementById('regionName'),
     toast: document.getElementById('toast'),
     tabs: document.querySelectorAll('.tabbar .tab'),
     views: {
@@ -144,9 +149,17 @@
 
   el.regionPick.value = user.region || 'US';
 
+  /* the select sits invisibly over the region pill; the pill shows its label */
+  function syncRegionName() {
+    var o = el.regionPick.options[el.regionPick.selectedIndex];
+    if (el.regionName) el.regionName.textContent = o ? o.text : '';
+  }
+  syncRegionName();
+
   el.regionPick.addEventListener('change', function () {
     S.updateUser({ region: el.regionPick.value });
     user = S.getUser();
+    syncRegionName();
     toast('Region set to ' + el.regionPick.options[el.regionPick.selectedIndex].text);
     // the select the user is standing on must not lose focus; the results (and
     // an open script) are redrawn in place, never a wizard mid-edit
@@ -167,9 +180,12 @@
   /* the theme row: theme.js owns the 44px button; a click on the label
      beside it is forwarded so the whole row acts as one control */
   el.themeRow.addEventListener('click', function (e) {
-    if (e.target.closest('.theme-btn')) return;
     var btn = el.themeRow.querySelector('.theme-btn');
-    if (btn) btn.click();
+    // theme.js re-renders the button's icon on click, so by the time the
+    // event reaches this row e.target (the old svg) is detached and
+    // closest() finds nothing — the path recorded at dispatch is reliable
+    if (!btn || e.composedPath().indexOf(btn) !== -1) return;
+    btn.click();
   });
 
   /* ---------------- helpers ---------------- */
@@ -199,25 +215,30 @@
     Object.keys(el.views).forEach(function (k) {
       el.views[k].hidden = (k !== name);
     });
-    if (name !== 'results') { hidePanel(); detail.body.innerHTML = ''; }
+    // the rail's "Selected" card only makes sense beside an open document
+    if (name !== 'script') { hidePanel(); detail.body.innerHTML = ''; }
+    // the shelf's "Start" row is lit while a question screen is showing
+    if (el.startRow) {
+      el.startRow.classList.toggle('is-on', name === 'wizard');
+      if (name === 'wizard') el.startRow.setAttribute('aria-current', 'true');
+      else el.startRow.removeAttribute('aria-current');
+    }
   }
+
+  if (el.startRow) el.startRow.addEventListener('click', function () { showStart(); });
 
   var mobileMQ = window.matchMedia('(max-width: 899.98px)');
   function isMobile() { return mobileMQ.matches; }
-  /* three panes: the selected rule opens in a panel beside the list */
-  var wideMQ = window.matchMedia('(min-width: 1200px)');
-  function isWide() { return wideMQ.matches; }
 
+  /* the rail (>= 1200px): a compact "Selected" card while a document is open */
   var detail = {
     panel: document.getElementById('detailPanel'),
     body: document.getElementById('detailBody')
   };
-  var selected = null;     // the match shown in the panel
-  var panelMode = null;    // 'rule' | 'script' | 'none' | null (hidden)
+  var selected = null;     // the match whose document is open
 
   function hidePanel() {
     detail.panel.hidden = true;
-    panelMode = null;
   }
 
   /* the bottom tabs only exist below 900px, but the attribute is kept in
@@ -240,8 +261,7 @@
     var target = ({
       results: document.getElementById('resTitle'),
       wizard: document.querySelector('.wiz-step.is-on .wiz-q'),
-      script: document.getElementById('scrBack'),
-      detail: document.getElementById('detailTitle'),
+      script: document.getElementById('detailTitle'),
       help: el.helpTitle
     })[name];
     if (!target) return;
@@ -284,16 +304,18 @@
   function statusHTML(n) {
     // before the rulebook is in, say nothing rather than a misleading "nothing yet"
     if (!E.loaded) return '<span class="srow-status"></span>';
-    if (!n.total) return '<span class="srow-status">nothing yet</span>';
-    var dot, text;
+    if (!n.total) return '<span class="srow-status"></span>';
+    // one dot and a number; the word is there for screen readers and the tooltip
+    var dot, count, word;
     if (n.ask) {
       dot = n.strong ? 'dot-strong' : 'dot-worth';
-      text = n.ask + ' to ask';
+      count = n.ask; word = ' to ask';
     } else {
       dot = 'dot-long';
-      text = n.long + (n.long === 1 ? ' long shot' : ' long shots');
+      count = n.long; word = n.long === 1 ? ' long shot' : ' long shots';
     }
-    return '<span class="srow-status"><i class="dot ' + dot + '"></i>' + text + '</span>';
+    return '<span class="srow-status" title="' + count + word + '"><i class="dot ' + dot + '"></i>' +
+      '<span class="tnum">' + count + '</span><span class="sr-only">' + word + '</span></span>';
   }
 
   function renderShelf() {
@@ -302,6 +324,7 @@
     el.shelfEmpty.hidden = shelf.length > 0;
     el.side.classList.toggle('is-empty', shelf.length === 0);
     el.statItems.textContent = shelf.length;
+    el.statItems.hidden = shelf.length === 0;   // the badge is hidden at zero
 
     var selectedIdx = -1;
     shelf.forEach(function (item, i) {
@@ -332,11 +355,8 @@
           '<span class="srow-ico" aria-hidden="true">' + itemPicture(item) + '</span>' +
           '<span class="srow-main">' +
             '<span class="srow-name">' + label + '</span>' +
-            '<span class="srow-sub">' +
-              '<span class="srow-meta">' + esc(E.agePhrase(item.ageMonths)) + '</span>' +
-              statusHTML(summarise(matches)) +
-            '</span>' +
           '</span>' +
+          statusHTML(summarise(matches)) +
         '</button>' +
         '<button class="srow-x" type="button" data-remove="' + esc(item.id) + '" ' +
           'aria-label="Remove ' + label + '" title="Remove">' + ico('x') + '</button>';
@@ -434,10 +454,49 @@
     photoPreview: document.getElementById('wizPhotoPreview'),
     photoImg: document.getElementById('wizPhotoImg'),
     photoNote: document.getElementById('wizPhotoNote'),
-    photoRemove: document.getElementById('wizPhotoRemove')
+    photoRemove: document.getElementById('wizPhotoRemove'),
+    more1: document.getElementById('wizMoreQ1'),
+    fallback1: document.getElementById('wizFallback1'),
+    more2: document.getElementById('wizMoreQ2'),
+    fallback2: document.getElementById('wizFallback2')
   };
 
-  var POPULAR_CATS = ['phone', 'laptop', 'headphones', 'appliance-large', 'appliance-small', 'power-tool'];
+  /* the typed answer sits behind a "Describe it" row on questions 1 and 2;
+     anything that needs the field (a prefill, an error, "Other") opens it */
+  function setFallback(step, open) {
+    var btn = step === 2 ? wizEls.more2 : wizEls.more1;
+    var box = step === 2 ? wizEls.fallback2 : wizEls.fallback1;
+    if (!btn || !box) return;
+    box.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  }
+  function fallbackOpen(step) {
+    var box = step === 2 ? wizEls.fallback2 : wizEls.fallback1;
+    return !!(box && !box.hidden);
+  }
+  if (wizEls.more1) wizEls.more1.addEventListener('click', function () {
+    var open = !fallbackOpen(1);
+    setFallback(1, open);
+    if (open) wizEls.name.focus();
+  });
+  if (wizEls.more2) wizEls.more2.addEventListener('click', function () {
+    var open = !fallbackOpen(2);
+    setFallback(2, open);
+    if (open) wizEls.brand.focus();
+  });
+
+  var POPULAR_CATS = ['phone', 'laptop', 'headphones', 'watch', 'appliance-large', 'appliance-small', 'power-tool', 'kitchen', 'footwear', 'furniture'];
+  /* a photo of the kind of thing on each question-1 tile (local files only) */
+  var CAT_PHOTO = {
+    phone: 'phone', laptop: 'laptop', headphones: 'headphones', watch: 'watch',
+    'appliance-large': 'washing-machine', 'appliance-small': 'coffee-machine',
+    'power-tool': 'drill', kitchen: 'cast-iron-pan', footwear: 'running-shoes', furniture: 'sofa'
+  };
+  function catPhoto(id) {
+    return CAT_PHOTO[id]
+      ? '<img src="assets/img/photo/' + CAT_PHOTO[id] + '-800.webp" alt="" width="44" height="44" loading="lazy">'
+      : '';
+  }
   var COMMON_BRANDS = ['Apple', 'Samsung', 'Sony', 'Bose', 'Dyson', 'Whirlpool', 'DeWalt'];
   var CANT_REMEMBER = 'Can’t remember — that’s fine';
   var PAY_ICON = { visa: 'card', mastercard: 'card', amex: 'card', discover: 'card', debit: 'card', cash: 'coins' };
@@ -449,23 +508,50 @@
     wizEls.brandList.appendChild(o);
   });
 
-  /* one option row: icon · label · radio on the right */
+  /* one option row: icon · label · radio on the right. Each tile group is a
+     radiogroup: role=radio + aria-checked, one tab stop (the checked tile, or
+     the first), arrows move between tiles, Space/Enter picks one. */
   function optRow(attrs, iconHTML, label, on) {
-    return '<button class="opt' + (on ? ' is-on' : '') + '" type="button" aria-pressed="' + on + '" ' + attrs + '>' +
+    return '<button class="opt' + (on ? ' is-on' : '') + '" type="button" role="radio" aria-checked="' + on + '" tabindex="-1" ' + attrs + '>' +
       (iconHTML ? '<span class="opt-ico" aria-hidden="true">' + iconHTML + '</span>' : '') +
       '<span class="opt-label">' + esc(label) + '</span>' +
       '<span class="opt-radio" aria-hidden="true">' + ico('check') + '</span>' +
     '</button>';
   }
 
+  /* roving tabindex: the checked tile (else the first) is the group's tab stop */
+  function roveTabs(group) {
+    var tiles = group.querySelectorAll('.opt');
+    var on = group.querySelector('.opt.is-on') || tiles[0];
+    Array.prototype.forEach.call(tiles, function (t) { t.setAttribute('tabindex', t === on ? '0' : '-1'); });
+  }
+  var KEY_STEP = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+  [wizEls.catChips, wizEls.brandChips, wizEls.ageOpts, wizEls.payOpts].forEach(function (group) {
+    group.addEventListener('keydown', function (e) {
+      var tiles = Array.prototype.slice.call(group.querySelectorAll('.opt'));
+      var i = tiles.indexOf(document.activeElement);
+      if (i === -1) return;
+      var to;
+      if (KEY_STEP[e.key]) to = (i + KEY_STEP[e.key] + tiles.length) % tiles.length;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = tiles.length - 1;
+      else return;
+      e.preventDefault();
+      tiles.forEach(function (t, k) { t.setAttribute('tabindex', k === to ? '0' : '-1'); });
+      tiles[to].focus();
+    });
+  });
+
   wizEls.ageOpts.innerHTML = C.AGES.map(function (a) {
     return optRow('data-age="' + esc(a.id) + '"', '', a.label, false);
   }).join('') + optRow('data-age="none"', '', CANT_REMEMBER, false);
+  roveTabs(wizEls.ageOpts);
 
   wizEls.payOpts.innerHTML = C.PAYMENTS.map(function (p) {
     var label = p.id === 'unknown' ? CANT_REMEMBER : p.label;
     return optRow('data-pay="' + esc(p.id) + '"', PAY_ICON[p.id] ? ico(PAY_ICON[p.id]) : '', label, false);
   }).join('');
+  roveTabs(wizEls.payOpts);
 
   function startWizard(prefill, editItem, opts) {
     opts = opts || {};
@@ -491,6 +577,9 @@
     wizEls.broken.checked = wiz.broken;
     showPhoto(wiz.photo, wiz.photo ? 'Photo saved with this item.' : '');
     wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
+    // the typed answers show only when there is something in them
+    setFallback(1, !!(wiz.name || wiz.photo || opts.focusInput));
+    setFallback(2, !!(wiz.brand && !brandIsCommon(wiz.brand)));
     renderCatRows();
     renderBrandRows();
     syncOptions();
@@ -514,8 +603,11 @@
     if (wiz.category && list.indexOf(wiz.category) === -1 && wiz.category !== 'other') list.unshift(wiz.category);
     list.push('other');
     wizEls.catChips.innerHTML = list.map(function (id) {
-      return optRow('data-cat="' + esc(id) + '"', catIcon(id), C.categoryLabel(id), wiz.category === id);
+      return optRow('data-cat="' + esc(id) + '"', catPhoto(id), C.categoryLabel(id), wiz.category === id);
     }).join('');
+    roveTabs(wizEls.catChips);
+    // "Something else" is the one tile that needs the words
+    if (wiz.category === 'other') setFallback(1, true);
     updateContinue();
   }
 
@@ -540,6 +632,7 @@
     wizEls.brandChips.innerHTML = COMMON_BRANDS.map(function (x) {
       return optRow('data-brand="' + esc(x) + '"', '', x, !other && x.toLowerCase() === b.toLowerCase());
     }).join('') + optRow('data-brand=""', '', 'Other brand', !!other);
+    roveTabs(wizEls.brandChips);
   }
 
   function syncOptions() {
@@ -548,13 +641,15 @@
         ? wiz.ageUnknown
         : wiz.ageMonths != null && Number(b.dataset.age) === Number(wiz.ageMonths);
       b.classList.toggle('is-on', on);
-      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-checked', String(on));
     });
+    roveTabs(wizEls.ageOpts);
     Array.prototype.forEach.call(wizEls.payOpts.children, function (b) {
       var on = b.dataset.pay === wiz.payment;
       b.classList.toggle('is-on', on);
-      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-checked', String(on));
     });
+    roveTabs(wizEls.payOpts);
   }
 
   /* Continue is dimmed, not disabled, until question 1 has an answer */
@@ -569,6 +664,9 @@
     if (!row) return;
     wiz.category = row.dataset.cat;
     renderCatRows();
+    // the grid was rebuilt under the user: put focus back on the picked tile
+    var again = wizEls.catChips.querySelector('[data-cat="' + CSS.escape(wiz.category) + '"]');
+    if (again) again.focus();
   });
 
   wizEls.brandChips.addEventListener('click', function (e) {
@@ -579,10 +677,15 @@
       wiz.brand = b;
       wiz.brandOther = false;
       wizEls.brand.value = b;
+      renderBrandRows();
+      var again = wizEls.brandChips.querySelector('[data-brand="' + CSS.escape(b) + '"]');
+      if (again) again.focus();
+      return;
     } else {
       // "Other brand": type it in the field
       wiz.brandOther = true;
       if (brandIsCommon(wiz.brand)) { wiz.brand = ''; wizEls.brand.value = ''; }
+      setFallback(2, true);
       wizEls.brand.focus();
     }
     renderBrandRows();
@@ -732,8 +835,7 @@
     });
     wizEls.bar.style.width = (wiz.step / 4 * 100) + '%';
     wizEls.count.textContent = 'Question ' + wiz.step + ' of 4';
-    // the button says what comes next, not just "Continue" (round-2 judges)
-    wizEls.next.textContent = ['Next: who made it', 'Next: when you got it', 'Next: how you paid', 'See what you are owed'][wiz.step - 1];
+    wizEls.next.textContent = wiz.step === 4 ? 'See who owes you' : 'Next';
     // skip only where there is no "can't remember" row to do the same job
     wizEls.skip.hidden = wiz.step !== 2;
     // no Back on the start screen; on question 1 it appears only while editing
@@ -752,7 +854,8 @@
       if (!wiz.name.trim() && !wiz.category) {
         // said twice on purpose: the toast announces it, the line under the
         // field stays until there is an answer
-        toast('Type or pick something first.');
+        toast('Pick or type something first.');
+        setFallback(1, true);
         wizEls.err.hidden = false;
         document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1 wizErr');
         wizEls.name.focus();
@@ -871,7 +974,6 @@
     current.matches = matches;
     var n = summarise(matches);
     setCounts(n);
-    var wide = isWide();
     selected = null;
 
     if (!matches.length) {
@@ -879,35 +981,16 @@
       resEls.summary.innerHTML = '';
       resEls.filter.hidden = true;
       resEls.groups.innerHTML = '';
-      // wide: the "nothing found" copy is the panel's content
-      resEls.none.hidden = wide;
-      if (wide) {
-        detail.body.className = 'detail-body';
-        detail.body.innerHTML = '<div class="dp-none">' + resEls.none.innerHTML + '</div>';
-        detail.panel.hidden = false;
-        panelMode = 'none';
-      } else {
-        hidePanel();
-      }
+      resEls.none.hidden = false;
     } else {
       resEls.none.hidden = true;
-      // the filter chips repeated the key's numbers and confused the people
-      // this is for; the long shots fold behind one row instead
-      resEls.filter.hidden = true;
+      resEls.filter.hidden = false;
       resEls.summary.hidden = false;
       resEls.summary.innerHTML = renderSummary(n);
       startMarked = false;
       var leads = matches.filter(function (m) { return !isLongShot(m); });
       var longs = matches.filter(isLongShot);
       resEls.groups.innerHTML = E.group(leads).map(renderGroup).join('') + renderLongShots(longs, !leads.length);
-      // wide: the panel is never empty — it opens on the top lead
-      if (wide) {
-        var first = resEls.groups.querySelector('.rcard');
-        var fm = first && findMatch(first.dataset.rule);
-        if (fm) selectRule(fm, { focus: false }); else hidePanel();
-      } else {
-        hidePanel();
-      }
     }
 
     // remember which rules we have shown, so new ones can be flagged later
@@ -927,23 +1010,12 @@
      the same numbers three times over (round-2 judges; Zillow and Glassdoor
      open their results with one sentence, then the list). */
   function renderSummary(n) {
-    var lead;
+    // one line; the chips underneath carry the counts by strength
     if (n.ask) {
-      lead = '<b class="res-n tnum">' + n.ask + '</b> ' + (n.ask === 1 ? 'place' : 'places') +
-        ' to ask about a free fix. <span class="res-line-sub">Start with the first one below.</span>';
-    } else {
-      lead = 'No strong lead for this one' +
-        (n.long ? ', <span class="res-line-sub">but the long shots below are worth a look.</span>' : '.');
+      return '<p class="res-line"><b class="res-n tnum">' + n.ask + '</b> ' +
+        (n.ask === 1 ? 'place' : 'places') + ' may owe you a free repair.</p>';
     }
-    var keys = [['strong', 'strong'], ['worth asking', 'worth'], ['long shot', 'long']].filter(function (pair) {
-      return n[pair[1]] > 0;
-    }).map(function (pair) {
-      var s = STRENGTH[pair[0]], count = n[pair[1]];
-      var word = pair[0] === 'long shot' ? (count === 1 ? 'long shot' : 'long shots') : pair[0];
-      return '<span class="res-key"><i class="dot ' + s.dot + '" aria-hidden="true"></i><b class="tnum">' + count + '</b> ' + esc(word) + '</span>';
-    }).join('');
-    return '<p class="res-line' + (n.ask ? '' : ' none') + '">' + lead + '</p>' +
-      '<p class="res-keys">' + keys + '</p>';
+    return '<p class="res-line none">No strong lead' + (n.long ? ' — only long shots.' : '.') + '</p>';
   }
 
   var startMarked = false;
@@ -976,17 +1048,12 @@
         '<span class="sr-only">, </span>' +
         '<span class="rgroup-count tnum">' + longs.length + '</span>' +
       '</h2>' +
-      '<p class="rgroup-note">General rules that probably do not apply to you. Kept so nothing is hidden.</p>' +
+      '<p class="rgroup-note">Probably not you. Kept so nothing is hidden.</p>' +
       '<div class="rgroup-list">' +
         '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + longs.map(renderCard).join('') + '</div>' +
         (open ? '' : '<button class="rgroup-toggle" type="button" data-more>Show ' + label + '</button>') +
       '</div>' +
     '</section>';
-  }
-
-  function fact(icon, label, value) {
-    return '<li class="rc-fact">' + ico(icon, 16) +
-      '<span class="fl">' + label + '</span><span class="fv">' + esc(value) + '</span></li>';
   }
 
   function kv(icon, label, valueHTML) {
@@ -1000,6 +1067,10 @@
     return '<a class="' + cls + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Read the rule ' + ico('out', 16) + NEW_TAB + '</a>';
   }
 
+  /* the short source word in a row's first column */
+  var SRC_WORD = { manufacturer: 'The maker', card: 'Your card', settlement: 'A payout', program: 'Free repair', statutory: 'The law', retailer: 'The shop' };
+
+  /* one row, Cal.com's bookings geometry: facts · headline + reason + who · action */
   function renderCard(m) {
     var r = m.rule;
     var s = STRENGTH[m.strength] || STRENGTH['long shot'];
@@ -1009,47 +1080,54 @@
     if (isStart) startMarked = true;
 
     // facts are built only from fields that exist; nothing is guessed
-    var facts = [];
     var win = firstClause(r.window_note, 6);
-    if (win) facts.push(fact('clock', 'Window', win));
-    // an unknown purchase date on a timed rule: the clock cannot be read yet, and the card says so
-    if (m.timing === 'unknown') facts.push(fact('calendar', 'Date', 'check your receipt'));
-    if (r.deadline) facts.push(fact('calendar', 'Deadline', fmtDate(r.deadline)));
-    if (ASK_WHO[r.source_type]) facts.push(fact('who', 'Ask', ASK_WHO[r.source_type]));
+    var col1 = '<span class="rc-src">' + esc(SRC_WORD[r.source_type] || 'A rule') + '</span>' +
+      (win ? '<span class="rc-when">' + esc(win) + '</span>' : '') +
+      // an unknown purchase date on a timed rule: the clock cannot be read yet, and the row says so
+      (m.timing === 'unknown' ? '<span class="rc-deadline">Date: check your receipt</span>' : '') +
+      (r.deadline ? '<span class="rc-deadline">By ' + esc(fmtDate(r.deadline)) + '</span>' : '');
 
-    var link = ruleLink(r.source_url, 'rc-link');
-    // the two buttons repeat on every card; the title tells them apart for AT
+    // the two buttons repeat on every row; the title tells them apart for AT
     var tid = 'rt-' + esc(r.id);
-    // wide: "Details" opens the panel (no fold-out), and the panel holds the
-    // primary button, so the card's own is the quiet one
+    // wide: "Details" opens the rail panel (no fold-out)
     var wide = isWide();
 
     return '<article class="rcard ' + s.cls + (isStart ? ' is-start' : '') + '" data-rule="' + esc(r.id) + '">' +
       '<div class="rc-row">' +
-        '<span class="rc-ico" aria-hidden="true">' + ico(SRC_ICON[r.source_type] || 'box') + '</span>' +
+        '<div class="rc-col1">' + col1 +
+          '<button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') +
+            ' aria-describedby="' + tid + '">Details ' + ico(wide ? 'next' : 'chevron', 16) + '</button>' +
+          pill(m.strength) +
+        '</div>' +
         '<div class="rc-main">' +
           (isStart ? '<span class="rc-start">Start here</span>' : '') +
           '<h3 class="rc-title" id="' + tid + '">' + esc(r.title) + '</h3>' +
-          pill(m.strength) +
-          (facts.length ? '<ul class="rc-facts" role="list">' + facts.join('') + '</ul>' : '') +
-          '<button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') +
-            ' aria-describedby="' + tid + '">Details ' + ico(wide ? 'next' : 'chevron', 16) + '</button>' +
+          (m.reason ? '<p class="rc-reason" title="' + esc(cap(m.reason)) + '">' + esc(cap(m.reason)) + '</p>' : '') +
+          (ASK_WHO[r.source_type] ? '<p class="rc-ask">Ask: ' + esc(ASK_WHO[r.source_type]) + '</p>' : '') +
         '</div>' +
-        '<div class="rc-side"><button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get the words to say</button></div>' +
+        '<div class="rc-side"><button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get script</button></div>' +
       '</div>' +
-      '<div class="rc-body" hidden>' +
-        '<p class="rc-get">' + esc(r.what_you_get) + '</p>' +
-        '<h4 class="rc-h">How to claim</h4>' +
-        '<ol class="rc-steps" role="list">' + steps(r.how_to_claim).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' +
-        '<dl class="rc-kv">' +
-          kv('clock', 'Window', esc(r.window_note)) +
-          (r.deadline ? kv('calendar', 'Deadline', esc(fmtDate(r.deadline))) : '') +
-          (r.contact ? kv('phoneCall', 'Contact', linkify(r.contact)) : '') +
-        '</dl>' +
-        (m.reason ? '<p class="rc-why">Why it matched: ' + esc(m.reason) + '.</p>' : '') +
-        (link ? '<div class="rc-actions">' + link + '</div>' : '') +
-      '</div>' +
+      '<div class="rc-body" hidden>' + docBody(m) + '</div>' +
     '</article>';
+  }
+
+  function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* the inside of the rule's document card: what you get, the steps, the
+     label · value rows, why it matched, the source link */
+  function docBody(m, h) {
+    var r = m.rule;
+    h = h || 'h4';   // h4 under a card's h3 title; h3 under the rail's h2
+    return '<p class="rc-get">' + esc(r.what_you_get) + '</p>' +
+      '<' + h + ' class="rc-h">How to claim</' + h + '>' +
+      '<ol class="rc-steps" role="list">' + steps(r.how_to_claim).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' +
+      '<dl class="rc-kv">' +
+        kv('clock', 'Window', esc(r.window_note)) +
+        (r.deadline ? kv('calendar', 'Deadline', esc(fmtDate(r.deadline))) : '') +
+        (r.contact ? kv('phoneCall', 'Contact', linkify(r.contact)) : '') +
+        (r.source_url ? kv('doc', 'Source', ruleLink(r.source_url, 'rc-link')) : '') +
+      '</dl>' +
+      (m.reason ? '<p class="rc-why">Why it matched: ' + esc(m.reason) + '.</p>' : '');
   }
 
   /* the first clause of a note, at most `max` words, never ending on a
@@ -1100,7 +1178,9 @@
     // only ever emit http(s) and tel: hrefs — a hand-edited corpus must not be
     // able to introduce a javascript: or data: link
     if (/^https?:\/\//i.test(v)) {
-      return '<a href="' + esc(v) + '" target="_blank" rel="noopener noreferrer">' + esc(v) + NEW_TAB + '</a>';
+      // the link shows its site, not the whole address
+      var host = v.replace(/^https?:\/\/(www\.)?/i, '').replace(/[\/?#].*$/, '');
+      return '<a href="' + esc(v) + '" target="_blank" rel="noopener noreferrer">' + esc(host || v) + NEW_TAB + '</a>';
     }
     if (/^[+()\d][\d\s().+-]{6,}$/.test(v)) {
       return '<a href="tel:' + esc(v.replace(/[^+\d]/g, '')) + '">' + esc(v) + '</a>';
@@ -1165,27 +1245,24 @@
     if (opts.focus) focusView('detail');
   }
 
+  /* the rule as a document card (Mistral Le Chat): a small top bar with the
+     kind of thing and the status pill, the body, one black action */
   function renderDetail(m) {
     var r = m.rule;
     var s = STRENGTH[m.strength] || STRENGTH['long shot'];
-    return '<div class="dp-head">' +
-        '<span class="rc-ico" aria-hidden="true">' + ico(SRC_ICON[r.source_type] || 'box') + '</span>' +
-        '<h2 class="dp-title" id="detailTitle" tabindex="-1">' + esc(r.title) + '</h2>' +
+    return '<div class="doc">' +
+      '<div class="doc-top">' + ico(SRC_ICON[r.source_type] || 'box', 18) +
+        '<span class="doc-kicker">The rule</span>' + pill(m.strength) +
       '</div>' +
-      '<div class="dp-status">' + pill(m.strength) + '<span class="dp-key">' + esc(s.key) + '</span></div>' +
-      '<p class="rc-get dp-get">' + esc(r.what_you_get) + '</p>' +
-      '<h3 class="rc-h">How to claim</h3>' +
-      '<ol class="rc-steps" role="list">' + steps(r.how_to_claim).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' +
-      '<dl class="rc-kv">' +
-        kv('clock', 'Window', esc(r.window_note)) +
-        (r.deadline ? kv('calendar', 'Deadline', esc(fmtDate(r.deadline))) : '') +
-        (r.contact ? kv('phoneCall', 'Contact', linkify(r.contact)) : '') +
-      '</dl>' +
-      (m.reason ? '<p class="rc-why">Why it matched: ' + esc(m.reason) + '.</p>' : '') +
-      '<div class="dp-actions">' +
-        '<button class="btn btn-accent btn-lg btn-block" type="button" data-script>Get the words to say</button>' +
-        ruleLink(r.source_url, 'rc-link') +
-      '</div>';
+      '<div class="doc-body">' +
+        '<h2 class="dp-title" id="detailTitle" tabindex="-1">' + esc(r.title) + '</h2>' +
+        '<p class="dp-key">' + esc(s.key) + '</p>' +
+        docBody(m, 'h3') +
+      '</div>' +
+      '<div class="doc-foot">' +
+        '<button class="btn btn-accent" type="button" data-script>Get the words to say</button>' +
+      '</div>' +
+    '</div>';
   }
 
   detail.body.addEventListener('click', function (e) {
@@ -1221,13 +1298,26 @@
   var scrBody = document.getElementById('scrBody');
   var scrCurrent = null;
 
-  /* the rule's own name in bold wherever a line carries it — only what is there */
-  function boldTitle(line, title) {
-    var l = String(line), t = String(title || '').trim();
-    if (!t) return esc(l);
-    var i = l.toLowerCase().indexOf(t.toLowerCase());
-    if (i === -1) return esc(l);
-    return esc(l.slice(0, i)) + '<b>' + esc(l.slice(i, i + t.length)) + '</b>' + esc(l.slice(i + t.length));
+  /* the facts the reader must get right in bold: the rule's name, the item,
+     when it was bought — only where a line actually carries them */
+  function boldPhrases(line, phrases) {
+    var l = String(line), lower = l.toLowerCase();
+    var ranges = [];
+    (phrases || []).forEach(function (p) {
+      var t = String(p || '').trim();
+      if (t.length < 3) return;
+      var i = lower.indexOf(t.toLowerCase());
+      if (i === -1) return;
+      var overlaps = ranges.some(function (r) { return i < r[1] && i + t.length > r[0]; });
+      if (!overlaps) ranges.push([i, i + t.length]);
+    });
+    ranges.sort(function (a, b) { return a[0] - b[0]; });
+    var out = '', at = 0;
+    ranges.forEach(function (r) {
+      out += esc(l.slice(at, r[0])) + '<b>' + esc(l.slice(r[0], r[1])) + '</b>';
+      at = r[1];
+    });
+    return out + esc(l.slice(at));
   }
 
   function showScript(m, keepFocus) {
@@ -1242,27 +1332,34 @@
     rows += kv('doc', 'Rule', esc(r.title) + ruleLink(r.source_url, 'rc-link'));
     if (s.deadline) rows += kv('calendar', 'Deadline', esc(fmtDate(s.deadline)));
 
+    // the facts to get right: the rule's name, the thing, when it was bought
+    var keyPhrases = [r.title, current.item && current.item.name, E.agePhrase(current.item && current.item.ageMonths)];
+
     var top = inPanel
-      ? '<div class="scr-top">' +
-          '<button class="btn btn-quiet scr-back" id="scrBack" type="button">' + ico('back', 20) + ' Back to the rule</button>' +
+      ? '<div class="doc-top">' +
+          '<button class="btn btn-quiet scr-back" id="scrBack" type="button">' + ico('back', 18) + ' Rule</button>' +
+          '<span class="doc-kicker">Your script</span>' +
           pill(m.strength) +
-          '<h2 class="scr-for" id="detailTitle">The words to say</h2>' +
         '</div>'
-      : '<div class="scr-top">' +
-          '<button class="iconbtn" id="scrBack" type="button" aria-label="Back to results">' + ico('back') + '</button>' +
-          '<h2 class="scr-for">The words to say</h2>' +
+      : '<div class="doc-top">' +
+          '<button class="iconbtn scr-back" id="scrBack" type="button" aria-label="Back to results">' + ico('back') + '</button>' +
+          '<span class="doc-kicker">Your script</span>' +
           pill(m.strength) +
         '</div>';
 
     var html =
-      '<div class="scr-card">' + top +
-        '<dl class="scr-kv">' + rows + '</dl>' +
-        '<div class="scr-lines">' +
-          s.lines.map(function (l) { return '<p>' + boldTitle(l, r.title) + '</p>'; }).join('') +
+      '<div class="scr-card doc">' + top +
+        '<div class="doc-body">' +
+          '<h2 class="scr-for"' + (inPanel ? ' id="detailTitle"' : '') + '>What to say</h2>' +
+          '<dl class="scr-kv">' + rows + '</dl>' +
+          '<div class="scr-lines">' +
+            s.lines.map(function (l) { return '<p>' + boldPhrases(l, keyPhrases) + '</p>'; }).join('') +
+          '</div>' +
+          '<p class="scr-help">Say it in store, or paste it into their chat or email.</p>' +
         '</div>' +
-        '<div class="scr-foot">' +
-          '<button class="btn btn-accent btn-lg" type="button" id="copyScript">Copy the script</button>' +
-          '<button class="btn btn-ghost" type="button" id="markWon">I got it — mark as won</button>' +
+        '<div class="doc-foot">' +
+          '<button class="btn btn-accent" type="button" id="copyScript">Copy script</button>' +
+          '<button class="btn btn-ghost" type="button" id="markWon">Mark as won</button>' +
         '</div>' +
       '</div>';
 
@@ -1295,7 +1392,7 @@
       var done = function () {
         copy.textContent = 'Copied';
         toast('Copied.');   // the button label alone is not announced
-        setTimeout(function () { copy.textContent = 'Copy the script'; }, 1800);
+        setTimeout(function () { copy.textContent = 'Copy script'; }, 1800);
       };
       var failed = function () { toast('Could not copy — select the words and copy them yourself.'); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1382,7 +1479,8 @@
   booting = false;
 
   E.load('data/coverage.json').then(function (n) {
-    el.corpusNote.textContent = n + ' rules in the book';
+    // a round figure: the book grows, and an exact count reads as a promise
+    el.corpusNote.textContent = (n >= 100 ? Math.floor(n / 100) * 100 + '+' : n) + ' rules in the book';
     renderShelf();
     // if the user clicked an item while the rulebook was still loading, redraw it
     if (current.item && !el.views.results.hidden) showResults(current.item, true);
@@ -1391,10 +1489,12 @@
     if (pending) {
       history.replaceState(null, '', 'app.html');
       startNew(pending);
-    } else if (isDemo && S.getShelf().length) {
+    } else if (isDemo && S.getShelf().length && params.get('start') !== 'new') {
+      // start=new keeps the demo on question one (the launch film opens there)
       showResults(S.getShelf()[0]);
     }
-  }).catch(function () {
+  }).catch(function (err) {
+    if (window.console && console.error) console.error('rulebook', err);
     corpusFailed = true;
     el.corpusNote.textContent = 'Could not load the rulebook — try refreshing.';
     toast('The rulebook failed to load.');

@@ -137,7 +137,7 @@ h3, p { margin: 0; }
 /* ============================================================
    THE FILM — Owed's own (ported from the cinematic build)
    ============================================================ */
-.film { position: relative; z-index: 3; height: calc(700vh + 100svh); background: #0B0F0C; pointer-events: none; }
+.film { position: relative; z-index: 3; height: calc(520vh + 100svh); background: #0B0F0C; pointer-events: none; }
 .film-sticky { pointer-events: auto; }
 .film.is-covering .film-sticky { pointer-events: none; }
 .film-overlay { transition: opacity .3s var(--ease); }
@@ -203,7 +203,7 @@ h3, p { margin: 0; }
 .is-show .stg { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.16, 1, .3, 1) var(--sd, 0ms), transform .8s cubic-bezier(.16, 1, .3, 1) var(--sd, 0ms); }
 .stg-2 { --sd: 150ms; } .stg-3 { --sd: 300ms; } .stg-4 { --sd: 400ms; }
 @media (max-width: 900px) {
-  .film { height: calc(560vh + 100svh); }
+  .film { height: calc(420vh + 100svh); }
   .film-scene { padding: 0 1.5rem; }
   .film-s3 { justify-content: flex-start; align-items: flex-start; padding-top: 5.5rem; }
   .film-copy-r { max-width: none; }
@@ -571,3 +571,25 @@ html:not(.js-enter) .reveal { opacity: 1; transform: none; }
 .nav.on-dark .btn-accent { background: #FFF; color: #000; }
 .nav.on-dark .nav-toggle span { background: #FFF; }
 .nav.on-dark.is-stuck { background: rgba(10, 10, 10, .55); border-bottom-color: rgba(255, 255, 255, .08); }
+
+/* ---------- Apple's type voice on the page: semibold heads, tight tracking ---------- */
+.h2 { font-weight: 600; letter-spacing: -.03em; }
+.proof-names li, .place-grid h3, .env-cells strong, .env-left h3, .faq-item summary, .footer-col h4 { letter-spacing: -.01em; }
+.btn { letter-spacing: -.01em; }
+
+/* ---------- the script card assembles itself as it reveals ---------- */
+@keyframes card-pop { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes card-drop { from { opacity: 0; transform: translateY(-10px) scale(.8); } to { opacity: 1; transform: none; } }
+@keyframes card-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes card-fade { from { opacity: 0; } to { opacity: 1; } }
+.show-media.in .show-panel { animation: card-pop .7s cubic-bezier(.16, 1, .3, 1) .45s both; }
+.show-media.in .show-pin { animation: card-drop .5s cubic-bezier(.16, 1, .3, 1) .7s both; }
+.show-media.in .show-pill { animation: card-rise .6s cubic-bezier(.16, 1, .3, 1) .85s both; }
+.show-media.in .wf-side > *, .show-media.in .wf-main > * { animation: card-fade .5s ease-out both; }
+.show-media.in .wf-side > :nth-child(1), .show-media.in .wf-main > :nth-child(1) { animation-delay: .15s; }
+.show-media.in .wf-side > :nth-child(2), .show-media.in .wf-main > :nth-child(2) { animation-delay: .22s; }
+.show-media.in .wf-side > :nth-child(3), .show-media.in .wf-main > :nth-child(3) { animation-delay: .29s; }
+.show-media.in .wf-side > :nth-child(4), .show-media.in .wf-main > :nth-child(4) { animation-delay: .36s; }
+.show-media.in .wf-side > :nth-child(5) { animation-delay: .43s; }
+.show-media.in .wf-side > :nth-child(6) { animation-delay: .5s; }
+@media (prefers-reduced-motion: reduce) { .show-media.in .show-panel, .show-media.in .show-pin, .show-media.in .show-pill, .show-media.in .wf-side > *, .show-media.in .wf-main > * { animation: none; } }

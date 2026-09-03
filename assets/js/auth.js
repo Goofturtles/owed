@@ -1,142 +1,122 @@
 /* ============================================================
-   Owed — sign in / sign up
+   Owed — sign in (name only)
+   One field. The name is stored in this browser as owed:user and
+   nothing is sent anywhere. ?mode=signup|signin and ?item= are
+   still accepted so old links keep working.
    ============================================================ */
 (function () {
   'use strict';
 
   var S = window.OwedStore;
   var params = new URLSearchParams(location.search);
-  // the boxed card wrapper is gone; the panel itself carries the mode
-  var card = document.getElementById('panel');
-  var sw = document.querySelector('.auth-switch');
-  var tabSignup = document.getElementById('tabSignup');
-  var tabSignin = document.getElementById('tabSignin');
-  var title = document.getElementById('authTitle');
-  var sub = document.getElementById('authSub');
-  var form = document.getElementById('authForm');
-  var submit = document.getElementById('authSubmit');
-  var errorBox = document.getElementById('authError');
-  var nameInput = document.getElementById('name');
-  var emailInput = document.getElementById('email');
-  var regionSelect = document.getElementById('region');
-  var emailHint = document.getElementById('emailHint');
-
-  var mode = params.get('mode') === 'signin' ? 'signin' : 'signup';
   var pendingItem = params.get('item') || '';
 
-  /* ---------- mode switching ---------- */
-  function setMode(next) {
-    mode = next;
-    card.setAttribute('data-mode', mode);
-    sw.setAttribute('data-on', mode);
-    tabSignup.classList.toggle('is-on', mode === 'signup');
-    tabSignin.classList.toggle('is-on', mode === 'signin');
-    // these are links now, so the current one is aria-current, not aria-selected
-    if (mode === 'signup') { tabSignup.setAttribute('aria-current', 'page'); tabSignin.removeAttribute('aria-current'); }
-    else { tabSignin.setAttribute('aria-current', 'page'); tabSignup.removeAttribute('aria-current'); }
+  var form = document.getElementById('authForm');
+  var field = document.getElementById('fieldName');
+  var nameInput = document.getElementById('name');
+  var help = document.getElementById('authHelp');
+  var submitLabel = document.getElementById('authSubmitLabel');
 
-    if (mode === 'signup') {
-      title.textContent = 'Start your shelf';
-      sub.textContent = 'Free, and it takes about fifteen seconds.';
-      submit.querySelector('span').textContent = 'Create account';
-      emailHint.textContent = 'Used only as the name on your shelf — nothing is sent to it.';
-      nameInput.removeAttribute('disabled');
-      regionSelect.removeAttribute('disabled');
-    } else {
-      title.textContent = 'Welcome back';
-      sub.textContent = 'Your shelf is waiting in this browser.';
-      submit.querySelector('span').textContent = 'Sign in';
-      emailHint.textContent = 'The email you used when you started your shelf.';
-      nameInput.setAttribute('disabled', '');
-      regionSelect.setAttribute('disabled', '');
-    }
-    hideError();
-    var url = new URL(location.href);
-    url.searchParams.set('mode', mode);
-    history.replaceState(null, '', url);
-  }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var HELP_DEFAULT = 'Just a first name is fine.';
 
-  // intercept so the switch stays instant; the href is the no-JS fallback
-  tabSignup.addEventListener('click', function (e) { e.preventDefault(); setMode('signup'); });
-  tabSignin.addEventListener('click', function (e) { e.preventDefault(); setMode('signin'); });
-
-  /* ---------- prefill from an existing local account ---------- */
+  /* ---------- returning user ---------- */
   var existing = S.getUser();
-  if (existing) {
-    if (existing.email) emailInput.value = existing.email;
-    if (existing.name) nameInput.value = existing.name;
-    if (existing.region) regionSelect.value = existing.region;
-    if (!params.get('mode')) mode = 'signin';
-  }
-  setMode(mode);
-
-  /* ---------- validation ---------- */
-  function showError(msg) {
-    // unhide first, then write: a hidden alert is never announced
-    errorBox.hidden = false;
-    errorBox.textContent = msg;
-  }
-  function hideError() {
-    errorBox.textContent = '';
-    errorBox.hidden = true;
+  if (existing && existing.name && existing.name !== 'You') {
+    nameInput.value = existing.name;
+    submitLabel.textContent = 'Continue as ' + existing.name;
+    help.textContent = 'Not you? Just change the name.';
   }
 
-  function validEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());
+  function setError(msg) {
+    field.classList.add('is-error');
+    help.classList.add('is-error');
+    help.textContent = msg;
+    nameInput.setAttribute('aria-invalid', 'true');
+    if (!reduce) {
+      field.classList.remove('is-shaking');
+      void field.offsetWidth; // restart the animation
+      field.classList.add('is-shaking');
+    }
   }
+  function clearError() {
+    if (!field.classList.contains('is-error')) return;
+    field.classList.remove('is-error', 'is-shaking');
+    help.classList.remove('is-error');
+    help.textContent = HELP_DEFAULT;
+    nameInput.removeAttribute('aria-invalid');
+  }
+  nameInput.addEventListener('input', clearError);
 
   /* ---------- submit ---------- */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    hideError();
-
-    var email = emailInput.value.trim();
-    if (!email) {
-      showError('Pop in an email so your shelf has a name.');
-      emailInput.focus();
+    var name = nameInput.value.trim();
+    if (!name) {
+      setError('Type a name so we can label your shelf.');
+      nameInput.focus();
       return;
     }
-    if (!validEmail(email)) {
-      showError("That doesn't look like an email address.");
-      emailInput.setAttribute('aria-invalid', 'true');
-      emailInput.focus();
-      return;
-    }
+    if (existing) S.updateUser({ name: name });
+    else S.signUp(name, '', 'US');
 
-    submit.classList.add('is-busy');
-
-    var user;
-    if (mode === 'signup') {
-      user = S.signUp(nameInput.value, email, regionSelect.value);
-    } else {
-      user = S.signIn(email);
-      // store.js returns null when this browser already holds a shelf under a
-      // different address — say so rather than quietly replacing it
-      if (!user) {
-        submit.classList.remove('is-busy');
-        showError('This browser already has a shelf under a different email. ' +
-                  'Use that address, or create a new account.');
-        emailInput.setAttribute('aria-invalid', 'true');
-        emailInput.focus();
-        return;
-      }
-    }
-    emailInput.removeAttribute('aria-invalid');
-
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var go = function () {
-      var url = 'app.html';
-      if (pendingItem) url += '?new=' + encodeURIComponent(pendingItem);
-      location.href = url;
-    };
-
-    if (reduce) { go(); return; }
-    card.classList.add('is-done');
-    setTimeout(go, 380);
+    var url = 'app.html';
+    if (pendingItem) url += '?new=' + encodeURIComponent(pendingItem);
+    location.href = url;
   });
 
-  /* ---------- enter key moves through fields ---------- */
-  nameInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { e.preventDefault(); emailInput.focus(); }
+  /* ---------- photo carousel ---------- */
+  var carousel = document.getElementById('carousel');
+  if (!carousel) return;
+  var slides = Array.prototype.slice.call(carousel.querySelectorAll('.auth-slide'));
+  var dots = Array.prototype.slice.call(carousel.querySelectorAll('.auth-dot'));
+  var caption = document.getElementById('carouselCaption');
+  var index = 0;
+  var timer = null;
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('is-on', k === index); });
+    dots.forEach(function (d, k) {
+      d.classList.toggle('is-on', k === index);
+      if (k === index) d.setAttribute('aria-current', 'true');
+      else d.removeAttribute('aria-current');
+    });
+    caption.textContent = slides[index].getAttribute('data-caption') || '';
+  }
+
+  // the caption is only announced while the user is driving the carousel;
+  // an auto-rotating live region would speak every six seconds
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+    caption.setAttribute('aria-live', 'polite');
+  }
+  function start() {
+    if (reduce || timer) return;
+    caption.setAttribute('aria-live', 'off');
+    timer = setInterval(function () { show(index + 1); }, 6000);
+  }
+
+  document.getElementById('carouselPrev').addEventListener('click', function () { show(index - 1); });
+  document.getElementById('carouselNext').addEventListener('click', function () { show(index + 1); });
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () { show(Number(d.getAttribute('data-index')) || 0); });
   });
+  carousel.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+  });
+
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+  carousel.addEventListener('focusin', stop);
+  carousel.addEventListener('focusout', function () {
+    if (!carousel.contains(document.activeElement)) start();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop(); else start();
+  });
+
+  show(0);
+  start();
 })();
