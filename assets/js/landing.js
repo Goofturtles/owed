@@ -533,7 +533,7 @@
       el.classList.add('reveal');
       var sibs = el.parentElement ? el.parentElement.children : [el];
       var n = Array.prototype.indexOf.call(sibs, el);
-      el.style.transitionDelay = Math.min(n, 6) * 90 + 'ms';
+      el.style.transitionDelay = Math.min(n, 6) * (el.classList.contains('faq-item') ? 130 : 90) + 'ms';
     });
     io = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
