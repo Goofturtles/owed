@@ -1004,3 +1004,9 @@
   .rail:has(.doc-foot) .rail-foot { display: none; }
   .rail-card:has(.doc-foot) { padding-bottom: 140px; }
 }
+
+/* no colour on the bar at all: just the blur of the words behind it */
+@media (min-width: 1200px) {
+  .rail .doc-foot { background: transparent !important; backdrop-filter: blur(22px) saturate(1.2) !important; -webkit-backdrop-filter: blur(22px) saturate(1.2) !important; border-top: 0 !important; }
+  :root[data-theme="dark"] .rail .doc-foot { background: transparent !important; }
+}
