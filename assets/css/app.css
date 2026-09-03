@@ -989,3 +989,11 @@
   .rail .scr-help { margin-bottom: 8px; }
 }
 :root[data-theme="dark"] .rail .doc-foot { background: rgba(10, 10, 10, .6); }
+
+/* the frosted bar is fixed to the rail's foot (just above the small print) and never moves;
+   the card gets room underneath so the last line of the script can scroll clear of it */
+@media (min-width: 1200px) {
+  .rail { position: sticky; }
+  .rail .doc-foot { position: absolute !important; left: 16px; right: 16px; bottom: 44px; margin: 0; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); box-shadow: 0 -8px 30px rgba(0, 0, 0, .06); }
+  .rail-card:has(.doc-foot) { padding-bottom: 170px; }
+}
