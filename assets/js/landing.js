@@ -49,6 +49,21 @@
     });
   })();
 
+  /* the foot of the page: the last 720px of scroll are damped, so the wheel
+     eases the reader to a stop instead of slamming into the end */
+  (function softLanding() {
+    var ZONE = 720;
+    window.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.deltaY <= 0) return;                 // zooming, or scrolling up: untouched
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var left = max - window.scrollY;
+      if (left > ZONE || left <= 0) return;
+      e.preventDefault();
+      var k = 0.18 + 0.82 * Math.pow(left / ZONE, 1.6);         // 1 at the zone's edge, ~0.18 at the very end
+      window.scrollBy(0, Math.min(left, e.deltaY * k));
+    }, { passive: false });
+  })();
+
   var nav = document.getElementById('nav');
   var darkBands = document.querySelectorAll('.on-dark-band');   /* none on the SaaS page; the film sets its own flag */
   var filmEl = document.getElementById('film');
@@ -151,7 +166,7 @@
        sees while scrolling; the 1080p frame is painted only once the scroll
        settles. Decoding 960x540 is ~5ms, 1080p is 15-30ms — that was the lag. */
     var LO_N = 121, lo = new Array(LO_N), loLoaded = 0, loQueue = [], loInflight = 0;
-    function loSrc(i) { return 'assets/film/m/f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
+    function loSrc(i) { return 'assets/film/l/f' + ('00' + (i + 1)).slice(-3) + '.webp'; }   // 1280x720: sharp enough to scrub on a big display, ~8ms to decode
     (function () { var o = [0, LO_N - 1, 60, 30, 90, 15, 45, 75, 105]; var seen = {}; o.forEach(function (i) { seen[i] = 1; loQueue.push(i); }); for (var i = 0; i < LO_N; i++) if (!seen[i]) loQueue.push(i); })();
     function pumpLo() {
       if (small) return;
@@ -261,7 +276,7 @@
         if (li >= 0) {
           if (drawnKind === 'lo' && drawn === li && !alpha) return;
           drawn = li; drawnKind = 'lo';
-          var ls = Math.max(W / 960, H / 540), lw = 960 * ls, lh = 540 * ls;
+          var ls = Math.max(W / 1280, H / 720), lw = 1280 * ls, lh = 720 * ls;
           ctx.drawImage(lo[li], (W - lw) / 2, (H - lh) / 2, lw, lh);
           if (alpha > 0) { var lo2 = nearestLo(of); if (lo2 >= 0) { ctx.globalAlpha = alpha; ctx.drawImage(lo[lo2], (W - lw) / 2, (H - lh) / 2, lw, lh); ctx.globalAlpha = 1; } }
           return;
