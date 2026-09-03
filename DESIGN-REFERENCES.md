@@ -37,7 +37,28 @@ Nine of nine: one flat colour, no gradient, no drop shadow; hover is a colour ch
 
 ## Landing page
 
-### The SaaS page under the film (3 September 2026)
+### The white page (3 September 2026, second pass — the live one)
+
+The owner rejected the cream ground, the light uppercase heads and the first SaaS pass, and set three rules: pure white with black type and black buttons, bolder type, and every part copied directly from a different brand's Mobbin section (no brand twice), with Owed's own app images in every part. Eight Mobbin studies (~90 sections examined, white/black references only) plus live computed styles from vercel.com, notion.com and attio.com set the system, and a consistency critic reconciled them:
+
+- **Type**: Notion's scale re-set in Geist — section heads 54px / 700 / −0.035em / 1.04 (Notion live 54/700/−1.875px/56; Attio 52–56/700; Framer 56/700), FAQ head 72/700 (OpenPhone), closing 44, card titles 22–24/700, body 16/24, greys #666 (body) and #999 (dim). Buttons: black #000, radius 8, 40px in the bar (Attio), 48 in sections (Vercel/Attio), 56 at the close (Contra). Hairlines #EAEAEA (plurality across Vercel, Attio, Notion, Cursor). Container 1200px.
+- **Nav — Attio** ([07bc478d](https://mobbin.com/sites/sections/07bc478d-e98c-4b12-b956-62afd8a3e811)): flat opaque white bar 72px, 15px/500 links, outlined Sign in + solid black Start free at 40px/r8, hairline only once scrolled; phone sheet of 56px rows.
+- **The film — Owed's own**, now 121 WebP frames (every second frame of the 24 fps clip at 1280 and 720 wide) painted to a canvas at the nearest frame to a smoothed scroll position; the mp4 seeking that stuttered is gone.
+- **The paper flythrough — Owed's own**, restored from commit b0de403: the raw-WebGL corridor of fine print (scene.js), one bold 60px/700 line at a time, four verdict cards by depth, guided scroll (scroll.js).
+- **Read from — Coda** ([75b6afeb](https://mobbin.com/sites/sections/75b6afeb-b611-4194-8681-938618c2d379), [b327d6ea](https://mobbin.com/sites/sections/b327d6ea-bdba-48d0-ab2e-e9d437fdc27f)): one grey sentence, one row of black names; every name is a `source_url` host in `data/coverage.json`.
+- **The script — Vercel "Centralized feedback"** ([892a4a8f](https://mobbin.com/sites/sections/892a4a8f-55b5-4bad-84b3-c77a538bcfb2)): 48px/700 two-line head, 18/32 grey body with the key clause in black, one 48px black button; the real script panel in a 12px card with a 320px dark callout panel (the Amex scenario's real who / rule / deadline) carrying a numbered badge, and a 52px black pill toolbar (the four questions + Copy) hanging 26px off the card's foot.
+- **Inside Owed — Notion "Try for free."** ([73408d02](https://mobbin.com/sites/sections/73408d02-de80-4628-9e76-4ce1c1b5e701)): one tall card + two stacked, white, 1px hairline, 24px padding, 40px line icon, 24/700 title, one sentence, a 36px button; the three-pane shot bleeds off the tall card's foot, the result and script crops bleed off the right of the small ones.
+- **How it works — ToDesktop** ([a52dff05](https://mobbin.com/sites/sections/a52dff05-8f33-4ec6-92ce-ab2fdd3c550b)), chosen after the owner rejected Sequence's stepper: three stacked white step cards, "Step N" tag, 24/700 title, one grey line, a two-column checklist with black ticks, the real crop on the right (wizard, result card, script).
+- **In numbers — Ramp** ([b3c99307](https://mobbin.com/sites/sections/b3c99307-fd22-4b51-8d0b-11bc1d750391), [d7b8268c](https://mobbin.com/sites/sections/d7b8268c-d948-4fd8-b80d-951b2e7c337e)): four 64px/600 numbers, 16px grey labels, no heading, no rules.
+- **Five places — Square "A little peace of mind"** ([b6639492](https://mobbin.com/sites/sections/b6639492-77d4-4be2-9525-2eeb42d9f1e3)): columns with a 22px line icon, a short bold sentence, one grey line, a 13px link with ↗.
+- **Environment — Norma** ([cc6fe797](https://mobbin.com/sites/sections/cc6fe797-f3aa-4a78-a283-bde7fb1df9ae)): a bordered card of four figure cells (42/600 number, bold label, grey source line) with a 72px CTA strip inside it, then a second card split 50/50 with two value pills and two figures over a 4px bar. Figures: 80% after 800 cycles and 7 years of parts (EU 2023/1670 and ecodesign), +12 months for choosing repair (EU right to repair), 3–6 years in Quebec; 276 of 318 rules read in a primary source; no CO₂ or tonnage.
+- **FAQ — OpenPhone** ([16077091](https://mobbin.com/sites/sections/16077091-516c-4e22-b6d2-c6ad86b01432)): 72px/700 centred head, 18px sub, 100px to the list, 90px hairline rows with a 20/600 question and a chevron, first open.
+- **Closing — Contra** ([66f6354b](https://mobbin.com/sites/sections/66f6354b-428e-435a-9878-c46e38c9c249)): 64px mark, 44px head, 17px grey line, one 56px black button, a 13px line with an underlined link.
+- **Footer — Portrait** ([80af72e7](https://mobbin.com/sites/sections/80af72e7-d5b7-4a68-94c2-1626b76112bf)): wordmark and a status line, three link columns at 14px, a dashed hairline, one 12px line.
+
+The storyboard the owner approved before the build (the twelve Mobbin stills stacked in page order) is `storyboard/index.html`, local only.
+
+### The SaaS page under the film (3 September 2026, first pass — replaced the same day)
 
 Everything below `#film` was rebuilt in one pass as a light SaaS page after seven Mobbin section studies (≈60 sections examined; specs and the corpus-fact audit are in the 3 September work log). The entries below this one describe the earlier sections they replaced and are kept as history. Shared rules the studies agreed on: white cards with one hairline, radius 16, no shadow (Notion bento, Vercel, Miro, Twenty, Klarna, Attio, Cursor, Deel); a 2–4 word title at 20/500 and exactly one sentence at 16; product crops that bleed off a card edge and fade into the card (Notion, Linear, Twenty, Klarna, Vercel); section heads left-aligned with the lede to the right; 112–176px between sections; no button inside feature grids.
 

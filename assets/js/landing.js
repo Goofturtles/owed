@@ -29,13 +29,17 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- the film: scroll-scrubbed video, three chapters ----------
-     Ported from owed-cinematic/src/App.tsx + useVideoScrub.ts. Progress p is
-     scrollY over the track's scroll span; the video is seeked towards a
-     smoothed p * duration (tau 8) on every frame and is never played. */
+  /* ---------- the film: a scroll-scrubbed frame sequence, three chapters ----------
+     Ported from owed-cinematic. Progress p is scrollY over the track's scroll
+     span. Seeking a 12 MB mp4 on every frame stuttered (each seek decodes from
+     the last keyframe), so the film is 121 WebP frames (every second frame of
+     the 24 fps clip, 1280 wide on laptops, 720 on phones) drawn to a canvas:
+     the nearest LOADED frame to a smoothed p is painted, never a seek. Frames
+     load in a spread order (0, 60, 30, 90, 15 ...) so the whole track has a
+     coarse film within a second and fills in from there. */
   (function film() {
     if (!filmEl) return;
-    var video = filmEl.querySelector('.film-video');
+    var canvas = filmEl.querySelector('.film-canvas');
     var overlay = filmEl.querySelector('.film-overlay');
     var scenes = filmEl.querySelectorAll('.film-scene');
     var dots = filmEl.querySelectorAll('[data-dot]');
@@ -63,29 +67,75 @@
 
     filmEl.classList.add('is-js');   // the stagger only hides things once this loop can show them again
 
-    var duration = 0, current = 0, target = 0, last = performance.now(), lastChapter = -1;
+    var current = 0, target = 0, last = performance.now(), lastChapter = -1;
     var sceneOn = [null, null, null];
-    if (video) {
-      var onMeta = function () { if (isFinite(video.duration) && video.duration > 0) duration = video.duration; };
-      video.addEventListener('loadedmetadata', onMeta);
-      if (video.readyState >= 1) onMeta();
-      video.addEventListener('loadeddata', function () { filmEl.classList.add('is-live'); });
-      if (video.readyState >= 2) filmEl.classList.add('is-live');
-      video.addEventListener('error', function () { filmEl.classList.remove('is-live'); });
-      /* the whole file is only fetched once the reader shows intent to move,
-         and never on a connection that asked to save data */
-      var saveData = !!(navigator.connection && navigator.connection.saveData);
-      var upgraded = false;
-      var upgrade = function () {
-        if (upgraded || saveData) return;
-        upgraded = true;
-        video.preload = 'auto';
-        try { video.load(); } catch (e) { /* keep metadata */ }
-      };
-      ['scroll', 'touchstart', 'keydown', 'wheel', 'pointerdown'].forEach(function (ev) {
-        window.addEventListener(ev, upgrade, { passive: true, once: true });
-      });
+
+    /* ---- the frame bank ---- */
+    var N = 121, frames = new Array(N), loaded = 0, ctx = null, drawn = -1;
+    var W = 0, H = 0, FW = 1280, FH = 720;
+    var small = window.innerWidth < 760 || (navigator.connection && navigator.connection.saveData);
+    var dir = 'assets/film/' + (small ? 'm' : 'd') + '/';
+    if (small) { FW = 720; FH = 405; }
+    if (canvas) ctx = canvas.getContext('2d', { alpha: false });
+
+    function frameSrc(i) { return dir + 'f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
+    /* coarse first: 0, 120, 60, 30, 90, 15, 45 ... then every gap */
+    function order() {
+      var out = [], seen = {};
+      function add(i) { if (!seen[i]) { seen[i] = 1; out.push(i); } }
+      add(0); add(N - 1);
+      for (var step = 64; step >= 1; step = step >> 1) {
+        for (var i = 0; i < N; i += step) add(i);
+      }
+      return out;
     }
+    var queue = order(), inflight = 0, MAX = 4;
+    function pump() {
+      while (inflight < MAX && queue.length) {
+        (function (i) {
+          var img = new Image();
+          img.decoding = 'async';
+          inflight++;
+          img.onload = function () {
+            inflight--; frames[i] = img; loaded++;
+            if (loaded === 1) filmEl.classList.add('is-live');
+            drawn = -1;          // a nearer frame may exist now
+            pump();
+          };
+          img.onerror = function () { inflight--; pump(); };
+          img.src = frameSrc(i);
+        })(queue.shift());
+      }
+    }
+    /* nearest loaded frame to a fractional index */
+    function nearest(f) {
+      var i = Math.round(f);
+      if (frames[i]) return i;
+      for (var d = 1; d < N; d++) {
+        if (i - d >= 0 && frames[i - d]) return i - d;
+        if (i + d < N && frames[i + d]) return i + d;
+      }
+      return -1;
+    }
+    function size() {
+      if (!canvas) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+      if (w === W && h === H) return;
+      W = w; H = h; canvas.width = w; canvas.height = h; drawn = -1;
+    }
+    function paint(f) {
+      if (!ctx) return;
+      size();
+      var i = nearest(f);
+      if (i < 0 || i === drawn) return;
+      drawn = i;
+      // cover: the frame fills the stage the way object-fit: cover would
+      var s = Math.max(W / FW, H / FH), dw = FW * s, dh = FH * s;
+      ctx.drawImage(frames[i], (W - dw) / 2, (H - dh) / 2, dw, dh);
+    }
+    pump();
+    window.addEventListener('resize', function () { drawn = -1; }, { passive: true });
 
     /* the dissolve to paper over the last tenth of the track, smoothed so a
        fast scroll never jumps it */
@@ -136,17 +186,15 @@
           if (d === chapter) dots[d].setAttribute('aria-current', 'true'); else dots[d].removeAttribute('aria-current');
         }
       }
-      if (video && duration > 0) {
+      if (canvas) {
         // reduced motion: three stills, one per chapter, instead of a camera move
-        target = (reduce ? [0, 0.43, 0.83][chapter] : p) * duration;
+        target = (reduce ? [0, 0.43, 0.83][chapter] : p) * (N - 1);
         if (reduce) current = target;
         else {
           current += (target - current) * (1 - Math.exp(-dt * 8));
-          if (Math.abs(target - current) < 0.002) current = target;
+          if (Math.abs(target - current) < 0.01) current = target;
         }
-        if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) {
-          try { video.currentTime = current; } catch (e) { /* not seekable yet */ }
-        }
+        paint(current);
       }
       requestAnimationFrame(tick);
     }
@@ -315,7 +363,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.product-shot, .sources-grid, .section-head, .prob-card, .feat-card, .hw-step, .hw-shot, .ck-col, .sc-left, .sc-fig, .env-card, .env-copy, .env-diagram, .env-chips, .reg-row, .faq-item, .cta-card'
+    '.proof-lead, .proof-names, .show-copy, .show-media, .feat > .wrap-1200 > .h2, .feat-card, .how > .wrap-1200 > .h2, .hstep, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
   );
 
   var io = null;
@@ -637,7 +685,7 @@
       }
     } catch (e) { n = 0; }
     if (n) {
-      el.textContent = 'In this browser so far: ' + n + (n === 1 ? ' thing' : ' things') + ' marked as fixed.';
+      el.textContent = n + (n === 1 ? ' thing' : ' things') + ' marked as fixed in this browser. Owed counts only what you told it.';
     }
   })();
 })();
