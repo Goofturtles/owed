@@ -1488,7 +1488,6 @@
           '<button class="btn btn-accent" type="button" id="copyScript">Copy script</button>' +
           '<button class="btn btn-ghost" type="button" id="sendScript">Send it</button>' +
           '<button class="btn btn-ghost" type="button" id="markWon">Mark as won</button>' +
-          '<p class="scr-send-note">Send it opens your email app or their claim page with the words ready. Owed itself sends nothing and keeps no copy.</p>' +
         '</div>' +
       '</div>';
 
