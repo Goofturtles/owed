@@ -10,18 +10,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1788420000">
-<link rel="stylesheet" href="assets/css/landing.css?v=1788420000">
-<link rel="stylesheet" href="assets/css/motion.css?v=1788420000">
-<script src="assets/js/theme.js?v=1788420000"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1788430000">
+<link rel="stylesheet" href="assets/css/landing.css?v=1788430000">
+<link rel="stylesheet" href="assets/css/motion.css?v=1788430000">
+<script src="assets/js/theme.js?v=1788430000"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ============ NAV — copied from Attio (Mobbin 07bc478d) ============
-     A flat, opaque white bar edge to edge: logo, four 15px/500 links, an
-     outlined "Sign in" and a solid black "Start free" at 40px / radius 8.
-     A hairline appears under it once the page has scrolled. -->
+<!-- ============ NAV — Attio (Mobbin 07bc478d), floating ============
+     Transparent over the film; once the page scrolls it turns to blurred
+     white glass with a hairline. Black links, outlined Sign in, solid black
+     Start free at 40px / radius 8. -->
 <header class="nav" id="nav">
   <div class="nav-row">
     <a class="brand" href="index.html" aria-label="Owed home">
@@ -42,7 +42,6 @@
       <span></span><span></span>
     </button>
   </div>
-  <!-- the phone sheet: stacked links, then the two buttons -->
   <div class="nav-sheet" id="navSheet">
     <a href="#how">How it works</a>
     <a href="#checks">What we check</a>
@@ -58,11 +57,10 @@
 <main id="main" tabindex="-1">
 
   <!-- ============ THE FILM: one sticky scene, three chapters ============
-       Ported from the owed-cinematic build. A scroll-scrubbed film that never
-       plays itself: 121 WebP frames are painted to a canvas at the nearest
-       frame to a smoothed scroll position (landing.js film()). Three text
-       compositions fade in and out in sequence; a chapter rail on the right;
-       chapter three carries the working "what broke?" field. -->
+       Ported from the owed-cinematic build. 121 WebP frames (1920 wide on
+       laptops, 960 on phones) are painted to a canvas at the nearest frame
+       to a smoothed scroll position (landing.js film()); nothing is seeked.
+       The dissolve to white happens only over the last 4% of the track. -->
   <section class="film" id="film" aria-label="Owed, in three chapters">
     <div class="film-sticky">
       <canvas class="film-canvas" aria-hidden="true"></canvas>
@@ -124,204 +122,102 @@
     </div>
   </section>
 
-  <!-- ============ THE STACK: a flythrough of the paperwork ============
-       The camera travels into a corridor of pages of fine print (raw WebGL,
-       scene.js) while one bold line at a time sits in the middle of the
-       screen and four real verdict cards float past at different depths.
-       Restored at the owner's request. -->
-  <section class="stack" id="stack" data-guided aria-label="How deep the paperwork goes">
-    <div class="stack-sticky">
-      <div class="stack-still" aria-hidden="true"></div>
-      <canvas class="stack-canvas" aria-hidden="true"></canvas>
-
-      <div class="stack-caps">
-        <p class="stack-cap" data-cap data-from="0" data-to="0.22">
-          Every warranty. Every card benefit. Every payout nobody collects.
-        </p>
-        <p class="stack-cap" data-cap data-from="0.22" data-to="0.66">
-          <b class="tnum">318</b> rules deep, and none of it is written for you.
-        </p>
-        <p class="stack-cap" data-cap data-from="0.66" data-to="1.01">
-          One of them says your repair is <em>free.</em>
-        </p>
-      </div>
-
-      <div class="stack-cards" aria-hidden="true">
-        <div class="scard" style="--sx:-38%; --sy:-34%; --sd:1.35; --sat:.06">
-          <span class="scard-tick"></span>
-          <b>The shop may still owe the repair</b>
-          <i>England &middot; 6 years to bring a claim</i>
-        </div>
-        <div class="scard" style="--sx:36%; --sy:-38%; --sd:.85; --sat:.20">
-          <span class="scard-tick"></span>
-          <b>One more year of cover</b>
-          <i>Your credit card &middot; after the maker&rsquo;s ran out</i>
-        </div>
-        <div class="scard" style="--sx:-40%; --sy:33%; --sd:1.6; --sat:.36">
-          <span class="scard-tick"></span>
-          <b>Free repair, parts and labour</b>
-          <i>Quebec legal guarantee &middot; 3 to 6 years</i>
-        </div>
-        <div class="scard" style="--sx:38%; --sy:36%; --sd:1.05; --sat:.52">
-          <span class="scard-tick"></span>
-          <b>A payout nobody collected</b>
-          <i>Class action &middot; while the window is open</i>
-        </div>
-      </div>
-
-      <span class="stack-hint mono" aria-hidden="true">scroll</span>
-
-      <div class="scroll-cue">
-        <span>Keep scrolling</span>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"/></svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ READ FROM — copied from Coda (Mobbin 75b6afeb) ============
-       One grey sentence, one row of black names, nothing else. Every name is
-       a host in data/coverage.json. -->
+  <!-- ============ READ FROM — Coda (Mobbin 75b6afeb) ============ -->
   <section class="proof" aria-labelledby="proofHead">
-    <div class="wrap-1200">
-      <h2 class="proof-lead" id="proofHead">Built from the fine print of <b class="tnum">318</b> warranty, card-benefit and consumer-law rules, read from</h2>
+    <div class="wrap-1200 proof-head">
+      <h2 class="proof-lead" id="proofHead">Read from the fine print of <b class="tnum">318</b> rules at</h2>
+      <button class="proof-pause" type="button" aria-pressed="false" data-pause aria-label="Pause the moving list">
+        <svg viewBox="0 0 20 20" width="12" height="12" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="3.5" height="12" rx="1"/><rect x="11.5" y="4" width="3.5" height="12" rx="1"/></svg>
+      </button>
+    </div>
+    <!-- every name is a source_url host in data/coverage.json; the second
+         copy makes the loop seamless and is hidden from assistive tech -->
+    <div class="proof-track">
       <ul class="proof-names" role="list">
-        <li>Apple</li><li>Samsung</li><li>Dyson</li><li>Bosch</li><li>Visa</li><li>American Express</li><li>EUR-Lex</li><li>legislation.gov.uk</li>
+        <li>Apple</li><li>Samsung</li><li>Google</li><li>LG</li><li>Dell</li><li>HP</li><li>DeWalt</li><li>Milwaukee</li><li>Bosch</li><li>Dyson</li><li>Speed Queen</li><li>Frigidaire</li><li>Sonos</li><li>JBL</li><li>Visa</li><li>Mastercard</li><li>American Express</li><li>Capital One</li><li>Citi</li><li>Chase</li><li>Scotiabank</li><li>RBC</li><li>CIBC</li><li>IKEA</li><li>Costco</li><li>REI</li><li>Target</li><li>Home Depot</li><li>John Lewis</li><li>Decathlon</li><li>MEC</li><li>L.L.Bean</li><li>FTC</li><li>NHTSA</li><li>CPSC</li><li>Cornell LII</li><li>legislation.gov.uk</li><li>EUR-Lex</li><li>European Commission</li><li>Quebec consumer office</li><li>California Legislature</li><li>Financial Ombudsman Service</li>
+      </ul>
+      <ul class="proof-names" aria-hidden="true">
+        <li>Apple</li><li>Samsung</li><li>Google</li><li>LG</li><li>Dell</li><li>HP</li><li>DeWalt</li><li>Milwaukee</li><li>Bosch</li><li>Dyson</li><li>Speed Queen</li><li>Frigidaire</li><li>Sonos</li><li>JBL</li><li>Visa</li><li>Mastercard</li><li>American Express</li><li>Capital One</li><li>Citi</li><li>Chase</li><li>Scotiabank</li><li>RBC</li><li>CIBC</li><li>IKEA</li><li>Costco</li><li>REI</li><li>Target</li><li>Home Depot</li><li>John Lewis</li><li>Decathlon</li><li>MEC</li><li>L.L.Bean</li><li>FTC</li><li>NHTSA</li><li>CPSC</li><li>Cornell LII</li><li>legislation.gov.uk</li><li>EUR-Lex</li><li>European Commission</li><li>Quebec consumer office</li><li>California Legislature</li><li>Financial Ombudsman Service</li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ THE SCRIPT — copied from Vercel "Centralized feedback" (Mobbin 892a4a8f) ============
-       Two columns. Left: a two-line 48px/700 heading, grey body with the key
-       clause in black, one black button. Right: a bordered card holding the
-       real script panel, a dark callout panel with a numbered badge, and a
-       black pill toolbar hanging off the card's bottom edge. -->
+  <!-- ============ THE WHOLE APP — one picture (Notion's product shot under the strip, Mobbin b2bc7d7b) ============ -->
+  <section class="shot" aria-label="The Owed app">
+    <div class="wrap-1200">
+      <figure class="shot-card">
+        <img src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000" alt="The Owed app: your saved things on the left, who owes you in the middle, the rule and how to claim on the right." decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THE SCRIPT — Vercel "Centralized feedback" (Mobbin 892a4a8f) ============ -->
   <section class="show" id="script" aria-labelledby="showHead">
     <div class="wrap-1200 show-grid">
       <div class="show-copy">
         <h2 class="h2" id="showHead">It writes the words<br>you say on the phone.</h2>
-        <p class="show-body">Once Owed finds the rule that covers you, it writes the claim: <strong>who to ask, the rule named in the company&rsquo;s own words, and the deadline on top.</strong> Copy it, or read it out.</p>
+        <p class="show-body">Once it finds the rule, Owed writes the claim: <strong>who to ask, the rule named, the deadline on top.</strong> Copy it, or read it out.</p>
         <a class="btn btn-accent btn-48" href="auth.html?mode=signup">Get my script</a>
       </div>
 
       <div class="show-media">
         <div class="show-card">
+          <!-- the faded product mock (Vercel greys its app to a wireframe so the panel pops) -->
           <div class="show-clip">
-            <img src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="The script panel in the app: who to call, the rule, and the words to say, with a copy button." loading="lazy" decoding="async">
+            <img src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000" alt="The Owed app, faded behind the callout." loading="lazy" decoding="async">
           </div>
-          <!-- the callout: the real header of the Amex scenario the app writes -->
+          <!-- the pin on the mock, where the comment was left -->
+          <span class="show-pin" aria-hidden="true"><b>1</b><i></i></span>
+          <!-- the dark panel: the real who / rule / deadline of the Amex scenario -->
           <aside class="show-panel" aria-label="What the script names">
-            <span class="show-badge" aria-hidden="true">1</span>
             <div class="show-panel-head">
               <span class="show-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
-              <b>American Express &middot; benefits line</b>
-              <span class="show-meta">who to ask</span>
+              <b>Owed</b>
+              <span class="show-meta">just now</span>
             </div>
-            <p class="show-panel-line">Extended warranty benefit &mdash; one more year of cover after the maker&rsquo;s own warranty ends.</p>
-            <div class="show-chips" aria-hidden="true"><span>Sony WH-1000XM4</span><span>bought 12 June 2025</span></div>
-            <div class="show-panel-foot"><span>Amex US extended warranty guide</span><span>Tell them within 30 days</span></div>
-            <div class="show-panel-field" aria-hidden="true"><span>Hi &mdash; I&rsquo;d like to open a claim under the&hellip;</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <p class="show-panel-line">Ask American Express for the extended warranty benefit.</p>
+            <div class="show-chips" aria-hidden="true"><span><img src="assets/img/how-02.webp?v=2" width="998" height="560" alt="" loading="lazy" decoding="async"></span><span><img src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="" loading="lazy" decoding="async"></span></div>
+            <div class="show-panel-foot"><span>No replies</span><span class="show-due"><i></i>30 days to tell them</span></div>
+            <div class="show-panel-field" aria-hidden="true"><span>Hi &mdash; I&rsquo;d like to open a claim&hellip;</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
           </aside>
-          <!-- the toolbar: the four questions, then copy -->
+          <!-- the toolbar hanging off the card's foot: icons, three marks, share, more -->
           <div class="show-pill" aria-hidden="true">
-            <svg class="is-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6c0 4.2 3.1 7.6 7.5 9 4.4-1.4 7.5-4.8 7.5-9V6Z"/></svg>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/></svg>
+            <span class="show-pill-on"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v11H9l-5 4z"/></svg></span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+            <span class="show-pill-avs"><i class="t-mint">A</i><i class="t-sky">V</i><i class="t-sand">N</i><i class="t-teal">EU</i></span>
             <i class="show-pill-div"></i>
-            <span class="show-pill-label">Copy script</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 9l5-5 5 5M5 20h14"/></svg>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ INSIDE OWED — copied from Notion "Try for free." (Mobbin 73408d02) ============
-       A 46px/700 heading, then one tall card and two stacked cards: white,
-       1px #E6E6E6, radius 8, 24px padding, screenshots clipped by the card
-       edges with no inner frame. -->
-  <section class="feat" id="features" aria-labelledby="featHead">
+  <!-- ============ THE THREE SCREENS — Twenty's screenshot cards (Mobbin a29b4352) ============
+       Three white cards, the real screen full-bleed at the top, a four-word
+       caption under it. Nothing else. -->
+  <section class="screens" id="how" aria-labelledby="screensHead">
     <div class="wrap-1200">
-      <h2 class="h2" id="featHead">Everything you need to get it fixed for free.</h2>
-      <div class="feat-grid">
-        <article class="feat-card feat-tall">
-          <svg class="feat-ico" viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="8" width="28" height="24" rx="3"/><path d="M6 15h28M14 8v24"/></svg>
-          <h3>The whole answer on one screen</h3>
-          <p>Your things on the left, who owes you in the middle, the rule and how to claim on the right.</p>
-          <a class="btn btn-accent btn-36" href="auth.html?mode=signup">Start free</a>
-          <img class="feat-shot" src="assets/img/app-shot.webp?v=1788377000" width="1500" height="1000" alt="The Owed app: four saved things on the left, one strong lead for a Lodge cast iron skillet in the middle, and the rule with how to claim on the right." loading="lazy" decoding="async">
-        </article>
-        <article class="feat-card">
-          <svg class="feat-ico" viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 30l8-10 6 7 10-14"/><path d="M8 34h24"/></svg>
-          <h3>Every lead, ranked honestly</h3>
-          <p>Strong, worth asking or long shot: how well the rule fits what you told it, never a promise.</p>
-          <a class="btn btn-outline btn-36" href="app.html?demo=1">See a result</a>
-          <img class="feat-crop" src="assets/img/how-02.webp?v=2" width="998" height="560" alt="" loading="lazy" decoding="async">
-        </article>
-        <article class="feat-card">
-          <svg class="feat-ico" viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h24v16H16l-6 5v-5H8z"/><path d="M13 16h14M13 20h9"/></svg>
-          <h3>The words to say, written for you</h3>
-          <p>Who to ask, the rule named, the deadline on top. Ready to read out or paste into an email.</p>
-          <a class="btn btn-outline btn-36" href="#script">Read a script</a>
-          <img class="feat-crop" src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="" loading="lazy" decoding="async">
-        </article>
-      </div>
-      <p class="feat-foot">Owed runs in your browser. Nothing to install, and nothing you type leaves it. <a href="LIMITATIONS.md">Where the rulebook is thin</a></p>
+      <h2 class="h2" id="screensHead">Four questions. One answer. The words to say.</h2>
+      <ul class="screen-grid" role="list">
+        <li class="screen-card">
+          <div class="screen-img"><img src="assets/img/how-01.webp?v=2" width="1120" height="1306" alt="Question 1 of 4: What broke? A text field and tiles for phone, laptop, headphones and appliances." loading="lazy" decoding="async"></div>
+          <p><span class="screen-n t-mint">1</span>Say what broke</p>
+        </li>
+        <li class="screen-card">
+          <div class="screen-img"><img src="assets/img/how-02.webp?v=2" width="998" height="560" alt="A result card: Lodge replaces cracked or warped cast iron free, with no end date, marked Strong." loading="lazy" decoding="async"></div>
+          <p><span class="screen-n t-sky">2</span>See who owes you</p>
+        </li>
+        <li class="screen-card">
+          <div class="screen-img"><img src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="The words to say: who to call, the rule, and a script with a copy button." loading="lazy" decoding="async"></div>
+          <p><span class="screen-n t-sand">3</span>Read the script</p>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- ============ HOW IT WORKS — copied from ToDesktop (Mobbin a52dff05) ============
-       A small heading, then three stacked white step cards: a "Step N" tag,
-       a bold title, one grey line, a two-column checklist, and the product
-       screenshot on the right of the card. One real crop per step. -->
-  <section class="how" id="how" aria-labelledby="howHead">
-    <div class="wrap-1200">
-      <h2 class="h2 h2-40" id="howHead">How it works</h2>
-      <ol class="hsteps" role="list">
-        <li class="hstep">
-          <div class="hstep-text">
-            <span class="hstep-tag">Step 1</span>
-            <h3>Say what broke, in your own words</h3>
-            <p>Type it as you&rsquo;d say it out loud, or take a photo of the thing. Then three more short questions.</p>
-            <ul class="hstep-checks" role="list">
-              <li>What broke</li><li>Who made it</li><li>Roughly when you got it</li><li>How you paid</li>
-            </ul>
-          </div>
-          <figure class="hstep-media">
-            <img src="assets/img/how-01.webp?v=2" width="1120" height="1306" alt="Question 1 of 4 in the app: What broke? with a text field and tiles for phone, laptop, headphones, appliances, tools." loading="lazy" decoding="async">
-          </figure>
-        </li>
-        <li class="hstep">
-          <div class="hstep-text">
-            <span class="hstep-tag">Step 2</span>
-            <h3>See who owes you</h3>
-            <p>Every rule that fits, ranked strong, worth asking or long shot, with the reason in plain words.</p>
-            <ul class="hstep-checks" role="list">
-              <li>The maker&rsquo;s warranty</li><li>The card you paid with</li><li>Payouts and repair programmes</li><li>The law where you live</li>
-            </ul>
-          </div>
-          <figure class="hstep-media">
-            <img src="assets/img/how-02.webp?v=2" width="998" height="560" alt="A result card: Lodge replaces cracked or warped cast iron free, with no end date, marked Strong." loading="lazy" decoding="async">
-          </figure>
-        </li>
-        <li class="hstep">
-          <div class="hstep-text">
-            <span class="hstep-tag">Step 3</span>
-            <h3>Read the script</h3>
-            <p>Who to ask, the rule named in the company&rsquo;s own words, the deadline on top. Copy it, or read it out.</p>
-            <ul class="hstep-checks" role="list">
-              <li>Who to call or write to</li><li>The rule, quoted</li><li>The deadline</li><li>One tap to copy</li>
-            </ul>
-          </div>
-          <figure class="hstep-media">
-            <img src="assets/img/how-03.webp?v=2" width="820" height="1738" alt="The words to say: who to call, the rule, and a three-paragraph script with a copy button." loading="lazy" decoding="async">
-          </figure>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============ IN NUMBERS — copied from Ramp (Mobbin b3c99307 / d7b8268c) ============
-       Four bold numbers with a grey label under each, no heading, no rules. -->
+  <!-- ============ IN NUMBERS — Ramp (Mobbin b3c99307) ============ -->
   <section class="stats" aria-label="The rulebook in numbers">
     <div class="stats-in">
       <div class="stat"><b class="tnum" data-count-to="318" data-count-dur="1200">318</b><span>rules in the book</span></div>
@@ -331,77 +227,75 @@
     </div>
   </section>
 
-  <!-- ============ WHAT WE CHECK — copied from Square "A little peace of mind" (Mobbin b6639492) ============
-       A big heading, then columns: a 20px line icon, one short bold
-       sentence, one grey line, a small "Learn more" link. -->
+  <!-- ============ FIVE PLACES — Square "A little peace of mind" (Mobbin b6639492) ============
+       Coloured icon tiles (Notion's tinted tiles), one bold line, one link. -->
   <section class="places" id="checks" aria-labelledby="checksHead">
     <div class="wrap-1200">
       <h2 class="h2 h2-54" id="checksHead">Five places cover hides.</h2>
       <ul class="place-grid" role="list">
         <li>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.2 3.1 7.6 7.5 9 4.4-1.4 7.5-4.8 7.5-9V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>
-          <h3>The maker&rsquo;s warranty is often still running</h3>
-          <p>Some brands quietly promise a lifetime.</p>
+          <span class="tile t-mint" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6c0 4.2 3.1 7.6 7.5 9 4.4-1.4 7.5-4.8 7.5-9V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <h3>The maker&rsquo;s warranty</h3>
           <a href="app.html?demo=1">See a result <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg>
-          <h3>The card you paid with can add a free year</h3>
-          <p>If you call within 30 to 90 days of the break.</p>
+          <span class="tile t-sky" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg></span>
+          <h3>The card you paid with</h3>
           <a href="#script">Read the script <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5a2.8 2.8 0 0 0-2.5-1.3c-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2 2.6.8 2.6 2-1.1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.3"/><path d="M12 6.4v11.2"/></svg>
+          <span class="tile t-sand" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5a2.8 2.8 0 0 0-2.5-1.3c-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2 2.6.8 2.6 2-1.1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.3"/><path d="M12 6.4v11.2"/></svg></span>
           <h3>Payouts you can still claim</h3>
-          <p>Money is set aside when a product fails. Only the people who claim see it.</p>
           <a href="app.html?demo=1">See a result <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg>
-          <h3>Quiet repair programmes fix known faults free</h3>
-          <p>Makers rarely announce them. You have to ask.</p>
+          <span class="tile t-teal" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg></span>
+          <h3>Quiet repair programmes</h3>
           <a href="#earth">Which laws help <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M5 8h14"/><path d="m5 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="m19 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="M8 20h8"/></svg>
-          <h3>The law where you live outlasts the printed warranty</h3>
-          <p>Sometimes by years. Six in England.</p>
+          <span class="tile t-rose" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="m5 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="m19 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="M8 20h8"/></svg></span>
+          <h3>The law where you live</h3>
           <a href="LIMITATIONS.md">Where it is thin <span aria-hidden="true">&nearr;</span></a>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ ENVIRONMENT — copied from Norma (Mobbin cc6fe797) ============
-       A two-line heading, then one bordered card of four sourced facts with
-       a CTA strip inside it, and a second card with the coverage figures.
-       Every figure is a rule in data/coverage.json with a primary source;
-       no CO2 or tonnage figure (LIMITATIONS.md §10–11). -->
+  <!-- ============ ENVIRONMENT — Norma (Mobbin cc6fe797) ============
+       Four sourced figures, each key figure in colour (Apple's environment
+       cards), a black button row, then the schematic beside two figures.
+       No CO2 or tonnage figure (LIMITATIONS.md §10–11). -->
   <section class="env" id="earth" aria-labelledby="envHead">
     <div class="wrap-1200">
       <h2 class="h2 h2-40" id="envHead">Every claimed repair is one thing<br>not thrown away.</h2>
 
       <div class="env-card">
         <ul class="env-cells" role="list">
-          <li><b>80%</b><strong>of its charge a phone battery must keep</strong><span>after 800 full cycles &middot; Regulation (EU) 2023/1670</span></li>
-          <li><b>7 <small>years</small></b><strong>spare parts must stay on sale</strong><span>after the model ends &middot; EU ecodesign, phones and tablets</span></li>
-          <li><b>+12 <small>months</small></b><strong>of guarantee for choosing repair</strong><span>EU right to repair &middot; goods bought from 31 July 2026</span></li>
-          <li><b>3&ndash;6 <small>years</small></b><strong>of free repair on appliances</strong><span>Quebec, from 5 October 2026 &middot; parts and labour</span></li>
+          <li><b class="c-green">80%</b><strong>battery a phone must keep after 800 cycles</strong><span>Regulation (EU) 2023/1670</span></li>
+          <li><b class="c-blue">7 <small>years</small></b><strong>spare parts kept on sale</strong><span>EU ecodesign, phones and tablets</span></li>
+          <li><b class="c-amber">+12 <small>months</small></b><strong>of guarantee for choosing repair</strong><span>EU right to repair, from 31 July 2026</span></li>
+          <li><b class="c-teal">3&ndash;6 <small>years</small></b><strong>of free appliance repair</strong><span>Quebec, from 5 October 2026</span></li>
         </ul>
         <div class="env-strip">
-          <p>Lawmakers did the hard part. A rule only helps if you know it exists.</p>
+          <p>A rule only helps if you know it exists.</p>
           <a class="btn btn-accent btn-34" href="auth.html?mode=signup">Find my repair</a>
         </div>
       </div>
 
       <div class="env-card env-card-2">
-        <div class="env-left">
-          <h3>Where the rules come from.</h3>
-          <div class="env-fields">
-            <div><span class="env-field-l">The maker&rsquo;s own warranty</span><span class="env-pill"><b>151</b><i>rules</i></span></div>
-            <div><span class="env-field-l">Consumer law</span><span class="env-pill"><b>75</b><i>rules</i></span></div>
-          </div>
-        </div>
+        <figure class="env-left">
+          <svg class="xv" viewBox="0 0 440 250" role="img" aria-labelledby="xvTitle">
+            <title id="xvTitle">An exploded view of a phone: the shell, the board with its copper, the battery and the screen.</title>
+            <g transform="translate(46 156)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#F5EBD6" stroke="#000" stroke-width="2.4"/><rect x="62" y="8" width="32" height="6" rx="3" fill="#000" opacity=".35"/></g>
+            <g transform="translate(64 114)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#D8EFF0" stroke="#000" stroke-width="2.4"/><path d="M18 22h44M18 38h70M18 54h30M74 54h26" stroke="#B45309" stroke-width="2.4" stroke-linecap="round"/><rect x="104" y="16" width="30" height="20" rx="3" fill="#000"/><rect x="110" y="46" width="24" height="12" rx="3" fill="#000" opacity=".7"/></g>
+            <g transform="translate(82 72)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#DDF3E6" stroke="#000" stroke-width="2.4"/><rect x="156" y="28" width="8" height="22" rx="2" fill="#000"/><path d="M22 39h60" stroke="#000" stroke-width="2.4" stroke-linecap="round" opacity=".5"/><path d="M52 24v30" stroke="#000" stroke-width="2.4" stroke-linecap="round" opacity=".5"/></g>
+            <g transform="translate(100 30)"><rect x="0" y="0" width="156" height="78" rx="14" fill="#DCEBFA" stroke="#000" stroke-width="2.4"/><rect x="12" y="12" width="132" height="54" rx="7" fill="#FFF" opacity=".62"/></g>
+            <g stroke="#000" stroke-width="1.4" stroke-dasharray="3 4" fill="none" opacity=".5"><path d="M258 62h50"/><path d="M240 108h68"/><path d="M222 154h86"/><path d="M204 198h104"/></g>
+            <g class="xv-t"><text x="316" y="66">Screen</text><text x="316" y="112">Battery</text><text x="316" y="158">Board &amp; copper</text><text x="316" y="202">Shell</text></g>
+          </svg>
+          <figcaption>One fixed device is a screen, a battery, a board and its copper that never have to be made twice.</figcaption>
+        </figure>
         <div class="env-right">
           <div class="env-fig">
             <b>276 <span class="dim">of 318</span></b>
@@ -414,13 +308,11 @@
           </div>
         </div>
       </div>
-      <p class="env-note">No CO&#8322; estimate, no invented multiplier. Every figure above links to its source in the app.</p>
+      <p class="env-note">No CO&#8322; estimate, no invented multiplier.</p>
     </div>
   </section>
 
-  <!-- ============ FAQ — copied from OpenPhone (Mobbin 16077091) ============
-       A centred 72px/700 heading and a sub-line, then hairline rows with a
-       20px/600 question and a chevron; the first answer open. -->
+  <!-- ============ FAQ — OpenPhone (Mobbin 16077091) ============ -->
   <section class="faq" id="faq" aria-labelledby="faqHead">
     <div class="wrap-1200">
       <div class="faq-head">
@@ -430,47 +322,41 @@
       <div class="faq-list" id="faqList">
         <details class="faq-item" open>
           <summary><h3>Is this actually free?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Yes. Owed takes no cut of anything you claim and sells no warranties. It is a student project built to be free.</p></div>
+          <div class="faq-body"><p>Yes. No cut of anything you claim, no warranties sold. A student project built to be free.</p></div>
         </details>
         <details class="faq-item">
           <summary><h3>Do I need my receipt?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Not to check. Roughly when you bought it is enough. To claim you will usually need proof, and a bank statement line often counts, which is why Owed asks how you paid.</p></div>
+          <div class="faq-body"><p>Not to check. To claim you usually need proof, and a bank statement line often counts.</p></div>
         </details>
         <details class="faq-item">
-          <summary><h3>What if it finds nothing for my thing?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>It says so plainly. The rules are collected by hand, so an unusual brand may come back empty. Anything on your shelf is re-checked every time you open Owed.</p></div>
+          <summary><h3>What if it finds nothing?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p>It says so plainly. The rules are collected by hand, so an unusual brand may come back empty.</p></div>
         </details>
         <details class="faq-item">
           <summary><h3>Is this legal advice?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>No. Owed points at published rules and tells you what to ask, and every result links to its source. Strong, worth asking and long shot rate how well a rule fits your answers, not whether you qualify.</p></div>
+          <div class="faq-body"><p>No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></div>
         </details>
         <details class="faq-item">
           <summary><h3>Where does my data go?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Nowhere. Your shelf and your sign-in live in your own browser&rsquo;s storage. There is no server collecting what you own.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary><h3>Which countries does it work in?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>The US, Canada, the UK and the EU. Maker warranties lean American and Canadian, and card benefits are almost all North American. Pick your country and Owed filters to it; state rules are named by state.</p></div>
+          <div class="faq-body"><p>Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></div>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- ============ CLOSING — copied from Contra (Mobbin 66f6354b) ============
-       Mark, 44px heading, one grey line, one black button, one small line
-       with an underlined link. The footer follows directly. -->
+  <!-- ============ CLOSING — Contra (Mobbin 66f6354b) ============ -->
   <section class="cta" aria-labelledby="ctaHead">
     <div class="wrap-1200">
       <span class="cta-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
       <h2 class="h2 h2-44" id="ctaHead">Before you buy a new one,<br>check who owes you the old one.</h2>
-      <p class="cta-sub">Free. No account needed to look. Nothing you type leaves your browser.</p>
+      <p class="cta-sub">Free. No account needed to look.</p>
       <a class="btn btn-accent btn-56" href="auth.html?mode=signup">Start free</a>
       <p class="cta-small">Want to see one first? <a href="app.html?demo=1">Open the demo shelf</a></p>
     </div>
   </section>
 </main>
 
-<!-- ============ FOOTER — copied from Vercel 2023 (Mobbin 62969ac9) ============ -->
+<!-- ============ FOOTER — Portrait (Mobbin 80af72e7) ============ -->
 <footer class="footer">
   <div class="wrap-1200 footer-grid">
     <div class="footer-brand">
@@ -506,10 +392,8 @@
   </div>
 </footer>
 
-<script src="assets/js/catalog.js?v=1788420000"></script>
-<script src="assets/js/landing.js?v=1788420000"></script>
-<script src="assets/js/motion.js?v=1788420000"></script>
-<script src="assets/js/scroll.js?v=1788420000"></script>
-<script src="assets/js/scene.js?v=1788420000"></script>
+<script src="assets/js/catalog.js?v=1788430000"></script>
+<script src="assets/js/landing.js?v=1788430000"></script>
+<script src="assets/js/motion.js?v=1788430000"></script>
 </body>
 </html>

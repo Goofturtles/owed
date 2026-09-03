@@ -72,10 +72,10 @@
 
     /* ---- the frame bank ---- */
     var N = 121, frames = new Array(N), loaded = 0, ctx = null, drawn = -1;
-    var W = 0, H = 0, FW = 1280, FH = 720;
+    var W = 0, H = 0, FW = 1920, FH = 1080;
     var small = window.innerWidth < 760 || (navigator.connection && navigator.connection.saveData);
     var dir = 'assets/film/' + (small ? 'm' : 'd') + '/';
-    if (small) { FW = 720; FH = 405; }
+    if (small) { FW = 960; FH = 540; }
     if (canvas) ctx = canvas.getContext('2d', { alpha: false });
 
     function frameSrc(i) { return dir + 'f' + ('00' + (i + 1)).slice(-3) + '.webp'; }
@@ -161,8 +161,9 @@
           if (on) sc.removeAttribute('inert'); else sc.setAttribute('inert', '');
         }
       }
-      // the dissolve to paper: nothing until 0.9, complete at 1
-      var fadeTarget = Math.min(1, Math.max(0, (p - 0.9) / 0.1));
+      // the dissolve to white: nothing until the reader reaches the foot of
+      // the track (owner's call), then over the last 4%
+      var fadeTarget = Math.min(1, Math.max(0, (p - 0.96) / 0.04));
       fadeSmooth += (fadeTarget - fadeSmooth) * (1 - Math.exp(-dt * 6));
       if (Math.abs(fadeTarget - fadeSmooth) < 0.001) fadeSmooth = fadeTarget;
       var fade = reduce ? fadeTarget : fadeSmooth;
@@ -363,7 +364,7 @@
      Content must never be left invisible: the observer is a progressive
      enhancement, and a failsafe reveals everything shortly after load. */
   var revealables = document.querySelectorAll(
-    '.proof-lead, .proof-names, .show-copy, .show-media, .feat > .wrap-1200 > .h2, .feat-card, .how > .wrap-1200 > .h2, .hstep, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
+    '.proof-lead, .proof-names, .shot-card, .show-copy, .show-media, .screens .h2, .screen-card, .stat, .places .h2, .place-grid > li, .env .h2, .env-card, .faq-head, .faq-item, .cta > .wrap-1200 > *'
   );
 
   var io = null;
@@ -401,6 +402,18 @@
     setTimeout(revealAll, 6000);
   }
 
+
+  /* ---------- read from: pause the moving list (WCAG 2.2.2) ---------- */
+  (function proofPause() {
+    var btn = document.querySelector('[data-pause]');
+    var track = document.querySelector('.proof-track');
+    if (!btn || !track) return;
+    btn.addEventListener('click', function () {
+      var paused = track.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Resume the moving list' : 'Pause the moving list');
+    });
+  })();
 
   /* ---------- beyond money: the one number Owed counts ----------
      Read from this browser's own shelf (the same store the app writes):
