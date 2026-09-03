@@ -877,3 +877,20 @@
 }
 
 @media (max-width: 768px) { .res-filter { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 8px; margin: 0 -16px 16px; padding: 0 16px 4px; } .res-filter::-webkit-scrollbar { display: none; } .res-filter > * { flex: none; white-space: nowrap; } }
+
+/* rail legend: pill and its line on one row; every pill visible on the grey card */
+.rail-row { display: grid !important; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 12px 22px !important; margin: 0 -22px; border-top: 1px solid #E5E5EA; }
+.rail-row > span:last-child { font-size: 15px; line-height: 1.35; color: var(--ink-2); }
+.rail-legend .rail-row:first-of-type { border-top: 0; }
+.app-body .tag-long, .app-body .tag-longshot, .app-body .tag-far { background: #E5E5EA; color: #3A3A3C; }
+.rail-block { padding: 22px 22px 10px; }
+.rail-list li { padding: 10px 0; border-top: 1px solid #E5E5EA; font-size: 16px; }
+.rail-list li::before { width: 7px; height: 7px; }
+/* the small print in the rail's bottom-right corner */
+@media (min-width: 1200px) {
+  .rail { display: flex !important; flex-direction: column; min-height: 100vh; }
+  .rail-foot { margin-top: auto !important; text-align: right; padding: 16px 22px 20px !important; }
+}
+
+.side .brand:hover, .side .side-brand:hover, .side .xrow-brand:hover, .side a.brand:hover { background: transparent !important; box-shadow: none !important; }
+@media (min-width: 1200px) { .rail { padding-bottom: 0 !important; } }
