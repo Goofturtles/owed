@@ -382,7 +382,7 @@
            tab snaps it back at once. */
         var idle = false;   // the film holds still; a scroll cue appears instead (below)
         if (p !== pScroll) { lastScroll = now; pScroll = p; }
-        if (cue) cue.classList.toggle('is-on', !reduce && (now - lastScroll > 2500) && p < 0.97 && cover() === 0);
+        if (cue) cue.classList.toggle('is-on', p < 0.97 && cover() === 0);   // always on over the film, scrolling or not
         var LOOP = 48, FADE = 6, of = 0, alpha = 0;
         if (idle) {
           idlePos += dt * 4;
