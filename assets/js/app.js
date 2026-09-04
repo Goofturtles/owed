@@ -206,6 +206,59 @@
       log.appendChild(wrap);
     })();
 
+    /* move the panel: drag its head anywhere, hold Shift to snap it to the
+       nearest corner. Where you leave it is remembered. */
+    (function draggable() {
+      var head = panel.querySelector('.ask-head'), KEY = 'owed:askpos', MARGIN = 20;
+      if (!head || !window.matchMedia('(min-width: 769px)').matches) return;
+      function place(x, y) {
+        var w = panel.offsetWidth, h = panel.offsetHeight;
+        x = Math.min(innerWidth - w - 8, Math.max(8, x));
+        y = Math.min(innerHeight - h - 8, Math.max(8, y));
+        panel.style.left = x + 'px'; panel.style.top = y + 'px';
+        panel.style.right = 'auto'; panel.style.bottom = 'auto';
+        return { x: x, y: y };
+      }
+      try {
+        var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if (saved) requestAnimationFrame(function () { place(saved.x, saved.y); });
+      } catch (e) {}
+      var sx = 0, sy = 0, ox = 0, oy = 0, on = false;
+      head.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('button:not(.ask-grip)')) return;   // the close button still closes
+        var r = panel.getBoundingClientRect();
+        sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top; on = true;
+        panel.classList.add('is-dragging'); panel.classList.remove('is-snapping');
+        try { head.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+      head.addEventListener('pointermove', function (e) {
+        if (!on) return;
+        place(ox + (e.clientX - sx), oy + (e.clientY - sy));
+      });
+      function drop(e) {
+        if (!on) return;
+        on = false; panel.classList.remove('is-dragging');
+        var r = panel.getBoundingClientRect(), pos = { x: r.left, y: r.top };
+        if (e && e.shiftKey) {
+          // Shift: snap to whichever corner the panel is nearest
+          var w = panel.offsetWidth, h = panel.offsetHeight;
+          var left = (r.left + r.width / 2) < innerWidth / 2;
+          var top = (r.top + r.height / 2) < innerHeight / 2;
+          panel.classList.add('is-snapping');
+          pos = place(left ? MARGIN : innerWidth - w - MARGIN, top ? MARGIN : innerHeight - h - MARGIN);
+          setTimeout(function () { panel.classList.remove('is-snapping'); }, 220);
+        }
+        try { localStorage.setItem(KEY, JSON.stringify(pos)); } catch (err) {}
+      }
+      head.addEventListener('pointerup', drop);
+      head.addEventListener('pointercancel', function () { on = false; panel.classList.remove('is-dragging'); });
+      window.addEventListener('resize', function () {
+        if (panel.hidden || !panel.style.left) return;
+        place(parseFloat(panel.style.left), parseFloat(panel.style.top));
+      });
+    })();
+
     function add(kind, text) {
       var p = document.createElement('p'); p.className = 'ask-msg ' + kind; p.textContent = text;
       log.appendChild(p); log.scrollTop = log.scrollHeight; return p;
@@ -988,11 +1041,15 @@
 
   function applyIdentified(r) {
     var changed = false;
-    // a model number read off the item is the most useful thing in the photo
-    if (r.model && r.name && String(r.name).toLowerCase().indexOf(String(r.model).toLowerCase()) < 0) {
-      r.name = String(r.name) + ' ' + String(r.model);
-    }
-    if (!r.name && r.model) r.name = [r.brand, r.model].filter(Boolean).join(' ');
+    // nothing recognisable in the photo: say nothing rather than invent
+    if (r.confident === false) return false;
+    // the name has to say WHAT the thing is — "WH-1000XM4" alone means nothing
+    var kind = String(r.kind || (r.category ? C.categoryLabel(r.category) : '')).toLowerCase().split(' or ')[0].trim();
+    var parts = [r.brand, r.model].filter(Boolean).map(String);
+    if (kind && parts.length) parts.push(kind);
+    var built = parts.join(' ').trim();
+    if (built && !/[a-z]{3}/i.test(built.replace(/[^a-z]/gi, ''))) built = '';   // digits only: not a name
+    if (built) r.name = built; else if (!r.brand && !r.model) r.name = '';
     if (r.name && !wiz.name.trim()) { wiz.name = String(r.name).slice(0, 80); wizEls.name.value = wiz.name; changed = true; }
     if (r.brand && !wiz.brand.trim()) { wiz.brand = String(r.brand).slice(0, 40); wizEls.brand.value = wiz.brand; changed = true; }
     if (r.category && CAT_IDS.indexOf(r.category) !== -1) { wiz.category = r.category; changed = true; }
@@ -1006,14 +1063,18 @@
       return Promise.reject(new Error('no built-in model'));
     }
     return window.LanguageModel.create({ expectedInputs: [{ type: 'image' }] }).then(function (session) {
-      // the model number is the point: read any text printed on the item or its
-      // label, and put it in the name so the rulebook can match the exact product
-      var ask = 'You are identifying a household item from a photo so its warranty can be looked up. ' +
-        'Read any text printed on the item, its label, its box or its screen — brand, model name, model number. ' +
-        'Reply with ONLY compact JSON like ' +
-        '{"name":"Sony WH-1000XM4 wireless headphones","brand":"Sony","model":"WH-1000XM4","category":"headphones","text":"what you could read"} ' +
-        'where category is one of: ' + CAT_IDS.join(', ') + '. ' +
-        'Put the model number in "name" when you can read one. Use empty strings when unsure — never guess a model number.';
+      // no real product may appear in the example: a small on-device model will
+      // copy it straight back (a screenshot of our own app returned "WH-1000XM4").
+      // The reply must also say WHAT the thing is, not just a part number.
+      var ask = 'You are looking at a photo to identify a household object so its warranty can be looked up. ' +
+        'Only describe what is actually visible. Read any text printed on the object or its label: brand, model name, model number. ' +
+        'Reply with ONLY compact JSON in this shape, filling it from the photo: ' +
+        '{"brand":"","model":"","kind":"","category":"","confident":true}. ' +
+        '"kind" is the everyday word for the object (headphones, phone, laptop, kettle, drill, pan, watch, shoes, sofa). ' +
+        '"category" is one of: ' + CAT_IDS.join(', ') + '. ' +
+        'Never guess a brand or a model number — leave them empty unless you can read them in the photo. ' +
+        'If the photo is not a physical household object (a screenshot, a web page, a document, a person, an empty room), ' +
+        'reply {"brand":"","model":"","kind":"","category":"","confident":false}.';
       return session.prompt([{ role: 'user', content: [{ type: 'text', value: ask }, { type: 'image', value: file }] }]);
     }).then(function (text) {
       var m = String(text).match(/\{[\s\S]*\}/);
