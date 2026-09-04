@@ -39,21 +39,17 @@ await page.goto(`${BASE}/app.html?demo=1&start=new`, { waitUntil: 'load' });
 await wait(2600);
 await shot('q1');
 
-// the photo beat: drop one of our own product photographs into the field
-await page.evaluate(() => {
-  const f = document.getElementById('wizFallback1'); if (f) f.hidden = false;
-  const n = document.getElementById('wizName'); if (n) { n.value = 'Sony WH-1000XM4 headphones'; n.dispatchEvent(new Event('input', { bubbles: true })); }
-});
-await wait(600); await shot('q1-named');
-
-await page.evaluate(() => {
-  const tiles = [...document.querySelectorAll('#catChips .opt')];
-  const t = tiles.find(x => /headphone/i.test(x.textContent)) || tiles[2];
-  t.click();
-});
+// pick the tile first: that is question one answered
+await page.locator('#catChips .opt', { hasText: 'Headphones' }).first().click();
 await wait(700); await shot('q1-picked');
 
-await page.evaluate(() => document.getElementById('wizNext').click());
+// then the photo beat — a real file through the real input, so whatever the
+// app genuinely does with it is what the film shows
+await page.setInputFiles('#wizPhoto', 'assets/img/photo/headphones-800.webp');
+await wait(3500); await shot('q1-named');
+console.log('photo note:', await page.textContent('#wizPhotoNote'));
+
+await page.locator('#wizNext').click();
 await wait(900); await shot('q2');
 await page.evaluate(() => {
   const tiles = [...document.querySelectorAll('.wiz-step.is-on .opt')];
@@ -76,26 +72,16 @@ await page.evaluate(() => document.getElementById('wizNext').click());
 await wait(2200); await shot('results');
 
 /* ---------- the rule, then the words to say ---------- */
-await page.evaluate(() => {
-  const b = document.querySelector('.rcard .rc-title .rc-details') || document.querySelector('.rcard [data-toggle]');
-  if (b) b.click();
-});
+await page.locator('.rcard .rc-title .rc-details').first().click();
 await wait(1200); await shot('rule');
 
-await page.evaluate(() => {
-  const b = document.querySelector('.rcard [data-script]');
-  if (b) b.click();
-});
+await page.locator('.rcard [data-script]').first().click();
 await wait(1400); await shot('script');
 
-await page.evaluate(() => {
-  const c = document.getElementById('copyScript'); if (c) c.click();
-});
+await page.locator('#copyScript').click();
 await wait(900); await shot('script-copied');
 
-await page.evaluate(() => {
-  const w = document.getElementById('markWon'); if (w) w.click();
-});
+await page.locator('#markWon').click();
 await wait(1400); await shot('won');
 
 /* ---------- the rest of the product ---------- */
@@ -105,9 +91,7 @@ await page.evaluate(() => {
 });
 await wait(1500); await shot('region');
 
-await page.evaluate(() => {
-  const r = document.getElementById('askRow'); if (r) r.click();
-});
+await page.locator('#askRow').click();
 await wait(600);
 await page.evaluate(() => {
   const i = document.getElementById('askInput'), f = document.getElementById('askForm');

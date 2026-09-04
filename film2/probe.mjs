@@ -9,7 +9,7 @@ p.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
 await p.goto('http://localhost:3510/film2/index.html?capture=1', { waitUntil: 'load' });
 await p.evaluate(() => document.fonts.ready);
 await new Promise(r => setTimeout(r, 2500));
-for (const t of [6.0, 16.5, 22.5, 31.0, 38.5, 47.0, 52.0, 56.5, 63.0, 68.5, 72.5, 76.5, 81.5, 86.5, 91.5, 96.5, 101.5, 113.5]) {
+for (const t of [22.5, 34.0, 38.0, 49.5, 50.0, 50.5]) {
   await p.evaluate(x => window.owedFilm.seek(x), t);
   await new Promise(r => setTimeout(r, 120));
   await p.screenshot({ path: `${OUT}t${String(t).padStart(5,'0')}.png` });

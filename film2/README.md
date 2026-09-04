@@ -1,7 +1,7 @@
 # Owed — the 2:00 launch film
 
-`owed-launch-2min.mp4` — 1920×1080, 30fps, 120.0s, scored ("Dark Current", 128 BPM,
-so every cut lands on a bar at 1.875s). A lighter share cut sits beside it.
+`owed-launch-2min.mp4` — 1920×1080, 30fps, 120.0s, scored with "Dark Current" (128 BPM). Cuts are placed to the beats of the
+story, not snapped to the bar grid. A lighter share cut sits beside it.
 
 **Everything on screen is real.** The 17 product screens are captured from the live
 app by `shots.mjs`; the photographs are the project's own licensed Pexels stills
@@ -23,7 +23,7 @@ CTA → URL close. Owed's palette replaces theirs: white, black, Apple blue #007
 | 0:11 | blue wash — "Stop." |
 | 0:15 | "Somebody already owes you a free repair." |
 | 0:20 | the site, then the mark |
-| 0:28 | the four questions, with the photo step |
+| 0:28 | the four questions, and what a photo actually does |
 | 0:44 | what it found, ranked honestly |
 | 0:54 | the rule, in the company's own words |
 | 0:59 | the words to say — copy, send, mark it won |

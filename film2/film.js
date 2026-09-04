@@ -137,10 +137,10 @@
       wHTML = wordsHTML('Check *your *thing.', t, 110.6, .2);
     }
     set(L['t-words'], wOpacity);
-    if (wOpacity > 0) wordsEl.innerHTML = wHTML;
+    wordsEl.innerHTML = wOpacity > 0 ? wHTML : '';
 
     /* --- 20.2–24.6  the site --- */
-    shot('s-hero', t, 20.4, 21.4, 24.0, 24.8, { s: .92, y: 90 }, { s: 1.00, y: -30 });
+    shot('s-hero', t, 20.4, 21.4, 24.0, 24.8, { s: .90, y: 40 }, { s: .96, y: -76 });
 
     /* --- 24.6–28.8  the mark --- */
     if (t >= 24.4 && t < 29.0) {
@@ -165,13 +165,13 @@
     }
 
     /* --- 44.6–54.0  what it found --- */
-    shot('s-res', t, 44.7, 45.4, 49.6, 50.2, { s: .86, y: -70 }, { s: .92, y: -70 });
+    shot('s-res', t, 44.7, 45.4, 49.98, 50.0, { s: .86, y: -70 }, { s: .92, y: -70 });
     shot('s-rule', t, 53.9, 54.6, 58.6, 59.2, { s: 1.24, x: -190, y: -30 }, { s: 1.30, x: -210, y: -60 });
 
     /* the crop into the ranking: the same shot, pushed in */
     if (t >= 50.0 && t < 54.2) {
       var zp = inOut(seg(t, 50.0, 54.0));
-      set(L['s-res'], band(t, 50.0, 50.4, 53.6, 54.2),
+      set(L['s-res'], band(t, 50.0, 50.0, 53.6, 54.2),
         'translate(' + lerp(-180, -230, zp).toFixed(0) + 'px,' + lerp(-30, -90, zp).toFixed(0) + 'px) scale(' + lerp(1.42, 1.58, zp).toFixed(3) + ')');
     }
 
@@ -229,7 +229,7 @@
       [21.6, 24.4, 'Owed reads the fine print and finds who still has to fix it — <b>free</b>.'],
       [25.6, 28.6, 'Four questions. No receipt needed.'],
       [29.8, 32.8, 'One: what broke.'],
-      [36.8, 40.2, 'Or photograph it — Owed reads the model off the item.'],
+      [36.8, 40.2, 'Or photograph it — it keeps the photo and says where the model number hides.'],
       [40.8, 44.4, 'Who made it. How old it is. How you paid.'],
       [45.6, 49.8, 'Four places may owe you a free repair.'],
       [50.6, 53.8, 'Ranked honestly: <b>strong</b>, worth asking, long shot.'],
@@ -252,11 +252,12 @@
     // a caption over a photograph, or over a screen zoomed to fill the frame,
     // needs its own ground to stay readable
     var onPhoto = (t > 4.0 && t < 11.6) || (t > 74.0 && t < 79.2) ||
-                  (t > 49.9 && t < 74.3) || (t > 83.9 && t < 94.1);
+                  (t > 49.9 && t < 74.3) || (t > 83.9 && t < 94.1) ||
+                  (t > 20.3 && t < 24.9);
     set(L.scrim, onPhoto ? capOn : 0);
     L.cap.classList.toggle('over-photo', onPhoto);
     set(L.cap, capOn);
-    if (capOn > 0) document.getElementById('cap').innerHTML = capText;
+    document.getElementById('cap').innerHTML = capOn > 0 ? capText : '';
   }
 
   /* ---------- preview + capture hooks ---------- */

@@ -7,6 +7,10 @@ const b = await chromium.launch({ channel: 'chrome', args: ['--force-color-profi
 const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
 await p.goto('http://localhost:3510/film2/index.html?capture=1', { waitUntil: 'load' });
 await p.evaluate(() => document.fonts.ready);
+// every weight the film uses, and every image decoded, before frame zero
+await p.evaluate(() => Promise.all(
+  ['500 40px Inter', '600 40px Inter', '700 92px Inter'].map(f => document.fonts.load(f))));
+await p.evaluate(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))));
 await new Promise(r => setTimeout(r, 3000));
 const total = Math.round(DUR * FPS);
 for (let i = 0; i < total; i++) {
