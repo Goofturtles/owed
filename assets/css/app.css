@@ -1130,3 +1130,8 @@
 
 .ask { min-height: min(560px, 70vh); }
 .ask-log { flex: 1; }
+
+/* the shelf row fills its column at every width: the hover tint used to stop
+   wherever the text ended, and long names ellipsised with gutter to spare */
+.shelf-row { display: flex; align-items: stretch; }
+.shelf-row > .srow { flex: 1 1 auto; min-width: 0; width: auto; }

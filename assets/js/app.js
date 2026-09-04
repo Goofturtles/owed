@@ -970,6 +970,11 @@
 
   function applyIdentified(r) {
     var changed = false;
+    // a model number read off the item is the most useful thing in the photo
+    if (r.model && r.name && String(r.name).toLowerCase().indexOf(String(r.model).toLowerCase()) < 0) {
+      r.name = String(r.name) + ' ' + String(r.model);
+    }
+    if (!r.name && r.model) r.name = [r.brand, r.model].filter(Boolean).join(' ');
     if (r.name && !wiz.name.trim()) { wiz.name = String(r.name).slice(0, 80); wizEls.name.value = wiz.name; changed = true; }
     if (r.brand && !wiz.brand.trim()) { wiz.brand = String(r.brand).slice(0, 40); wizEls.brand.value = wiz.brand; changed = true; }
     if (r.category && CAT_IDS.indexOf(r.category) !== -1) { wiz.category = r.category; changed = true; }
@@ -983,9 +988,14 @@
       return Promise.reject(new Error('no built-in model'));
     }
     return window.LanguageModel.create({ expectedInputs: [{ type: 'image' }] }).then(function (session) {
-      var ask = 'Look at this photo of a household item. Reply with ONLY compact JSON like ' +
-        '{"name":"Sony WH-1000XM4 headphones","brand":"Sony","category":"headphones"} ' +
-        'where category is one of: ' + CAT_IDS.join(', ') + '. Use empty strings when unsure.';
+      // the model number is the point: read any text printed on the item or its
+      // label, and put it in the name so the rulebook can match the exact product
+      var ask = 'You are identifying a household item from a photo so its warranty can be looked up. ' +
+        'Read any text printed on the item, its label, its box or its screen — brand, model name, model number. ' +
+        'Reply with ONLY compact JSON like ' +
+        '{"name":"Sony WH-1000XM4 wireless headphones","brand":"Sony","model":"WH-1000XM4","category":"headphones","text":"what you could read"} ' +
+        'where category is one of: ' + CAT_IDS.join(', ') + '. ' +
+        'Put the model number in "name" when you can read one. Use empty strings when unsure — never guess a model number.';
       return session.prompt([{ role: 'user', content: [{ type: 'text', value: ask }, { type: 'image', value: file }] }]);
     }).then(function (text) {
       var m = String(text).match(/\{[\s\S]*\}/);
@@ -1016,14 +1026,18 @@
         var did = applyIdentified(r);
         var what = r.name || r.brand || (r.category && C.categoryLabel(r.category));
         showPhoto(dataUrl, did && what
-          ? '<b>Looks like ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
-          : 'Photo saved with this item. Type what it is below.');
+          ? '<b>Read from the photo: ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
+          : 'Photo saved. Nothing readable in it — type what it is below.');
         updateContinue();
       }).catch(function () {
+        // no on-device model: a barcode is still a real identifier, so keep it
         return readBarcode(file).then(function (code) {
-          showPhoto(dataUrl, code
-            ? '<b>Barcode ' + esc(code) + ' read.</b> The photo is saved with this item — type what it is and who made it below.'
-            : 'Photo saved with this item. This browser cannot name products by itself yet, so type what it is below.');
+          if (code) {
+            if (!wiz.name.trim()) { wiz.name = code; wizEls.name.value = code; updateContinue(); }
+            showPhoto(dataUrl, '<b>Barcode ' + esc(code) + ' read.</b> That is the product code — put the name beside it if you know it.');
+            return;
+          }
+          showPhoto(dataUrl, 'Photo saved. This browser has no on-device AI to read the model, so type what it is below.');
         });
       });
     });
