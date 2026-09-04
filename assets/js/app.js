@@ -1041,15 +1041,10 @@
 
   function applyIdentified(r) {
     var changed = false;
-    // nothing recognisable in the photo: say nothing rather than invent
-    if (r.confident === false) return false;
-    // the name has to say WHAT the thing is — "WH-1000XM4" alone means nothing
-    var kind = String(r.kind || (r.category ? C.categoryLabel(r.category) : '')).toLowerCase().split(' or ')[0].trim();
-    var parts = [r.brand, r.model].filter(Boolean).map(String);
-    if (kind && parts.length) parts.push(kind);
-    var built = parts.join(' ').trim();
-    if (built && !/[a-z]{3}/i.test(built.replace(/[^a-z]/gi, ''))) built = '';   // digits only: not a name
-    if (built) r.name = built; else if (!r.brand && !r.model) r.name = '';
+    if (!r || r.unsure) return false;          // the checks did not agree: say nothing
+    // the name says WHAT the thing is — "WH-1000XM4" on its own means nothing
+    var built = [r.brand, r.model, r.kind].filter(Boolean).join(' ').trim();
+    r.name = built;
     if (r.name && !wiz.name.trim()) { wiz.name = String(r.name).slice(0, 80); wizEls.name.value = wiz.name; changed = true; }
     if (r.brand && !wiz.brand.trim()) { wiz.brand = String(r.brand).slice(0, 40); wizEls.brand.value = wiz.brand; changed = true; }
     if (r.category && CAT_IDS.indexOf(r.category) !== -1) { wiz.category = r.category; changed = true; }
@@ -1058,29 +1053,103 @@
     return changed;
   }
 
+  /* Naming a thing from a photo, without ever inventing one.
+     A small on-device model will happily answer "Sony WH-1000XM4" for a
+     screenshot, so its word alone is never enough. Three gates, in order:
+       1. is this even a photograph of a real object? (asked on its own)
+       2. two independent descriptions must agree on what the thing is
+       3. the everyday word must be one we know, and a brand or model must
+          actually appear as text the model claims to have read
+     Anything that fails ends in "I could not tell", never a guess. */
+  var KIND_WORDS = ('headphones earbuds speaker soundbar phone smartphone tablet laptop computer monitor ' +
+    'television tv camera console watch tracker printer router keyboard mouse ' +
+    'washing machine washer dryer dishwasher fridge refrigerator freezer oven cooker hob microwave kettle toaster ' +
+    'coffee machine blender mixer vacuum fan heater air conditioner ' +
+    'drill saw sander grinder mower trimmer ' +
+    'pan pot skillet kettle cookware knife ' +
+    'shoes boots trainers sneakers jacket coat backpack bag ' +
+    'sofa couch chair table bed mattress desk lamp').split(' ');
+
+  function askModel(session, text, file) {
+    return session.prompt([{ role: 'user', content: [{ type: 'text', value: text }, { type: 'image', value: file }] }]);
+  }
+  function firstJSON(text) {
+    var m = String(text).match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('no json');
+    return JSON.parse(m[0]);
+  }
+  function kindOf(s) {
+    s = String(s || '').toLowerCase().replace(/[^a-z ]/g, ' ');
+    for (var i = 0; i < KIND_WORDS.length; i++) if (s.indexOf(KIND_WORDS[i]) >= 0) return KIND_WORDS[i];
+    return '';
+  }
+
   function identifyWithBuiltInAI(file) {
     if (!('LanguageModel' in window) || typeof window.LanguageModel.create !== 'function') {
       return Promise.reject(new Error('no built-in model'));
     }
-    return window.LanguageModel.create({ expectedInputs: [{ type: 'image' }] }).then(function (session) {
-      // no real product may appear in the example: a small on-device model will
-      // copy it straight back (a screenshot of our own app returned "WH-1000XM4").
-      // The reply must also say WHAT the thing is, not just a part number.
-      var ask = 'You are looking at a photo to identify a household object so its warranty can be looked up. ' +
-        'Only describe what is actually visible. Read any text printed on the object or its label: brand, model name, model number. ' +
-        'Reply with ONLY compact JSON in this shape, filling it from the photo: ' +
-        '{"brand":"","model":"","kind":"","category":"","confident":true}. ' +
-        '"kind" is the everyday word for the object (headphones, phone, laptop, kettle, drill, pan, watch, shoes, sofa). ' +
-        '"category" is one of: ' + CAT_IDS.join(', ') + '. ' +
-        'Never guess a brand or a model number — leave them empty unless you can read them in the photo. ' +
-        'If the photo is not a physical household object (a screenshot, a web page, a document, a person, an empty room), ' +
-        'reply {"brand":"","model":"","kind":"","category":"","confident":false}.';
-      return session.prompt([{ role: 'user', content: [{ type: 'text', value: ask }, { type: 'image', value: file }] }]);
-    }).then(function (text) {
-      var m = String(text).match(/\{[\s\S]*\}/);
-      if (!m) throw new Error('no json');
-      return JSON.parse(m[0]);
+    var session;
+    return window.LanguageModel.create({ expectedInputs: [{ type: 'image' }] }).then(function (s) {
+      session = s;
+      // gate 1: a photograph of a real object, or a picture of a screen?
+      return askModel(session,
+        'Look at this image. Is it a photograph of a real physical object that someone owns, ' +
+        'or is it a screenshot, a web page, an app interface, a document, a drawing or a picture of a person? ' +
+        'Reply with ONLY {"photo_of_object":true} or {"photo_of_object":false}.', file);
+    }).then(function (t) {
+      if (!firstJSON(t).photo_of_object) return { unsure: true };
+      // gate 2: two independent descriptions, no example answer in either
+      return askModel(session,
+        'In three words or fewer, what is the object in this photo? Reply with ONLY the words, no punctuation. ' +
+        'If you cannot tell, reply: unknown', file)
+        .then(function (plain) {
+          return askModel(session,
+            'Identify the object in this photo so its warranty can be looked up. ' +
+            'Reply with ONLY compact JSON with these keys and nothing else: ' +
+            '{"kind":"","brand":"","model":"","read_from_photo":""}. ' +
+            '"kind" is the everyday word for the object. ' +
+            '"brand" and "model" must be left empty unless the words are printed in the photo and you can read them. ' +
+            '"read_from_photo" is the exact text you can see printed on the object, or an empty string.', file)
+            .then(function (t2) { return { plain: String(plain || ''), data: firstJSON(t2) }; });
+        });
+    }).then(function (out) {
+      if (out.unsure) return { unsure: true };
+      var d = out.data || {};
+      var k1 = kindOf(out.plain), k2 = kindOf(d.kind);
+      // the two answers must land on the same everyday word
+      if (!k1 || !k2 || k1 !== k2) return { unsure: true };
+      // a brand or model is only allowed if the model says it read those words off the item
+      var read = String(d.read_from_photo || '').toLowerCase();
+      var brand = String(d.brand || '').trim();
+      var model = String(d.model || '').trim();
+      if (brand && read.indexOf(brand.toLowerCase()) < 0) brand = '';
+      if (model && read.indexOf(model.toLowerCase()) < 0) model = '';
+      return { kind: k1, brand: brand, model: model, category: guessCategory(k1) };
     });
+  }
+
+  /* the everyday word maps onto one of the app's own categories */
+  function guessCategory(kind) {
+    var M = {
+      headphones: 'headphones', earbuds: 'headphones', speaker: 'headphones', soundbar: 'headphones',
+      phone: 'phone', smartphone: 'phone', tablet: 'phone',
+      laptop: 'laptop', computer: 'laptop', monitor: 'laptop', printer: 'laptop', router: 'laptop',
+      keyboard: 'laptop', mouse: 'laptop', television: 'laptop', tv: 'laptop', console: 'laptop', camera: 'laptop',
+      watch: 'watch', tracker: 'watch',
+      washer: 'appliance_large', washing: 'appliance_large', machine: 'appliance_large', dryer: 'appliance_large',
+      dishwasher: 'appliance_large', fridge: 'appliance_large', refrigerator: 'appliance_large',
+      freezer: 'appliance_large', oven: 'appliance_large', cooker: 'appliance_large', hob: 'appliance_large',
+      microwave: 'appliance_small', kettle: 'appliance_small', toaster: 'appliance_small', coffee: 'appliance_small',
+      blender: 'appliance_small', mixer: 'appliance_small', vacuum: 'appliance_small', fan: 'appliance_small',
+      heater: 'appliance_small', conditioner: 'appliance_small',
+      drill: 'tool', saw: 'tool', sander: 'tool', grinder: 'tool', mower: 'tool', trimmer: 'tool',
+      pan: 'kitchen', pot: 'kitchen', skillet: 'kitchen', cookware: 'kitchen', knife: 'kitchen',
+      shoes: 'shoes', boots: 'shoes', trainers: 'shoes', sneakers: 'shoes',
+      sofa: 'furniture', couch: 'furniture', chair: 'furniture', table: 'furniture', bed: 'furniture',
+      mattress: 'furniture', desk: 'furniture', lamp: 'furniture'
+    };
+    var c = M[kind] || '';
+    return CAT_IDS.indexOf(c) >= 0 ? c : '';
   }
 
   function readBarcode(file) {
@@ -1103,10 +1172,10 @@
       identifyWithBuiltInAI(file).then(function (r) {
         r = r || {};
         var did = applyIdentified(r);
-        var what = r.name || r.brand || (r.category && C.categoryLabel(r.category));
+        var what = r && r.name;
         showPhoto(dataUrl, did && what
           ? '<b>Read from the photo: ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
-          : 'Photo saved. Nothing readable in it — type what it is below.');
+          : 'Photo saved. <b>I could not tell what this is</b> — type what it is below and I will not guess.');
         updateContinue();
       }).catch(function () {
         // no on-device model: a barcode is still a real identifier, so keep it
