@@ -9,6 +9,31 @@
   var KEY_USER = 'owed:user';
   var KEY_SHELF = 'owed:shelf';
   var KEY_SEEN = 'owed:seen';
+  /* Settings that belong to the PERSON, not to this sign-in: kept under their
+     email so signing out and back in returns them to where they live.
+     Signing out clears the session, never this. */
+  var KEY_PROFILES = 'owed:profiles';
+  var PROFILE_KEYS = ['region', 'subregion', 'name'];
+
+  function profileKey(email) { return String(email || '').trim().toLowerCase(); }
+
+  function saveProfile(user) {
+    var k = profileKey(user && user.email);
+    if (!k) return;
+    var all = read(KEY_PROFILES, {}) || {};
+    var p = all[k] || {};
+    PROFILE_KEYS.forEach(function (f) { if (user[f]) p[f] = user[f]; });
+    all[k] = p;
+    write(KEY_PROFILES, all);
+  }
+
+  /** What we already know about this email on this computer. */
+  function getProfile(email) {
+    var k = profileKey(email);
+    if (!k) return null;
+    var all = read(KEY_PROFILES, {}) || {};
+    return all[k] || null;
+  }
 
   function read(key, fallback) {
     try {
@@ -50,7 +75,11 @@
       region: region || 'US',
       createdAt: Date.now()
     };
+    // anything this email set before on this computer comes back with them
+    var known = getProfile(user.email);
+    if (known) PROFILE_KEYS.forEach(function (f) { if (known[f] && f !== 'name') user[f] = known[f]; });
     write(KEY_USER, user);
+    saveProfile(user);
     return user;
   }
 
@@ -90,6 +119,7 @@
     if (!u) return null;
     Object.keys(patch || {}).forEach(function (k) { u[k] = patch[k]; });
     write(KEY_USER, u);
+    saveProfile(u);          // remember it against the email for next time
     return u;
   }
 
@@ -219,6 +249,8 @@
     signUp: signUp,
     signIn: signIn,
     signOut: signOut,
+    getProfile: getProfile,
+    saveProfile: saveProfile,
     updateUser: updateUser,
     isSignedIn: isSignedIn,
     getShelf: getShelf,

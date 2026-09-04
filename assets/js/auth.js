@@ -76,8 +76,14 @@
       return;
     }
     // re-read at submit time: the record may have been cleared since the page loaded
-    if (S.getUser()) S.updateUser({ name: name, email: email });
-    else S.signUp(name, email, 'US');
+    // the region this email used before on this computer, not a fresh default
+    var known = S.getProfile ? S.getProfile(email) : null;
+    var region = (known && known.region) || (S.getUser() && S.getUser().region) || 'US';
+    if (S.getUser()) S.updateUser({ name: name, email: email, region: region, subregion: (known && known.subregion) || '' });
+    else {
+      S.signUp(name, email, region);
+      if (known && known.subregion) S.updateUser({ subregion: known.subregion });
+    }
 
     var url = 'app.html';
     if (pendingItem) url += '?new=' + encodeURIComponent(pendingItem);
