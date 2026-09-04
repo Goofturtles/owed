@@ -282,7 +282,8 @@
     var startX = 0, startW = 0;
     function width() { return rail.getBoundingClientRect().width; }
     h.addEventListener('pointerdown', function (e) {
-      startX = e.clientX; startW = width(); h.setPointerCapture(e.pointerId);
+      startX = e.clientX; startW = width();
+      try { h.setPointerCapture(e.pointerId); } catch (err) {}
       h.classList.add('is-dragging'); app.classList.add('is-resizing');
     });
     h.addEventListener('pointermove', function (e) {

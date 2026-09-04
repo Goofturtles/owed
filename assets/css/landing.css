@@ -405,7 +405,7 @@ html:not(.js-enter) .reveal { opacity: 1; transform: none; }
 .footer-col a { display: block; font-size: 14px; line-height: 20px; padding: 6px 0; color: #666666; text-decoration: none; transition: color .1s ease; }
 .footer-col a:hover { color: var(--accent); }
 .footer-col a:hover { color: #000; }
-.footer-base { margin-top: 40px; padding-top: 20px; border-top: 1px dashed #E5E5E5; }
+.footer-base { margin-top: 40px; padding-top: 20px; }
 .footer-base p { font-size: 12px; line-height: 1.6; color: #666666; max-width: 70ch; }
 
 @media (prefers-reduced-motion: reduce) { .btn, .nav { transition: none; } }
