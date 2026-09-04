@@ -485,6 +485,32 @@
       '<span class="tnum">' + count + '</span><span class="sr-only">' + word + '</span></span>';
   }
 
+  /* the rail's summary: what the shelf adds up to, from the same matches the
+     rows use — nothing invented, and it hides until the rulebook has loaded */
+  function renderRailSummary(shelf) {
+    var box = document.getElementById('railSummary');
+    if (!box) return;
+    if (!E.loaded || !shelf.length) { box.hidden = true; return; }
+    var strong = 0, dated = 0, soonest = null;
+    shelf.forEach(function (item) {
+      E.match(withRegion(item)).forEach(function (m) {
+        if (m.strength === 'strong') strong++;
+        if (m.rule.deadline) {
+          dated++;
+          if (!soonest || m.rule.deadline < soonest.rule.deadline) soonest = { rule: m.rule, item: item };
+        }
+      });
+    });
+    document.getElementById('railThings').textContent = shelf.length;
+    document.getElementById('railStrong').textContent = strong;
+    document.getElementById('railSoon').textContent = dated;
+    var next = document.getElementById('railNext');
+    next.textContent = soonest
+      ? 'Soonest deadline: ' + fmtDate(soonest.rule.deadline) + ' — ' + (soonest.item.name || itemLabel(soonest.item)) + '.'
+      : 'None of your leads has a fixed deadline.';
+    box.hidden = false;
+  }
+
   function renderShelf() {
     var shelf = S.getShelf();
     el.shelfList.innerHTML = '';
@@ -499,6 +525,8 @@
     });
     // the selected row is never hidden behind "Show more"
     var limit = (shelfExpanded || selectedIdx >= SHELF_VISIBLE) ? shelf.length : SHELF_VISIBLE;
+
+    renderRailSummary(shelf);
 
     var totalNew = 0;
     shelf.forEach(function (item, i) {

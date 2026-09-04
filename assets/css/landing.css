@@ -807,3 +807,9 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   .env-strip .btn, .btn-34 { min-height: 44px; padding: 0 18px; }
   .film-rail-btn, .film-dot { min-width: 44px; min-height: 44px; }
 }
+
+/* the dark panel sits centred in the card now that the toolbar is gone */
+.show-card { margin-bottom: 0; }
+.show-panel { top: 0 !important; bottom: 0; margin-block: auto; height: fit-content; }
+.show-pin { top: 0 !important; bottom: 0; margin-block: auto; height: fit-content; translate: 0 -112px; }
+@media (max-width: 768px) { .show-panel { position: static !important; margin-block: 12px 0; height: auto; } .show-pin { display: none; } }
