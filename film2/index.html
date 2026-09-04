@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owed — launch film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="film.css">
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- ground layers, back to front -->
+  <div class="ground g-white" data-l="white"></div>
+  <div class="ground g-black" data-l="black"></div>
+  <div class="ground g-blue"  data-l="blue"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- photographs of real things -->
+  <div class="photo" data-l="ph-head"><img src="../assets/img/photo/headphones.webp" alt=""></div>
+  <div class="photo" data-l="ph-wash"><img src="../assets/img/photo/washing-machine.webp" alt=""></div>
+  <div class="photo" data-l="ph-drill"><img src="../assets/img/photo/drill.webp" alt=""></div>
+  <div class="photo" data-l="ph-laptop"><img src="../assets/img/photo/laptop.webp" alt=""></div>
+  <div class="photo" data-l="ph-fixed"><img src="../assets/img/photo/headphones.webp" alt=""></div>
+
+  <!-- the product itself: real screens -->
+  <div class="shot" data-l="s-hero"><img src="shots/land-hero.png" alt=""></div>
+  <div class="shot" data-l="s-q1"><img src="shots/q1.png" alt=""></div>
+  <div class="shot" data-l="s-q1p"><img src="shots/q1-picked.png" alt=""></div>
+  <div class="shot" data-l="s-q1n"><img src="shots/q1-named.png" alt=""></div>
+  <div class="shot" data-l="s-q2"><img src="shots/q2.png" alt=""></div>
+  <div class="shot" data-l="s-q3"><img src="shots/q3.png" alt=""></div>
+  <div class="shot" data-l="s-q4"><img src="shots/q4.png" alt=""></div>
+  <div class="shot" data-l="s-res"><img src="shots/results.png" alt=""></div>
+  <div class="shot" data-l="s-rule"><img src="shots/rule.png" alt=""></div>
+  <div class="shot" data-l="s-script"><img src="shots/script.png" alt=""></div>
+  <div class="shot" data-l="s-copied"><img src="shots/script-copied.png" alt=""></div>
+  <div class="shot" data-l="s-won"><img src="shots/won.png" alt=""></div>
+  <div class="shot" data-l="s-places"><img src="shots/land-places.png" alt=""></div>
+  <div class="shot" data-l="s-region"><img src="shots/region.png" alt=""></div>
+  <div class="shot" data-l="s-ask"><img src="shots/ask.png" alt=""></div>
+  <div class="shot" data-l="s-dark"><img src="shots/dark-results.png" alt=""></div>
+  <div class="shot" data-l="s-env"><img src="shots/land-env.png" alt=""></div>
+
+  <!-- the pointer that does the clicking -->
+  <div class="cursor" data-l="cursor">
+    <svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 3l14 8.5-6.2 1.6L9.5 19z" fill="#000" stroke="#fff" stroke-width="1.7" stroke-linejoin="round"/></svg>
+    <i class="cursor-ring"></i>
+  </div>
+
+  <!-- type -->
+  <div class="type" data-l="t-typed"><h1 class="kinetic" id="typed"></h1></div>
+  <div class="type" data-l="t-words"><h1 class="kinetic" id="words"></h1></div>
+  <div class="cap-scrim" data-l="scrim"></div>
+  <div class="cap" data-l="cap"><p id="cap"></p></div>
+  <div class="stat-row" data-l="stats">
+    <div><b>300+</b><span>rules read</span></div>
+    <div><b>190+</b><span>brands</span></div>
+    <div><b>4</b><span>regions</span></div>
+    <div><b>$0</b><span>to use</span></div>
+  </div>
+  <div class="lock" data-l="lock">
+    <span class="mark"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
+    <span class="word">Owed</span>
+  </div>
+  <div class="tick" data-l="tick"><svg viewBox="0 0 24 24" width="76" height="76" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></div>
+  <div class="url" data-l="url"><span id="url"></span></div>
+</div>
+
+<div class="controls" id="controls">
+  <button id="play" type="button">Play</button>
+  <input id="scrub" type="range" min="0" max="120" step="0.033" value="0">
+  <span id="clock">0.0</span>
+</div>
+
+<script src="film.js"></script>
+</body>
+</html>

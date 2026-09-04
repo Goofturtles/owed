@@ -1,0 +1,97 @@
+/* Owed — launch film. Authored at 1920x1080; every layer is positioned from
+   film.js by time, so a frame at t always looks the same. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #0A0A0A; overflow: hidden; }
+
+.stage {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+  background: #FFFFFF; transform-origin: top left;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- grounds ---------- */
+.ground { position: absolute; inset: 0; opacity: 0; }
+.g-white { background: #FFFFFF; }
+.g-black { background: #0A0A0A; }
+.g-blue {
+  background:
+    radial-gradient(70% 55% at 50% 42%, #7CC0FF 0%, rgba(124, 192, 255, 0) 70%),
+    linear-gradient(175deg, #0B62D6 0%, #0071E3 38%, #37A0F5 72%, #9AD5FF 100%);
+}
+.grain { position: absolute; inset: 0; opacity: .05; pointer-events: none; mix-blend-mode: multiply;
+  background-image: radial-gradient(#000 1px, transparent 1px); background-size: 3px 3px; }
+
+/* ---------- photographs ---------- */
+.photo { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- product screens ---------- */
+.shot {
+  position: absolute; left: 50%; top: 50%; width: 1440px; height: 900px;
+  margin: -450px 0 0 -720px; opacity: 0; border-radius: 16px; overflow: hidden;
+  background: #FFF; box-shadow: 0 60px 140px rgba(10, 30, 60, .28), 0 8px 30px rgba(10, 30, 60, .12);
+}
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* ---------- the pointer ---------- */
+.cursor { position: absolute; left: 0; top: 0; opacity: 0; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .35)); }
+.cursor svg { display: block; }
+.cursor-ring { position: absolute; left: -14px; top: -14px; width: 46px; height: 46px; border-radius: 50%;
+  border: 2px solid #0071E3; opacity: 0; transform: scale(.4); }
+
+/* ---------- type ---------- */
+.type { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; padding: 0 140px; }
+.kinetic {
+  font-size: 92px; line-height: 1.06; letter-spacing: -.035em; font-weight: 700;
+  text-align: center; color: #0A0A0A; text-wrap: balance;
+}
+.kinetic .w { display: inline-block; }
+.kinetic .blue { color: #0071E3; }
+.kinetic .caret { display: inline-block; width: 5px; height: .88em; margin-left: 6px;
+  background: currentColor; vertical-align: -.08em; }
+.on-dark .kinetic, .on-blue .kinetic { color: #FFFFFF; }
+.on-dark .kinetic .blue { color: #6DB2FF; }
+.on-blue .kinetic .blue { color: #0A2D5C; }
+
+.cap { position: absolute; left: 0; right: 0; bottom: 58px; display: grid; place-items: center; opacity: 0; padding: 0 160px; }
+.cap p { font-size: 40px; line-height: 1.25; letter-spacing: -.02em; font-weight: 600; color: #0A0A0A; text-align: center; text-wrap: balance; }
+.on-dark .cap p, .on-blue .cap p { color: #FFFFFF; }
+.cap b { color: #0071E3; }
+.on-dark .cap b { color: #6DB2FF; }
+.on-blue .cap b { color: #0A2D5C; }
+
+/* ---------- numbers ---------- */
+.stat-row { position: absolute; left: 0; right: 0; top: 50%; margin-top: -90px; display: flex;
+  justify-content: center; gap: 96px; opacity: 0; }
+.stat-row div { text-align: center; color: #FFFFFF; }
+.stat-row b { display: block; font-size: 104px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+.stat-row span { display: block; margin-top: 14px; font-size: 26px; font-weight: 500; opacity: .82; }
+
+/* ---------- identity ---------- */
+.lock { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex;
+  align-items: center; gap: 26px; opacity: 0; }
+.lock .mark { width: 96px; height: 96px; border-radius: 26px; background: #0A0A0A; display: grid; place-items: center; }
+.lock .word { font-size: 96px; font-weight: 700; letter-spacing: -.04em; color: #0A0A0A; }
+.on-dark .lock .word { color: #FFFFFF; }
+.on-dark .lock .mark { background: #0071E3; }
+
+.tick { position: absolute; left: 50%; top: 50%; margin: -70px 0 0 -70px; width: 140px; height: 140px;
+  border-radius: 50%; background: #0071E3; display: grid; place-items: center; opacity: 0; }
+
+.url { position: absolute; left: 0; right: 0; bottom: 120px; text-align: center; opacity: 0; }
+.url span { font-size: 34px; font-weight: 500; letter-spacing: .01em; color: #A1A1AA; }
+
+/* ---------- preview controls (hidden while capturing) ---------- */
+.controls { position: fixed; left: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center; gap: 12px;
+  background: rgba(0, 0, 0, .7); color: #fff; padding: 10px 14px; border-radius: 12px;
+  font: 500 14px/1 -apple-system, Inter, sans-serif; }
+.controls input { width: 520px; }
+.controls button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 0; background: #fff; cursor: pointer; }
+body.capture .controls { display: none; }
+
+/* a scrim so a caption always reads over a photograph */
+.cap-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; opacity: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .55) 62%, rgba(0, 0, 0, .72) 100%); }
+.cap.over-photo p { color: #FFFFFF; }
+.cap.over-photo b { color: #8FC7FF; }
