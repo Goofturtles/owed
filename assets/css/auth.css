@@ -397,4 +397,20 @@
 
 .auth-badge { position: absolute !important; z-index: 2; }
 
-@media (max-width: 820px) { .auth-panel { min-height: 380px; } .auth-panel-head { padding-top: 56px; } }
+/* ================= phone pass (audit) ================= */
+@media (max-width: 819px) {
+  .auth-panel { min-height: 380px; justify-content: center; padding: 40px 16px; }
+  .auth-panel-video { object-position: 64% 50%; }
+  .auth-left { min-height: 0; padding: 88px 24px 56px; }
+  .auth-right { padding-top: 8px; }
+  .auth-help { min-height: 48px; text-wrap: balance; }
+  .auth-field-icon-right { display: none; }
+  .auth-input { padding-right: 20px; }
+}
+/* the label can be long ("Continue as ...") — one line, ellipsised, never spilling the pill */
+.auth-btn { height: auto; min-height: 49px; padding: 0 20px; }
+.auth-btn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* white type over a drifting film needs a real scrim */
+.auth-panel-tint { background: linear-gradient(180deg, rgba(9, 28, 66, .62) 0%, rgba(9, 38, 86, .46) 45%, rgba(10, 54, 64, .52) 100%) !important; }
+.auth-panel-head { text-shadow: 0 1px 14px rgba(0, 0, 0, .45); }
+.auth-panel-sub { text-wrap: balance; max-width: 30ch; margin-left: auto; margin-right: auto; }

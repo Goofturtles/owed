@@ -31,25 +31,34 @@
     help.textContent = 'Not you? Just change the details.';
   }
 
-  function setError(msg) {
-    field.classList.add('is-error');
+  var emailField = document.getElementById('fieldEmail');
+  /* the ring goes on the field that is actually wrong — a bad email used to
+     mark the name box, and fixing the email never cleared it */
+  function setError(msg, which) {
+    var f = which || field, input = f.querySelector('input');
+    clearError(true);
+    f.classList.add('is-error');
     help.classList.add('is-error');
     help.textContent = msg;
-    nameInput.setAttribute('aria-invalid', 'true');
+    if (input) input.setAttribute('aria-invalid', 'true');
     if (!reduce) {
-      field.classList.remove('is-shaking');
-      void field.offsetWidth; // restart the animation
-      field.classList.add('is-shaking');
+      f.classList.remove('is-shaking');
+      void f.offsetWidth; // restart the animation
+      f.classList.add('is-shaking');
     }
   }
-  function clearError() {
-    if (!field.classList.contains('is-error')) return;
-    field.classList.remove('is-error', 'is-shaking');
+  function clearError(quiet) {
+    [field, emailField].forEach(function (f) {
+      if (!f) return;
+      f.classList.remove('is-error', 'is-shaking');
+      var i = f.querySelector('input'); if (i) i.removeAttribute('aria-invalid');
+    });
+    if (quiet) return;
     help.classList.remove('is-error');
     help.textContent = HELP_DEFAULT;
-    nameInput.removeAttribute('aria-invalid');
   }
-  nameInput.addEventListener('input', clearError);
+  nameInput.addEventListener('input', function () { clearError(); });
+  if (emailInput) emailInput.addEventListener('input', function () { clearError(); });
 
   /* ---------- submit ---------- */
   form.addEventListener('submit', function (e) {
@@ -62,7 +71,7 @@
     }
     var email = emailInput ? emailInput.value.trim() : '';
     if (!email || !EMAIL_RE.test(email)) {
-      setError('Add an email that looks right, like you@example.com.');
+      setError('Add an email that looks right, like you@example.com.', emailField);
       if (emailInput) emailInput.focus();
       return;
     }

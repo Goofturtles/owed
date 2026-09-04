@@ -85,6 +85,12 @@
     }, { passive: true });
   })();
 
+  /* the film's field: the desktop example is cut mid-word on a phone */
+  (function shortPlaceholder() {
+    var f = document.getElementById('tryItem');
+    if (f && window.matchMedia('(max-width: 640px)').matches) f.placeholder = 'What broke?';
+  })();
+
   var nav = document.getElementById('nav');
   var darkBands = document.querySelectorAll('.on-dark-band');   /* none on the SaaS page; the film sets its own flag */
   var filmEl = document.getElementById('film');

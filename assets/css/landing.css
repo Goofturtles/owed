@@ -826,3 +826,32 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   .show-media.in .show-panel, .show-media.in .show-panel-field span, .show-media.in .show-panel-field svg { animation: none !important; }
   .show-media.in .show-panel-field span { width: auto; border-right: 0; }
 }
+
+/* ================= phone pass (audit, 390 and 360 wide) ================= */
+@media (max-width: 899px) {
+  /* the blur on the stuck bar made #nav a containing block, so the open menu
+     collapsed to a 32px sliver: no blur while the sheet is open */
+  .nav.is-open { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .nav-toggle { flex: 0 0 44px; width: 44px; height: 44px; }
+  .nav .brand, .footer .brand { min-height: 44px; }
+}
+@media (max-width: 768px) {
+  .h2 { line-height: 1.14; }
+  /* the marquee's 96px edge fade ate half a phone screen */
+  .proof-track, :root[data-theme="dark"] .proof-track {
+    mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  }
+  .show-clip { height: 184px; }
+  .place-grid a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 2px; font-size: 15px; }
+  .cta-small a, .film-link { display: inline-block; min-height: 44px; line-height: 44px; font-size: 15px; }
+  .footer-col a { padding: 12px 0; font-size: 15px; }
+  .footer-col .nav-me { display: flex; align-items: center; width: 100%; min-height: 44px; padding: 12px 0; font-size: 15px; font-weight: 400; color: #A1A1AA; background: none; border: 0; text-align: left; }
+  .show-panel-line, .env-cells span, .env-fig > span, .footer-status { font-size: 14px; }
+  .env-inputs label { font-size: 14px; }
+  .faq-head p, .auth-help { text-wrap: balance; }
+}
+@media (max-width: 640px) { #ctaHead br { display: none; } }
+@media (max-width: 600px) { .env-panel { padding: 8px; } .env-panel .env-card { padding-inline: 16px; } }
+/* the font shorthand was invalid (family "inherit"), so both selects fell back to 12px */
+.env-inputs select { font-family: inherit; font-size: 16px; font-weight: 500; line-height: 1.2; }

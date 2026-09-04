@@ -1058,3 +1058,52 @@
 .rail-figs span { font-size: 14px; line-height: 1.3; color: var(--ink-3); }
 .rail-next { margin: 14px 0 4px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
 .rail-sum[hidden] { display: none; }
+
+/* ================= phone pass (audit, 390 and 360 wide) ================= */
+@media (max-width: 899.98px) {
+  /* the sticky sub-header was see-through: the page read straight through its own title */
+  .pane-head { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .topbar { height: 48px; }
+  /* Ask anything had no way in on a phone: its row lives in the hidden sidebar nav */
+  body[data-tab="help"] .side-nav { display: flex; }
+  body[data-tab="help"] .side-nav > *:not(#askRow) { display: none; }
+  body[data-tab="help"] #askRow { width: 100%; justify-content: flex-start; gap: 12px; min-height: 52px; padding: 0 12px; font-size: 18px; }
+  body[data-tab="help"] .panel { display: flex; flex-direction: column; }
+  body[data-tab="help"] .side-util { margin-bottom: auto; }
+  /* shelf rows filled only their own text, leaving a ragged right edge */
+  .shelf-row { display: flex; }
+  .shelf-row > .srow { flex: 1 1 auto; min-width: 0; }
+  .srow-name { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .srow { align-items: flex-start; padding-top: 10px; padding-bottom: 10px; }
+  .util-theme .theme-btn { margin-left: -22px; }
+}
+@media (max-width: 768px) {
+  /* the head must stay one row: the back button was wrapping under the title */
+  .pane-head { flex-wrap: nowrap; gap: 12px; padding: 10px 16px; min-height: 64px; }
+  .pane-head-main, .res-head .res-head-main { flex: 1 1 auto; order: 0; min-width: 0; }
+  .res-head { flex-wrap: nowrap; }
+  .res-head .res-ico { display: none; }
+  .res-head .res-rename { margin-left: 0; }
+  .res-head .res-edit { margin-left: 8px; }
+  /* the chip row lost its inset to an !important margin */
+  .res-filter { margin: 0 -16px 16px !important; padding: 0 16px 4px !important; max-width: none; }
+  /* the script's bar: enough ground that the words do not read through it */
+  /* on a phone the words must not read through the bar at all */
+  .doc-foot { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 -1px 0 var(--line); padding: 12px 16px calc(14px + env(safe-area-inset-bottom)); }
+  :root[data-theme="dark"] .doc-foot { background: var(--paper); }
+  /* photo thumbnails were centre-cropping landscape shots into noise */
+  .opt-ico img { object-position: 60% 55%; }
+  .opt-list:has(.opt-ico img) .opt { justify-content: flex-start; padding-top: 14px; }
+  .opt-list:has(.opt-ico img) .opt-label { margin-top: auto; }
+  .opt-list .opt:not(:has(.opt-ico)) { min-height: 64px; }
+  .opt-label { text-wrap: balance; }
+  .rc-meta { text-wrap: pretty; }
+  /* the source link's arrow dropped to its own line */
+  .rc-kv dd a svg, .scr-kv dd a svg, .rc-link svg { display: inline-block; vertical-align: -3px; }
+  .rc-kv a.rc-link, .scr-kv a.rc-link { display: inline-flex; align-items: center; gap: 4px; }
+  /* the Ask sheet is a dialog: give it a scrim and keep it clear of the tab bar */
+  .ask { bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .ask::before { content: ""; position: fixed; inset: 0; z-index: -1; background: rgba(0, 0, 0, .35); }
+  .ask-note { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .ask-form { padding-left: 20px; padding-right: 20px; }
+}
