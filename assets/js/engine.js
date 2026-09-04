@@ -172,7 +172,7 @@
       visa: 'a Visa card', mastercard: 'a Mastercard', amex: 'an Amex',
       discover: 'a Discover card', debit: 'a debit card', cash: 'cash'
     };
-    return map[id] || 'that method';
+    return map[id] || '';   // unknown: the sentence leaves the payment out entirely
   }
 
   /** Run the whole corpus against an item. */
@@ -221,18 +221,21 @@
   function script(match, item, user) {
     var r = match.rule;
     var name = (user && user.name) || 'I';
-    var thing = item.name || (item.brand ? item.brand + ' ' + item.category : 'the item');
+    var thing = thingName(item);
     var when = agePhrase(item.ageMonths);   // already contains "about"
+    var pay = paymentWord(item.payment);
     var lines = [];
 
-    lines.push('Hi — I’d like to open a claim under ' + aOrThe(r.title) + '.');
-    lines.push('I bought ' + thing + ' ' + when + ' and paid with ' +
-               paymentWord(item.payment) + '. ' + brokeLine(item));
+    // the words a polite person would actually use on the phone: ask, don't demand
+    lines.push('Hello — I hope you can help me with something.');
+    lines.push('I bought ' + thing + ' ' + when +
+               (pay ? ' and paid with ' + pay : '') + '. ' + brokeLine(item));
+    lines.push('I think this may still be covered. The rule I am going by is: ' + r.title + '.');
 
     var hint = fillHint(r.script_hint, item, when);
     if (hint) lines.push(hint);
 
-    lines.push('Could you tell me what you need from me, and confirm the deadline for this claim?');
+    lines.push('Could you let me know what you need from me, and whether there is a deadline I should keep in mind? Thank you for your help.');
 
     return {
       lines: lines,
@@ -241,6 +244,24 @@
       deadline: r.deadline || '',
       by: name
     };
+  }
+
+  /**
+   * What to call the thing on the phone. A typed name wins; otherwise the brand
+   * and the category, lower-cased so "Samsung Laptop or computer" (two menu
+   * labels stuck together) reads as "a Samsung laptop".
+   */
+  function thingName(item) {
+    if (item.name) return item.name;
+    var cat = String(item.category || '').replace(/_/g, ' ');
+    var CAT = {
+      laptop: 'laptop', phone: 'phone', headphones: 'pair of headphones', watch: 'watch',
+      appliance_large: 'appliance', appliance_small: 'small appliance', tool: 'power tool',
+      kitchen: 'pan', shoes: 'pair of shoes', furniture: 'piece of furniture', other: 'item'
+    };
+    var word = CAT[item.category] || cat.split(' or ')[0].toLowerCase() || 'item';
+    if (!item.brand) return 'a ' + word;
+    return (/^[aeiou]/i.test(item.brand) ? 'an ' : 'a ') + item.brand + ' ' + word;
   }
 
   /** "the Chase extended warranty" — keeps proper nouns capitalised. */
@@ -256,7 +277,7 @@
    */
   function fillHint(hint, item, when) {
     if (!hint) return '';
-    var thing = item.name || (item.brand ? item.brand + ' ' + item.category : 'the item');
+    var thing = thingName(item);
     // "about a year ago" already reads as a time phrase, so drop any preposition
     // in front of it — otherwise you get "failed on about a year ago".
     var out = String(hint)
@@ -270,7 +291,9 @@
 
   function brokeLine(item) {
     if (item.faultNote) return String(item.faultNote);
-    return item.broken ? 'It has stopped working properly.' : 'I want to check what cover it still has.';
+    return item.broken
+      ? 'It has stopped working properly.'
+      : 'I would like to check what cover it still has.';
   }
 
   function agePhrase(months) {

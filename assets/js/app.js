@@ -194,6 +194,18 @@
     row.addEventListener('click', function () { panel.hidden ? open() : close(); });
     document.getElementById('askClose').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
+    // three openers, so the panel is never an empty box
+    (function seeds() {
+      var wrap = document.createElement('div'); wrap.className = 'ask-seeds';
+      ['Do I need my receipt?', 'What do I say on the phone?', 'How long do I have?'].forEach(function (q) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'ask-seed'; b.textContent = q;
+        b.addEventListener('click', function () { input.value = q; form.requestSubmit(); wrap.remove(); });
+        wrap.appendChild(b);
+      });
+      log.appendChild(wrap);
+    })();
+
     function add(kind, text) {
       var p = document.createElement('p'); p.className = 'ask-msg ' + kind; p.textContent = text;
       log.appendChild(p); log.scrollTop = log.scrollHeight; return p;

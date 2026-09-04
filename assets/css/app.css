@@ -1107,3 +1107,26 @@
   .ask-note { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .ask-form { padding-left: 20px; padding-right: 20px; }
 }
+
+/* ---------- Ask anything: a proper panel, not a small chat box ---------- */
+.ask { width: min(560px, calc(100vw - 32px)); max-height: min(76vh, 760px); border-radius: 20px; }
+.ask-head { padding: 18px 16px 14px 24px; }
+.ask-title { font-size: 20px; }
+.ask-log { padding: 20px 24px; gap: 14px; }
+.ask-msg { max-width: 88%; font-size: 16px; padding: 12px 16px; }
+.ask-form { padding: 14px 16px 16px 20px; }
+.ask-input { height: 48px; font-size: 16px; }
+.ask-send { width: 48px; height: 48px; }
+/* the questions people actually start with, one tap each */
+.ask-seeds { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 4px; }
+.ask-seed { border: 1px solid var(--line-2, #D4D4D4); background: var(--card, #FFF); color: var(--ink); border-radius: 9999px; min-height: 40px; padding: 0 14px; font: inherit; font-size: 15px; cursor: pointer; }
+.ask-seed:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 768px) {
+  /* on a phone it is a sheet: full width, half the screen, above the tab bar */
+  .ask { left: 0; right: 0; bottom: 0; width: auto; max-height: 82vh; border-radius: 20px 20px 0 0; border-bottom: 0; }
+  .ask-log { padding: 16px 20px; }
+  .ask-form { padding: 12px 16px calc(16px + env(safe-area-inset-bottom)); }
+}
+
+.ask { min-height: min(560px, 70vh); }
+.ask-log { flex: 1; }
