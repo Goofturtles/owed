@@ -968,6 +968,24 @@
     img.src = url;
   }
 
+  /* where the model number is printed, per kind of thing — the one piece of
+     knowledge that turns a photo into an exact product */
+  function modelHint(cat) {
+    var H = {
+      phone: 'in Settings, under About, or engraved on the back',
+      laptop: 'on the underside, or in About This Mac / System',
+      headphones: 'inside the headband, or under the ear cushion',
+      watch: 'on the back of the case',
+      appliance_large: 'on a sticker inside the door or around the back',
+      appliance_small: 'on a plate underneath',
+      tool: 'on the motor housing, next to the serial number',
+      kitchen: 'stamped on the base',
+      shoes: 'on the tongue label, inside the shoe',
+      furniture: 'on a tag under the seat or behind the frame'
+    };
+    return H[cat] || 'on a label, a plate, or the box it came in';
+  }
+
   function applyIdentified(r) {
     var changed = false;
     // a model number read off the item is the most useful thing in the photo
@@ -1037,10 +1055,27 @@
             showPhoto(dataUrl, '<b>Barcode ' + esc(code) + ' read.</b> That is the product code — put the name beside it if you know it.');
             return;
           }
-          showPhoto(dataUrl, 'Photo saved. This browser has no on-device AI to read the model, so type what it is below.');
+          // most phones have no on-device model: help the reader get the number
+          // off the photo themselves — iOS and Android can both copy text from
+          // a picture, and one tap pastes it straight into the name
+          showPhoto(dataUrl, 'Photo saved. <b>Where the model number hides:</b> ' + modelHint(wiz.category) +
+            '. Press and hold the number in your photo to copy it, then ' +
+            '<button class="wiz-paste" type="button" data-paste>paste it here</button>.');
         });
       });
     });
+  });
+
+  // "paste it here": the clipboard read needs this click as its gesture
+  wizEls.photoNote.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-paste]')) return;
+    if (!navigator.clipboard || !navigator.clipboard.readText) { wizEls.name.focus(); return; }
+    navigator.clipboard.readText().then(function (t) {
+      t = String(t || '').trim().slice(0, 80);
+      if (!t) { wizEls.name.focus(); return; }
+      wiz.name = t; wizEls.name.value = t; setFallback(1, true); updateContinue();
+      toast('Pasted into the name.');
+    }, function () { wizEls.name.focus(); });
   });
 
   wizEls.photoRemove.addEventListener('click', function () {

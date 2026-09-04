@@ -1135,3 +1135,6 @@
    wherever the text ended, and long names ellipsised with gutter to spare */
 .shelf-row { display: flex; align-items: stretch; }
 .shelf-row > .srow { flex: 1 1 auto; min-width: 0; width: auto; }
+
+.wiz-paste { border: 0; background: none; padding: 0; font: inherit; color: var(--accent); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.wiz-photo-note b { color: var(--ink); }
