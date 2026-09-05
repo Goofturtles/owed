@@ -1,4 +1,6 @@
+*.mp4
 frames/
 probe/
-*.mp4
+sheet/
 shots/
+track.mp3
