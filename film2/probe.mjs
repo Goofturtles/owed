@@ -9,10 +9,10 @@ p.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
 await p.goto('http://localhost:3510/film2/index.html?capture=1', { waitUntil: 'load' });
 await p.evaluate(() => document.fonts.ready);
 await new Promise(r => setTimeout(r, 2500));
-for (const t of [22.5, 34.0, 38.0, 49.5, 50.0, 50.5]) {
+for (const t of (process.argv.slice(2).map(Number))) {
   await p.evaluate(x => window.owedFilm.seek(x), t);
-  await new Promise(r => setTimeout(r, 120));
-  await p.screenshot({ path: `${OUT}t${String(t).padStart(5,'0')}.png` });
+  await new Promise(r => setTimeout(r, 140));
+  await p.screenshot({ path: `${OUT}t${String(t).padStart(6, '0')}.png` });
 }
-console.log('errors:', errs.length ? errs.slice(0,5) : 'none');
+console.log('errors:', errs.length ? errs.slice(0, 5) : 'none');
 await b.close();

@@ -1,7 +1,7 @@
 /** Render every frame of the film. Deterministic: each frame is seek(t) then shoot. */
 import { chromium } from '../film/node_modules/playwright-core/index.mjs';
 import { mkdirSync } from 'node:fs';
-const FPS = 30, DUR = 120, OUT = 'film2/frames/';
+const FPS = 30, DUR = 150, OUT = 'film2/frames/';
 mkdirSync(OUT, { recursive: true });
 const b = await chromium.launch({ channel: 'chrome', args: ['--force-color-profile=srgb', '--hide-scrollbars'] });
 const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
