@@ -1,7 +1,8 @@
 /** Render every frame of the film. Deterministic: each frame is seek(t) then shoot. */
 import { chromium } from '../film/node_modules/playwright-core/index.mjs';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, rmSync } from 'node:fs';
 const FPS = 30, DUR = 150, OUT = 'film2/frames/';
+rmSync(OUT, { recursive: true, force: true });   // never encode half of a previous cut
 mkdirSync(OUT, { recursive: true });
 const b = await chromium.launch({ channel: 'chrome', args: ['--force-color-profile=srgb', '--hide-scrollbars'] });
 const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
@@ -10,6 +11,9 @@ await p.evaluate(() => document.fonts.ready);
 // every weight the film uses, and every image decoded, before frame zero
 await p.evaluate(() => Promise.all(
   ['500 40px Inter', '600 40px Inter', '700 92px Inter'].map(f => document.fonts.load(f))));
+  /* document.fonts.load resolves happily when nothing matched, so assert */
+  if (!await p.evaluate(() => document.fonts.check('700 92px Inter')))
+    throw new Error('Inter did not load - every frame would be set in a fallback face');
 await p.evaluate(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))));
 await new Promise(r => setTimeout(r, 3000));
 const total = Math.round(DUR * FPS);

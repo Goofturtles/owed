@@ -6,7 +6,9 @@ html, body { background: #06070A; overflow: hidden; }
 .stage {
   position: relative; width: 1920px; height: 1080px; overflow: hidden;
   background: #FFFFFF; transform-origin: top left;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", Helvetica, Arial, sans-serif;
+  /* Inter first, and capture.mjs asserts it: a host with SF Pro installed
+     would otherwise re-break every line in the film */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -88,8 +90,8 @@ html, body { background: #06070A; overflow: hidden; }
   box-shadow: 0 20px 60px rgba(0,113,227,.45); }
 
 .url { position: absolute; left: 0; right: 0; bottom: 150px; text-align: center; opacity: 0; }
-.url span { font-size: 36px; font-weight: 500; color: #9AA0AA; }
-.on-dark .url span { color: #8A9099; }
+.url span { font-size: 36px; font-weight: 500; color: #6E747E; }
+.on-dark .url span { color: #B9BFC7; }
 
 /* ---------- preview only ---------- */
 .controls { position: fixed; left: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center;

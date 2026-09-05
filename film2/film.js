@@ -32,10 +32,12 @@
   function set(el, o, tr) { if (!el) return; el.style.opacity = o; if (tr !== undefined) el.style.transform = tr; }
 
   /* ---------- the parts of the product ---------- */
+  /* every part the film places, and nothing else — an unplaced entry still
+     costs a fetch, a decode and a sizeParts() pass on every seek */
   var PARTS = ['tile0','tile1','tile2','tile3','tile4','tile5','tile6','tile7','tile8','tile9','tile-on',
-    'wiz-ico','wiz-bar','btn-next','shell-side','photo-note','brands','ages','pays',
-    'res-line','res-chips','group-head','card0','card1','rail-check','rail-legend','pane-head',
-    'doc-rule','script-kv','script-body','script-buttons','btn-copy','btn-copied',
+    'wiz-ico','wiz-bar','btn-next','photo-note','brands','ages','pays',
+    'res-line','res-chips','group-head','card0','card1','pane-head',
+    'doc-rule','script-kv','script-body','script-buttons','btn-copied',
     'region-pill','ask-panel','place0','place1','place2','place3','place4','env0','env1','env2','env3'];
   var P = {};
   (function build() {
@@ -170,9 +172,9 @@
 
     /* ============ INTRO 0–15.7s : something broke ============ */
     if (t < bar(4)) {
-      bigO = band(t, bar(0.2), bar(0.7), bar(3.6), bar(3.95));
+      bigO = band(t, bar(0.1), bar(0.5), bar(3.6), bar(3.95));
       bigHTML = t < bar(2)
-        ? typed('Something broke.', seg(t, bar(0.4), bar(1.7)), true)
+        ? typed('Something broke.', seg(t, bar(0.25), bar(1.7)), true)
         : 'Something broke.<br>' + typed('Again.', seg(t, bar(2.1), bar(2.9)), true);
     }
     photo('ph-head', t, bar(4), bar(4.15), bar(5.85), bar(6), 1.05, 1.14);
@@ -187,10 +189,10 @@
       bigHTML = '<span class="w" style="display:inline-block;transform:scale(' + lerp(1.35, 1, sp).toFixed(3) +
         ');filter:blur(' + ((1 - sp) * 14).toFixed(1) + 'px)">Stop.</span>';
     } else if (t >= bar(9.6) && t < bar(13.4)) {
-      bigO = band(t, bar(9.7), bar(10), bar(13), bar(13.35));
-      bigHTML = words('Somebody already owes you a *free *repair.', t, bar(9.8), BEAT * 0.5);
+      bigO = band(t, bar(9.6), bar(9.9), bar(13), bar(13.35));
+      bigHTML = words('Somebody already owes you a *free *repair.', t, bar(9.6), BEAT * 0.5);
     } else if (t >= bar(14) && t < bar(17)) {
-      bigO = band(t, bar(14.1), bar(14.5), bar(16.6), bar(16.95));
+      bigO = band(t, bar(14.1), bar(14.5), bar(16.1), bar(16.45));
       bigHTML = words('*Four questions. That is all.', t, bar(14.2), BEAT * 0.75);
     }
     /* the mark draws itself on the blue */
@@ -203,19 +205,19 @@
 
     /* ============ FULL 33.2–58.6s : the product, part by part ============ */
     /* the shell arrives, then the question, then the ten tiles pop in */
-    if (t >= bar(17) && t < bar(25.6)) {
-      setDrift(t, bar(17), bar(25.6), -40, -18, 1.0, 1.05);
-      set(L.glow, band(t, bar(17), bar(18), bar(25), bar(25.6)) * .8,
+    if (t >= bar(16.45) && t < bar(25.6)) {
+      setDrift(t, bar(16.45), bar(25.6), -40, -18, 1.0, 1.05);
+      set(L.glow, band(t, bar(16.45), bar(18), bar(25), bar(25.6)) * .8,
         'translate(' + (-260 + drift.x) + 'px,' + (60 + drift.y) + 'px) scale(' + drift.s.toFixed(3) + ')');
-      part('pane-head', t, bar(17.2), bar(25.5), 0, -428, 1.5, { fromY: -44 });
-      part('wiz-ico', t, bar(17.8), bar(25.4), 0, -330, 2.3, { fromS: .35, dur: .5 });
-      part('wiz-bar', t, bar(18.4), bar(25.4), 0, -248, 2.2, { fromY: 0, fromS: .4 });
+      part('pane-head', t, bar(16.5), bar(25.5), 0, -428, 1.5, { fromY: -44 });
+      part('wiz-ico', t, bar(17), bar(25.4), 0, -330, 2.3, { fromS: .35, dur: .5 });
+      part('wiz-bar', t, bar(17.5), bar(25.4), 0, -248, 2.2, { fromY: 0, fromS: .4 });
 
       /* ten tiles, one per half beat — the components popping up */
       var GX = [-520, -260, 0, 260, 520], k = 2.15;
       for (var i = 0; i < 10; i++) {
         var col = i % 5, row = (i / 5) | 0;
-        part('tile' + i, t, beat(bar(19) / BEAT + i * 0.5), bar(25.3),
+        part('tile' + i, t, beat(76 + i * 0.5), bar(25.3),
           GX[col], -70 + row * 268, k,
           { fromY: 46, fromS: .72, dur: .62, rot: (i % 2 ? 3 : -3) });
       }
@@ -251,11 +253,12 @@
     /* what it found — the list builds row by row */
     if (t >= bar(31) && t < bar(37)) {
       setDrift(t, bar(31), bar(37), 0, -30, 1.0, 1.06);
-      part('res-line', t, bar(31), bar(36.9), 0, -396, 1.8, { fromY: 30 });
-      part('res-chips', t, bar(31.5), bar(36.9), 0, -280, 1.7, { fromY: 24 });
-      part('group-head', t, bar(32), bar(36.9), 0, -172, 1.8, { fromX: -60, fromY: 0 });
-      part('card0', t, bar(32.5), bar(36.9), 0, 0, 1.8, { fromY: 40 });
-      part('card1', t, bar(33.2), bar(36.9), 0, 292, 1.8, { fromY: 40 });
+      /* five rows at 1.35x: the whole stack fits 1080 and clears the caption */
+      part('res-line', t, bar(31), bar(36.9), 0, -400, 1.35, { fromY: 30 });
+      part('res-chips', t, bar(31.5), bar(36.9), 0, -300, 1.35, { fromY: 24 });
+      part('group-head', t, bar(32), bar(36.9), 0, -180, 1.35, { fromX: -60, fromY: 0 });
+      part('card0', t, bar(32.5), bar(36.9), 0, 0, 1.35, { fromY: 40 });
+      part('card1', t, bar(33.2), bar(36.9), 0, 250, 1.35, { fromY: 40 });
       capO = band(t, bar(33.8), bar(34.2), bar(36.4), bar(36.8));
       capHTML = 'Ranked honestly: <b>strong</b>, worth asking, long shot.';
     }
@@ -274,8 +277,9 @@
       part('script-buttons', t, bar(43.2), bar(45.9), 0, 320, 1.42, { fromY: 30 });
       capO = band(t, bar(41.4), bar(41.8), bar(43), bar(43.4));
       capHTML = 'The words to say, <b>written for you</b>.';
-      /* the light lands on Copy script, then the button turns over.
-         -229/272 is the measured centre of #copyScript inside .doc-foot at 1.42x. */
+      /* the light lands on Copy script, then the button turns over. #copyScript
+         sits 161/-28 from the centre of .doc-foot, so at 1.42x under buttons at
+         y=320 that is x=-229, y=280. */
       if (t >= bar(43.6)) dot(t, bar(43.6), bar(45.9), -229, 280, bar(44.1));
       if (t >= bar(44.1)) part('btn-copied', t, bar(44.1), bar(45.9), -229, 280, 1.42, { fromS: .96, fromY: 0, dur: .34 });
     }
@@ -292,7 +296,7 @@
     if (t >= bar(49.3) && t < bar(52)) {
       var tp = outBack(seg(t, bar(49.4), bar(50.2)));
       set(L.tick, band(t, bar(49.4), bar(49.7), bar(51.6), bar(52)), 'scale(' + lerp(.3, 1, tp).toFixed(3) + ')');
-      capO = band(t, bar(50.2), bar(50.5), bar(51.6), bar(51.95));
+      capO = band(t, bar(50.2), bar(50.5), bar(51.5), bar(51.8));
       capHTML = 'Asked. Fixed. <b>Nothing paid.</b>'; capArt = true;
     }
 
@@ -300,7 +304,8 @@
     if (t >= bar(52) && t < bar(55.2)) {
       setDrift(t, bar(52), bar(55.2), 0, -16, 1.0, 1.05);
       for (var j = 0; j < 5; j++) {
-        part('place' + j, t, bar(52.3) + j * BEAT * 0.75, bar(55.1), -700 + j * 350, 10, 1.85,
+        /* 360 pitch against a 322-wide card: a real gap, and the row fits 1920 */
+        part('place' + j, t, bar(52) + j * BEAT * 0.75, bar(55.2), -720 + j * 360, 10, 1.5,
           { fromY: 40, fromS: .8, dur: .6 });
       }
       capO = band(t, bar(53.6), bar(54), bar(54.7), bar(55.1));
@@ -310,26 +315,26 @@
     /* the province, then the helper */
     if (t >= bar(55.4) && t < bar(58)) {
       setDrift(t, bar(55.4), bar(58), 0, 0, 1.0, 1.05);
-      part('region-pill', t, bar(55.5), bar(57.9), 0, -10, 3.3, { fromY: 30, fromS: .86 });
+      part('region-pill', t, bar(55.2), bar(57.9), 0, -10, 3.3, { fromY: 30, fromS: .86, fade: .18 });
       capO = band(t, bar(56), bar(56.4), bar(57.5), bar(57.9));
       capHTML = 'And the law where you actually live.';
     }
     if (t >= bar(58) && t < bar(61.9)) {
       setDrift(t, bar(58), bar(61.9), 0, -20, 1.0, 1.06);
-      part('ask-panel', t, bar(58.2), bar(61.8), 0, -18, 1.10, { fromY: 44, fromS: .9 });
+      part('ask-panel', t, bar(58), bar(61.8), 0, -18, 1.10, { fromY: 44, fromS: .9 });
       capO = band(t, bar(59), bar(59.4), bar(61.3), bar(61.75));
       capHTML = 'Ask anything — answered on your own device.'; capArt = true;
     }
 
     /* ============ PEAK 95.7–124.9s ============ */
     if (t >= bar(62) && t < bar(64)) {
-      bigO = band(t, bar(62.1), bar(62.5), bar(63.6), bar(63.95));
-      bigHTML = words('Nothing you type *ever *leaves your browser.', t, bar(62.2), BEAT * 0.5);
+      bigO = band(t, bar(62), bar(62.4), bar(63.1), bar(63.45));
+      bigHTML = words('Nothing you type *ever *leaves your browser.', t, bar(62), BEAT * 0.5);
     }
-    if (t >= bar(64) && t < bar(68)) {
-      setDrift(t, bar(64), bar(68), 0, -18, 1.0, 1.05);
+    if (t >= bar(63.45) && t < bar(68)) {
+      setDrift(t, bar(63.45), bar(68), 0, -18, 1.0, 1.05);
       for (var e2 = 0; e2 < 4; e2++) {
-        part('env' + e2, t, bar(64.4) + e2 * BEAT, bar(67.9), -660 + e2 * 440, -10, 1.52,
+        part('env' + e2, t, bar(63.5) + e2 * BEAT, bar(67.9), -660 + e2 * 440, -10, 1.52,
           { fromY: 44, fromS: .82, dur: .6 });
       }
       capO = band(t, bar(66), bar(66.4), bar(67.4), bar(67.85));
@@ -338,10 +343,10 @@
 
     /* the numbers count up on the beat */
     if (t >= bar(68) && t < bar(72.5)) {
-      set(L.stats, band(t, bar(68.2), bar(68.6), bar(71.9), bar(72.4)), fstr(flo(t, 0.9)));
+      set(L.stats, band(t, bar(68), bar(68.4), bar(71.6), bar(72.05)), fstr(flo(t, 0.9)));
       var kids = L.stats.querySelectorAll('div');
       for (var s2 = 0; s2 < kids.length; s2++) {
-        var pp = outExpo(seg(t, bar(68.2) + s2 * BEAT * 0.6, bar(68.2) + s2 * BEAT * 0.6 + 0.6));
+        var pp = outExpo(seg(t, bar(68) + s2 * BEAT * 0.6, bar(68) + s2 * BEAT * 0.6 + 0.6));
         kids[s2].style.opacity = pp.toFixed(3);
         kids[s2].style.transform = 'translateY(' + ((1 - pp) * 30).toFixed(1) + 'px)';
         var num = kids[s2].querySelector('b[data-n]');
@@ -351,8 +356,8 @@
 
     /* ============ CLOSE 124.9–150s ============ */
     if (t >= bar(72) && t < bar(76.2)) {
-      bigO = band(t, bar(72.1), bar(72.5), bar(75.8), bar(76.15));
-      bigHTML = words('Check *your *thing.', t, bar(72.3), BEAT * 0.9);
+      bigO = band(t, bar(72.05), bar(72.45), bar(75.8), bar(76.15));
+      bigHTML = words('Check *your *thing.', t, bar(72.1), BEAT * 0.9);
     }
     if (t >= bar(73.4)) {
       var l3 = outExpo(seg(t, bar(73.5), bar(74.4)));

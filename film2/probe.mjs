@@ -1,7 +1,7 @@
 import { chromium } from '../film/node_modules/playwright-core/index.mjs';
 import { mkdirSync } from 'node:fs';
 const OUT = 'film2/probe/'; mkdirSync(OUT, { recursive: true });
-const b = await chromium.launch({ channel: 'chrome' });
+const b = await chromium.launch({ channel: 'chrome', args: ['--force-color-profile=srgb', '--hide-scrollbars'] });
 const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
 const errs = [];
 p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });

@@ -7,7 +7,7 @@
 The first attempt crossfaded whole screenshots and held them still. That reads
 as glitchy, because near-identical full-screen images swapping over each other
 looks like a stutter rather than a cut. This version never shows a whole page.
-It captures the app as **44 separate components** and brings each one in on its
+It captures the app as **40 separate components** and brings each one in on its
 own beat, so the interface assembles itself in front of you.
 
 ## The grid
@@ -40,15 +40,22 @@ Two consequences worth knowing:
   on mutually irrational periods so no two are stationary at once; the ground
   keeps a slow pool of light behind everything. Verified: **zero** identical
   neighbouring frames across the whole film.
-- Layout is checked by sweep, not by eye. `geom.mjs` steps through the film at
-  4 Hz and fails if any visible part leaves the frame or collides with the
-  caption line.
+- Layout is checked by sweep, not by eye. `geom.mjs` walks all 4500 frames and
+  fails on four things: a visible part leaving the frame, a part colliding with
+  the caption line, two parts overlapping each other, and **ink mixing** — type
+  on screen while a ground is mid-dissolve. That last one matters because the
+  type colour is switched by a class on a hard threshold, so a headline caught
+  inside a dissolve renders in the wrong colour for the ground it is sitting on.
+- It also reports **dead air**: stretches with nothing on screen but the moving
+  ground. Every gap in the current cut is one beat (≤0.47s) or shorter, which
+  reads as an edit. The one exception is the 0.6s of black before the first
+  keystroke, which is the film's opening.
 
 ## Files
 
 | | |
 |---|---|
-| `parts.mjs` | drives the real app and screenshots 44 components at 2× |
+| `parts.mjs` | drives the real app and screenshots the components at 2× |
 | `index.html` | the stage: grounds, photos, `#parts`, type, numbers, lockup |
 | `film.js` | the timeline — `seek(t)` and nothing else |
 | `film.css` | how the parts, type and captions look |
@@ -65,7 +72,7 @@ The dev server must be running on :3510 first.
 ```bash
 node film2/parts.mjs      # only when the app's UI changes
 node film2/geom.mjs       # must print CLEAN
-node film2/capture.mjs    # 4500 png frames
+node film2/capture.mjs    # clears frames/, then writes 4500 png
 ffmpeg -y -framerate 30 -i film2/frames/f%05d.png -i track.mp3 \
   -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p -movflags +faststart \
   -c:a aac -b:a 224k -shortest film2/owed-launch.mp4
