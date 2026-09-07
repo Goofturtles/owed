@@ -1180,3 +1180,5 @@
 :root[data-theme="dark"] .srow.is-on, :root[data-theme="dark"] .xrow.is-on { background: rgba(41, 151, 255, .14); }
 :root[data-theme="dark"] .doc-foot { background: rgba(0, 0, 0, .86); }
 @media (max-width: 768px) { :root[data-theme="dark"] .doc-foot { background: #000000; } }
+
+.wiz-serial { grid-column: 1 / -1; font-variant-numeric: tabular-nums; letter-spacing: .02em; }

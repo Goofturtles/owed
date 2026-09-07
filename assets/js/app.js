@@ -688,7 +688,7 @@
   /* ---------------- wizard ---------------- */
   var wiz = {};
   function resetWiz() {
-    wiz = { step: 1, name: '', category: null, brand: '', brandOther: false,
+    wiz = { step: 1, name: '', serial: '', category: null, brand: '', brandOther: false,
             ageMonths: null, ageUnknown: false, payment: null, broken: true, editingId: null, photo: null };
   }
   resetWiz();
@@ -701,6 +701,7 @@
     next: document.getElementById('wizNext'),
     skip: document.getElementById('wizSkip'),
     name: document.getElementById('wizName'),
+    serial: document.getElementById('wizSerial'),
     err: document.getElementById('wizErr'),
     brand: document.getElementById('wizBrand'),
     brandList: document.getElementById('brandList'),
@@ -820,6 +821,7 @@
     if (editItem) {
       wiz.editingId = editItem.id;
       wiz.name = editItem.name || '';
+      wiz.serial = editItem.serial || '';
       wiz.category = editItem.category;
       wiz.brand = editItem.brand || '';
       wiz.ageMonths = editItem.ageMonths == null ? null : editItem.ageMonths;
@@ -833,6 +835,7 @@
     }
 
     wizEls.name.value = wiz.name;
+    wizEls.serial.value = wiz.serial || '';
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
     showPhoto(wiz.photo, wiz.photo ? 'Photo saved with this item.' : '');
@@ -951,6 +954,12 @@
     renderBrandRows();
   });
 
+  wizEls.serial.addEventListener('input', function () {
+    // serials are printed in caps and read back over the phone: keep them tidy
+    wiz.serial = wizEls.serial.value.toUpperCase().replace(/\s+/g, '');
+    if (wizEls.serial.value !== wiz.serial) wizEls.serial.value = wiz.serial;
+  });
+
   wizEls.name.addEventListener('input', function () {
     wiz.name = wizEls.name.value;
     var guess = C.guessCategory(wiz.name);
@@ -1045,6 +1054,9 @@
     // the name says WHAT the thing is — "WH-1000XM4" on its own means nothing
     var built = [r.brand, r.model, r.kind].filter(Boolean).join(' ').trim();
     r.name = built;
+    if (r.serial && !wiz.serial.trim()) {
+      wiz.serial = r.serial; wizEls.serial.value = r.serial; changed = true;
+    }
     if (r.name && !wiz.name.trim()) { wiz.name = String(r.name).slice(0, 80); wizEls.name.value = wiz.name; changed = true; }
     if (r.brand && !wiz.brand.trim()) { wiz.brand = String(r.brand).slice(0, 40); wizEls.brand.value = wiz.brand; changed = true; }
     if (r.category && CAT_IDS.indexOf(r.category) !== -1) { wiz.category = r.category; changed = true; }
@@ -1106,9 +1118,10 @@
           return askModel(session,
             'Identify the object in this photo so its warranty can be looked up. ' +
             'Reply with ONLY compact JSON with these keys and nothing else: ' +
-            '{"kind":"","brand":"","model":"","read_from_photo":""}. ' +
+            '{"kind":"","brand":"","model":"","serial":"","read_from_photo":""}. ' +
             '"kind" is the everyday word for the object. ' +
-            '"brand" and "model" must be left empty unless the words are printed in the photo and you can read them. ' +
+            '"brand", "model" and "serial" must be left empty unless the characters are printed in the photo and you can read them. ' +
+        '"serial" is the serial number, often labelled Serial, S/N or SN. ' +
             '"read_from_photo" is the exact text you can see printed on the object, or an empty string.', file)
             .then(function (t2) { return { plain: String(plain || ''), data: firstJSON(t2) }; });
         });
@@ -1124,7 +1137,11 @@
       var model = String(d.model || '').trim();
       if (brand && read.indexOf(brand.toLowerCase()) < 0) brand = '';
       if (model && read.indexOf(model.toLowerCase()) < 0) model = '';
-      return { kind: k1, brand: brand, model: model, category: guessCategory(k1) };
+      var serial = String(d.serial || '').trim();
+      if (serial && read.indexOf(serial.toLowerCase()) < 0) serial = '';
+      // a serial is letters and digits, 6 to 20 of them: anything else is not one
+      if (serial && !/^[A-Za-z0-9-]{6,20}$/.test(serial)) serial = '';
+      return { kind: k1, brand: brand, model: model, serial: serial.toUpperCase(), category: guessCategory(k1) };
     });
   }
 
@@ -1172,7 +1189,7 @@
       identifyWithBuiltInAI(file).then(function (r) {
         r = r || {};
         var did = applyIdentified(r);
-        var what = r && r.name;
+        var what = r && [r.name, r.serial ? 'serial ' + r.serial : ''].filter(Boolean).join(', ');
         showPhoto(dataUrl, did && what
           ? '<b>Read from the photo: ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
           : 'Photo saved. <b>I could not tell what this is</b> — type what it is below and I will not guess.');
@@ -1279,6 +1296,7 @@
       ageMonths: wiz.ageMonths,   // null = the user could not remember; never invent an age
       payment: wiz.payment || 'unknown',
       broken: wiz.broken,
+      serial: wiz.serial.trim(),
       region: user.region || 'US',
       subregion: user.subregion || '',
       photo: wiz.photo || null    // a small JPEG data URL; lives only in this browser

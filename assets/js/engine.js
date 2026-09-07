@@ -232,6 +232,9 @@
                (pay ? ' and paid with ' + pay : '') + '. ' + brokeLine(item));
     lines.push('I think this may still be covered. The rule I am going by is: ' + r.title + '.');
 
+    // 52 rules in the book turn on a serial number: say it when we have one
+    if (item.serial) lines.push('The serial number is ' + String(item.serial).trim() + '.');
+
     var hint = fillHint(r.script_hint, item, when);
     if (hint) lines.push(hint);
 
@@ -285,6 +288,7 @@
       .replace(/\[(date|purchase date)\]/gi, when)
       .replace(/\[(item|product|model|product and model number)\]/gi, thing)
       .replace(/\[brand\]/gi, item.brand || thing)
+      .replace(/\[(serial|serial number|serial no)\]/gi, item.serial || '')
       .replace(/\[amount\]/gi, 'the amount on my statement');
     return /\[[^\]]+\]/.test(out) ? '' : out;
   }
