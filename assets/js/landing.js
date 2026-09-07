@@ -605,6 +605,12 @@
   (function envCalc() {
     var form = document.getElementById('envForm');
     var region = document.getElementById('envRegion'), age = document.getElementById('envAge');
+    // start on the reader's own country when they have not chosen one
+    if (region && window.OwedStore && OwedStore.guessWhere) {
+      var saved = OwedStore.getUser && OwedStore.getUser();
+      var start = (saved && saved.region) || OwedStore.guessWhere().region;
+      if (start && [].some.call(region.options, function (o) { return o.value === start; })) region.value = start;
+    }
     var n = document.getElementById('envN'), pct = document.getElementById('envPct'), bar = document.getElementById('envBar');
     if (!form || !region || !age || !n) return;
     var table;

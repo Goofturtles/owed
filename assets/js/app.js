@@ -150,11 +150,15 @@
 
   /* the select carries region|province: a province or state narrows the law to
      what applies there (an Ontario reader no longer sees Quebec's rules) */
-  if (!user.subregion && (user.region || 'US') === 'CA') {
-    // first run in Canada: the time zone gives the province for most readers; Toronto's zone is Ontario's
-    var tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
-    var guess = { 'America/Toronto': 'CA-ON', 'America/Vancouver': 'CA-BC', 'America/Edmonton': 'CA-AB', 'America/Regina': 'CA-SK', 'America/Winnipeg': 'CA-XX', 'America/Halifax': 'CA-XX', 'America/Moncton': 'CA-NB', 'America/St_Johns': 'CA-XX' }[tz];
-    if (guess) { S.updateUser({ subregion: guess }); user = S.getUser(); }
+  // first run: work out the country (and the province or state where the clock
+  // says which) instead of starting everyone in the United States
+  if (!user.regionSet) {
+    var where = S.guessWhere();
+    var patch = { regionSet: true };
+    if (!user.region || user.region === 'US') patch.region = where.region;
+    if (!user.subregion && where.subregion) patch.subregion = where.subregion;
+    S.updateUser(patch);
+    user = S.getUser();
   }
   el.regionPick.value = (user.region || 'US') + (user.subregion ? '|' + user.subregion : '');
   if (el.regionPick.selectedIndex < 0) el.regionPick.value = user.region || 'US';

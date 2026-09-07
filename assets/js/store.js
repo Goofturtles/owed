@@ -17,6 +17,36 @@
 
   function profileKey(email) { return String(email || '').trim().toLowerCase(); }
 
+  /* Where you are, from the clock and the language the browser already has.
+     Nothing is asked for and nothing is sent anywhere; it is only a first
+     guess, and the picker in the app overrules it for good. */
+  var TZ_SUB = {
+    'America/Toronto': 'CA-ON', 'America/Vancouver': 'CA-BC', 'America/Edmonton': 'CA-AB',
+    'America/Regina': 'CA-SK', 'America/Moncton': 'CA-NB', 'America/Winnipeg': 'CA-XX',
+    'America/Halifax': 'CA-XX', 'America/St_Johns': 'CA-XX', 'America/Whitehorse': 'CA-XX',
+    'America/Los_Angeles': 'US-CA', 'America/New_York': 'US-NY', 'America/Detroit': 'US-NY'
+  };
+  var EU_ZONE = /^Europe\/(Amsterdam|Andorra|Athens|Berlin|Bratislava|Brussels|Bucharest|Budapest|Copenhagen|Dublin|Helsinki|Lisbon|Ljubljana|Luxembourg|Madrid|Malta|Nicosia|Oslo|Paris|Prague|Riga|Rome|Sofia|Stockholm|Tallinn|Vienna|Vilnius|Warsaw|Zagreb|Zurich)$/;
+
+  function guessWhere() {
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var lang = String((navigator.languages && navigator.languages[0]) || navigator.language || '');
+    var country = (lang.split('-')[1] || '').toUpperCase();
+    var sub = TZ_SUB[tz] || '';
+    var region = '';
+
+    if (sub) region = sub.slice(0, 2);
+    else if (tz === 'Europe/London' || country === 'GB') region = 'UK';
+    else if (EU_ZONE.test(tz)) region = 'EU';
+    else if (/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|Moncton|St_Johns|Whitehorse|Yellowknife|Iqaluit|Dawson|Inuvik|Glace_Bay|Goose_Bay|Rankin_Inlet|Resolute|Swift_Current|Fort_Nelson|Creston|Blanc-Sablon)$/.test(tz) || country === 'CA') region = 'CA';
+    else if (/^(America|US|Pacific\/Honolulu)/.test(tz) || country === 'US') region = 'US';
+
+    if (!region) region = 'US';                       // the rulebook's largest set
+    if (sub && sub.slice(0, 2) !== region) sub = '';
+    return { region: region, subregion: sub };
+  }
+
   function saveProfile(user) {
     var k = profileKey(user && user.email);
     if (!k) return;
@@ -72,7 +102,7 @@
       id: uid(),
       name: (name || '').trim() || 'You',
       email: (email || '').trim(),
-      region: region || 'US',
+      region: region || guessWhere().region,
       createdAt: Date.now()
     };
     // anything this email set before on this computer comes back with them
@@ -250,6 +280,7 @@
     signIn: signIn,
     signOut: signOut,
     getProfile: getProfile,
+    guessWhere: guessWhere,
     saveProfile: saveProfile,
     updateUser: updateUser,
     isSignedIn: isSignedIn,
