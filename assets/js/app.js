@@ -1181,7 +1181,66 @@
   wizEls.photo.addEventListener('change', function () {
     var file = wizEls.photo.files && wizEls.photo.files[0];
     wizEls.photo.value = '';
-    if (!file) return;
+    if (file) usePhotoFile(file);
+  });
+
+  /* the camera: a live view and a shutter, so a photo can be taken here rather
+     than hunted for in the gallery. The stream never leaves the browser. */
+  (function camera() {
+    var btn = document.getElementById('wizCamBtn'), sheet = document.getElementById('camSheet');
+    var view = document.getElementById('camView'), note = document.getElementById('camNote');
+    if (!btn || !sheet) return;
+    var stream = null;
+    function stop() {
+      if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
+      view.srcObject = null; sheet.hidden = true;
+    }
+    btn.addEventListener('click', function () {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        wizEls.photo.click();   // no camera here: fall back to the picker
+        return;
+      }
+      sheet.hidden = false;
+      note.textContent = 'Starting the camera…';
+      // a dismissed permission prompt never resolves: do not sit here for ever
+      var settled = false;
+      var giveUp = setTimeout(function () {
+        if (settled) return;
+        settled = true; stop();
+        toast('The camera did not start — pick a photo instead.');
+        wizEls.photo.click();
+      }, 8000);
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
+        .then(function (s) {
+          if (settled) { s.getTracks().forEach(function (t) { t.stop(); }); return; }
+          settled = true; clearTimeout(giveUp);
+          stream = s; view.srcObject = s; view.play();
+          note.textContent = 'Fill the frame with the label or the model number.';
+        })
+        .catch(function () {
+          if (settled) return;
+          settled = true; clearTimeout(giveUp);
+          stop();
+          toast('The camera is not available — pick a photo instead.');
+          wizEls.photo.click();
+        });
+    });
+    document.getElementById('camCancel').addEventListener('click', stop);
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) stop(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) stop(); });
+    document.getElementById('camShoot').addEventListener('click', function () {
+      if (!view.videoWidth) return;
+      var cv = document.createElement('canvas');
+      cv.width = view.videoWidth; cv.height = view.videoHeight;
+      cv.getContext('2d').drawImage(view, 0, 0);
+      cv.toBlob(function (blob) {
+        stop();
+        if (blob) usePhotoFile(new File([blob], 'photo.jpg', { type: 'image/jpeg' }));
+      }, 'image/jpeg', .9);
+    });
+  })();
+
+  function usePhotoFile(file) {
     shrinkPhoto(file, function (dataUrl) {
       if (!dataUrl) { toast('That file could not be read as a photo.'); return; }
       wiz.photo = dataUrl;
@@ -1211,7 +1270,7 @@
         });
       });
     });
-  });
+  }
 
   // "paste it here": the clipboard read needs this click as its gesture
   wizEls.photoNote.addEventListener('click', function (e) {

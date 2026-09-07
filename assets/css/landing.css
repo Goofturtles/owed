@@ -855,3 +855,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 @media (max-width: 600px) { .env-panel { padding: 8px; } .env-panel .env-card { padding-inline: 16px; } }
 /* the font shorthand was invalid (family "inherit"), so both selects fell back to 12px */
 .env-inputs select { font-family: inherit; font-size: 16px; font-weight: 500; line-height: 1.2; }
+
+/* the environment pickers: the native popup needs its own colours at night */
+.env-inputs option { background-color: #FFFFFF; color: #111111; }
+:root[data-theme="dark"] .env-inputs option { background-color: #1A1A1A; color: #F5F5F7; }
