@@ -1182,3 +1182,7 @@
 @media (max-width: 768px) { :root[data-theme="dark"] .doc-foot { background: #000000; } }
 
 .wiz-serial { grid-column: 1 / -1; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+
+/* the item line may carry a serial, and half a serial is no use on the phone:
+   let it wrap onto a second line instead of ellipsising */
+.pane-sub, .res-meta { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

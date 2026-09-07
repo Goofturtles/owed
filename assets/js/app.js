@@ -1354,7 +1354,8 @@
     resEls.sub.textContent = [
       C.categoryLabel(item.category),
       item.brand,
-      E.agePhrase(item.ageMonths)
+      E.agePhrase(item.ageMonths),
+      item.serial ? 'S/N ' + item.serial : ''
     ].filter(Boolean).join(' · ');
 
     // Never say "nothing matched" when the truth is "the rulebook isn't here yet".
