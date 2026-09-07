@@ -1030,6 +1030,25 @@
     img.src = url;
   }
 
+  /* Everything the photo gave us, said plainly: what it is, what it looks like,
+     what was readable — and, when no model was readable, where to find one. */
+  function photoNote(r, did) {
+    if (!did || !r || !r.name) {
+      return 'Photo saved. <b>I could not tell what this is</b> — type what it is below and I will not guess.';
+    }
+    var seen = [r.name];
+    if (r.condition) seen.push(r.condition);
+    (r.features || []).forEach(function (f) { seen.push(f); });
+    var out = '<b>From the photo:</b> ' + esc(seen.join(' · ')) + '.';
+    if (r.serial) out += ' <b>Serial ' + esc(r.serial) + '.</b>';
+    if (!r.model) {
+      out += ' <b>No model number in shot</b> — it is ' + modelHint(r.category) +
+        '. Photograph that and I can match the exact rules, or ' +
+        '<button class="wiz-paste" type="button" data-paste>paste it here</button>.';
+    }
+    return out + ' Change anything below that is wrong.';
+  }
+
   /* where the model number is printed, per kind of thing — the one piece of
      knowledge that turns a photo into an exact product */
   function modelHint(cat) {
@@ -1052,7 +1071,9 @@
     var changed = false;
     if (!r || r.unsure) return false;          // the checks did not agree: say nothing
     // the name says WHAT the thing is — "WH-1000XM4" on its own means nothing
+    // with no readable model, a colour still makes the thing recognisable on the shelf
     var built = [r.brand, r.model, r.kind].filter(Boolean).join(' ').trim();
+    if (!r.brand && !r.model && r.colour) built = (r.colour + ' ' + r.kind).trim();
     r.name = built;
     if (r.serial && !wiz.serial.trim()) {
       wiz.serial = r.serial; wizEls.serial.value = r.serial; changed = true;
@@ -1116,13 +1137,18 @@
         'If you cannot tell, reply: unknown', file)
         .then(function (plain) {
           return askModel(session,
-            'Identify the object in this photo so its warranty can be looked up. ' +
+            'Describe the object in this photo so its warranty can be looked up. ' +
             'Reply with ONLY compact JSON with these keys and nothing else: ' +
-            '{"kind":"","brand":"","model":"","serial":"","read_from_photo":""}. ' +
+            '{"kind":"","colour":"","features":[],"condition":"","brand":"","model":"","serial":"","read_from_photo":""}. ' +
             '"kind" is the everyday word for the object. ' +
+            '"colour" is its main colour. ' +
+            '"features" is up to four short phrases for what you can actually see — a case, the number of cameras, ' +
+            'a screen, buttons, a cable, a dial, wear or damage. Three or four words each. ' +
+            '"condition" is one of: looks new, used, damaged, or an empty string. ' +
             '"brand", "model" and "serial" must be left empty unless the characters are printed in the photo and you can read them. ' +
-        '"serial" is the serial number, often labelled Serial, S/N or SN. ' +
-            '"read_from_photo" is the exact text you can see printed on the object, or an empty string.', file)
+            '"serial" is the serial number, often labelled Serial, S/N or SN. ' +
+            '"read_from_photo" is the exact text you can see printed on the object, or an empty string. ' +
+            'Describe only what is visible. Never guess a brand or a model from the shape of the object.', file)
             .then(function (t2) { return { plain: String(plain || ''), data: firstJSON(t2) }; });
         });
     }).then(function (out) {
@@ -1141,7 +1167,16 @@
       if (serial && read.indexOf(serial.toLowerCase()) < 0) serial = '';
       // a serial is letters and digits, 6 to 20 of them: anything else is not one
       if (serial && !/^[A-Za-z0-9-]{6,20}$/.test(serial)) serial = '';
-      return { kind: k1, brand: brand, model: model, serial: serial.toUpperCase(), category: guessCategory(k1) };
+      // what the photo can honestly show, beyond a name
+      var colour = String(d.colour || '').trim().toLowerCase().slice(0, 20);
+      var feats = (Array.isArray(d.features) ? d.features : [])
+        .map(function (f) { return String(f || '').trim().toLowerCase().replace(/\.$/, ''); })
+        .filter(function (f) { return f && f.length < 40; })
+        .slice(0, 4);
+      var condition = String(d.condition || '').trim().toLowerCase();
+      if (['looks new', 'used', 'damaged'].indexOf(condition) < 0) condition = '';
+      return { kind: k1, brand: brand, model: model, serial: serial.toUpperCase(),
+               colour: colour, features: feats, condition: condition, category: guessCategory(k1) };
     });
   }
 
@@ -1248,10 +1283,7 @@
       identifyWithBuiltInAI(file).then(function (r) {
         r = r || {};
         var did = applyIdentified(r);
-        var what = r && [r.name, r.serial ? 'serial ' + r.serial : ''].filter(Boolean).join(', ');
-        showPhoto(dataUrl, did && what
-          ? '<b>Read from the photo: ' + esc(what) + '.</b> Check it below and change anything that is wrong.'
-          : 'Photo saved. <b>I could not tell what this is</b> — type what it is below and I will not guess.');
+        showPhoto(dataUrl, photoNote(r, did));
         updateContinue();
       }).catch(function () {
         // no on-device model: a barcode is still a real identifier, so keep it
