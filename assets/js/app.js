@@ -580,6 +580,99 @@
     box.hidden = false;
   }
 
+  /* ---------- the sidebar's middle four ----------
+     Everything here is read from the shelf and the rulebook: no new claims,
+     no new numbers. A block with nothing to show hides itself. */
+  var CLAIM_WORD = { asked: 'asked', waiting: 'waiting', won: 'won', refused: 'refused' };
+
+  function daysUntil(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return null;
+    return Math.round((d - new Date(new Date().toDateString())) / 86400000);
+  }
+
+  function sxRow(label, sub, onClick, cls) {
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'sx-row' + (cls ? ' ' + cls : '');
+    b.innerHTML = '<span class="sx-row-main">' + esc(label) + '</span>' +
+      (sub ? '<span class="sx-row-sub">' + esc(sub) + '</span>' : '');
+    if (onClick) b.addEventListener('click', onClick);
+    li.appendChild(b);
+    return li;
+  }
+
+  function openRule(itemId, ruleId) {
+    var item = S.getItem(itemId);
+    if (!item) { toast('That thing is no longer on your shelf.'); return; }
+    showResults(item);
+    var m = findMatch(ruleId);
+    if (m && isWide()) selectRule(m, { focus: true });
+  }
+
+  function renderSideExtras(shelf) {
+    var due = document.getElementById('sxDue'), dueList = document.getElementById('sxDueList');
+    var cl = document.getElementById('sxClaims'), clList = document.getElementById('sxClaimsList');
+    var rc = document.getElementById('sxRecent'), rcList = document.getElementById('sxRecentList');
+    var sum = document.getElementById('sxSum');
+    if (!due) return;
+
+    // 1. deadlines, soonest first
+    var soon = [], strong = 0;
+    if (E.loaded) {
+      shelf.forEach(function (item) {
+        E.match(withRegion(item)).forEach(function (m) {
+          if (m.strength === 'strong') strong++;
+          if (!m.rule.deadline) return;
+          var left = daysUntil(m.rule.deadline);
+          if (left == null || left < 0) return;
+          soon.push({ item: item, rule: m.rule, left: left });
+        });
+      });
+    }
+    soon.sort(function (a, b) { return a.left - b.left; });
+    dueList.innerHTML = '';
+    soon.slice(0, 2).forEach(function (d) {
+      dueList.appendChild(sxRow(d.item.name || itemLabel(d.item),
+        fmtDate(d.rule.deadline) + ' · ' + (d.left === 0 ? 'today' : d.left + (d.left === 1 ? ' day left' : ' days left')),
+        function () { openRule(d.item.id, d.rule.id); }, d.left <= 30 ? 'is-soon' : ''));
+    });
+    due.hidden = !soon.length;
+
+    // 2. claims already sent, newest first
+    var claims = [];
+    shelf.forEach(function (item) {
+      var c = item.claims || {};
+      Object.keys(c).forEach(function (rid) {
+        claims.push({ item: item, ruleId: rid, state: c[rid].state, at: c[rid].at || 0 });
+      });
+    });
+    claims.sort(function (a, b) { return b.at - a.at; });
+    clList.innerHTML = '';
+    claims.slice(0, 2).forEach(function (c) {
+      var word = CLAIM_WORD[c.state] || c.state;
+      var when = c.at ? new Date(c.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '';
+      clList.appendChild(sxRow(c.item.name || itemLabel(c.item),
+        word + (when ? ' · ' + when : ''),
+        function () { openRule(c.item.id, c.ruleId); }, 'is-' + c.state));
+    });
+    cl.hidden = !claims.length;
+
+    // 3. rules opened lately
+    var recent = (S.getRecent && S.getRecent()) || [];
+    rcList.innerHTML = '';
+    recent.slice(0, 2).forEach(function (r) {
+      rcList.appendChild(sxRow(r.title || 'A rule', '', function () { openRule(r.itemId, r.ruleId); }));
+    });
+    rc.hidden = !recent.length;
+
+    // 4. the count, once the rulebook is in
+    document.getElementById('sxThings').textContent = shelf.length;
+    document.getElementById('sxStrong').textContent = strong;
+    document.getElementById('sxWon').textContent = S.rescuedCount ? S.rescuedCount() : 0;
+    sum.hidden = !shelf.length || !E.loaded;
+  }
+
   function renderShelf() {
     var shelf = S.getShelf();
     el.shelfList.innerHTML = '';
@@ -596,6 +689,7 @@
     var limit = (shelfExpanded || selectedIdx >= SHELF_VISIBLE) ? shelf.length : SHELF_VISIBLE;
 
     renderRailSummary(shelf);
+    renderSideExtras(shelf);
 
     var totalNew = 0;
     shelf.forEach(function (item, i) {
@@ -1750,6 +1844,7 @@
 
   /* ---------------- detail panel (>= 1200px) ---------------- */
   function selectRule(m, opts) {
+    if (m && m.rule && S.pushRecent) S.pushRecent({ ruleId: m.rule.id, itemId: current.item && current.item.id, title: m.rule.title });
     opts = opts || {};
     selected = m;
     Array.prototype.forEach.call(resEls.groups.querySelectorAll('.rcard'), function (c) {
@@ -1882,7 +1977,9 @@
         '<div class="doc-foot">' +
           '<button class="btn btn-accent" type="button" id="copyScript">Copy script</button>' +
           '<button class="btn btn-ghost" type="button" id="sendScript">Send it</button>' +
+          '<button class="btn btn-ghost" type="button" id="markAsked">I asked them</button>' +
           '<button class="btn btn-ghost" type="button" id="markWon">Mark as won</button>' +
+          '<button class="btn btn-ghost" type="button" id="printClaim">Print or save as PDF</button>' +
         '</div>' +
       '</div>';
 
@@ -1947,7 +2044,17 @@
       }
       return;
     }
-    if (e.target.closest('#markWon')) {
+    if (e.target.closest('#markAsked')) {
+      if (!S.setClaimState(current.item.id, scrCurrent.match.rule.id, 'asked')) { showStart(); return; }
+      toast('Noted. It is in your list of claims sent.');
+      renderShelf();
+      return;
+    }
+    if (e.target.closest('#printClaim')) {
+      window.print();
+      return;
+    }
+        if (e.target.closest('#markWon')) {
       var ruleId = scrCurrent.match.rule.id;
       // null when the item was removed in another tab: nothing to count
       if (!S.setClaimState(current.item.id, ruleId, 'won')) { showStart(); return; }

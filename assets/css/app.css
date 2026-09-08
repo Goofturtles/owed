@@ -1211,3 +1211,47 @@
 .cam-foot { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
 .cam-shutter { flex: 1; min-height: 52px; }
 .cam-note { padding: 0 16px 14px; margin: 0; font-size: 15px; line-height: 1.45; color: var(--ink-3); }
+
+/* ---------- the sidebar's middle: deadlines, claims, recent, the count ---------- */
+.side-extras { order: 3; flex: 0 1 auto; max-height: 38%; display: flex; flex-direction: column; gap: 2px; padding: 6px 0 0; overflow-y: auto; min-height: 0; }
+.sx { padding: 8px 0 6px; }
+.sx[hidden] { display: none; }
+.sx-head { margin: 0 8px 4px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.sx-list { list-style: none; margin: 0; padding: 0; }
+.sx-row { display: block; width: 100%; text-align: left; border: 0; background: none; font: inherit; cursor: pointer; padding: 7px 8px; border-radius: 10px; color: var(--ink); }
+.sx-row:hover { background: rgba(0, 0, 0, .05); }
+:root[data-theme="dark"] .sx-row:hover { background: rgba(255, 255, 255, .07); }
+.sx-row-main { display: block; font-size: 15px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sx-row-sub { display: block; margin-top: 1px; font-size: 13px; line-height: 1.3; color: var(--ink-3); }
+.sx-row.is-soon .sx-row-sub { color: #B45309; font-weight: 600; }
+:root[data-theme="dark"] .sx-row.is-soon .sx-row-sub { color: #F5B36B; }
+.sx-row.is-won .sx-row-sub { color: var(--mint-ink, #0B5C3A); font-weight: 600; }
+:root[data-theme="dark"] .sx-row.is-won .sx-row-sub { color: #7BE3A3; }
+.sx-sum { border-bottom: 1px solid var(--line); margin: 0 0 4px; padding: 4px 8px 12px; }
+.sx-figs { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0; padding: 0; }
+.sx-figs li { display: grid; gap: 0; }
+.sx-figs b { font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+.sx-figs span { font-size: 12px; color: var(--ink-3); }
+.help-credit { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-3); }
+.help-credit a { color: var(--accent); }
+
+/* ---------- on paper: the claim only ---------- */
+@media print {
+  .side, .rail, .topbar, .tabbar, .corner-help, .ask, .help, .doc-foot,
+  .res-filter, .res-summary, .pane-head .res-edit, .pane-head .res-rename,
+  .scr-back, .rgroup-toggle, .side-extras { display: none !important; }
+  html, body { background: #FFF !important; color: #000 !important; }
+  .app { display: block !important; width: auto !important; }
+  .main, .panel, .view { overflow: visible !important; height: auto !important; }
+  .pane-head { position: static !important; border: 0 !important; padding: 0 0 12px !important; }
+  .doc, .scr-card, .rcard { border: 0 !important; box-shadow: none !important; background: #FFF !important; }
+  .scr-lines { border: 1px solid #CCC !important; background: #FFF !important; }
+  a { color: #000 !important; text-decoration: underline; }
+  /* a link is useless on paper unless the address is printed with it */
+  .rc-kv a[href^="http"]::after, .scr-kv a[href^="http"]::after { content: " — " attr(href); font-size: 11px; word-break: break-all; }
+  .rc-kv a svg, .scr-kv a svg { display: none !important; }
+}
+
+/* the shelf keeps room for a few rows before the extras take what is left */
+.side-group { min-height: 190px; }
+@media (max-height: 720px) { .side-extras { max-height: 30%; } .side-group { min-height: 150px; } }

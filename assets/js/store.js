@@ -12,6 +12,8 @@
   /* Settings that belong to the PERSON, not to this sign-in: kept under their
      email so signing out and back in returns them to where they live.
      Signing out clears the session, never this. */
+  var KEY_RECENT = 'owed:recent';
+
   var KEY_PROFILES = 'owed:profiles';
   var PROFILE_KEYS = ['region', 'subregion', 'name'];
 
@@ -227,7 +229,18 @@
     return updateItem(itemId, { claims: item.claims });
   }
 
-  /** Items where at least one claim was marked won. */
+  /* the last handful of rules opened, newest first, so a reader can get back
+     to one without hunting the list again */
+  function pushRecent(entry) {
+    if (!entry || !entry.ruleId) return;
+    var list = read(KEY_RECENT, []) || [];
+    list = list.filter(function (r) { return r.ruleId !== entry.ruleId; });
+    list.unshift({ ruleId: entry.ruleId, itemId: entry.itemId || '', title: String(entry.title || '').slice(0, 90), at: Date.now() });
+    write(KEY_RECENT, list.slice(0, 8));
+  }
+  function getRecent() { return read(KEY_RECENT, []) || []; }
+
+    /** Items where at least one claim was marked won. */
   function rescuedCount() {
     return getShelf().filter(function (it) {
       var c = it.claims || {};
@@ -279,6 +292,8 @@
     signUp: signUp,
     signIn: signIn,
     signOut: signOut,
+    pushRecent: pushRecent,
+    getRecent: getRecent,
     getProfile: getProfile,
     guessWhere: guessWhere,
     saveProfile: saveProfile,

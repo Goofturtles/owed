@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=1789630000">
-<link rel="stylesheet" href="assets/css/motion.css?v=1789630000">
-<link rel="stylesheet" href="assets/css/app.css?v=1789630000">
-<script src="assets/js/theme.js?v=1789630000"></script>
+<link rel="stylesheet" href="assets/css/base.css?v=1789680000">
+<link rel="stylesheet" href="assets/css/motion.css?v=1789680000">
+<link rel="stylesheet" href="assets/css/app.css?v=1789680000">
+<script src="assets/js/theme.js?v=1789680000"></script>
 </head>
 <body class="app-body" data-tab="things">
 <a class="skip-link" href="#appMain">Skip to content</a>
@@ -69,6 +69,29 @@
         <button class="side-more" id="shelfMore" type="button" hidden>Show more</button>
       </div>
     </section>
+
+    <!-- the sidebar's middle: only the blocks with something to say appear -->
+    <div class="side-extras" id="sideExtras">
+      <section class="sx sx-sum" id="sxSum" hidden>
+        <ul class="sx-figs" role="list">
+          <li><b id="sxThings">0</b><span>things</span></li>
+          <li><b id="sxStrong">0</b><span>strong</span></li>
+          <li><b id="sxWon">0</b><span>won</span></li>
+        </ul>
+      </section>
+      <section class="sx" id="sxDue" hidden>
+        <h2 class="sx-head">Coming up</h2>
+        <ul class="sx-list" id="sxDueList" role="list"></ul>
+      </section>
+      <section class="sx" id="sxClaims" hidden>
+        <h2 class="sx-head">Claims you sent</h2>
+        <ul class="sx-list" id="sxClaimsList" role="list"></ul>
+      </section>
+      <section class="sx" id="sxRecent" hidden>
+        <h2 class="sx-head">Recently opened</h2>
+        <ul class="sx-list" id="sxRecentList" role="list"></ul>
+      </section>
+    </div>
 
     <div class="side-action">
       <button class="btn btn-accent" id="addBtn" type="button">
@@ -285,15 +308,6 @@
       <aside class="detail" id="detailPanel" aria-labelledby="detailKicker" hidden>
         <div class="detail-body" id="detailBody"></div>
       </aside>
-      <div class="rail-block rail-sum" id="railSummary" hidden>
-        <h2 class="rail-title">Your shelf</h2>
-        <ul class="rail-figs" role="list">
-          <li><b id="railThings">0</b><span>things saved</span></li>
-          <li><b id="railStrong" class="c-green">0</b><span>strong leads</span></li>
-          <li><b id="railSoon" class="c-amber">0</b><span>with a deadline</span></li>
-        </ul>
-        <p class="rail-next" id="railNext"></p>
-      </div>
       <div class="rail-block">
         <h2 class="rail-title">Before you call</h2>
         <ul class="rail-list"><li>Receipt or card statement</li><li>Photos of the fault</li><li>Model and serial number</li><li>The date you bought it</li></ul>
@@ -336,6 +350,7 @@
     <details class="help-item"><summary>Is this legal advice?</summary><p>No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></details>
     <details class="help-item"><summary>Where does my data go?</summary><p>Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></details>
     <p class="help-more"><a href="index.html#faq">All questions on the site</a> · <a href="LIMITATIONS.md">What Owed cannot do</a></p>
+    <p class="help-credit">State right-to-repair summaries are written and kept current by <a href="https://www.repair.org" target="_blank" rel="noopener noreferrer">The Repair Association</a>, not by Owed. Every rule here also cites the law itself.</p>
   </div>
 </dialog>
 <div class="cam" id="camSheet" role="dialog" aria-label="Take a photo" hidden>
@@ -368,10 +383,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/catalog.js?v=1789630000"></script>
-<script src="assets/js/store.js?v=1789630000"></script>
-<script src="assets/js/engine.js?v=1789630000"></script>
-<script src="assets/js/app.js?v=1789630000"></script>
-<script src="assets/js/motion.js?v=1789630000"></script>
+<script src="assets/js/catalog.js?v=1789680000"></script>
+<script src="assets/js/store.js?v=1789680000"></script>
+<script src="assets/js/engine.js?v=1789680000"></script>
+<script src="assets/js/app.js?v=1789680000"></script>
+<script src="assets/js/motion.js?v=1789680000"></script>
 </body>
 </html>
