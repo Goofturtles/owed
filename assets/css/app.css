@@ -708,32 +708,6 @@
   .toast { transition: opacity .2s !important; transform: translate(-50%, 0) !important; }
 }
 
-/* ============================================================
-   print — the claim script survives being printed and carried to
-   the phone. Everything else gets out of the way.
-   ============================================================ */
-@media print {
-  :root, :root[data-theme="dark"] {
-    --paper: #FFFFFF; --paper-2: #FFFFFF; --paper-3: #FFFFFF; --card: #FFFFFF;
-    --ink: #000000; --ink-2: #222222; --ink-3: #444444;
-    --line: #999999; --line-2: #999999;
-    --accent: #000000; --accent-soft: #FFFFFF; --accent-line: #999999;
-  }
-  .topbar, .tabbar, .side, .toast, .scr-back, .doc-foot, .rgroup-toggle, .theme-btn, .corner-help, .rail-legend, .rail-foot { display: none !important; }
-  body:has(.detail-body.is-script) .view-results { display: none !important; }
-  .rail, .detail { display: block !important; position: static !important; max-height: none !important; overflow: visible !important; padding: 0 !important; }
-  .rail-card { border: 0 !important; }
-  body, .app-body { background: #fff !important; color: #000 !important; }
-  .app { display: block !important; min-height: 0 !important; }
-  .panel { padding: 0 !important; border: 0 !important; }
-  .view { animation: none !important; }
-  .doc { border: 1px solid #999 !important; break-inside: avoid; }
-  .scr-lines p { animation: none !important; color: #000 !important; font-size: 12pt !important; line-height: 1.6 !important; }
-  .scr-kv a::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
-  .scr-card::before { content: "Owed — claim script"; display: block; font-family: var(--sans); font-size: 16pt; margin: 12pt; }
-  .scr-card::after { content: "Owed is an information tool, not legal advice. Check the source before you rely on it."; display: block; margin: 14pt 12pt; font-size: 9pt; color: #444; }
-}
-
 @media (min-width: 1200px) { .corner-help { display: none; } }
 
 /* ---------- shell: full width, tinted sidebar (the owner: too much white at the sides, sidebar not white) ---------- */
@@ -1235,23 +1209,35 @@
 .help-credit { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-3); }
 .help-credit a { color: var(--accent); }
 
-/* ---------- on paper: the claim only ---------- */
+/* ---------- on paper: the claim, on a sheet of its own ---------- */
+#printSheet { display: none; }
+@page { margin: 18mm; }
 @media print {
-  .side, .rail, .topbar, .tabbar, .corner-help, .ask, .help, .doc-foot,
-  .res-filter, .res-summary, .pane-head .res-edit, .pane-head .res-rename,
-  .scr-back, .rgroup-toggle, .side-extras { display: none !important; }
-  html, body { background: #FFF !important; color: #000 !important; }
-  .app { display: block !important; width: auto !important; }
-  .main, .panel, .view { overflow: visible !important; height: auto !important; }
-  .pane-head { position: static !important; border: 0 !important; padding: 0 0 12px !important; }
-  .doc, .scr-card, .rcard { border: 0 !important; box-shadow: none !important; background: #FFF !important; }
-  .scr-lines { border: 1px solid #CCC !important; background: #FFF !important; }
-  a { color: #000 !important; text-decoration: underline; }
-  /* a link is useless on paper unless the address is printed with it */
-  .rc-kv a[href^="http"]::after, .scr-kv a[href^="http"]::after { content: " — " attr(href); font-size: 11px; word-break: break-all; }
-  .rc-kv a svg, .scr-kv a svg { display: none !important; }
-}
+  html, body { background: #FFF !important; color: #000 !important; height: auto !important; overflow: visible !important; }
+  body.is-printing > *:not(#printSheet) { display: none !important; }
+  body.is-printing #printSheet { display: block !important; }
 
-/* the shelf keeps room for a few rows before the extras take what is left */
-.side-group { min-height: 190px; }
-@media (max-height: 720px) { .side-extras { max-height: 30%; } .side-group { min-height: 150px; } }
+  /* on screen some lines arrive dimmed and animated; on paper they are just words */
+  #printSheet, #printSheet * { color: #000 !important; opacity: 1 !important; animation: none !important; transform: none !important; }
+  #printSheet { font: 400 11pt/1.55 var(--sans, system-ui, sans-serif); }
+  #printSheet h1 { margin: 0; font-size: 21pt; line-height: 1.15; letter-spacing: -.01em; }
+  #printSheet .ps-facts { margin: 3pt 0 0; font-size: 10pt; color: #555; }
+  #printSheet .scr-for { margin: 16pt 0 6pt; font-size: 13pt; }
+  #printSheet .doc-body { padding: 0 !important; }
+
+  #printSheet .scr-kv { display: grid; grid-template-columns: max-content 1fr; gap: 3pt 10pt; margin: 0 0 14pt; padding: 8pt 0; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; }
+  #printSheet .scr-kv dt { margin: 0; font-size: 8.5pt; letter-spacing: .06em; text-transform: uppercase; color: #666; }
+  #printSheet .scr-kv dd { margin: 0; font-size: 10.5pt; }
+  #printSheet .scr-kv svg, #printSheet .sr-only { display: none !important; }
+
+  #printSheet .scr-lines { border: 1px solid #BBB; border-radius: 3pt; padding: 12pt 14pt; background: #FFF; }
+  #printSheet .scr-lines p { margin: 0 0 9pt; break-inside: avoid; }
+  #printSheet .scr-lines p:last-child { margin-bottom: 0; }
+  #printSheet b, #printSheet strong { font-weight: 700; }
+
+  #printSheet a { color: #000; text-decoration: underline; }
+  /* a link is useless on paper unless its address is printed with it */
+  #printSheet a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8.5pt; word-break: break-all; text-decoration: none; }
+  #printSheet .ps-note { margin: 16pt 0 0; padding-top: 8pt; border-top: 1px solid #CCC; font-size: 8.5pt; }
+  #printSheet .ps-facts, #printSheet .ps-note, #printSheet .scr-kv dt { color: #555 !important; }
+}

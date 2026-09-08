@@ -580,6 +580,49 @@
     box.hidden = false;
   }
 
+  /* Printing a claim. The script sits in the rail on a wide screen and in the
+     script view on a narrow one, and both are inside scrolling, clipped boxes,
+     so nothing useful survives being printed in place. A copy is laid out on a
+     sheet of its own instead, and everything else is hidden for the moment. */
+  function printClaim() {
+    var card = document.querySelector('.scr-card');
+    var body = card && card.querySelector('.doc-body');
+    if (!body) { toast('Open a script first.'); return; }
+
+    var item = current.item || {};
+    var facts = [C.categoryLabel(item.category), item.brand, E.agePhrase(item.ageMonths),
+      item.serial ? 'Serial ' + item.serial : ''].filter(Boolean).join(' · ');
+
+    var sheet = document.createElement('div');
+    sheet.id = 'printSheet';
+    sheet.innerHTML =
+      '<h1>' + esc(item.name || itemLabel(item) || 'Your claim') + '</h1>' +
+      (facts ? '<p class="ps-facts">' + esc(facts) + '</p>' : '');
+    var copy = body.cloneNode(true);
+    var help = copy.querySelector('.scr-help');
+    if (help) help.parentNode.removeChild(help);
+    sheet.appendChild(copy);
+
+    var note = document.createElement('p');
+    note.className = 'ps-note';
+    note.textContent = 'Printed from Owed on ' + new Date().toLocaleDateString(undefined,
+      { day: 'numeric', month: 'long', year: 'numeric' }) +
+      '. Owed points at published rules; it is not legal advice.';
+    sheet.appendChild(note);
+
+    document.body.appendChild(sheet);
+    document.body.classList.add('is-printing');
+
+    var done = function () {
+      document.body.classList.remove('is-printing');
+      if (sheet.parentNode) sheet.parentNode.removeChild(sheet);
+      window.removeEventListener('afterprint', done);
+    };
+    window.addEventListener('afterprint', done);
+    window.print();
+    setTimeout(done, 1500);        // afterprint does not fire everywhere
+  }
+
   /* ---------- the sidebar's middle four ----------
      Everything here is read from the shelf and the rulebook: no new claims,
      no new numbers. A block with nothing to show hides itself. */
@@ -2050,10 +2093,7 @@
       renderShelf();
       return;
     }
-    if (e.target.closest('#printClaim')) {
-      window.print();
-      return;
-    }
+    if (e.target.closest('#printClaim')) { printClaim(); return; }
         if (e.target.closest('#markWon')) {
       var ruleId = scrCurrent.match.rule.id;
       // null when the item was removed in another tab: nothing to count
