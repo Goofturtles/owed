@@ -231,6 +231,25 @@ Roughly in order of how much each one matters:
 10. **Deadline reminders**, since the most valuable thing the tool knows is often that you have 48 hours.
 11. **Operational basics**: monitoring, an offline fallback (there is no service worker, and the app needs an HTTP server because it fetches the rulebook at runtime), and accessibility and translation review for every region it claims to cover.
 
+## 12a. State law summaries are cross-referenced, not duplicated
+
+Seven US state right-to-repair rules carry an `explainer` link to the matching
+state page at The Repair Association (repair.org), shown in the rule's own
+detail panel under the primary Source row: California, New York, Oregon,
+Minnesota and Colorado, the last covering both the general parts rule and the
+powered-wheelchair one. They maintain those pages; Owed does not carry a
+parallel summary that would have to be watched separately. Every rule still
+cites its primary statute in `source_url`, and that citation stays the thing
+the script is written from.
+
+The field is deliberately absent everywhere else. Repair.org publishes a page
+for all fifty states, but only those seven hold an actual law summary; the rest
+return a heading with nothing beneath it, and one (Nevada) is a broken link on
+their own site. Sending a reader to an empty page is worse than sending them
+nowhere, so the link is data on individual rules rather than a state-name
+pattern, and adding a new one means checking that page first. Massachusetts is
+the clearest example: it has a rule in this book and no summary to link to.
+
 ## 13. The maintenance burden
 
 A hand-collected rulebook is a promise to keep reading. This is the part that does not scale on its own.

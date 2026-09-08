@@ -3405,7 +3405,12 @@
       "contact": "",
       "script_hint": "California's Right to Repair Act requires you to supply parts, tools and repair documents on fair and reasonable terms for 7 years after this model was last made. Please send me the part and the service manual.",
       "source_url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240SB244",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "California",
+        "url": "https://www.repair.org/california"
+      }
     },
     {
       "id": "law-us-ny-right-to-repair",
@@ -3451,7 +3456,12 @@
       "contact": "https://ag.ny.gov/file-complaint/consumer/goods-services",
       "script_hint": "New York's Digital Fair Repair Act, General Business Law 399-nn, says you have to give owners and independent shops the same parts, tools and manuals you give your approved repairers. Please send them.",
       "source_url": "https://www.nysenate.gov/legislation/laws/GBS/399-NN",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "New York",
+        "url": "https://www.repair.org/newyork"
+      }
     },
     {
       "id": "law-us-or-right-to-repair-parts-pairing",
@@ -3496,7 +3506,12 @@
       "contact": "",
       "script_hint": "Oregon's right to repair law bans using parts pairing to block or throttle a working replacement part, or to show warnings I can't dismiss. Please give me the tool to pair this part.",
       "source_url": "https://olis.oregonlegislature.gov/liz/2024r1/Downloads/MeasureDocument/SB1596/Enrolled",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "Oregon",
+        "url": "https://www.repair.org/oregon"
+      }
     },
     {
       "id": "law-us-co-right-to-repair",
@@ -3539,7 +3554,12 @@
       "contact": "",
       "script_hint": "Colorado's Consumer Right to Repair law requires you to give me the parts, tools and documentation to fix this, and failing to do so is a deceptive trade practice. Please supply them.",
       "source_url": "https://leg.colorado.gov/bills/hb24-1121",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "Colorado",
+        "url": "https://www.repair.org/colorado"
+      }
     },
     {
       "id": "law-us-co-powered-wheelchair-repair",
@@ -3567,7 +3587,12 @@
       "contact": "",
       "script_hint": "Colorado law requires powered wheelchair makers to give owners and independent repairers the parts, software, tools and manuals needed for repairs, and refusing is a deceptive trade practice. Please send them.",
       "source_url": "https://leg.colorado.gov/bills/hb22-1031",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "Colorado",
+        "url": "https://www.repair.org/colorado"
+      }
     },
     {
       "id": "law-us-fcba-withhold-payment",
@@ -9024,7 +9049,12 @@
       "contact": "https://ag.ny.gov/file-complaint/consumer/goods-services",
       "script_hint": "New York's Digital Fair Repair Act (General Business Law 399-nn) requires you to make this part and the repair documentation available to me on fair and reasonable terms.",
       "source_url": "https://ag.ny.gov/press-release/2024/attorney-general-james-reminds-consumers-its-easier-ever-get-electronics",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "New York",
+        "url": "https://www.repair.org/newyork"
+      }
     },
     {
       "id": "law-us-mn-digital-fair-repair",
@@ -9070,7 +9100,12 @@
       "contact": "",
       "script_hint": "Minnesota Statute 325E.72 requires you to make this documentation, part or tool available to me on fair and reasonable terms. Please confirm in writing if you're refusing.",
       "source_url": "https://www.revisor.mn.gov/statutes/cite/325E.72",
-      "deadline": ""
+      "deadline": "",
+      "explainer": {
+        "org": "The Repair Association",
+        "label": "Minnesota",
+        "url": "https://www.repair.org/minnesota"
+      }
     },
     {
       "id": "law-us-card-claims-and-defenses",

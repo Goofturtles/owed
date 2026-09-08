@@ -1580,6 +1580,16 @@
     return '<a class="' + cls + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Read the rule ' + ico('out', 16) + NEW_TAB + '</a>';
   }
 
+  /* Someone else's page about the same law — The Repair Association keeps the
+     state summaries current so Owed does not carry a second copy to maintain.
+     Named in the link text so it never reads as one of our own pages. */
+  function orgLink(ex, cls) {
+    if (!ex || !/^https?:\/\//i.test(String(ex.url || ''))) return '';
+    var who = [ex.org, ex.label].filter(Boolean).join(': ');
+    return '<a class="' + cls + '" href="' + esc(ex.url) + '" target="_blank" rel="noopener noreferrer">' +
+      esc(who) + ' ' + ico('out', 16) + NEW_TAB + '</a>';
+  }
+
   /* the short source word in a row's first column */
   var SRC_WORD = { manufacturer: 'The maker', card: 'Your card', settlement: 'A payout', program: 'Free repair', statutory: 'The law', retailer: 'The shop' };
 
@@ -1634,6 +1644,7 @@
         (r.deadline ? kv('calendar', 'Deadline', esc(fmtDate(r.deadline))) : '') +
         (r.contact ? kv('phoneCall', 'Contact', linkify(r.contact)) : '') +
         (r.source_url ? kv('doc', 'Source', ruleLink(r.source_url, 'rc-link')) : '') +
+        (r.explainer && r.explainer.url ? kv('scales', 'Explainer', orgLink(r.explainer, 'rc-link')) : '') +
       '</dl>' +
       (m.reason ? '<p class="rc-why">Why it matched: ' + esc(m.reason) + '.</p>' : '');
   }
