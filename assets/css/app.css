@@ -1213,7 +1213,7 @@
 #printSheet { display: none; }
 @page { margin: 18mm; }
 @media print {
-  html, body { background: #FFF !important; color: #000 !important; height: auto !important; overflow: visible !important; }
+  html, body, .app-body { background: #FFF !important; color: #000 !important; height: auto !important; min-height: 0 !important; overflow: visible !important; }
   body.is-printing > *:not(#printSheet) { display: none !important; }
   body.is-printing #printSheet { display: block !important; }
 
@@ -1221,21 +1221,25 @@
   #printSheet, #printSheet * { color: #000 !important; opacity: 1 !important; animation: none !important; transform: none !important; }
   #printSheet { font: 400 11pt/1.55 var(--sans, system-ui, sans-serif); }
   #printSheet h1 { margin: 0; font-size: 21pt; line-height: 1.15; letter-spacing: -.01em; }
-  #printSheet .ps-facts { margin: 3pt 0 0; font-size: 10pt; color: #555; }
+  #printSheet .ps-facts { margin: 3pt 0 0; font-size: 10pt; }
   #printSheet .scr-for { margin: 16pt 0 6pt; font-size: 13pt; }
   #printSheet .doc-body { padding: 0 !important; }
 
-  #printSheet .scr-kv { display: grid; grid-template-columns: max-content 1fr; gap: 3pt 10pt; margin: 0 0 14pt; padding: 8pt 0; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; }
-  #printSheet .scr-kv dt { margin: 0; font-size: 8.5pt; letter-spacing: .06em; text-transform: uppercase; color: #666; }
+  /* A4 less its margins is about 658px, so the phone media queries match on
+     paper. Everything they change here has to be put back. */
+  #printSheet .scr-kv { display: grid !important; grid-template-columns: max-content 1fr !important; gap: 3pt 10pt !important; margin: 0 0 14pt; padding: 8pt 0; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; }
+  #printSheet .scr-kv > div { display: contents !important; }
+  #printSheet .scr-kv dt { margin: 0 !important; font-size: 8.5pt; letter-spacing: .06em; text-transform: uppercase; }
   #printSheet .scr-kv dd { margin: 0; font-size: 10.5pt; }
   #printSheet .scr-kv svg, #printSheet .sr-only { display: none !important; }
 
-  #printSheet .scr-lines { border: 1px solid #BBB; border-radius: 3pt; padding: 12pt 14pt; background: #FFF; }
+  #printSheet .scr-lines { display: block !important; border: 1px solid #BBB; border-radius: 3pt; padding: 12pt 14pt; background: #FFF; }
   #printSheet .scr-lines p { margin: 0 0 9pt; break-inside: avoid; }
   #printSheet .scr-lines p:last-child { margin-bottom: 0; }
   #printSheet b, #printSheet strong { font-weight: 700; }
 
-  #printSheet a { color: #000; text-decoration: underline; }
+  /* a nowrap URL runs off the paper and the printer clips it */
+  #printSheet a { text-decoration: underline; white-space: normal !important; overflow-wrap: anywhere; }
   /* a link is useless on paper unless its address is printed with it */
   #printSheet a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8.5pt; word-break: break-all; text-decoration: none; }
   #printSheet .ps-note { margin: 16pt 0 0; padding-top: 8pt; border-top: 1px solid #CCC; font-size: 8.5pt; }

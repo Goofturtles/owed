@@ -583,11 +583,17 @@
   /* Printing a claim. The script sits in the rail on a wide screen and in the
      script view on a narrow one, and both are inside scrolling, clipped boxes,
      so nothing useful survives being printed in place. A copy is laid out on a
-     sheet of its own instead, and everything else is hidden for the moment. */
-  function printClaim() {
-    var card = document.querySelector('.scr-card');
+     sheet of its own instead, and everything else is hidden for the moment.
+     The sheet is built on beforeprint, so Ctrl+P prints the claim too. */
+  var printTimer = 0;
+
+  function buildPrintSheet() {
+    if (document.getElementById('printSheet')) return true;   // already up
+    // whichever container is actually on screen; both can hold a card at once
+    var host = (panelMode === 'script' && detail.panel && !detail.panel.hidden) ? detail.body : scrBody;
+    var card = (host && host.querySelector('.scr-card')) || document.querySelector('.scr-card');
     var body = card && card.querySelector('.doc-body');
-    if (!body) { toast('Open a script first.'); return; }
+    if (!body) return false;
 
     var item = current.item || {};
     var facts = [C.categoryLabel(item.category), item.brand, E.agePhrase(item.ageMonths),
@@ -598,9 +604,14 @@
     sheet.innerHTML =
       '<h1>' + esc(item.name || itemLabel(item) || 'Your claim') + '</h1>' +
       (facts ? '<p class="ps-facts">' + esc(facts) + '</p>' : '');
+
     var copy = body.cloneNode(true);
     var help = copy.querySelector('.scr-help');
     if (help) help.parentNode.removeChild(help);
+    // the original ids stay on the live card; two of anything breaks getElementById
+    copy.removeAttribute('id');
+    var withIds = copy.querySelectorAll('[id]'), n;
+    for (n = 0; n < withIds.length; n++) withIds[n].removeAttribute('id');
     sheet.appendChild(copy);
 
     var note = document.createElement('p');
@@ -612,15 +623,26 @@
 
     document.body.appendChild(sheet);
     document.body.classList.add('is-printing');
+    return true;
+  }
 
-    var done = function () {
-      document.body.classList.remove('is-printing');
-      if (sheet.parentNode) sheet.parentNode.removeChild(sheet);
-      window.removeEventListener('afterprint', done);
-    };
-    window.addEventListener('afterprint', done);
+  function clearPrintSheet() {
+    if (printTimer) { clearTimeout(printTimer); printTimer = 0; }
+    var sheet = document.getElementById('printSheet');
+    if (sheet) sheet.parentNode.removeChild(sheet);
+    document.body.classList.remove('is-printing');
+  }
+
+  window.addEventListener('beforeprint', buildPrintSheet);
+  window.addEventListener('afterprint', clearPrintSheet);
+
+  function printClaim() {
+    if (!buildPrintSheet()) { toast('Open a script first.'); return; }
     window.print();
-    setTimeout(done, 1500);        // afterprint does not fire everywhere
+    // afterprint does not fire everywhere. The sheet is invisible on screen, so
+    // clearing late costs nothing while clearing early prints a blank page.
+    if (printTimer) clearTimeout(printTimer);
+    printTimer = setTimeout(clearPrintSheet, 60000);
   }
 
   /* ---------- the sidebar's middle four ----------
