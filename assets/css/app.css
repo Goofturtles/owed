@@ -524,6 +524,12 @@
 .rc-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .rc-link svg { width: 16px; height: 16px; }
 .scr-kv .rc-link { margin-left: 4px; }
+/* `.rc-kv a` (inline-block, above) outranks .rc-link's inline-flex, and
+   base.css sets svg { display: block } — so the external-link glyph dropped
+   onto a line of its own inside these rows. Keep it beside the text at every
+   width, for the Source link and the Explainer link alike. */
+.rc-kv a.rc-link, .scr-kv a.rc-link { display: inline-flex; align-items: center; gap: 4px; }
+.rc-kv dd a svg, .scr-kv dd a svg { display: inline-block; flex: none; }
 .doc-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 16px 20px 20px; }
 .doc-foot .btn { height: 44px; padding: 0 18px; border-radius: 6px; }
 .dp-none { text-align: center; padding: 32px 20px; }
@@ -1098,9 +1104,6 @@
   .opt-list .opt:not(:has(.opt-ico)) { min-height: 64px; }
   .opt-label { text-wrap: balance; }
   .rc-meta { text-wrap: pretty; }
-  /* the source link's arrow dropped to its own line */
-  .rc-kv dd a svg, .scr-kv dd a svg, .rc-link svg { display: inline-block; vertical-align: -3px; }
-  .rc-kv a.rc-link, .scr-kv a.rc-link { display: inline-flex; align-items: center; gap: 4px; }
   /* the Ask sheet is a dialog: give it a scrim and keep it clear of the tab bar */
   .ask { bottom: calc(64px + env(safe-area-inset-bottom)); }
   .ask::before { content: ""; position: fixed; inset: 0; z-index: -1; background: rgba(0, 0, 0, .35); }
