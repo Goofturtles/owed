@@ -1184,7 +1184,13 @@
 :root[data-theme="dark"] .doc-foot { background: rgba(0, 0, 0, .86); }
 @media (max-width: 768px) { :root[data-theme="dark"] .doc-foot { background: #000000; } }
 
-.wiz-serial { grid-column: 1 / -1; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+/* the model box stopped at the first column while the serial spanned both, so
+   the two fields never lined up: give every field the whole row and let the two
+   photo buttons share the row under them */
+.wiz-fallback { grid-template-columns: 1fr 1fr; }
+.wiz-fallback > .wiz-input { grid-column: 1 / -1; }
+.wiz-photo-btn { width: 100%; }
+.wiz-serial { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
 
 /* the item line may carry a serial, and half a serial is no use on the phone:
    let it wrap onto a second line instead of ellipsising */
