@@ -3349,6 +3349,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-MD"
         ]
       },
       "window_months": 48.0,
@@ -3544,6 +3547,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CO"
         ]
       },
       "window_months": 999.0,
@@ -3577,6 +3583,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-CO"
         ]
       },
       "window_months": 999.0,
@@ -8661,6 +8670,13 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "subregions": [
+          "US-MA",
+          "US-MD",
+          "US-ME",
+          "US-WV",
+          "US-KS"
         ]
       },
       "window_months": 48.0,

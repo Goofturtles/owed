@@ -250,6 +250,21 @@ nowhere, so the link is data on individual rules rather than a state-name
 pattern, and adding a new one means checking that page first. Massachusetts is
 the clearest example: it has a rule in this book and no summary to link to.
 
+## 12b. State-scoped rules only show in their own state
+
+Rules that exist in one US state or Canadian province carry
+`applies_to.subregions`, and the engine drops them for a reader anywhere else.
+Four US rules were missing that tag and so appeared for every US reader: both
+Colorado right-to-repair rules, Maryland's rule on unenforceable disclaimers,
+and the "sold as is" rule, which is only law in Massachusetts, Maryland, Maine,
+West Virginia and Kansas. They are tagged now. The region totals in section 3
+count by country and are unchanged; what changed is who sees them.
+
+A reader who does not pick a state still sees every rule for their country.
+That is deliberate: without a state, hiding state law would hide the very thing
+they came for. The cost is that the list is longer and less precise until they
+choose.
+
 ## 13. The maintenance burden
 
 A hand-collected rulebook is a promise to keep reading. This is the part that does not scale on its own.
