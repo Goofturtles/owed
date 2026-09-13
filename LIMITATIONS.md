@@ -2,7 +2,7 @@
 
 Owed tells you who might owe you a free repair. This file is the honest account of where it is thin, where it can be wrong, and what it deliberately does not claim.
 
-Everything below was checked against the code and the rulebook in this repo, not written from memory. Counts come from `data/coverage.json` (318 rules after the 2 September 2026 deduplication; 445 as compiled on 2026-08-26 — see `data/dedup-log.json`). Behaviour comes from `assets/js/engine.js`, `assets/js/catalog.js`, `assets/js/store.js` and `assets/js/app.js`.
+Everything below was checked against the code and the rulebook in this repo, not written from memory. Counts come from `data/coverage.json` (317 rules after the 2 September 2026 deduplication and the 9 September New York merge; 445 as compiled on 2026-08-26 — see `data/dedup-log.json`). Behaviour comes from `assets/js/engine.js`, `assets/js/catalog.js`, `assets/js/store.js` and `assets/js/app.js`.
 
 ---
 
@@ -10,15 +10,15 @@ Everything below was checked against the code and the rulebook in this repo, not
 
 | | Count |
 |---|---|
-| Rules total | 318 |
+| Rules total | 317 |
 | The maker's own warranty | 151 |
-| Consumer law | 75 |
+| Consumer law | 74 |
 | Credit card benefits | 47 |
 | Class-action settlements | 15 |
 | Free repair programmes | 3 |
 | The shop that sold it | 27 |
 | Marked `certain` (term read in a primary source) | 276 |
-| Marked `likely` (verified with a caveat) | 41 |
+| Marked `likely` (verified with a caveat) | 40 |
 | Marked `possible` (reported, not verified) | 1 |
 | Brands named | 194 |
 | Rules with a hard claim deadline | 14 |
@@ -29,7 +29,7 @@ Region coverage, counted by rule (a rule can list more than one region):
 
 | Region | Rules |
 |---|---|
-| United States | 243 |
+| United States | 242 |
 | Canada | 84 |
 | United Kingdom | 31 |
 | European Union | 32 |
@@ -61,7 +61,7 @@ The landing page FAQ states this in words; the numbers are here. Region coverage
 | | United States | Canada | United Kingdom | European Union |
 |---|---|---|---|---|
 | The maker's own warranty | 135 | 50 | 16 | 15 |
-| Consumer law | 35 | 17 | 10 | 14 |
+| Consumer law | 34 | 17 | 10 | 14 |
 | Credit card benefits | 34 | 12 | 1 | 1 |
 | Class-action settlements | 15 | 0 | 0 | 0 |
 | The shop that sold it | 23 | 5 | 3 | 0 |

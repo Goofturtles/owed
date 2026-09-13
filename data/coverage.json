@@ -3429,11 +3429,6 @@
           "tablet",
           "headphones",
           "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
           "watch",
           "camera",
           "monitor",
@@ -3452,12 +3447,12 @@
         ]
       },
       "window_months": 999.0,
-      "window_note": "In force since 28 December 2023. Covers gadgets first made and first sold in New York on or after 1 July 2023. Cars, medical devices, farm and off-road gear and e-bikes are not covered. No deadline tied to when you bought it.",
-      "what_you_get": "The parts, tools and repair information you or a local shop need to fix your device. Repair documents at no charge, and parts and tools at the same cost the maker charges its own approved repair shops. Any contract wording that tries to dodge this duty is void.",
-      "confidence": "likely",
-      "how_to_claim": "Ask the maker's support for the part and the repair manual, in writing. If they refuse, file a complaint with the New York Attorney General's Consumer Frauds Bureau.",
+      "window_note": "In force since 28 December 2023. Covers gear first made, and first sold or used in New York, on or after 1 July 2023. Home appliances are left out, including fridges, ovens, microwaves, heating and cooling units and home alarm systems, and so are cars, medical devices, farm and off-road gear, power tools, yard and garden equipment, e-bikes and industrial electrical gear. No deadline tied to when you bought it.",
+      "what_you_get": "The parts, tools and repair information you or a local shop need to fix your device. The manual and the tools have to be free, apart from the real cost of posting a physical copy, and parts have to be offered at a reasonable cost and on reasonable terms. A maker cannot use its contracts with its own approved shops to get out of this.",
+      "confidence": "certain",
+      "how_to_claim": "Ask the maker's support for the part and the repair manual, in writing. If they refuse, file a complaint with the New York Attorney General, who enforces this section.",
       "contact": "https://ag.ny.gov/file-complaint/consumer/goods-services",
-      "script_hint": "New York's Digital Fair Repair Act, General Business Law 399-nn, says you have to give owners and independent shops the same parts, tools and manuals you give your approved repairers. Please send them.",
+      "script_hint": "New York's Digital Fair Repair Act, General Business Law 399-nn, says you have to make the parts, tools and documentation available to owners and independent shops on fair and reasonable terms. Please send them.",
       "source_url": "https://www.nysenate.gov/legislation/laws/GBS/399-NN",
       "deadline": "",
       "explainer": {
@@ -9025,52 +9020,6 @@
       "script_hint": "California Civil Code 1791.1(c) gives me an implied warranty of up to one year on new consumer goods, so I'm still covered. This wasn't fit for normal use.",
       "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1791.1",
       "deadline": ""
-    },
-    {
-      "id": "law-us-ny-digital-fair-repair",
-      "source_type": "statutory",
-      "title": "New York: the maker must sell parts and manuals to your local shop",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "monitor",
-          "printer",
-          "camera",
-          "watch",
-          "toy",
-          "other"
-        ],
-        "regions": [
-          "US"
-        ],
-        "payment_methods": [
-          "*"
-        ],
-        "subregions": [
-          "US-NY"
-        ]
-      },
-      "window_months": 999.0,
-      "window_note": "New York only, and only for gear first made or sold in New York after 1 July 2023. Home appliances, power tools, cars, yard and garden equipment, farm gear and medical devices are all left out.",
-      "what_you_get": "A cheaper repair. You or any independent shop can buy the same parts and tools the maker's own authorised shops buy, at the same price, and the repair documents have to be free.",
-      "confidence": "certain",
-      "how_to_claim": "Take it to any independent repair shop, or ask the maker directly for the part and the manual. If they refuse or quote a silly price, file a complaint with the New York Attorney General's consumer bureau.",
-      "contact": "https://ag.ny.gov/file-complaint/consumer/goods-services",
-      "script_hint": "New York's Digital Fair Repair Act (General Business Law 399-nn) requires you to make this part and the repair documentation available to me on fair and reasonable terms.",
-      "source_url": "https://ag.ny.gov/press-release/2024/attorney-general-james-reminds-consumers-its-easier-ever-get-electronics",
-      "deadline": "",
-      "explainer": {
-        "org": "The Repair Association",
-        "label": "New York",
-        "url": "https://www.repair.org/newyork"
-      }
     },
     {
       "id": "law-us-mn-digital-fair-repair",
