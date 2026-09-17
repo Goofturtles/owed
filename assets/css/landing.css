@@ -872,3 +872,44 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 :root[data-theme="dark"] .lang-menu { background: #111; border-color: #262626; }
 :root[data-theme="dark"] .lang-menu a { color: #F5F5F7; }
 :root[data-theme="dark"] .lang-menu a:hover { background: #1F1F22; }
+
+/* ============================================================
+   THE LOADING BAR - a first visit waits here until the film's frames
+   are in (boot.js). The veil is the film's first frame before it lands:
+   its colours row by row, and the film's navy, so lifting it reads as the
+   peaks coming through the cloud rather than one page swapping for another.
+   The mark alone, like a boot screen: a wordmark would re-set under the
+   bar when the web font arrived.
+   ============================================================ */
+.boot { display: none; }
+/* No scrollbar while it is up. The page reflows by the scrollbar's width at
+   the lift, under the veil's first 80 ms at full opacity, where nobody sees it. */
+html.is-booting { overflow: hidden; }
+/* hidden from sight, focus and screen readers from the first paint, not only
+   once the page has parsed and boot.js can set inert */
+html.is-booting body > :not(#boot) { visibility: hidden; }
+/* i18n hides the whole body until the dictionaries apply; the veil already
+   covers the untranslated page, so let the bar itself show */
+html.i18n-pending.is-booting body { visibility: visible; opacity: 1; }
+html.is-booting .boot, html.is-lifting .boot {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center;
+  background-color: #C7CCD6;   /* forced colours keeps a colour, never a gradient */
+  background-image: linear-gradient(180deg, #CDD2DA 0%, #C6CCD5 48%, #CDD2DB 78%, #D8DCE5 100%);
+  color: #1D3045;
+}
+.boot-inner { display: grid; justify-items: center; gap: 26px; }
+.boot-mark { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: #1D3045; color: #F3F5F7; }
+.boot-bar { position: relative; width: 168px; height: 3px; border-radius: 3px; overflow: hidden; background: rgba(29, 48, 69, .2); }
+.boot-fill { position: absolute; inset: 0; border-radius: inherit; background: #1D3045; transform: scaleX(0); transform-origin: left center; will-change: transform; }
+html.is-lifting .boot { opacity: 0; pointer-events: none; transition: opacity .6s cubic-bezier(.2, .7, .2, 1) .08s; }
+html.is-lifting .boot-inner { opacity: 0; transform: translateY(-8px); transition: opacity .28s ease, transform .5s cubic-bezier(.2, .7, .2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  html.is-lifting .boot, html.is-lifting .boot-inner { transition: none; }
+}
+/* Windows high contrast drops backgrounds: draw the bar in system colours */
+@media (forced-colors: active) {
+  .boot-mark { forced-color-adjust: none; background: CanvasText; color: Canvas; }
+  .boot-bar { forced-color-adjust: none; background: Canvas; outline: 1px solid CanvasText; }
+  .boot-fill { forced-color-adjust: none; background: CanvasText; }
+}

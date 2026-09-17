@@ -71,6 +71,7 @@
     }
     window.addEventListener('wheel', function (e) {
       if (e.ctrlKey) return;                                           // pinch-zoom
+      if (document.documentElement.classList.contains('is-booting')) { e.preventDefault(); return; }   // nothing moves behind the loading bar
       if (e.target.closest && e.target.closest('.proof-track, .nav-menu, textarea, [data-native-scroll]')) return;
       e.preventDefault();
       var d = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
@@ -197,7 +198,16 @@
     /* the fast bank: 121 small frames (2 MB) load first and are what the eye
        sees while scrolling; the 1080p frame is painted only once the scroll
        settles. Decoding 960x540 is ~5ms, 1080p is 15-30ms — that was the lag. */
-    var LO_N = 121, lo = new Array(LO_N), loLoaded = 0, loQueue = [], loInflight = 0;
+    var LO_N = 121, lo = new Array(LO_N), loLoaded = 0, loSettled = 0, loQueue = [], loInflight = 0;
+    /* the loading bar (boot.js) holds a first visit until the frames the scrub
+       draws are in: the fast bank on a laptop, the whole bank on a phone */
+    var boot = window.OwedBoot && window.OwedBoot.active ? window.OwedBoot : null;
+    if (boot) boot.expect(small ? N : LO_N);
+    /* on a laptop the 1080p bank waits for the fast bank: they shared one pipe
+       and the frames the scroll actually shows came in last. A straggler that
+       never settles must not hold it back for good. */
+    var hiHeld = !small;
+    if (hiHeld) setTimeout(function () { if (hiHeld) { hiHeld = false; pump(); } }, 10000);
     function loSrc(i) { return 'assets/film/l/f' + ('00' + (i + 1)).slice(-3) + '.webp'; }   // 1280x720: sharp enough to scrub on a big display, ~8ms to decode
     (function () { var o = [0, LO_N - 1, 60, 30, 90, 15, 45, 75, 105]; var seen = {}; o.forEach(function (i) { seen[i] = 1; loQueue.push(i); }); for (var i = 0; i < LO_N; i++) if (!seen[i]) loQueue.push(i); })();
     function pumpLo() {
@@ -205,11 +215,17 @@
       while (loInflight < 6 && loQueue.length) {
         (function (i) {
           var img = new Image(); img.decoding = 'async'; loInflight++;
-          img.onload = function () { loInflight--; lo[i] = img; loLoaded++; if (loLoaded === 1) filmEl.classList.add('is-live'); drawn = -1; pumpLo(); };
-          img.onerror = function () { loInflight--; pumpLo(); };
+          img.onload = function () { loInflight--; lo[i] = img; loLoaded++; if (loLoaded === 1) filmEl.classList.add('is-live'); drawn = -1; loDone(); };
+          img.onerror = function () { loInflight--; loDone(); };
           img.src = loSrc(i);
         })(loQueue.shift());
       }
+    }
+    function loDone() {
+      loSettled++;
+      if (boot) boot.tick();
+      if (hiHeld && loSettled >= LO_N) { hiHeld = false; pump(); }
+      pumpLo();
     }
     function nearestLo(f) {
       var i = Math.round(f / 2);
@@ -227,20 +243,23 @@
       }
       return out;
     }
-    var queue = order(), inflight = 0, MAX = 4;
+    var queue = order(), inflight = 0, MAX = small ? 6 : 4;   // a phone's bank is small and gates the loading bar
     function pump() {
       while (inflight < MAX && queue.length) {
+        if (hiHeld) return;
         (function (i) {
           var img = new Image();
           img.decoding = 'async';
           inflight++;
+          var gated = boot && small;
           img.onload = function () {
             inflight--; frames[i] = img; loaded++;
             if (loaded === 1) filmEl.classList.add('is-live');
             drawn = -1;          // a nearer frame may exist now
+            if (gated) boot.tick();
             pump();
           };
-          img.onerror = function () { inflight--; pump(); };
+          img.onerror = function () { inflight--; if (gated) boot.tick(); pump(); };
           img.src = frameSrc(i);
         })(queue.shift());
       }

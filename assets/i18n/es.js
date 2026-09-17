@@ -639,6 +639,7 @@ OwedI18n.add("es", {
  "landing.footer.repairOrg": "Resúmenes de leyes estatales por The Repair Association",
  "landing.footer.sampleScript": "Mensaje de ejemplo",
  "landing.footer.status": "Cada regla enlaza a su fuente publicada",
+ "landing.loader.label": "Cargando Owed",
  "landing.meta.description": "Se te rompió algo. Owed lee la letra pequeña (garantías, cobertura de tarjetas, indemnizaciones, programas de reparación y leyes de protección al consumidor) y te dice quién todavía tiene que arreglarlo gratis, y con qué palabras pedirlo.",
  "landing.meta.title": "Owed: alguien ya te debe una reparación gratis",
  "landing.nav.changeName": "Cambiar mi nombre o correo",

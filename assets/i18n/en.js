@@ -645,6 +645,7 @@ OwedI18n.add("en", {
  "landing.footer.repairOrg": "State law summaries by The Repair Association",
  "landing.footer.sampleScript": "Sample script",
  "landing.footer.status": "Every rule links to its published source",
+ "landing.loader.label": "Loading Owed",
  "landing.meta.description": "Your thing broke. Owed reads the fine print — warranties, card cover, payouts, repair programmes and consumer law — and tells you who still has to fix it for free, plus the words to say.",
  "landing.meta.title": "Owed — somebody already owes you a free repair",
  "landing.nav.changeName": "Change my name or email",

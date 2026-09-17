@@ -639,6 +639,7 @@ OwedI18n.add("fr", {
  "landing.footer.repairOrg": "Résumés des lois des États américains, par The Repair Association",
  "landing.footer.sampleScript": "Exemple de message",
  "landing.footer.status": "Chaque règle renvoie à sa source publiée",
+ "landing.loader.label": "Chargement d’Owed",
  "landing.meta.description": "Votre objet est en panne. Owed lit les petits caractères – garanties, protection de votre carte, indemnités, programmes de réparation et droit de la consommation – et vous dit qui doit encore le réparer gratuitement, et quoi lui dire.",
  "landing.meta.title": "Owed – quelqu'un vous doit déjà une réparation gratuite",
  "landing.nav.changeName": "Modifier mon nom ou mon courriel",
