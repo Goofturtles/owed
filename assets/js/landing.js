@@ -14,21 +14,22 @@
     try { u = JSON.parse(localStorage.getItem('owed:user') || 'null'); } catch (e) { u = null; }
     if (!u || !u.name || u.name === 'You') return;
     var first = (u.name || '').trim().split(/\s+/)[0];
+    // which links are which comes from data-cta in index.html, never from their (translated) words
     document.querySelectorAll('a[href^="auth.html"]').forEach(function (l) {
-      if (/sign in/i.test(l.textContent)) {
+      if (l.dataset.cta === 'signin') {
         // the sign-in button becomes "Hi, Name" and opens a small settings menu
         var btn = document.createElement('button');
-        btn.type = 'button'; btn.className = l.className + ' nav-me'; btn.textContent = 'Hi, ' + first;
+        btn.type = 'button'; btn.className = l.className + ' nav-me'; btn.textContent = OwedI18n.t('landing.nav.hi', { name: first });
         btn.setAttribute('aria-haspopup', 'menu'); btn.setAttribute('aria-expanded', 'false');
         var menu = document.createElement('div');
         menu.className = 'nav-menu'; menu.setAttribute('role', 'menu'); menu.hidden = true;
         menu.innerHTML =
           '<p class="nav-menu-who"><b></b><span></span></p>' +
-          '<a role="menuitem" href="app.html">Open my shelf</a>' +
-          '<a role="menuitem" href="auth.html">Change my name or email</a>' +
-          '<button role="menuitem" type="button" data-menu="theme">Switch light / dark</button>' +
-          '<a role="menuitem" href="index.html#faq">Help</a>' +
-          '<button role="menuitem" type="button" data-menu="out">Sign out</button>';
+          '<a role="menuitem" href="app.html">' + OwedI18n.th('landing.nav.openShelf') + '</a>' +
+          '<a role="menuitem" href="auth.html">' + OwedI18n.th('landing.nav.changeName') + '</a>' +
+          '<button role="menuitem" type="button" data-menu="theme">' + OwedI18n.th('landing.nav.switchTheme') + '</button>' +
+          '<a role="menuitem" href="index.html#faq">' + OwedI18n.th('landing.nav.help') + '</a>' +
+          '<button role="menuitem" type="button" data-menu="out">' + OwedI18n.th('landing.nav.signOut') + '</button>';
         menu.querySelector('b').textContent = u.name; menu.querySelector('span').textContent = u.email || '';
         var wrap = document.createElement('span'); wrap.className = 'nav-me-wrap';
         l.parentNode.insertBefore(wrap, l); wrap.appendChild(btn); wrap.appendChild(menu); l.remove();
@@ -45,7 +46,10 @@
         return;
       }
       l.href = 'app.html';
-      if (/start free|find my repair|get my script/i.test(l.textContent)) l.textContent = 'Open my shelf';
+      if (l.dataset.cta === 'start') {
+        l.textContent = OwedI18n.t('landing.nav.openShelf');
+        l.setAttribute('data-i18n', 'landing.nav.openShelf');   // so a later translation pass keeps the new label
+      }
     });
   })();
 
@@ -88,7 +92,7 @@
   /* the film's field: the desktop example is cut mid-word on a phone */
   (function shortPlaceholder() {
     var f = document.getElementById('tryItem');
-    if (f && window.matchMedia('(max-width: 640px)').matches) f.placeholder = 'What broke?';
+    if (f && window.matchMedia('(max-width: 640px)').matches) f.placeholder = OwedI18n.t('landing.try.placeholderShort');
   })();
 
   var nav = document.getElementById('nav');
@@ -480,32 +484,28 @@
   var input = document.getElementById('tryItem');
   var result = document.getElementById('tryResult');
 
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-
+  // line and heading texts are HTML (th escapes every value put into them)
   function teaserFor(text) {
     var cat = C.guessCategory(text);
     var brand = C.guessBrand(text);
     var label = cat ? C.categoryLabel(cat) : null;
 
     var lines = [];
-    lines.push({ tone: 'ok', text: "The maker's own warranty — most start at a year, some run for life" });
-    lines.push({ tone: 'ok', text: 'Extra cover from the card you paid with, often a whole extra year' });
-    lines.push({ tone: 'maybe', text: 'Open payouts and free repair programmes for known faults' });
-    lines.push({ tone: 'ok', text: 'Your legal cover, which usually outlasts the printed warranty' });
+    lines.push({ tone: 'ok', text: OwedI18n.th('landing.try.line.maker') });
+    lines.push({ tone: 'ok', text: OwedI18n.th('landing.try.line.card') });
+    lines.push({ tone: 'maybe', text: OwedI18n.th('landing.try.line.payouts') });
+    lines.push({ tone: 'ok', text: OwedI18n.th('landing.try.line.law') });
 
+    // {label} is the category name lowercased, {category} the same name as written
     var heading;
     if (brand && label) {
-      heading = 'A ' + esc(label).toLowerCase() + ' from ' + esc(brand) + " — here's what we'd check";
+      heading = OwedI18n.th('landing.try.heading.labelBrand', { label: label.toLowerCase(), category: label, brand: brand });
     } else if (label) {
-      heading = 'A ' + esc(label).toLowerCase() + " — here's what we'd check";
+      heading = OwedI18n.th('landing.try.heading.label', { label: label.toLowerCase(), category: label });
     } else if (brand) {
-      heading = esc(brand) + " — here's what we'd check";
+      heading = OwedI18n.th('landing.try.heading.brand', { brand: brand });
     } else {
-      heading = "Here's what we'd check for that";
+      heading = OwedI18n.th('landing.try.heading.none');
     }
 
     return { heading: heading, lines: lines, known: !!(brand || cat) };
@@ -534,10 +534,12 @@
       result.hidden = false;
       result.innerHTML =
         '<h3 class="try-h">' + t.heading + '</h3>' +
-        '<p class="muted try-sub">Four questions in the app narrow this to the ones worth asking about.</p>' +
+        '<p class="muted try-sub">' + OwedI18n.th('landing.try.sub') + '</p>' +
         '<ul>' + items + '</ul>' +
-        '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">Check my ' +
-        (C.guessCategory(text) ? esc(C.categoryLabel(C.guessCategory(text))).toLowerCase() : 'item') + '</a>';
+        '<a class="btn btn-accent go" href="auth.html?mode=signup&amp;item=' + encodeURIComponent(text) + '">' +
+        (C.guessCategory(text)
+          ? OwedI18n.th('landing.try.go', { label: C.categoryLabel(C.guessCategory(text)).toLowerCase(), category: C.categoryLabel(C.guessCategory(text)) })
+          : OwedI18n.th('landing.try.goItem')) + '</a>';
     });
   }
 
@@ -595,7 +597,7 @@
     btn.addEventListener('click', function () {
       var paused = track.classList.toggle('is-paused');
       btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      btn.setAttribute('aria-label', paused ? 'Resume the moving list' : 'Pause the moving list');
+      btn.setAttribute('aria-label', OwedI18n.t(paused ? 'landing.proof.resume' : 'landing.proof.pause'));
     });
   })();
 
@@ -613,14 +615,16 @@
     }
     var n = document.getElementById('envN'), pct = document.getElementById('envPct'), bar = document.getElementById('envBar');
     if (!form || !region || !age || !n) return;
+    var word = n.parentNode.querySelector('.dim');   // "rules", which agrees with the count in some languages
     var table;
     try { table = JSON.parse(form.getAttribute('data-table') || '{}'); } catch (e) { return; }
     function paint() {
       var row = table[region.value + ':' + age.value];
       if (!row) return;
       var p = row[0] ? Math.round(row[1] / row[0] * 100) : 0;
-      n.textContent = row[0];
-      pct.textContent = p + '%';
+      n.textContent = OwedI18n.num(row[0]);
+      if (word) word.textContent = OwedI18n.plural('landing.env.rules', row[0]);
+      pct.textContent = OwedI18n.num(p / 100, { style: 'percent' });
       if (bar) bar.style.setProperty('--w', p + '%');
     }
     region.addEventListener('change', paint);

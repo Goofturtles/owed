@@ -79,6 +79,7 @@
   transition: opacity .15s var(--ease);
 }
 .auth-wordmark:hover { opacity: .7; }
+.auth-lang { position: absolute; z-index: 2; top: 12px; right: 12px; }
 
 /* faint character grid in the two left corners — a data-URI tile,
    so it needs no image request */

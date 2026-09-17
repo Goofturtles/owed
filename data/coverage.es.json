@@ -1,0 +1,14 @@
+{
+ "version": 1,
+ "lang": "es",
+ "rules": {
+  "programs-eu-safety-gate-search": {
+   "title": "UE: busca alertas de productos peligrosos en Safety Gate",
+   "what_you_get": "La confirmación de que tu producto fue señalado como peligroso en algún país de la UE, con la marca, el modelo y el riesgo: una prueba útil cuando le pidas al vendedor o al fabricante una reparación gratis o que te devuelvan el dinero.",
+   "window_note": "No hay fecha límite. Cada semana se publican alertas nuevas de países de toda la UE.",
+   "how_to_claim": "Busca la marca y el modelo en el sitio de alertas Safety Gate de la Comisión Europea. Si aparece, muéstrale la alerta a quien te lo vendió y pregunta qué están haciendo por los propietarios de ese producto.",
+   "script_hint": "Mi modelo aparece en las alertas Safety Gate de la UE. ¿Qué les ofrecen a los propietarios de este producto?",
+   "verified_against": "https://eur-lex.europa.eu/legal-content/ES/TXT/HTML/?uri=CELEX:32023R0988"
+  }
+ }
+}

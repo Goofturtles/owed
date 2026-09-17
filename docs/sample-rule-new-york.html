@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><title>How one rule works in Owed</title><style>
+@page { size: Letter; margin: 22mm 20mm; }
+* { box-sizing: border-box; }
+body { font-family: Georgia, 'Times New Roman', serif; color: #111; font-size: 11pt; line-height: 1.55; margin: 0; }
+h1 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 22pt; line-height: 1.25; margin: 0 0 6pt; letter-spacing: -0.01em; }
+h2 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13.5pt; line-height: 1.3; margin: 22pt 0 8pt; break-after: avoid; }
+p { margin: 0 0 9pt; }
+hr { border: 0; border-top: 1px solid #ccc; margin: 16pt 0; }
+code { font-family: Consolas, 'Courier New', monospace; font-size: 9.5pt; background: #f2f2f2; padding: 0 3px; border-radius: 3px; }
+pre { font-family: Consolas, 'Courier New', monospace; font-size: 9pt; line-height: 1.45; background: #f6f6f6; border: 1px solid #e3e3e3; border-radius: 6px; padding: 10pt 12pt; white-space: pre-wrap; word-break: break-word; break-inside: avoid; }
+blockquote { margin: 0 0 12pt; padding: 10pt 14pt; border-left: 3px solid #111; background: #fafafa; }
+blockquote p, li, td { break-inside: avoid; }
+p { orphans: 3; widows: 3; }
+blockquote p { margin: 0 0 7pt; }
+blockquote p:last-child { margin-bottom: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 9.5pt; line-height: 1.4; margin: 4pt 0 12pt; }
+th, td { text-align: left; vertical-align: top; padding: 6pt 8pt; border-bottom: 1px solid #ddd; }
+th { font-family: 'Segoe UI', Arial, sans-serif; font-weight: 600; border-bottom: 1.5px solid #111; }
+tr { break-inside: avoid; }
+ul { margin: 0 0 10pt; padding-left: 18pt; }
+li { margin: 0 0 5pt; }
+</style></head><body><h1>How one rule works in Owed</h1>
+<p>For Gay Gordon-Byrne, The Repair Association</p>
+<p>Arjun Sharma, September 2026, goofturtles.github.io/owed</p>
+<hr>
+<p>Gay,</p>
+<p>You asked to see a sample of how a rule is actually written up, so here is one, start to finish.</p>
+<p>I picked New York on purpose. It is the rule your page helped me get right, and it is also the one where I found out I had been wrong. That felt like the honest choice for a sample.</p>
+<p>I should say plainly where this came from. Owed started as a project, the kind of thing you build because you want to build something. It stopped being that somewhere along the way. What kept me at it is a small and annoying fact: these rights already exist, and almost nobody finds out in time to use them. The law gets written for people who will never read it. That gap is the reason I kept going, and it is why I care whether the sentences in this file are true rather than just convincing.</p>
+<p>It is free. No account, no tracking, no money in it. I mention that only so you know what you are looking at.</p>
+<hr>
+<h2>1. The rule as it is stored</h2>
+<p>Every rule is one record in one public file, <code>data/coverage.json</code>. Nothing is generated when someone loads the page and nothing is written by a language model. If a sentence is wrong, it is wrong because I wrote it wrong, and it gets fixed in one place.</p>
+<pre>id           law-us-ny-right-to-repair
+source_type  statutory
+title        New York: makers must hand over parts, tools and repair manuals
+applies to   New York only (US-NY), any brand
+categories   phone, laptop, tablet, headphones, tv, watch, camera, monitor, printer, toy, other
+confidence   certain
+source       https://www.nysenate.gov/legislation/laws/GBS/399-NN
+explainer    The Repair Association, New York
+             https://www.repair.org/newyork</pre>
+<h2>2. What the reader actually sees</h2>
+<p>Word for word, as it appears on the page:</p>
+<blockquote><p><strong>What you get</strong><br>The parts, tools and repair information you or a local shop need to fix your device. The manual and the tools have to be free, apart from the real cost of posting a physical copy, and parts have to be offered at a reasonable cost and on reasonable terms. A maker cannot use its contracts with its own approved shops to get out of this.</p><p><strong>Window</strong><br>In force since 28 December 2023. Covers gear first made, and first sold or used in New York, on or after 1 July 2023. Home appliances are left out, including fridges, ovens, microwaves, heating and cooling units and home alarm systems, and so are cars, medical devices, farm and off-road gear, power tools, yard and garden equipment, e-bikes and industrial electrical gear. No deadline tied to when you bought it.</p><p><strong>How to claim</strong><br>Ask the maker's support for the part and the repair manual, in writing. If they refuse, file a complaint with the New York Attorney General, who enforces this section.</p><p><strong>Source</strong>  Read the rule (links to the statute above)<br><strong>Explainer</strong>  The Repair Association: New York</p></blockquote>
+<h2>3. Where every sentence comes from</h2>
+<p>This is the part I would most like you to pull apart. Each line was checked against the text at nysenate.gov, and then again independently against the newyork.public.law mirror. The two agree word for word.</p>
+<table><thead><tr><th>What the reader is told</th><th>GBL 399-nn</th></tr></thead><tbody><tr><td>Parts, tools and documentation must be made available</td><td>2, "shall make available to any independent repair provider and owner"</td></tr><tr><td>The manual is free</td><td>1(d)(i), documentation "at no charge"</td></tr><tr><td>Apart from the real cost of posting a physical copy</td><td>1(d)(i), "reasonable actual costs of preparing and sending the copy"</td></tr><tr><td>The tools are free</td><td>1(d)(ii), tools "at no charge"</td></tr><tr><td>Parts at a reasonable cost and on reasonable terms</td><td>1(d)(iii), "at reasonable costs and terms"</td></tr><tr><td>A maker cannot use its contracts with its approved shops to get out of it</td><td>3(b), a provision that "purports to waive, avoid, restrict, or limit" the duty is "void and unenforceable"</td></tr><tr><td>Covers gear first made and first sold or used in NY on or after 1 July 2023</td><td>1(b) and 2</td></tr><tr><td>Home appliances left out, including fridges, ovens, microwaves, heating and cooling units, home alarm systems</td><td>3(g), "any home appliance that has a digital electronic product embedded within it ... refrigerators, ovens, microwaves, air conditioning, heating units, and security devices or alarm systems"</td></tr><tr><td>Cars left out</td><td>4(a)</td></tr><tr><td>Medical devices left out</td><td>4(b)</td></tr><tr><td>Farm and off-road gear, power tools, yard and garden equipment left out</td><td>4(c)</td></tr><tr><td>Industrial electrical gear left out</td><td>4(d)</td></tr><tr><td>E-bikes left out</td><td>4(e)</td></tr><tr><td>Complain to the Attorney General</td><td>7, "Enforcement by the attorney general"</td></tr></tbody></table>
+<p>Two things in that rule are <strong>not</strong> taken from the statute, and I would rather tell you than have you find them:</p>
+<ul><li><strong>"In force since 28 December 2023."</strong> The section gives no calendar date at all. I am relying on the Key Dates block on your New York page, which is also the page the rule links out to.</li><li><strong>"No deadline tied to when you bought it."</strong> That is an absence rather than a provision. There is no limitation period in the section, so the claim is that nothing is there.</li></ul>
+<h2>4. The words it puts in someone's hands</h2>
+<p>Owed never contacts anyone on a person's behalf. It writes something they send themselves, in their own name:</p>
+<blockquote><p>Hello, I hope you can help me with something.</p><p>I bought a laptop about two years ago. It has stopped charging.</p><p>I think this may still be covered. The rule I am going by is: New York: makers must hand over parts, tools and repair manuals.</p><p>New York's Digital Fair Repair Act, General Business Law 399-nn, says you have to make the parts, tools and documentation available to owners and independent shops on fair and reasonable terms. Please send them.</p><p>Could you let me know what you need from me, and whether there is a deadline I should keep in mind? Thank you for your help.</p></blockquote>
+<p>That is the whole product, really. Everything else is working out which rule belongs in that middle paragraph.</p>
+<h2>5. What this rule deliberately does not claim</h2>
+<p>Getting this list right matters more to me than the rest of the document.</p>
+<ul><li>It does not say anyone will win. It says which rule may apply.</li><li>It does not say parts must be sold at the price authorised shops pay. New York says only "reasonable costs and terms". California and Oregon genuinely do require parity and their rules say so. New York's does not, because the statute does not.</li><li>It does not promise a repair. 399-nn is about access to parts, tools and documentation, not about anyone fixing the thing for you.</li><li>It does not hint that a reader can sue. Only the Attorney General enforces this section.</li><li>It does not treat 3(f) as a flat ban on games consoles. That paragraph is a federal-law conflict carve-out that happens to mention them, so I left it out of the plain-English list rather than overstate it.</li><li>It is not legal advice, and the page says so.</li><li>It reads nothing about the person using it. No account, nothing uploaded, everything stays in their browser.</li></ul>
+<h2>6. Two things that changed because of your email</h2>
+<p><strong>I link to you now instead of restating you.</strong> Every US state repair rule carries a link out to your state page next to the statute, labelled as yours. Seven rules have it: California, New York, Oregon, Minnesota and both Colorado rules. I only used the seven pages that have real summaries on them. The other state URLs resolve but are empty, and sending someone to a blank page seemed worse than not linking at all.</p>
+<p><strong>Your page caught a mistake of mine.</strong> This is the part I would rather not write, which is probably why it should be in here.</p>
+<p>I had two New York rules for one statute and they disagreed with each other. I had not noticed. Reading 399-nn properly, against your page:</p>
+<ul><li>both of them overstated the parts duty as price parity with authorised shops, when 1(d)(iii) says only "reasonable costs and terms"</li><li>one wrongly included power tools, which 4(c) excludes</li><li>one wrongly included home appliances, which 3(g) excludes</li></ul>
+<p>They are one rule now, rewritten against the primary text. The rulebook went from 318 rules to 317. I then went looking for the same failure everywhere else, and New York turned out to be the only state where two rules contradicted each other. California and Oregon were already right.</p>
+<p>I am telling you this because of what you said about not wanting to monitor someone else's pages. You should be able to judge whether I am the sort of person who finds his own mistakes. That seems like a fair thing to want to know before your name goes anywhere near this.</p>
+<hr>
+<p>Thank you for the time you have already given me. Everything above can be checked against <code>data/coverage.json</code> in the repository, and if any line in section 3 is wrong, I would genuinely rather hear it than not.</p>
+<p>Arjun</p></body></html>

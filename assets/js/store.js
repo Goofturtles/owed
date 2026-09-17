@@ -235,7 +235,7 @@
     if (!entry || !entry.ruleId) return;
     var list = read(KEY_RECENT, []) || [];
     list = list.filter(function (r) { return r.ruleId !== entry.ruleId; });
-    list.unshift({ ruleId: entry.ruleId, itemId: entry.itemId || '', title: String(entry.title || '').slice(0, 90), at: Date.now() });
+    list.unshift({ ruleId: entry.ruleId, itemId: entry.itemId || '', title: String(entry.title || '').slice(0, 90), lang: entry.lang || 'en', at: Date.now() });
     write(KEY_RECENT, list.slice(0, 8));
   }
   function getRecent() { return read(KEY_RECENT, []) || []; }
@@ -271,17 +271,19 @@
     if (getShelf().length) return;
     var now = Date.now();
     var MONTH = 1000 * 60 * 60 * 24 * 30.4;
+    // the names are saved in the language the demo was first opened in, like any name a person types
+    var t = global.OwedI18n.t;
     [
-      { name: 'Sony WH-1000XM4 headphones', brand: 'Sony', category: 'headphones',
+      { name: t('store.demo.headphones'), brand: 'Sony', category: 'headphones',
         ageMonths: 14, payment: 'visa', region: 'US', broken: true,
         addedAt: now - 2 * MONTH },
-      { name: 'Whirlpool dishwasher', brand: 'Whirlpool', category: 'appliance-large',
+      { name: t('store.demo.dishwasher'), brand: 'Whirlpool', category: 'appliance-large',
         ageMonths: 34, payment: 'mastercard', region: 'US', broken: true,
         addedAt: now - 5 * MONTH },
-      { name: 'DeWalt cordless drill', brand: 'DeWalt', category: 'power-tool',
+      { name: t('store.demo.drill'), brand: 'DeWalt', category: 'power-tool',
         ageMonths: 22, payment: 'visa', region: 'US', broken: false,
         addedAt: now - 1 * MONTH },
-      { name: 'Lodge cast iron skillet', brand: 'Lodge', category: 'kitchen',
+      { name: t('store.demo.skillet'), brand: 'Lodge', category: 'kitchen',
         ageMonths: 60, payment: 'cash', region: 'US', broken: true,
         addedAt: now - 10 * MONTH }
     ].forEach(function (it) { addItem(it); });

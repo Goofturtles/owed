@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Owed — somebody already owes you a free repair</title>
-<meta name="description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts, repair programmes and consumer law — and tells you who still has to fix it for free, plus the words to say.">
+<title data-i18n="landing.meta.title">Owed — somebody already owes you a free repair</title>
+<meta name="description" data-i18n-attr="content:landing.meta.description" content="Your thing broke. Owed reads the fine print — warranties, card cover, payouts, repair programmes and consumer law — and tells you who still has to fix it for free, plus the words to say.">
 <link rel="icon" href="favicon.svg?v=1789700000" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,10 @@
 <link rel="stylesheet" href="assets/css/landing.css?v=1789700000">
 <link rel="stylesheet" href="assets/css/motion.css?v=1789700000">
 <script src="assets/js/theme.js?v=1789700000"></script>
+<script src="assets/js/i18n.js?v=1789700000"></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main" data-i18n="landing.skip">Skip to content</a>
 
 <!-- ============ NAV — Attio (Mobbin 07bc478d), floating ============
      Transparent over the film; once the page scrolls it turns to blurred
@@ -24,32 +25,34 @@
      Start free at 40px / radius 8. -->
 <header class="nav" id="nav">
   <div class="nav-row">
-    <a class="brand" href="index.html" aria-label="Owed home">
+    <a class="brand" href="index.html" aria-label="Owed home" data-i18n-attr="aria-label:landing.nav.home">
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
       <span class="brand-name">Owed</span>
     </a>
-    <nav class="nav-links" aria-label="Main">
-      <a href="#script">How it works</a>
-      <a href="#checks">What we check</a>
-      <a href="#earth">Environment</a>
-      <a href="#faq">Questions</a>
+    <nav class="nav-links" aria-label="Main" data-i18n-attr="aria-label:landing.nav.main">
+      <a href="#script" data-i18n="landing.nav.how">How it works</a>
+      <a href="#checks" data-i18n="landing.nav.checks">What we check</a>
+      <a href="#earth" data-i18n="landing.nav.earth">Environment</a>
+      <a href="#faq" data-i18n="landing.nav.faq">Questions</a>
     </nav>
     <div class="nav-actions">
-      <a class="btn btn-outline nav-signin" href="auth.html?mode=signin">Sign in</a>
-      <a class="btn btn-accent" href="auth.html?mode=signup">Start free</a>
+      <div class="nav-lang" data-lang-host></div>
+      <a class="btn btn-outline nav-signin" href="auth.html?mode=signin" data-cta="signin" data-i18n="landing.cta.signin">Sign in</a>
+      <a class="btn btn-accent" href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.startFree">Start free</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navSheet">
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navSheet" data-i18n-attr="aria-label:landing.nav.menu">
       <span></span><span></span>
     </button>
   </div>
   <div class="nav-sheet" id="navSheet">
-    <a href="#script">How it works</a>
-    <a href="#checks">What we check</a>
-    <a href="#earth">Environment</a>
-    <a href="#faq">Questions</a>
+    <a href="#script" data-i18n="landing.nav.how">How it works</a>
+    <a href="#checks" data-i18n="landing.nav.checks">What we check</a>
+    <a href="#earth" data-i18n="landing.nav.earth">Environment</a>
+    <a href="#faq" data-i18n="landing.nav.faq">Questions</a>
+    <div class="nav-sheet-lang" data-lang-host="inline"></div>
     <div class="nav-sheet-actions">
-      <a class="btn btn-accent" href="auth.html?mode=signup">Start free</a>
-      <a class="btn btn-outline" href="auth.html?mode=signin">Sign in</a>
+      <a class="btn btn-accent" href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.startFree">Start free</a>
+      <a class="btn btn-outline" href="auth.html?mode=signin" data-cta="signin" data-i18n="landing.cta.signin">Sign in</a>
     </div>
   </div>
 </header>
@@ -61,73 +64,73 @@
        laptops, 960 on phones) are painted to a canvas at the nearest frame
        to a smoothed scroll position (landing.js film()); nothing is seeked.
        The dissolve to white happens only over the last 4% of the track. -->
-  <section class="film" id="film" aria-label="Owed, in three chapters">
+  <section class="film" id="film" aria-label="Owed, in three chapters" data-i18n-attr="aria-label:landing.film.label">
     <div class="film-sticky">
       <canvas class="film-canvas" aria-hidden="true"></canvas>
       <div class="film-still" aria-hidden="true"></div>
 
       <div class="film-overlay">
-        <section class="film-scene film-s1" aria-label="The promise">
+        <section class="film-scene film-s1" aria-label="The promise" data-i18n-attr="aria-label:landing.film.promise.label">
           <div class="film-copy">
-            <h1 class="film-title stg">Somebody already owes you a free repair.</h1>
-            <p class="film-kicker stg stg-2">Find the cover you already have.</p>
+            <h1 class="film-title stg" data-i18n="landing.film.promise.title">Somebody already owes you a free repair.</h1>
+            <p class="film-kicker stg stg-2" data-i18n="landing.film.promise.kicker">Find the cover you already have.</p>
           </div>
-          <button class="film-next stg stg-3" type="button" data-go="places" aria-label="See what Owed checks">
+          <button class="film-next stg stg-3" type="button" data-go="places" aria-label="See what Owed checks" data-i18n-attr="aria-label:landing.film.promise.next">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </section>
 
-        <section class="film-scene film-s2" aria-label="The five places" aria-hidden="true" inert>
+        <section class="film-scene film-s2" aria-label="The five places" aria-hidden="true" inert data-i18n-attr="aria-label:landing.film.places.label">
           <div class="film-copy film-copy-c">
-            <h2 class="film-title film-title-2 stg"><span>Five places cover hides.</span> <span class="film-dim">One place to check.</span></h2>
-            <ul class="film-places stg stg-2" role="list" aria-label="What Owed checks">
-              <li>Maker warranties</li><li>Card cover</li><li>Unclaimed payouts</li><li>Repair programmes</li><li>Consumer law</li>
+            <h2 class="film-title film-title-2 stg" data-i18n-html="landing.film.places.title"><span>Five places cover hides.</span> <span class="film-dim">One place to check.</span></h2>
+            <ul class="film-places stg stg-2" role="list" aria-label="What Owed checks" data-i18n-attr="aria-label:landing.film.places.listLabel">
+              <li data-i18n="landing.film.places.maker">Maker warranties</li><li data-i18n="landing.film.places.card">Card cover</li><li data-i18n="landing.film.places.payouts">Unclaimed payouts</li><li data-i18n="landing.film.places.programmes">Repair programmes</li><li data-i18n="landing.film.places.law">Consumer law</li>
             </ul>
-            <p class="film-sub stg stg-3">What broke. Who made it. When you got it. How you paid.</p>
+            <p class="film-sub stg stg-3" data-i18n="landing.film.places.sub">What broke. Who made it. When you got it. How you paid.</p>
           </div>
         </section>
 
-        <section class="film-scene film-s3" aria-label="See what you are owed" aria-hidden="true" inert>
+        <section class="film-scene film-s3" aria-label="See what you are owed" aria-hidden="true" inert data-i18n-attr="aria-label:landing.film.action.label">
           <div class="film-copy film-copy-r">
-            <p class="film-kicker film-kicker-w stg">Your things. Your cover.</p>
-            <h2 class="film-title film-title-w stg stg-2">Before you replace it,<br>see what you&rsquo;re owed.</h2>
+            <p class="film-kicker film-kicker-w stg" data-i18n="landing.film.action.kicker">Your things. Your cover.</p>
+            <h2 class="film-title film-title-w stg stg-2" data-i18n-html="landing.film.action.title">Before you replace it,<br>see what you&rsquo;re owed.</h2>
             <form class="hero-try film-try stg stg-3" id="tryForm" action="auth.html" method="get" novalidate>
-              <label class="sr-only" for="tryItem">What broke?</label>
+              <label class="sr-only" for="tryItem" data-i18n="landing.try.label">What broke?</label>
               <div class="hero-try-field">
                 <svg class="hero-try-ico" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m13.5 13.5 3 3"/></svg>
-                <input class="hero-try-input" id="tryItem" name="item" type="text"
+                <input class="hero-try-input" id="tryItem" name="item" type="text" data-i18n-attr="placeholder:landing.try.placeholder"
                        placeholder="What broke? Sony headphones, Whirlpool dishwasher…"
                        autocomplete="off" spellcheck="false">
-                <button class="btn btn-accent hero-try-btn" type="submit">Check it</button>
+                <button class="btn btn-accent hero-try-btn" type="submit" data-i18n="landing.try.submit">Check it</button>
               </div>
             </form>
-            <p class="film-note stg stg-4">Free, and no account needed to try. Nothing you type leaves your browser. <a class="film-link" href="app.html?demo=1">Open the demo shelf</a></p>
+            <p class="film-note stg stg-4"><span data-i18n="landing.film.action.note">Free, and no account needed to try. Nothing you type leaves your browser.</span> <a class="film-link" href="app.html?demo=1" data-i18n="landing.openDemo">Open the demo shelf</a></p>
             <div class="try-result" id="tryResult" role="status" aria-live="polite" hidden></div>
           </div>
         </section>
 
-        <div class="film-rail" role="group" aria-label="Chapters">
-          <button class="film-rail-btn" type="button" data-go="next" aria-label="Next chapter">
+        <div class="film-rail" role="group" aria-label="Chapters" data-i18n-attr="aria-label:landing.film.rail.label">
+          <button class="film-rail-btn" type="button" data-go="next" aria-label="Next chapter" data-i18n-attr="aria-label:landing.film.rail.next">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
           </button>
-          <button class="film-dot" type="button" data-go="promise" data-dot aria-label="Chapter 1: the promise" aria-current="true"><i></i></button>
-          <button class="film-dot" type="button" data-go="places" data-dot aria-label="Chapter 2: the five places"><i></i></button>
-          <button class="film-dot" type="button" data-go="action" data-dot aria-label="Chapter 3: see what you are owed"><i></i></button>
-          <button class="film-rail-btn film-rail-up" type="button" data-go="promise" aria-label="Back to the top">
+          <button class="film-dot" type="button" data-go="promise" data-dot aria-label="Chapter 1: the promise" aria-current="true" data-i18n-attr="aria-label:landing.film.rail.promise"><i></i></button>
+          <button class="film-dot" type="button" data-go="places" data-dot aria-label="Chapter 2: the five places" data-i18n-attr="aria-label:landing.film.rail.places"><i></i></button>
+          <button class="film-dot" type="button" data-go="action" data-dot aria-label="Chapter 3: see what you are owed" data-i18n-attr="aria-label:landing.film.rail.action"><i></i></button>
+          <button class="film-rail-btn film-rail-up" type="button" data-go="promise" aria-label="Back to the top" data-i18n-attr="aria-label:landing.film.rail.top">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
           </button>
         </div>
       </div>
       <div class="film-scrim" aria-hidden="true"></div>
-      <div class="film-cue" aria-hidden="true"><span class="film-cue-mouse"><i></i></span><span class="film-cue-text">Scroll</span></div>
+      <div class="film-cue" aria-hidden="true"><span class="film-cue-mouse"><i></i></span><span class="film-cue-text" data-i18n="landing.film.scroll">Scroll</span></div>
     </div>
   </section>
 
   <!-- ============ READ FROM — Coda (Mobbin 75b6afeb) ============ -->
   <section class="proof" aria-labelledby="proofHead">
     <div class="wrap-1200 proof-head">
-      <h2 class="proof-lead" id="proofHead">Read from the fine print at</h2>
-      <button class="proof-pause" type="button" aria-pressed="false" data-pause aria-label="Pause the moving list">
+      <h2 class="proof-lead" id="proofHead" data-i18n="landing.proof.lead">Read from the fine print at</h2>
+      <button class="proof-pause" type="button" aria-pressed="false" data-pause aria-label="Pause the moving list" data-i18n-attr="aria-label:landing.proof.pause">
         <svg class="ico-pause" viewBox="0 0 20 20" width="12" height="12" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="3.5" height="12" rx="1"/><rect x="11.5" y="4" width="3.5" height="12" rx="1"/></svg><svg class="ico-play" viewBox="0 0 20 20" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M6 4.5v11l9-5.5z"/></svg>
       </button>
     </div>
@@ -149,9 +152,9 @@
   <section class="show band-dark on-dark-band" id="script" aria-labelledby="showHead">
     <div class="wrap-1200 show-grid">
       <div class="show-copy">
-        <h2 class="h2" id="showHead">It writes the words<br>you say on the phone.</h2>
-        <p class="show-body">Once it finds the rule, Owed writes the claim: <strong>who to ask, the rule named, the deadline on top.</strong> Copy it, or read it out.</p>
-        <a class="btn btn-accent btn-48" href="auth.html?mode=signup">Get my script</a>
+        <h2 class="h2" id="showHead" data-i18n-html="landing.show.title">It writes the words<br>you say on the phone.</h2>
+        <p class="show-body" data-i18n-html="landing.show.body">Once it finds the rule, Owed writes the claim: <strong>who to ask, the rule named, the deadline on top.</strong> Copy it, or read it out.</p>
+        <a class="btn btn-accent btn-48" href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.getScript">Get my script</a>
       </div>
 
       <div class="show-media">
@@ -169,16 +172,16 @@
           <!-- the pin on the mock, where the comment was left -->
           <span class="show-pin" aria-hidden="true"><b>1</b><i></i></span>
           <!-- the dark panel: the real who / rule / deadline of the Amex scenario -->
-          <aside class="show-panel" aria-label="What the script names">
+          <aside class="show-panel" aria-label="What the script names" data-i18n-attr="aria-label:landing.show.panelLabel">
             <div class="show-panel-head">
               <span class="show-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
               <b>Owed</b>
-              <span class="show-meta">just now</span>
+              <span class="show-meta" data-i18n="landing.show.justNow">just now</span>
             </div>
-            <p class="show-panel-line">Ask American Express for the extended warranty benefit.</p>
+            <p class="show-panel-line" data-i18n="landing.show.line">Ask American Express for the extended warranty benefit.</p>
             <div class="show-chips" aria-hidden="true"><span><img src="assets/img/how-02.webp?v=1789700000" width="998" height="560" alt="" loading="lazy" decoding="async"></span><span><img src="assets/img/how-03.webp?v=1789700000" width="820" height="1738" alt="" loading="lazy" decoding="async"></span></div>
-            <div class="show-panel-foot"><span>No replies</span><span class="show-due"><i></i>30 days to tell them</span></div>
-            <div class="show-panel-field" aria-hidden="true"><span>Hi &mdash; I&rsquo;d like to open a claim&hellip;</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="show-panel-foot"><span data-i18n="landing.show.noReplies">No replies</span><span class="show-due"><i></i><span data-i18n="landing.show.due">30 days to tell them</span></span></div>
+            <div class="show-panel-field" aria-hidden="true"><span data-i18n="landing.show.field">Hi &mdash; I&rsquo;d like to open a claim&hellip;</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
           </aside>
           <!-- the cursor that "clicks" the pin each cycle -->
           <span class="show-cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 3l14 8.5-6.2 1.6L9.5 19z" fill="#000" stroke="#FFF" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
@@ -192,12 +195,12 @@
        caption under it. Nothing else. -->
 
   <!-- ============ IN NUMBERS — Ramp (Mobbin b3c99307) ============ -->
-  <section class="stats" aria-label="The rulebook in numbers">
+  <section class="stats" aria-label="The rulebook in numbers" data-i18n-attr="aria-label:landing.stats.label">
     <div class="stats-in">
-      <div class="stat"><b class="tnum"><em data-count-to="300" data-count-dur="1200">300</em>+</b><span>rules in the book</span></div>
-      <div class="stat"><b class="tnum"><em data-count-to="190" data-count-dur="1000">190</em>+</b><span>brands named</span></div>
-      <div class="stat"><b class="tnum">4</b><span>regions: US, Canada, UK, EU</span></div>
-      <div class="stat"><b class="tnum">$0</b><span>to use, no account to look</span></div>
+      <div class="stat"><b class="tnum" data-i18n-html="landing.stats.rules.figure"><em data-count-to="300" data-count-dur="1200">300</em>+</b><span data-i18n="landing.stats.rules.caption">rules in the book</span></div>
+      <div class="stat"><b class="tnum" data-i18n-html="landing.stats.brands.figure"><em data-count-to="190" data-count-dur="1000">190</em>+</b><span data-i18n="landing.stats.brands.caption">brands named</span></div>
+      <div class="stat"><b class="tnum">4</b><span data-i18n="landing.stats.regions.caption">regions: US, Canada, UK, EU</span></div>
+      <div class="stat"><b class="tnum" data-i18n="landing.stats.cost.figure">$0</b><span data-i18n="landing.stats.cost.caption">to use, no account to look</span></div>
     </div>
   </section>
 
@@ -205,32 +208,32 @@
        Coloured icon tiles (Notion's tinted tiles), one bold line, one link. -->
   <section class="places" id="checks" aria-labelledby="checksHead">
     <div class="wrap-1200">
-      <h2 class="h2 h2-54" id="checksHead">Five places cover hides.</h2>
+      <h2 class="h2 h2-54" id="checksHead" data-i18n="landing.places.title">Five places cover hides.</h2>
       <ul class="place-grid" role="list">
         <li>
           <span class="tile t-mint" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6c0 4.2 3.1 7.6 7.5 9 4.4-1.4 7.5-4.8 7.5-9V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
-          <h3>The maker&rsquo;s warranty</h3>
-          <a href="app.html?demo=1">See a result <span aria-hidden="true">&nearr;</span></a>
+          <h3 data-i18n="landing.places.maker">The maker&rsquo;s warranty</h3>
+          <a href="app.html?demo=1"><span data-i18n="landing.places.seeResult">See a result</span> <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
           <span class="tile t-sky" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg></span>
-          <h3>The card you paid with</h3>
-          <a href="#script">Read the script <span aria-hidden="true">&nearr;</span></a>
+          <h3 data-i18n="landing.places.card">The card you paid with</h3>
+          <a href="#script"><span data-i18n="landing.places.readScript">Read the script</span> <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
           <span class="tile t-sand" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5a2.8 2.8 0 0 0-2.5-1.3c-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2 2.6.8 2.6 2-1.1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.3"/><path d="M12 6.4v11.2"/></svg></span>
-          <h3>Payouts you can still claim</h3>
-          <a href="app.html?demo=1">See a result <span aria-hidden="true">&nearr;</span></a>
+          <h3 data-i18n="landing.places.payouts">Payouts you can still claim</h3>
+          <a href="app.html?demo=1"><span data-i18n="landing.places.seeResult">See a result</span> <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
           <span class="tile t-teal" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5.2 5.2l-7.4 7.4a2.6 2.6 0 0 1-3.7-3.7Z"/><path d="m5.5 5.5 3 3"/></svg></span>
-          <h3>Quiet repair programmes</h3>
-          <a href="#earth">Which laws help <span aria-hidden="true">&nearr;</span></a>
+          <h3 data-i18n="landing.places.programmes">Quiet repair programmes</h3>
+          <a href="#earth"><span data-i18n="landing.places.whichLaws">Which laws help</span> <span aria-hidden="true">&nearr;</span></a>
         </li>
         <li>
           <span class="tile t-rose" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="m5 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="m19 8-2.5 6a3 3 0 0 0 5 0Z"/><path d="M8 20h8"/></svg></span>
-          <h3>The law where you live</h3>
-          <a href="LIMITATIONS.md">Where it is thin <span aria-hidden="true">&nearr;</span></a>
+          <h3 data-i18n="landing.places.law">The law where you live</h3>
+          <a href="LIMITATIONS.md"><span data-i18n="landing.places.whereThin">Where it is thin</span> <span aria-hidden="true">&nearr;</span></a>
         </li>
       </ul>
     </div>
@@ -242,20 +245,20 @@
        No CO2 or tonnage figure (LIMITATIONS.md §10–11). -->
   <section class="env" id="earth" aria-labelledby="envHead">
     <div class="wrap-1200">
-      <p class="env-eyebrow"><span class="t-mint" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-8 5-14 16-16-1 11-7 16-14 16"/><path d="M4 20c3-5 7-8 11-10"/></svg></span>Environment</p>
-      <h2 class="h2 h2-40" id="envHead">Fix it instead of replacing it.<br>Every repair is one less thing made.</h2>
+      <p class="env-eyebrow"><span class="t-mint" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-8 5-14 16-16-1 11-7 16-14 16"/><path d="M4 20c3-5 7-8 11-10"/></svg></span><span data-i18n="landing.env.eyebrow">Environment</span></p>
+      <h2 class="h2 h2-40" id="envHead" data-i18n-html="landing.env.title">Fix it instead of replacing it.<br>Every repair is one less thing made.</h2>
 
       <div class="env-panel">
       <div class="env-card">
         <ul class="env-cells" role="list">
-          <li><b><em data-count-to="80" data-count-dur="1100">80</em>%</b><strong>battery a phone must keep</strong><span>after 800 charges, EU rule 2023/1670</span></li>
-          <li><b><em data-count-to="7" data-count-dur="900">7</em> years</b><strong>of spare parts on sale</strong><span>EU ecodesign, phones and tablets</span></li>
-          <li><b>+<em data-count-to="12" data-count-dur="1000">12</em> months</b><strong>of guarantee for choosing repair</strong><span>EU right to repair, from 31 July 2026</span></li>
-          <li><b>3 to 6 years</b><strong>of free appliance repair</strong><span>Quebec, from 5 October 2026</span></li>
+          <li><b data-i18n-html="landing.env.battery.figure"><em data-count-to="80" data-count-dur="1100">80</em>%</b><strong data-i18n="landing.env.battery.what">battery a phone must keep</strong><span data-i18n="landing.env.battery.source">after 800 charges, EU rule 2023/1670</span></li>
+          <li><b data-i18n-html="landing.env.parts.figure"><em data-count-to="7" data-count-dur="900">7</em> years</b><strong data-i18n="landing.env.parts.what">of spare parts on sale</strong><span data-i18n="landing.env.parts.source">EU ecodesign, phones and tablets</span></li>
+          <li><b data-i18n-html="landing.env.guarantee.figure">+<em data-count-to="12" data-count-dur="1000">12</em> months</b><strong data-i18n="landing.env.guarantee.what">of guarantee for choosing repair</strong><span data-i18n="landing.env.guarantee.source">EU right to repair, from 31 July 2026</span></li>
+          <li><b data-i18n="landing.env.quebec.figure">3 to 6 years</b><strong data-i18n="landing.env.quebec.what">of free appliance repair</strong><span data-i18n="landing.env.quebec.source">Quebec, from 5 October 2026</span></li>
         </ul>
         <div class="env-strip">
-          <p>A rule only helps if you know it exists.</p>
-          <a class="btn btn-accent btn-34 btn-pill" href="auth.html?mode=signup">Find my repair</a>
+          <p data-i18n="landing.env.strip">A rule only helps if you know it exists.</p>
+          <a class="btn btn-accent btn-34 btn-pill" href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.findRepair">Find my repair</a>
         </div>
       </div>
 
@@ -263,17 +266,17 @@
            (rules whose window is still open; "never run out" = no end date) -->
       <div class="env-card env-card-2">
         <form class="env-left" id="envForm" data-table='{"US:0":[256,118],"US:12":[192,118],"US:24":[174,118],"US:60":[127,118],"CA:0":[98,46],"CA:12":[75,46],"CA:24":[67,46],"CA:60":[54,46],"UK:0":[45,12],"UK:12":[35,12],"UK:24":[27,12],"UK:60":[18,12],"EU:0":[46,18],"EU:12":[38,18],"EU:24":[28,18],"EU:60":[20,18]}'>
-          <h3>See what still covers you.</h3>
+          <h3 data-i18n="landing.env.calc.title">See what still covers you.</h3>
           <div class="env-inputs">
-            <label><span>Where you live</span>
-              <select id="envRegion"><option value="US">United States</option><option value="CA">Canada</option><option value="UK">United Kingdom</option><option value="EU">European Union</option></select></label>
-            <label><span>How old it is</span>
-              <select id="envAge"><option value="0">Under a year</option><option value="12">1 to 2 years</option><option value="24">2 to 5 years</option><option value="60">Over 5 years</option></select></label>
+            <label><span data-i18n="landing.env.calc.whereLabel">Where you live</span>
+              <select id="envRegion"><option value="US" data-i18n="landing.env.calc.regionUs">United States</option><option value="CA" data-i18n="landing.env.calc.regionCa">Canada</option><option value="UK" data-i18n="landing.env.calc.regionUk">United Kingdom</option><option value="EU" data-i18n="landing.env.calc.regionEu">European Union</option></select></label>
+            <label><span data-i18n="landing.env.calc.ageLabel">How old it is</span>
+              <select id="envAge"><option value="0" data-i18n="landing.env.calc.ageUnder1">Under a year</option><option value="12" data-i18n="landing.env.calc.age1to2">1 to 2 years</option><option value="24" data-i18n="landing.env.calc.age2to5">2 to 5 years</option><option value="60" data-i18n="landing.env.calc.ageOver5">Over 5 years</option></select></label>
           </div>
         </form>
         <div class="env-right" aria-live="polite">
-          <div class="env-fig"><b><span id="envN">256</span> <span class="dim">rules</span></b><span>could still cover something that age, where you live</span></div>
-          <div class="env-fig"><b><span id="envPct">46%</span></b><span>of those never run out</span><i class="env-bar" aria-hidden="true"><i id="envBar" style="--w: 46%"></i></i></div>
+          <div class="env-fig"><b><span id="envN">256</span> <span class="dim" data-i18n="landing.env.rules">rules</span></b><span data-i18n="landing.env.stillCover">could still cover something that age, where you live</span></div>
+          <div class="env-fig"><b><span id="envPct">46%</span></b><span data-i18n="landing.env.neverRunOut">of those never run out</span><i class="env-bar" aria-hidden="true"><i id="envBar" style="--w: 46%"></i></i></div>
         </div>
       </div>
       </div>
@@ -284,29 +287,29 @@
   <section class="faq" id="faq" aria-labelledby="faqHead">
     <div class="wrap-1200">
       <div class="faq-head">
-        <h2 class="h2 h2-72" id="faqHead">Questions people ask before they claim.</h2>
-        <p>Short answers. The full rule is one tap away in the app.</p>
+        <h2 class="h2 h2-72" id="faqHead" data-i18n="landing.faq.title">Questions people ask before they claim.</h2>
+        <p data-i18n="landing.faq.intro">Short answers. The full rule is one tap away in the app.</p>
       </div>
       <div class="faq-list" id="faqList">
         <details class="faq-item">
-          <summary><h3>Is this actually free?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Yes. No cut of anything you claim, no warranties sold. A student project built to be free.</p></div>
+          <summary><h3 data-i18n="landing.faq.freeQ">Is this actually free?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p data-i18n="landing.faq.freeA">Yes. No cut of anything you claim, no warranties sold. A student project built to be free.</p></div>
         </details>
         <details class="faq-item">
-          <summary><h3>Do I need my receipt?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Not to check. To claim you usually need proof, and a bank statement line often counts.</p></div>
+          <summary><h3 data-i18n="landing.faq.receiptQ">Do I need my receipt?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p data-i18n="landing.faq.receiptA">Not to check. To claim you usually need proof, and a bank statement line often counts.</p></div>
         </details>
         <details class="faq-item">
-          <summary><h3>What if it finds nothing?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>It says so plainly. The rules are collected by hand, so an unusual brand may come back empty.</p></div>
+          <summary><h3 data-i18n="landing.faq.nothingQ">What if it finds nothing?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p data-i18n="landing.faq.nothingA">It says so plainly. The rules are collected by hand, so an unusual brand may come back empty.</p></div>
         </details>
         <details class="faq-item">
-          <summary><h3>Is this legal advice?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></div>
+          <summary><h3 data-i18n="landing.faq.legalQ">Is this legal advice?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p data-i18n="landing.faq.legalA">No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></div>
         </details>
         <details class="faq-item">
-          <summary><h3>Where does my data go?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
-          <div class="faq-body"><p>Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></div>
+          <summary><h3 data-i18n="landing.faq.dataQ">Where does my data go?</h3><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></summary>
+          <div class="faq-body"><p data-i18n="landing.faq.dataA">Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></div>
         </details>
       </div>
     </div>
@@ -316,10 +319,10 @@
   <section class="cta band-dark on-dark-band" aria-labelledby="ctaHead">
     <div class="wrap-1200">
       <span class="cta-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
-      <h2 class="h2 h2-44" id="ctaHead">Before you buy a new one,<br>check who owes you the old one.</h2>
-      <p class="cta-sub">Free. No account needed to look.</p>
-      <a class="btn btn-accent btn-56" href="auth.html?mode=signup">Start free</a>
-      <p class="cta-small">Want to see one first? <a href="app.html?demo=1">Open the demo shelf</a></p>
+      <h2 class="h2 h2-44" id="ctaHead" data-i18n-html="landing.closing.title">Before you buy a new one,<br>check who owes you the old one.</h2>
+      <p class="cta-sub" data-i18n="landing.closing.sub">Free. No account needed to look.</p>
+      <a class="btn btn-accent btn-56" href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.startFree">Start free</a>
+      <p class="cta-small"><span data-i18n="landing.closing.seeOne">Want to see one first?</span> <a href="app.html?demo=1" data-i18n="landing.openDemo">Open the demo shelf</a></p>
     </div>
   </section>
 </main>
@@ -328,39 +331,43 @@
 <footer class="footer">
   <div class="wrap-1200 footer-grid">
     <div class="footer-brand">
-      <a class="brand" href="index.html" aria-label="Owed home">
+      <a class="brand" href="index.html" aria-label="Owed home" data-i18n-attr="aria-label:landing.nav.home">
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
         <span class="brand-name">Owed</span>
       </a>
-      <p class="footer-status"><i aria-hidden="true"></i>Every rule links to its published source</p>
+      <p class="footer-status"><i aria-hidden="true"></i><span data-i18n="landing.footer.status">Every rule links to its published source</span></p>
+      <div class="footer-lang" data-lang-host="inline"></div>
     </div>
     <div class="footer-col">
-      <h3>Product</h3>
-      <a href="auth.html?mode=signup">Start free</a>
-      <a href="auth.html?mode=signin">Sign in</a>
-      <a href="app.html?demo=1">Demo shelf</a>
-      <a href="#script">Sample script</a>
+      <h3 data-i18n="landing.footer.product">Product</h3>
+      <a href="auth.html?mode=signup" data-cta="start" data-i18n="landing.cta.startFree">Start free</a>
+      <a href="auth.html?mode=signin" data-cta="signin" data-i18n="landing.cta.signin">Sign in</a>
+      <a href="app.html?demo=1" data-i18n="landing.footer.demoShelf">Demo shelf</a>
+      <a href="#script" data-i18n="landing.footer.sampleScript">Sample script</a>
     </div>
     <div class="footer-col">
-      <h3>Learn</h3>
-      <a href="#script">How it works</a>
-      <a href="#checks">What we check</a>
-      <a href="#earth">Environment</a>
-      <a href="#faq">Questions</a>
+      <h3 data-i18n="landing.footer.learn">Learn</h3>
+      <a href="#script" data-i18n="landing.nav.how">How it works</a>
+      <a href="#checks" data-i18n="landing.nav.checks">What we check</a>
+      <a href="#earth" data-i18n="landing.nav.earth">Environment</a>
+      <a href="#faq" data-i18n="landing.nav.faq">Questions</a>
     </div>
     <div class="footer-col">
-      <h3>Honesty</h3>
-      <a href="LIMITATIONS.md">Limitations</a>
-      <a href="DESIGN-REFERENCES.md">Design references</a>
-      <a href="#faq">Not legal advice</a>
-      <a href="https://www.repair.org" target="_blank" rel="noopener noreferrer">State law summaries by The Repair Association</a>
+      <h3 data-i18n="landing.footer.honesty">Honesty</h3>
+      <a href="LIMITATIONS.md" data-i18n="landing.footer.limitations">Limitations</a>
+      <a href="DESIGN-REFERENCES.md" data-i18n="landing.footer.designRefs">Design references</a>
+      <a href="#faq" data-i18n="landing.footer.notLegal">Not legal advice</a>
+      <a href="https://www.repair.org" target="_blank" rel="noopener noreferrer" data-i18n="landing.footer.repairOrg">State law summaries by The Repair Association</a>
     </div>
   </div>
   <div class="wrap-1200 footer-base">
-    <p>&copy; 2026 Owed. An information tool, not legal advice. Every rule links to its published source; your shelf never leaves your browser.</p>
+    <p data-i18n="landing.footer.base">&copy; 2026 Owed. An information tool, not legal advice. Every rule links to its published source; your shelf never leaves your browser.</p>
   </div>
 </footer>
 
+<script src="assets/i18n/en.js?v=1789700000"></script>
+<script src="assets/i18n/fr.js?v=1789700000"></script>
+<script src="assets/i18n/es.js?v=1789700000"></script>
 <script src="assets/js/catalog.js?v=1789700000"></script>
 <script src="assets/js/store.js?v=1789700000"></script>
 <script src="assets/js/landing.js?v=1789700000"></script>

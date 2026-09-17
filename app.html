@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Your shelf — Owed</title>
-<meta name="description" content="Check what you own for free repairs, refunds and payouts you can still claim.">
+<title data-i18n="appShell.meta.title">Your shelf — Owed</title>
+<meta name="description" content="Check what you own for free repairs, refunds and payouts you can still claim." data-i18n-attr="content:appShell.meta.description">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,13 +14,14 @@
 <link rel="stylesheet" href="assets/css/motion.css?v=1789700000">
 <link rel="stylesheet" href="assets/css/app.css?v=1789700000">
 <script src="assets/js/theme.js?v=1789700000"></script>
+<script src="assets/js/i18n.js?v=1789700000"></script>
 </head>
 <body class="app-body" data-tab="things">
-<a class="skip-link" href="#appMain">Skip to content</a>
+<a class="skip-link" href="#appMain" data-i18n="appShell.skip">Skip to content</a>
 
 <!-- ============ phone top bar (< 900px only) ============ -->
 <header class="topbar">
-  <a class="brand" href="index.html" aria-label="Owed home">
+  <a class="brand" href="index.html" aria-label="Owed home" data-i18n-attr="aria-label:appShell.brand.home">
     <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
     <span class="brand-name">Owed</span>
   </a>
@@ -32,20 +33,20 @@
   <aside class="side" id="side">
 
     <div class="side-brand">
-      <a class="brand" href="index.html" aria-label="Owed home">
+      <a class="brand" href="index.html" aria-label="Owed home" data-i18n-attr="aria-label:appShell.brand.home">
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9.5 17.5 4 12"/></svg></span>
         <span class="brand-name">Owed</span>
       </a>
     </div>
 
-    <nav class="side-nav" aria-label="Shelf">
+    <nav class="side-nav" aria-label="Shelf" data-i18n-attr="aria-label:appShell.nav.label">
       <button class="xrow" id="startRow" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/></svg>
-        <span class="xrow-label">Start</span>
+        <span class="xrow-label" data-i18n="appShell.nav.start">Start</span>
       </button>
       <button class="xrow" id="askRow" type="button" aria-controls="askPanel" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>
-        <span class="xrow-label">Ask anything</span>
+        <span class="xrow-label" data-i18n="appShell.ask.title">Ask anything</span>
       </button>
     </nav>
 
@@ -56,7 +57,7 @@
             <svg class="sg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.5-6 4.5Z"/></svg>
             <span class="sg-count tnum" id="statItems">0</span>
           </span>
-          <span class="sg-label" id="shelfLabel">Saved things</span>
+          <span class="sg-label" id="shelfLabel" data-i18n="appShell.shelf.label">Saved things</span>
           <svg class="sg-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
       </div>
@@ -64,9 +65,9 @@
         <ul class="shelf-list" id="shelfList" role="list"></ul>
         <div class="shelf-empty" id="shelfEmpty" hidden>
           <img src="assets/img/photo/headphones-800.webp" alt="" width="800" height="800" loading="lazy">
-          <p>Nothing saved yet.</p>
+          <p data-i18n="appShell.shelf.empty">Nothing saved yet.</p>
         </div>
-        <button class="side-more" id="shelfMore" type="button" hidden>Show more</button>
+        <button class="side-more" id="shelfMore" type="button" hidden data-i18n="appShell.shelf.showMore">Show more</button>
       </div>
     </section>
 
@@ -74,21 +75,21 @@
     <div class="side-extras" id="sideExtras">
       <section class="sx sx-sum" id="sxSum" hidden>
         <ul class="sx-figs" role="list">
-          <li><b id="sxThings">0</b><span>things</span></li>
-          <li><b id="sxStrong">0</b><span>strong</span></li>
-          <li><b id="sxWon">0</b><span>won</span></li>
+          <li><b id="sxThings">0</b><span data-i18n="appShell.summary.things">things</span></li>
+          <li><b id="sxStrong">0</b><span data-i18n="appShell.summary.strong">strong</span></li>
+          <li><b id="sxWon">0</b><span data-i18n="appShell.summary.won">won</span></li>
         </ul>
       </section>
       <section class="sx" id="sxDue" hidden>
-        <h2 class="sx-head">Coming up</h2>
+        <h2 class="sx-head" data-i18n="appShell.side.comingUp">Coming up</h2>
         <ul class="sx-list" id="sxDueList" role="list"></ul>
       </section>
       <section class="sx" id="sxClaims" hidden>
-        <h2 class="sx-head">Claims you sent</h2>
+        <h2 class="sx-head" data-i18n="appShell.side.claimsSent">Claims you sent</h2>
         <ul class="sx-list" id="sxClaimsList" role="list"></ul>
       </section>
       <section class="sx" id="sxRecent" hidden>
-        <h2 class="sx-head">Recently opened</h2>
+        <h2 class="sx-head" data-i18n="appShell.side.recent">Recently opened</h2>
         <ul class="sx-list" id="sxRecentList" role="list"></ul>
       </section>
     </div>
@@ -96,68 +97,70 @@
     <div class="side-action">
       <button class="btn btn-accent" id="addBtn" type="button">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-        Check something new
+        <span data-i18n="appShell.side.checkNew">Check something new</span>
       </button>
     </div>
 
     <!-- foot: the region pill, then the small tools (a full list under Help on a phone) -->
     <div class="side-util">
-      <h1 class="util-title" id="helpTitle" tabindex="-1">Help</h1>
+      <h1 class="util-title" id="helpTitle" tabindex="-1" data-i18n="appShell.help">Help</h1>
 
       <div class="util-row util-region">
         <span class="util-circle" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
         </span>
         <span class="util-region-text" aria-hidden="true">
-          <span class="util-region-name" id="regionName">United States</span>
-          <span class="util-note" id="corpusNote">Loading the rulebook&hellip;</span>
+          <span class="util-region-name" id="regionName" data-i18n="appShell.region.us">United States</span>
+          <span class="util-note" id="corpusNote" data-i18n="appShell.region.loading">Loading the rulebook&hellip;</span>
         </span>
         <svg class="util-dots" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
-        <label class="sr-only" for="regionPick">Where you live</label>
+        <label class="sr-only" for="regionPick" data-i18n="appShell.region.label">Where you live</label>
         <select class="util-select" id="regionPick">
-          <optgroup label="United States">
-            <option value="US">United States (any state)</option>
-            <option value="US|US-CA">California</option>
-            <option value="US|US-CO">Colorado</option>
-            <option value="US|US-KS">Kansas</option>
-            <option value="US|US-ME">Maine</option>
-            <option value="US|US-MD">Maryland</option>
-            <option value="US|US-MA">Massachusetts</option>
-            <option value="US|US-MN">Minnesota</option>
-            <option value="US|US-NY">New York</option>
-            <option value="US|US-OR">Oregon</option>
-            <option value="US|US-WV">West Virginia</option>
-            <option value="US|US-XX">Another state</option>
+          <optgroup label="United States" data-i18n-attr="label:appShell.region.us">
+            <option value="US" data-i18n="appShell.region.usAny">United States (any state)</option>
+            <option value="US|US-CA" data-i18n="appShell.region.california">California</option>
+            <option value="US|US-CO" data-i18n="appShell.region.colorado">Colorado</option>
+            <option value="US|US-KS" data-i18n="appShell.region.kansas">Kansas</option>
+            <option value="US|US-ME" data-i18n="appShell.region.maine">Maine</option>
+            <option value="US|US-MD" data-i18n="appShell.region.maryland">Maryland</option>
+            <option value="US|US-MA" data-i18n="appShell.region.massachusetts">Massachusetts</option>
+            <option value="US|US-MN" data-i18n="appShell.region.minnesota">Minnesota</option>
+            <option value="US|US-NY" data-i18n="appShell.region.newYork">New York</option>
+            <option value="US|US-OR" data-i18n="appShell.region.oregon">Oregon</option>
+            <option value="US|US-WV" data-i18n="appShell.region.westVirginia">West Virginia</option>
+            <option value="US|US-XX" data-i18n="appShell.region.otherState">Another state</option>
           </optgroup>
-          <optgroup label="Canada">
-            <option value="CA">Canada (any province)</option>
-            <option value="CA|CA-ON">Ontario</option>
-            <option value="CA|CA-QC">Quebec</option>
-            <option value="CA|CA-BC">British Columbia</option>
-            <option value="CA|CA-AB">Alberta</option>
-            <option value="CA|CA-SK">Saskatchewan</option>
-            <option value="CA|CA-NB">New Brunswick</option>
-            <option value="CA|CA-XX">Another province</option>
+          <optgroup label="Canada" data-i18n-attr="label:appShell.region.canada">
+            <option value="CA" data-i18n="appShell.region.canadaAny">Canada (any province)</option>
+            <option value="CA|CA-ON" data-i18n="appShell.region.ontario">Ontario</option>
+            <option value="CA|CA-QC" data-i18n="appShell.region.quebec">Quebec</option>
+            <option value="CA|CA-BC" data-i18n="appShell.region.britishColumbia">British Columbia</option>
+            <option value="CA|CA-AB" data-i18n="appShell.region.alberta">Alberta</option>
+            <option value="CA|CA-SK" data-i18n="appShell.region.saskatchewan">Saskatchewan</option>
+            <option value="CA|CA-NB" data-i18n="appShell.region.newBrunswick">New Brunswick</option>
+            <option value="CA|CA-XX" data-i18n="appShell.region.otherProvince">Another province</option>
           </optgroup>
-          <option value="UK">United Kingdom</option>
-          <option value="EU">European Union</option>
+          <option value="UK" data-i18n="appShell.region.uk">United Kingdom</option>
+          <option value="EU" data-i18n="appShell.region.eu">European Union</option>
         </select>
       </div>
 
       <div class="util-tools">
+        <!-- i18n.js dresses the language button as a util-row; it lives here, never inside the theme row -->
+        <div class="util-lang" data-lang-host="row" data-lang-btn-class="util-row" data-lang-icon-class="util-ico" data-lang-label-class="util-label"></div>
         <!-- theme.js mounts its 44px toggle as the first child of .appbar-right -->
         <div class="util-row util-theme appbar-right" id="themeRow">
-          <span class="util-label">Theme</span>
+          <span class="util-label" data-i18n="appShell.util.theme">Theme</span>
         </div>
 
-        <a class="util-row" href="index.html#faq" title="Help">
+        <a class="util-row" href="index.html#faq" title="Help" data-i18n-attr="title:appShell.help">
           <svg class="util-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.6a2.6 2.6 0 1 1 3.7 2.4c-.7.4-1.1.9-1.1 1.7"/><path d="M12 17.2h.01"/></svg>
-          <span class="util-label">Help</span>
+          <span class="util-label" data-i18n="appShell.help">Help</span>
         </a>
 
-        <button class="util-row" id="signOutBtn" type="button" title="Sign out">
+        <button class="util-row" id="signOutBtn" type="button" title="Sign out" data-i18n-attr="title:appShell.util.signOut">
           <svg class="util-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="m15 8 4 4-4 4M19 12H9"/></svg>
-          <span class="util-label">Sign out</span>
+          <span class="util-label" data-i18n="appShell.util.signOut">Sign out</span>
         </button>
       </div>
     </div>
@@ -170,12 +173,12 @@
     <div class="view view-wizard" id="viewWizard" hidden>
       <div class="wiz">
         <header class="pane-head wiz-top">
-          <button class="iconbtn wiz-back" id="wizBack" type="button" aria-label="Back">
+          <button class="iconbtn wiz-back" id="wizBack" type="button" aria-label="Back" data-i18n-attr="aria-label:appShell.wizard.back">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>
           </button>
           <div class="pane-head-main">
-            <p class="pane-title">Check something</p>
-            <p class="pane-sub wiz-kicker" id="wizCount">Question 1 of 4</p>
+            <p class="pane-title" data-i18n="appShell.wizard.title">Check something</p>
+            <p class="pane-sub wiz-kicker" id="wizCount" data-i18n="appShell.wizard.countFirst">Question 1 of 4</p>
           </div>
         </header>
 
@@ -184,81 +187,81 @@
 
           <div class="wiz-step is-on" data-step="1">
             <span class="wiz-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 12 4l9 4.5v8L12 21l-9-4.5Z"/><path d="M3 8.5 12 13l9-4.5M12 13v8"/><path d="m7.5 6.3 9 4.5"/></svg></span>
-            <h1 class="wiz-q" id="wizQ1">What broke?</h1>
-            <p class="wiz-help" id="wizHelp1">Pick the closest thing.</p>
+            <h1 class="wiz-q" id="wizQ1" data-i18n="appShell.wizard.q1">What broke?</h1>
+            <p class="wiz-help" id="wizHelp1" data-i18n="appShell.wizard.help1">Pick the closest thing.</p>
             <div class="opt-list opt-tiles" id="catChips" role="radiogroup" aria-labelledby="wizQ1"></div>
             <button class="wiz-more" id="wizMoreQ1" type="button" aria-expanded="true" aria-controls="wizFallback1">
-              Add a photo instead
+              <span data-i18n="appShell.wizard.photoInstead">Add a photo instead</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </button>
             <div class="wiz-fallback" id="wizFallback1">
-              <input class="input wiz-input" id="wizName" type="text" aria-labelledby="wizQ1" aria-describedby="wizHelp1" placeholder="Model, if you know it — e.g. iPhone 14 Plus" autocomplete="off">
-              <input class="input wiz-input wiz-serial" id="wizSerial" type="text" aria-label="Serial number, if you know it" placeholder="Serial number, if you have it" autocomplete="off" spellcheck="false">
+              <input class="input wiz-input" id="wizName" type="text" aria-labelledby="wizQ1" aria-describedby="wizHelp1" placeholder="Model, if you know it — e.g. iPhone 14 Plus" autocomplete="off" data-i18n-attr="placeholder:appShell.wizard.modelPlaceholder">
+              <input class="input wiz-input wiz-serial" id="wizSerial" type="text" aria-label="Serial number, if you know it" placeholder="Serial number, if you have it" autocomplete="off" spellcheck="false" data-i18n-attr="aria-label:appShell.wizard.serialLabel; placeholder:appShell.wizard.serialPlaceholder">
               <!-- a photo of the item: identified on browsers with built-in AI,
                    otherwise the barcode is read where there is one; the photo
                    stays with the item in this browser and is never sent anywhere -->
               <div class="wiz-photo" id="wizPhotoWrap">
                 <label class="btn btn-ghost wiz-photo-btn" for="wizPhoto">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-2h5.4l1.2 2h1.6A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5Z"/><circle cx="12" cy="12.5" r="3.5"/></svg>
-                  <span>Add a photo</span>
+                  <span data-i18n="appShell.photo.add">Add a photo</span>
                 </label>
                 <input class="sr-only" type="file" id="wizPhoto" accept="image/*">
                 <button class="btn btn-ghost wiz-photo-btn" id="wizCamBtn" type="button">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5h3.2l1.4-2h7.8l1.4 2H20a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.4"/></svg>
-                  <span>Take a photo</span>
+                  <span data-i18n="appShell.photo.take">Take a photo</span>
                 </button>
                 <div class="wiz-photo-preview" id="wizPhotoPreview" hidden>
-                  <img id="wizPhotoImg" alt="Your photo of the item" width="44" height="44">
+                  <img id="wizPhotoImg" alt="Your photo of the item" width="44" height="44" data-i18n-attr="alt:appShell.photo.alt">
                   <div class="wiz-photo-meta">
                     <p class="wiz-photo-note" id="wizPhotoNote" role="status"></p>
-                    <button class="wiz-photo-x" id="wizPhotoRemove" type="button">Remove</button>
+                    <button class="wiz-photo-x" id="wizPhotoRemove" type="button" data-i18n="appShell.photo.remove">Remove</button>
                   </div>
                 </div>
               </div>
-              <p class="wiz-err" id="wizErr" hidden>Pick or type something first.</p>
+              <p class="wiz-err" id="wizErr" hidden data-i18n="appShell.wizard.err1">Pick or type something first.</p>
             </div>
           </div>
 
           <div class="wiz-step" data-step="2">
             <span class="wiz-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12.5V4.5a1 1 0 0 1 1-1h8l8 8-8 8Z"/><circle cx="8" cy="8" r="1.5"/></svg></span>
-            <h1 class="wiz-q" id="wizQ2">Who made it?</h1>
-            <p class="wiz-help" id="wizHelp2">The brand on the box.</p>
+            <h1 class="wiz-q" id="wizQ2" data-i18n="appShell.wizard.q2">Who made it?</h1>
+            <p class="wiz-help" id="wizHelp2" data-i18n="appShell.wizard.help2">The brand on the box.</p>
             <div class="opt-list opt-cards" id="brandChips" role="radiogroup" aria-labelledby="wizQ2"></div>
             <button class="wiz-more" id="wizMoreQ2" type="button" aria-expanded="false" aria-controls="wizFallback2">
-              Brand not listed? Type it
+              <span data-i18n="appShell.wizard.brandNotListed">Brand not listed? Type it</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </button>
             <div class="wiz-fallback" id="wizFallback2" hidden>
-              <input class="input wiz-input" id="wizBrand" type="text" aria-labelledby="wizQ2" aria-describedby="wizHelp2" placeholder="e.g. Sony" autocomplete="off" list="brandList">
+              <input class="input wiz-input" id="wizBrand" type="text" aria-labelledby="wizQ2" aria-describedby="wizHelp2" placeholder="e.g. Sony" autocomplete="off" list="brandList" data-i18n-attr="placeholder:appShell.wizard.brandPlaceholder">
               <datalist id="brandList"></datalist>
             </div>
           </div>
 
           <div class="wiz-step" data-step="3">
             <span class="wiz-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-            <h1 class="wiz-q" id="wizQ3">When did you get it?</h1>
-            <p class="wiz-help">Roughly is fine.</p>
+            <h1 class="wiz-q" id="wizQ3" data-i18n="appShell.wizard.q3">When did you get it?</h1>
+            <p class="wiz-help" data-i18n="appShell.wizard.help3">Roughly is fine.</p>
             <div class="opt-list opt-cards" id="ageOpts" role="radiogroup" aria-labelledby="wizQ3"></div>
           </div>
 
           <div class="wiz-step" data-step="4">
             <span class="wiz-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h4"/></svg></span>
-            <h1 class="wiz-q" id="wizQ4">How did you pay?</h1>
-            <p class="wiz-help">Some cards cover repairs.</p>
+            <h1 class="wiz-q" id="wizQ4" data-i18n="appShell.wizard.q4">How did you pay?</h1>
+            <p class="wiz-help" data-i18n="appShell.wizard.help4">Some cards cover repairs.</p>
             <div class="opt-list opt-tiles opt-tiles-4" id="payOpts" role="radiogroup" aria-labelledby="wizQ4"></div>
             <label class="wiz-broken">
               <input type="checkbox" id="wizBroken" checked>
-              <span>It&rsquo;s broken right now</span>
+              <span data-i18n="appShell.wizard.broken">It&rsquo;s broken right now</span>
             </label>
           </div>
 
           <div class="wiz-foot">
             <div class="wiz-foot-row">
-              <button class="btn btn-ghost wiz-back-2" id="wizBack2" type="button">Back</button>
-            <button class="btn btn-accent wiz-next" id="wizNext" type="button">Next</button>
+              <button class="btn btn-ghost wiz-back-2" id="wizBack2" type="button" data-i18n="appShell.wizard.back">Back</button>
+            <button class="btn btn-accent wiz-next" id="wizNext" type="button" data-i18n="appShell.wizard.next">Next</button>
             </div>
-            <button class="wiz-skip" id="wizSkip" type="button">Skip this</button>
-            <p class="wiz-note" id="wizNote" hidden>No receipt needed.</p>
+            <button class="wiz-skip" id="wizSkip" type="button" data-i18n="appShell.wizard.skip">Skip this</button>
+            <p class="wiz-note" id="wizNote" hidden data-i18n="appShell.wizard.noReceipt">No receipt needed.</p>
           </div>
         </div>
       </div>
@@ -269,120 +272,123 @@
       <header class="pane-head res-head">
         <span class="res-ico" id="resIcon" aria-hidden="true"></span>
         <div class="pane-head-main res-head-main">
-          <h1 class="pane-title res-title" id="resTitle">Sony headphones</h1>
+          <h1 class="pane-title res-title" id="resTitle" data-i18n="appShell.results.titlePlaceholder">Sony headphones</h1>
           <p class="pane-sub res-meta" id="resSub"></p>
         </div>
-        <button class="btn btn-ghost res-rename" id="resRename" type="button" aria-label="Rename this thing" title="Rename"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m13.5 6.5 3 3"/></svg></button>
-        <button class="btn btn-ghost res-edit" id="resRecheck" type="button">Edit</button>
+        <button class="btn btn-ghost res-rename" id="resRename" type="button" aria-label="Rename this thing" title="Rename" data-i18n-attr="aria-label:appShell.results.renameLabel; title:appShell.results.rename"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m13.5 6.5 3 3"/></svg></button>
+        <button class="btn btn-ghost res-edit" id="resRecheck" type="button" data-i18n="appShell.results.edit">Edit</button>
       </header>
 
       <div class="res-summary" id="resSummary" aria-live="polite" aria-atomic="true"></div>
 
-      <div class="res-filter" id="resFilter" role="group" aria-label="Filter by how well the rule fits">
-        <button class="fchip is-on" type="button" data-f="all" aria-pressed="true">All<span class="fchip-n tnum" data-n="all"></span></button>
-        <button class="fchip" type="button" data-f="strong" aria-pressed="false">Strong<span class="fchip-n tnum" data-n="strong"></span></button>
-        <button class="fchip" type="button" data-f="worth" aria-pressed="false">Worth asking<span class="fchip-n tnum" data-n="worth"></span></button>
-        <button class="fchip" type="button" data-f="longshot" aria-pressed="false">Long shot<span class="fchip-n tnum" data-n="longshot"></span></button>
+      <div class="res-filter" id="resFilter" role="group" aria-label="Filter by how well the rule fits" data-i18n-attr="aria-label:appShell.results.filterLabel">
+        <button class="fchip is-on" type="button" data-f="all" aria-pressed="true"><span data-i18n="appShell.results.filterAll">All</span><span class="fchip-n tnum" data-n="all"></span></button>
+        <button class="fchip" type="button" data-f="strong" aria-pressed="false"><span data-i18n="appShell.strength.strong">Strong</span><span class="fchip-n tnum" data-n="strong"></span></button>
+        <button class="fchip" type="button" data-f="worth" aria-pressed="false"><span data-i18n="appShell.strength.worth">Worth asking</span><span class="fchip-n tnum" data-n="worth"></span></button>
+        <button class="fchip" type="button" data-f="longshot" aria-pressed="false"><span data-i18n="appShell.strength.longShot">Long shot</span><span class="fchip-n tnum" data-n="longshot"></span></button>
       </div>
 
       <div class="res-groups" id="resGroups"></div>
 
       <div class="res-none" id="resNone" hidden>
-        <h2 class="res-none-title">Nothing found for this one.</h2>
-        <p>The rulebook is collected by hand, so unusual brands can come back empty. It stays on your shelf and shows up here if a rule lands.</p>
+        <h2 class="res-none-title" data-i18n="appShell.results.noneTitle">Nothing found for this one.</h2>
+        <p data-i18n="appShell.results.noneBody">The rulebook is collected by hand, so unusual brands can come back empty. It stays on your shelf and shows up here if a rule lands.</p>
       </div>
 
-      <p class="res-legend">Owed points at published rules. It is not legal advice.</p>
+      <p class="res-legend" data-i18n="appShell.results.legend">Owed points at published rules. It is not legal advice.</p>
     </div>
 
     <!-- the script as its own page (below 1200px; wider, it renders in the rail) -->
     <div class="view view-script" id="viewScript" hidden>
-      <h1 class="sr-only">Your claim script</h1>
+      <h1 class="sr-only" data-i18n="appShell.script.heading">Your claim script</h1>
       <div class="scr-body" id="scrBody"></div>
     </div>
   </main>
 
   <!-- ============ the rail (>= 1200px): the selected rule, or its script ============ -->
-  <aside class="rail" id="rail" aria-label="Selected rule">
+  <aside class="rail" id="rail" aria-label="Selected rule" data-i18n-attr="aria-label:appShell.rail.label">
     <div class="rail-card">
       <aside class="detail" id="detailPanel" aria-labelledby="detailKicker" hidden>
         <div class="detail-body" id="detailBody"></div>
       </aside>
       <div class="rail-block">
-        <h2 class="rail-title">Before you call</h2>
-        <ul class="rail-list"><li>Receipt or card statement</li><li>Photos of the fault</li><li>Model and serial number</li><li>The date you bought it</li></ul>
+        <h2 class="rail-title" data-i18n="appShell.rail.beforeCall">Before you call</h2>
+        <ul class="rail-list"><li data-i18n="appShell.rail.receipt">Receipt or card statement</li><li data-i18n="appShell.rail.photos">Photos of the fault</li><li data-i18n="appShell.rail.model">Model and serial number</li><li data-i18n="appShell.rail.date">The date you bought it</li></ul>
       </div>
       <div class="rail-legend">
-        <h2 class="rail-title">How rules are ranked</h2>
-        <div class="rail-row"><span class="tag tag-strong">Strong</span><span>The rule fits what you told us</span></div>
-        <div class="rail-row"><span class="tag tag-maybe">Worth asking</span><span>Fits, with one thing to check</span></div>
-        <div class="rail-row"><span class="tag tag-long">Long shot</span><span>A general rule, probably not you</span></div>
+        <h2 class="rail-title" data-i18n="appShell.rail.rankedTitle">How rules are ranked</h2>
+        <div class="rail-row"><span class="tag tag-strong" data-i18n="appShell.strength.strong">Strong</span><span data-i18n="appShell.rail.strongDesc">The rule fits what you told us</span></div>
+        <div class="rail-row"><span class="tag tag-maybe" data-i18n="appShell.strength.worth">Worth asking</span><span data-i18n="appShell.rail.worthDesc">Fits, with one thing to check</span></div>
+        <div class="rail-row"><span class="tag tag-long" data-i18n="appShell.strength.longShot">Long shot</span><span data-i18n="appShell.rail.longShotDesc">A general rule, probably not you</span></div>
       </div>
     </div>
-    <p class="rail-foot"><a href="index.html#checks">How rules are checked</a> · <a href="index.html#faq">Help</a> · <span>© 2026 Owed</span></p>
+    <p class="rail-foot"><a href="index.html#checks" data-i18n="appShell.rail.howChecked">How rules are checked</a> · <a href="index.html#faq" data-i18n="appShell.help">Help</a> · <span>© 2026 Owed</span></p>
   </aside>
 </div>
 
 <section class="ask" id="askPanel" role="dialog" aria-labelledby="askTitle" hidden>
   <header class="ask-head">
-    <h2 class="ask-title" id="askTitle">Ask anything</h2>
-    <span class="ask-grip" id="askGrip" aria-hidden="true" title="Drag to move · hold Shift to snap to a corner"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="9" cy="7" r="1.6"/><circle cx="15" cy="7" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="17" r="1.6"/><circle cx="15" cy="17" r="1.6"/></svg></span>
-    <button class="iconbtn ask-close" id="askClose" type="button" aria-label="Close">
+    <h2 class="ask-title" id="askTitle" data-i18n="appShell.ask.title">Ask anything</h2>
+    <span class="ask-grip" id="askGrip" aria-hidden="true" title="Drag to move · hold Shift to snap to a corner" data-i18n-attr="title:appShell.ask.grip"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="9" cy="7" r="1.6"/><circle cx="15" cy="7" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="17" r="1.6"/><circle cx="15" cy="17" r="1.6"/></svg></span>
+    <button class="iconbtn ask-close" id="askClose" type="button" aria-label="Close" data-i18n-attr="aria-label:appShell.close">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
   </header>
   <div class="ask-log" id="askLog" aria-live="polite">
-    <p class="ask-note">Warranties, repair rights, how to claim — ask in plain words. Answered by the AI built into this browser when it has one, otherwise from Owed's own rulebook. Nothing leaves your browser. Not legal advice.</p>
+    <p class="ask-note" data-i18n="appShell.ask.note">Warranties, repair rights, how to claim — ask in plain words. Answered by the AI built into this browser when it has one, otherwise from Owed's own rulebook. Nothing leaves your browser. Not legal advice.</p>
   </div>
   <form class="ask-form" id="askForm">
-    <input class="ask-input" id="askInput" type="text" placeholder="e.g. Do I need my receipt?" autocomplete="off" aria-label="Your question" maxlength="400">
-    <button class="btn btn-accent ask-send" type="submit" aria-label="Send">
+    <input class="ask-input" id="askInput" type="text" placeholder="e.g. Do I need my receipt?" autocomplete="off" aria-label="Your question" maxlength="400" data-i18n-attr="placeholder:appShell.ask.placeholder; aria-label:appShell.ask.inputLabel">
+    <button class="btn btn-accent ask-send" type="submit" aria-label="Send" data-i18n-attr="aria-label:appShell.ask.send">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </button>
   </form>
 </section>
 <dialog class="help" id="helpDialog" aria-labelledby="helpTitle">
-  <div class="help-head"><h2 class="help-title" id="helpTitle">Help</h2><button class="iconbtn help-close" id="helpClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="help-head"><h2 class="help-title" id="helpTitle" data-i18n="appShell.help">Help</h2><button class="iconbtn help-close" id="helpClose" type="button" aria-label="Close" data-i18n-attr="aria-label:appShell.close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div class="help-body">
-    <details class="help-item"><summary>Is this actually free?</summary><p>Yes. No cut of anything you claim, no warranties sold. A student project built to be free.</p></details>
-    <details class="help-item"><summary>Do I need my receipt?</summary><p>Not to check. To claim you usually need proof, and a bank statement line often counts.</p></details>
-    <details class="help-item"><summary>What if it finds nothing?</summary><p>It says so plainly. The rules are collected by hand, so an unusual brand may come back empty.</p></details>
-    <details class="help-item"><summary>Is this legal advice?</summary><p>No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></details>
-    <details class="help-item"><summary>Where does my data go?</summary><p>Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></details>
-    <p class="help-more"><a href="index.html#faq">All questions on the site</a> · <a href="LIMITATIONS.md">What Owed cannot do</a></p>
-    <p class="help-credit">State right-to-repair summaries are written and kept current by <a href="https://www.repair.org" target="_blank" rel="noopener noreferrer">The Repair Association</a>, not by Owed. Every rule here also cites the law itself.</p>
+    <details class="help-item"><summary data-i18n="appShell.helpDialog.freeQ">Is this actually free?</summary><p data-i18n="appShell.helpDialog.freeA">Yes. No cut of anything you claim, no warranties sold. A student project built to be free.</p></details>
+    <details class="help-item"><summary data-i18n="appShell.helpDialog.receiptQ">Do I need my receipt?</summary><p data-i18n="appShell.helpDialog.receiptA">Not to check. To claim you usually need proof, and a bank statement line often counts.</p></details>
+    <details class="help-item"><summary data-i18n="appShell.helpDialog.nothingQ">What if it finds nothing?</summary><p data-i18n="appShell.helpDialog.nothingA">It says so plainly. The rules are collected by hand, so an unusual brand may come back empty.</p></details>
+    <details class="help-item"><summary data-i18n="appShell.helpDialog.legalQ">Is this legal advice?</summary><p data-i18n="appShell.helpDialog.legalA">No. Owed points at published rules and tells you what to ask. Every result links to its source.</p></details>
+    <details class="help-item"><summary data-i18n="appShell.helpDialog.dataQ">Where does my data go?</summary><p data-i18n="appShell.helpDialog.dataA">Nowhere. Your shelf lives in your own browser. There is no server collecting what you own.</p></details>
+    <p class="help-more"><a href="index.html#faq" data-i18n="appShell.helpDialog.allQuestions">All questions on the site</a> · <a href="LIMITATIONS.md" data-i18n="appShell.helpDialog.limits">What Owed cannot do</a></p>
+    <p class="help-credit" data-i18n-html="appShell.helpDialog.credit">State right-to-repair summaries are written and kept current by <a href="https://www.repair.org" target="_blank" rel="noopener noreferrer">The Repair Association</a>, not by Owed. Every rule here also cites the law itself.</p>
   </div>
 </dialog>
-<div class="cam" id="camSheet" role="dialog" aria-label="Take a photo" hidden>
+<div class="cam" id="camSheet" role="dialog" aria-label="Take a photo" hidden data-i18n-attr="aria-label:appShell.photo.take">
   <div class="cam-box">
     <video class="cam-view" id="camView" playsinline muted></video>
-    <p class="cam-note" id="camNote">Fill the frame with the label or the model number.</p>
+    <p class="cam-note" id="camNote" data-i18n="appShell.camera.note">Fill the frame with the label or the model number.</p>
     <div class="cam-foot">
-      <button class="btn btn-ghost" id="camCancel" type="button">Cancel</button>
-      <button class="btn btn-accent cam-shutter" id="camShoot" type="button">Take the photo</button>
+      <button class="btn btn-ghost" id="camCancel" type="button" data-i18n="appShell.camera.cancel">Cancel</button>
+      <button class="btn btn-accent cam-shutter" id="camShoot" type="button" data-i18n="appShell.camera.shoot">Take the photo</button>
     </div>
   </div>
 </div>
-<a class="corner-help" href="index.html#faq" aria-label="Help" title="Help">?</a>
+<a class="corner-help" href="index.html#faq" aria-label="Help" title="Help" data-i18n-attr="aria-label:appShell.help; title:appShell.help">?</a>
 
 <!-- ============ phone bottom tabs (< 900px only) ============ -->
-<nav class="tabbar" aria-label="Main">
+<nav class="tabbar" aria-label="Main" data-i18n-attr="aria-label:appShell.tabs.label">
   <button class="tab is-on" type="button" data-tab="things" aria-current="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.5-6 4.5Z"/></svg>
-    <span>Saved</span>
+    <span data-i18n="appShell.tabs.saved">Saved</span>
   </button>
   <button class="tab" type="button" data-tab="check">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-    <span>New</span>
+    <span data-i18n="appShell.tabs.new">New</span>
   </button>
   <button class="tab" type="button" data-tab="help">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.6a2.6 2.6 0 1 1 3.7 2.4c-.7.4-1.1.9-1.1 1.7"/><path d="M12 17.2h.01"/></svg>
-    <span>Help</span>
+    <span data-i18n="appShell.help">Help</span>
   </button>
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="assets/i18n/en.js?v=1789700000"></script>
+<script src="assets/i18n/fr.js?v=1789700000"></script>
+<script src="assets/i18n/es.js?v=1789700000"></script>
 <script src="assets/js/catalog.js?v=1789700000"></script>
 <script src="assets/js/store.js?v=1789700000"></script>
 <script src="assets/js/engine.js?v=1789700000"></script>

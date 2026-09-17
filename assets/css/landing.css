@@ -565,7 +565,7 @@ html:not(.js-enter) .reveal { opacity: 1; transform: none; }
 
 /* ---------- the nav over dark ground (the film's sea chapter, the dark
    bands): white type, inverted buttons ---------- */
-.nav.on-dark .brand, .nav.on-dark .nav-links a, .nav.on-dark .theme-btn { color: #FFF; }
+.nav.on-dark .brand, .nav.on-dark .nav-links a, .nav.on-dark .theme-btn, .nav.on-dark .lang-btn { color: #FFF; }
 .nav.on-dark .nav-links a:hover { color: rgba(255, 255, 255, .7); }
 .nav.on-dark .btn-outline { background: rgba(255, 255, 255, .12); color: #FFF; border-color: rgba(255, 255, 255, .28); }
 .nav.on-dark .btn-accent { background: #FFF; color: #000; }
@@ -679,7 +679,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 :root[data-theme="dark"] .btn-accent:hover { background: #E5E5E5; }
 :root[data-theme="dark"] .btn-outline { background: transparent; color: #F5F5F7; border-color: #333; }
 :root[data-theme="dark"] .nav.is-stuck { background: rgba(10, 10, 10, .6); border-bottom-color: rgba(255, 255, 255, .08); }
-:root[data-theme="dark"] .nav .brand, :root[data-theme="dark"] .nav-links a, :root[data-theme="dark"] .theme-btn { color: #F5F5F7; }
+:root[data-theme="dark"] .nav .brand, :root[data-theme="dark"] .nav-links a, :root[data-theme="dark"] .theme-btn, :root[data-theme="dark"] .lang-btn { color: #F5F5F7; }
 :root[data-theme="dark"] .nav-actions .btn-outline { background: rgba(255, 255, 255, .06); }
 :root[data-theme="dark"] .proof-pause { background: #111; border-color: #333; color: #A1A1AA; }
 :root[data-theme="dark"] .proof-track { mask-image: linear-gradient(90deg, transparent, #000 96px, #000 calc(100% - 96px), transparent); }
@@ -716,7 +716,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 /* dark theme: the accent stays blue (Apple's dark blue), and the nav keeps the film's
    own colours while the film is under it — the video never changes */
 :root[data-theme="dark"] { --accent: #2997FF; --accent-soft: rgba(41, 151, 255, .18); --accent-line: rgba(41, 151, 255, .4); --sky-ink: #2997FF; }
-:root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .brand, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .nav-links a, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .theme-btn { color: #000; }
+:root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .brand, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .nav-links a, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .theme-btn, :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .lang-btn { color: #000; }
 :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .btn-outline { background: rgba(255, 255, 255, .7); color: #000; border-color: #E5E5E5; }
 :root[data-theme="dark"] .nav:not(.is-stuck):not(.on-dark) .btn-accent { background: #000; color: #FFF; }
 :root[data-theme="dark"] .film, :root[data-theme="dark"] .film-sticky { background: #0B0F0C; }
@@ -859,3 +859,16 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 /* the environment pickers: the native popup needs its own colours at night */
 .env-inputs option { background-color: #FFFFFF; color: #111111; }
 :root[data-theme="dark"] .env-inputs option { background-color: #1A1A1A; color: #F5F5F7; }
+
+/* ---------- language ---------- */
+/* the globe sits in the desktop bar; on phones the bar is full, so the three names go in the menu sheet and the footer */
+@media (max-width: 899px) { .nav-lang { display: none; } }
+.nav-sheet-lang { padding-top: 20px; }
+.nav-sheet-lang .lang-inline-list a { font-size: 17px; }
+.footer-lang { margin-top: 12px; }
+.footer-lang .lang-inline-list a { color: #A1A1AA; font-size: 14px; }
+.footer-lang .lang-inline-list a:hover, .footer-lang .lang-inline-list a[aria-current="true"] { color: #F5F5F7; }
+/* the landing's dark theme uses #111 cards on black, not the app's green-black */
+:root[data-theme="dark"] .lang-menu { background: #111; border-color: #262626; }
+:root[data-theme="dark"] .lang-menu a { color: #F5F5F7; }
+:root[data-theme="dark"] .lang-menu a:hover { background: #1F1F22; }

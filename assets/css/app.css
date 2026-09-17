@@ -235,6 +235,14 @@
 .util-theme .theme-btn { width: 44px; height: 44px; color: var(--ink); border: 0; border-radius: 9999px; }
 .util-theme .theme-btn:hover { background: none; }
 .util-theme .theme-btn svg { width: 20px; height: 20px; }
+/* language: i18n.js gives the button util-row / util-ico / util-label, so it follows the other tools in every layout */
+.lang-btn.util-row, .lang-btn.util-row:hover, .lang-btn.util-row[aria-expanded="true"] { border-color: transparent; color: var(--ink); }
+.lang-btn.util-row { height: auto; font-size: 16px; font-weight: 500; }
+.lang-btn.util-row[aria-expanded="true"] { background: var(--hover); }
+.util-tools .lang-menu { top: auto; bottom: calc(100% + 6px); left: 0; right: auto; }
+/* .side clips overflow: in the 88px rail the menu escapes to the right of it; on phones it opens downward into the scrolling panel */
+@media (min-width: 1200px) and (max-width: 1279.98px) { .util-tools .lang-menu { position: fixed; left: 96px; top: auto; bottom: 12px; } }
+@media (max-width: 899.98px) { .util-tools .lang-menu { top: calc(100% + 6px); bottom: auto; } }
 
 /* ---------------- main pane (centre column) ---------------- */
 .panel {
@@ -919,7 +927,9 @@
 .rail-list li { border: 0 !important; padding: 7px 0; font-size: 15px; gap: 12px; }
 .rail-list li::before { width: 18px; height: 18px; border-radius: 50%; background: rgba(0, 113, 227, .12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230071E3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 7 9.5 17.5 4 12'/%3E%3C/svg%3E") center / 11px no-repeat; }
 .rail-legend { padding: 8px 22px 12px; }
-.rail-row { display: grid !important; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 12px; padding: 7px 0 !important; margin: 0; border: 0 !important; }
+.rail-row { display: grid !important; grid-template-columns: minmax(112px, max-content) minmax(0, 1fr); align-items: center; gap: 12px; padding: 7px 0 !important; margin: 0; border: 0 !important; }
+/* never below the English 112px, wider only when a translated label ("Poco probable") needs it */
+.rail-row .tag { white-space: nowrap; }
 .rail-row > span:last-child { font-size: 15px; color: var(--ink-2); }
 @media (min-width: 1200px) { .rail-foot { padding: 0 22px 0 !important; margin-bottom: -2px; font-size: 14px; line-height: 44px; } }
 

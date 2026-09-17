@@ -56,8 +56,9 @@
     btn.innerHTML = c === 'dark' ? ICONS.light : ICONS.dark;
     // a toggle button: the label names the thing being toggled, the pressed
     // state says whether it is on, and the tooltip can spell out the action
-    btn.setAttribute('aria-label', 'Dark theme');
-    btn.setAttribute('title', c === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    // this file loads before i18n.js; render() first runs at DOMContentLoaded, when the dictionaries are in
+    btn.setAttribute('aria-label', OwedI18n.t('theme.dark'));
+    btn.setAttribute('title', OwedI18n.t(c === 'dark' ? 'theme.toLight' : 'theme.toDark'));
     btn.setAttribute('aria-pressed', c === 'dark' ? 'true' : 'false');
   }
 

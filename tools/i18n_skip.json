@@ -1,0 +1,23 @@
+{
+ "_why": "Keys that are defined but never shown (unreachable code kept as it was). French and Spanish may omit them; the check will not ask for them. Remove a key from here the moment its code becomes reachable.",
+ "keys": [
+  "app.card.dateUnknown",
+  "app.results.fold.longNote",
+  "app.results.fold.worthNote",
+  "engine.reason.brandUnnamed",
+  "motion.finder.cardDoc",
+  "motion.finder.cardItem",
+  "motion.finder.cardMeta",
+  "motion.finder.cardPage",
+  "motion.finder.cardVerdict",
+  "motion.finder.qcDoc",
+  "motion.finder.qcItem",
+  "motion.finder.qcMeta",
+  "motion.finder.qcVerdict",
+  "motion.finder.statuteVerified",
+  "motion.finder.ukDoc",
+  "motion.finder.ukItem",
+  "motion.finder.ukMeta",
+  "motion.finder.ukVerdict"
+ ]
+}

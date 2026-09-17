@@ -25,7 +25,7 @@
   var user = S.getUser();
   if (!user) {
     if (isDemo) {
-      user = S.signUp('Demo', 'demo@owed.local', 'US');
+      user = S.signUp(OwedI18n.t('app.demo.name'), 'demo@owed.local', 'US');
       S.seedDemo();
     } else {
       location.replace('auth.html?mode=signup');
@@ -106,11 +106,12 @@
   var ASK_WHO = { manufacturer: 'the maker', card: 'your card', retailer: 'the shop', statutory: 'the state or country', program: 'the programme' };
 
   /* the three strength labels (see LIMITATIONS.md §8), each with the one
-     plain sentence that explains it */
+     plain sentence that explains it. The keys are the engine's values and
+     stay English; only the words shown come from the dictionary. */
   var STRENGTH = {
-    'strong':       { cls: 'strong',   tag: 'tag-strong', dot: 'dot-strong', word: 'Strong',       plural: 'Strong',       key: 'The rule fits what you told us' },
-    'worth asking': { cls: 'worth',    tag: 'tag-maybe',  dot: 'dot-worth',  word: 'Worth asking', plural: 'Worth asking', key: 'Fits, with one thing to check' },
-    'long shot':    { cls: 'longshot', tag: 'tag-long',   dot: 'dot-long',   word: 'Long shot',    plural: 'Long shots',   key: 'A general rule, probably not you' }
+    'strong':       { cls: 'strong',   tag: 'tag-strong', dot: 'dot-strong', word: OwedI18n.t('app.strength.strong.word'),   plural: OwedI18n.t('app.strength.strong.plural'),   key: OwedI18n.t('app.strength.strong.key') },
+    'worth asking': { cls: 'worth',    tag: 'tag-maybe',  dot: 'dot-worth',  word: OwedI18n.t('app.strength.worth.word'),    plural: OwedI18n.t('app.strength.worth.plural'),    key: OwedI18n.t('app.strength.worth.key') },
+    'long shot':    { cls: 'longshot', tag: 'tag-long',   dot: 'dot-long',   word: OwedI18n.t('app.strength.longshot.word'), plural: OwedI18n.t('app.strength.longshot.plural'), key: OwedI18n.t('app.strength.longshot.key') }
   };
   var GLYPH = {
     strong: '<svg class="tag-g" viewBox="0 0 24 24" aria-hidden="true"><circle class="g-fill" cx="12" cy="12" r="10"/><path class="g-check" d="m7.5 12.5 3 3 6-6.5" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -167,7 +168,7 @@
   function syncRegionName() {
     var o = el.regionPick.options[el.regionPick.selectedIndex];
     var g = o && o.parentElement && o.parentElement.tagName === 'OPTGROUP' ? o.parentElement.label : '';
-    if (el.regionName) el.regionName.textContent = o ? (g && o.value.indexOf('|') > 0 ? o.text + ', ' + g : o.text) : '';
+    if (el.regionName) el.regionName.textContent = o ? (g && o.value.indexOf('|') > 0 ? OwedI18n.t('app.region.placeInCountry', { place: o.text, country: g }) : o.text) : '';
   }
   syncRegionName();
 
@@ -176,7 +177,7 @@
     S.updateUser({ region: parts[0], subregion: parts[1] || '' });
     user = S.getUser();
     syncRegionName();
-    toast('Region set to ' + el.regionPick.options[el.regionPick.selectedIndex].text);
+    toast(OwedI18n.t('app.region.set', { place: el.regionPick.options[el.regionPick.selectedIndex].text }));
     // the select the user is standing on must not lose focus; the results (and
     // an open script) are redrawn in place, never a wizard mid-edit
     if (current.item && (!el.views.results.hidden || !el.views.script.hidden)) redrawResults();
@@ -201,7 +202,9 @@
     // three openers, so the panel is never an empty box
     (function seeds() {
       var wrap = document.createElement('div'); wrap.className = 'ask-seeds';
-      ['Do I need my receipt?', 'What do I say on the phone?', 'How long do I have?'].forEach(function (q) {
+      // each seed is submitted as the question, so it must hit its own short answer below
+      ['app.ask.seed.receipt', 'app.ask.seed.script', 'app.ask.seed.howLong'].forEach(function (key) {
+        var q = OwedI18n.t(key);
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'ask-seed'; b.textContent = q;
         b.addEventListener('click', function () { input.value = q; form.requestSubmit(); wrap.remove(); });
@@ -271,10 +274,12 @@
       var lines = ['You are the helper inside Owed, a free tool that finds who owes someone a free repair (maker warranties, card benefits, repair programmes, consumer law) and writes the words to say. Answer in plain, short sentences for an older reader. Never invent a rule, a deadline or a phone number; if unsure, say what to check. Say it is information, not legal advice, only if asked about legal weight.'];
       var it = current.item;
       if (it) {
-        lines.push('The reader is looking at: ' + (it.name || '') + ' (' + (it.brand || 'brand unknown') + ', ' + (C.categoryLabel(it.category) || '') + ', ' + (E.agePhrase(it.ageMonths) || 'age unknown') + ', region ' + (it.region || 'US') + ').');
+        lines.push('The reader is looking at: ' + (it.name || '') + ' (' + (it.brand || 'brand unknown') + ', ' + (C.categoryLabel(it.category, 'en') || '') + ', ' + (E.agePhrase(it.ageMonths, 'en') || 'age unknown') + ', region ' + (it.region || 'US') + ').');
         var top = (current.matches || []).filter(function (m) { return !isLongShot(m); }).slice(0, 6);
-        if (top.length) lines.push('Rules Owed found for it: ' + top.map(function (m) { return m.rule.title + ' (' + m.strength + '; ' + firstClause(m.rule.window_note, 10) + ')'; }).join(' | '));
+        if (top.length) lines.push('Rules Owed found for it: ' + top.map(function (m) { return m.rule.title + ' (' + m.strength + '; ' + firstClause(m.rule.window_note, 10, m.rule._lang) + ')'; }).join(' | '));
       }
+      // the prompt stays English (the model is most reliable in English); the answer is in the reader's language
+      if (LANG !== 'en') lines.push('Reply in ' + ({ fr: 'French', es: 'Spanish' })[LANG] + '.');
       return lines.join('\n');
     }
     var session = null;
@@ -288,22 +293,76 @@
       return ready.then(function (s) { return s.prompt(q); }).then(function (t) { t = String(t || '').trim(); if (!t) throw new Error('empty'); return t; });
     }
     // no model: the rulebook answers with what it has — the rules found for the item, then Owed's own short answers
+    /* i18n-data: which short answer a question gets; tried in this order, the first hit wins.
+       en: the original patterns, tested on the question exactly as typed.
+       fr / es: whole words or phrases, lowercase and without accents, tested on the
+       question lowercased with its accents removed. A French or Spanish page tries its
+       own words first, then the English words, also as whole words (so "pays" is not "pay").
+       Each seed question (app.ask.seed.*) must hit its own answer in its own language. */
     var CANNED = [
-      [/receipt|proof|statement|invoice/i, 'You usually do not need the paper receipt. A card statement, an order email or the serial number is enough for most makers and card benefits. Card benefits do want the statement.'],
-      [/legal|lawyer|court|sue|advice/i, 'Owed points at published rules; it is information, not legal advice. Every rule links to its source so you can read it yourself.'],
-      [/data|privacy|store|server|account/i, 'Nothing you type leaves this browser. Your shelf is saved on this device only. Sign out clears it if you ask it to.'],
-      [/free|cost|pay|price/i, 'Owed is free. No cut of anything you claim, nothing sold.'],
-      [/how long|deadline|window|expire|late/i, 'Each rule has its own window. Open the rule: the Window row says how long you have, and the deadline shows on top of the script when there is one.'],
-      [/script|say|call|phone|email/i, 'Pick a rule and press Get script. It writes who to ask, the rule by name and the words to say. Copy it, or read it out.']
+      { answer: 'app.ask.answer.receipt',
+        en: /receipt|proof|statement|invoice/i,
+        fr: 'recu|recus|ticket|tickets|facture|factures|preuve|preuves|releve|releves',
+        es: 'recibo|recibos|ticket|tickets|factura|facturas|comprobante|comprobantes|prueba|pruebas|estado de cuenta' },
+      { answer: 'app.ask.answer.legal',
+        en: /legal|lawyer|court|sue|advice/i,
+        fr: 'legal|legale|legaux|legales|juridique|juridiques|avocat|avocate|avocats|tribunal|tribunaux|proces|poursuivre|conseil|conseils',
+        es: 'legal|legales|juridico|juridica|abogado|abogada|abogados|tribunal|tribunales|juicio|demandar|consejo|consejos|asesoria' },
+      { answer: 'app.ask.answer.data',
+        en: /data|privacy|store|server|account/i,
+        fr: 'donnee|donnees|confidentialite|vie privee|stocke|stockee|stockes|stockees|stocker|stockage|serveur|serveurs|mon compte|votre compte|ton compte|un compte|le compte',
+        es: 'dato|datos|privacidad|guarda|guardan|guardado|guardados|almacena|almacenan|almacenamiento|servidor|servidores|mi cuenta|tu cuenta|su cuenta|una cuenta|la cuenta' },
+      { answer: 'app.ask.answer.free',
+        en: /free|cost|pay|price/i,
+        fr: 'gratuit|gratuite|gratuits|gratuites|gratuitement|cout|couts|coute|coutent|prix|payer|payant|payante|paie|paye|paiement|tarif|tarifs|frais',
+        es: 'gratis|gratuito|gratuita|cuesta|cuestan|costo|coste|precio|precios|pagar|pago|pagos|tarifa|tarifas|cobran' },
+      { answer: 'app.ask.answer.howLong',
+        en: /how long|deadline|window|expire|late/i,
+        fr: 'combien de temps|delai|delais|date limite|echeance|expire|expiree|expires|expirer|trop tard|en retard',
+        es: 'cuanto tiempo|plazo|plazos|fecha limite|vence|vencen|vencimiento|caduca|caducan|expira|expiran|demasiado tarde|muy tarde|es tarde' },
+      { answer: 'app.ask.answer.script',
+        en: /script|say|call|phone|email/i,
+        fr: 'script|dire|dis|appeler|appelle|appel|telephone|courriel|email|mail',
+        es: 'guion|script|decir|digo|diga|llamar|llamo|llamada|telefono|correo|email|mail' }
     ];
+    var LANG = OwedI18n.lang;
+    // lowercase, accents off: "Reçu" and "recu" are the same word
+    function fold(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    // built at run time, and only on a French or Spanish page, so an older browser still parses this file
+    function wholeWords(source) {
+      return new RegExp('(^|[^\\p{L}\\p{N}])(?:' + source.replace(/ /g, '\\s+') + ')(?=[^\\p{L}\\p{N}]|$)', 'u');
+    }
+    function cannedAnswer(q) {
+      var c;
+      if (LANG === 'en') {
+        for (c = 0; c < CANNED.length; c++) { if (CANNED[c].en.test(q)) return CANNED[c].answer; }
+        return '';
+      }
+      var f = fold(q);
+      for (c = 0; c < CANNED.length; c++) { if (CANNED[c][LANG] && wholeWords(fold(CANNED[c][LANG])).test(f)) return CANNED[c].answer; }
+      for (c = 0; c < CANNED.length; c++) { if (wholeWords(CANNED[c].en.source).test(f)) return CANNED[c].answer; }
+      return '';
+    }
     function localAnswer(q) {
       var out = [];
       var top = (current.matches || []).filter(function (m) { return !isLongShot(m); });
-      var words = q.toLowerCase().split(/[^a-z0-9]+/).filter(function (w) { return w.length > 3; });
-      var hits = top.filter(function (m) { var t = (m.rule.title + ' ' + (m.rule.what_you_get || '') + ' ' + (m.rule.how_to_claim || '')).toLowerCase(); return words.some(function (w) { return t.indexOf(w) >= 0; }); }).slice(0, 2);
-      hits.forEach(function (m) { out.push(m.rule.title + ': ' + firstClause(m.rule.what_you_get || m.rule.window_note, 22) + '.'); });
-      for (var c = 0; c < CANNED.length; c++) { if (CANNED[c][0].test(q)) { out.push(CANNED[c][1]); break; } }
-      if (!out.length) out.push(top.length ? 'The best lead for this item is “' + top[0].rule.title + '”. Open it for the window, the contact and the script.' : 'Check something first and the rulebook can answer about it. For general questions, the Help page covers receipts, deadlines and data.');
+      var words, hits;
+      if (LANG === 'en') {
+        words = q.toLowerCase().split(/[^a-z0-9]+/).filter(function (w) { return w.length > 3; });
+        hits = top.filter(function (m) { var t = (m.rule.title + ' ' + (m.rule.what_you_get || '') + ' ' + (m.rule.how_to_claim || '')).toLowerCase(); return words.some(function (w) { return t.indexOf(w) >= 0; }); }).slice(0, 2);
+      } else {
+        // letters of any alphabet, accents folded on both sides; a word counts from the start of a rule's word, so "para" is not in "separate"
+        var split = new RegExp('[^\\p{L}\\p{N}]+', 'u');
+        words = fold(q).split(split).filter(function (w) { return w.length > 3; });
+        hits = top.filter(function (m) {
+          var ruleWords = fold(m.rule.title + ' ' + (m.rule.what_you_get || '') + ' ' + (m.rule.how_to_claim || '')).split(split);
+          return words.some(function (w) { return ruleWords.some(function (rw) { return rw.indexOf(w) === 0; }); });
+        }).slice(0, 2);
+      }
+      hits.forEach(function (m) { out.push(OwedI18n.t('app.ask.ruleLine', { title: m.rule.title, clause: firstClause(m.rule.what_you_get || m.rule.window_note, 22, m.rule._lang) })); });
+      var answer = cannedAnswer(q);
+      if (answer) out.push(OwedI18n.t(answer));
+      if (!out.length) out.push(top.length ? OwedI18n.t('app.ask.bestLead', { title: top[0].rule.title }) : OwedI18n.t('app.ask.noItem'));
       return out.join('\n\n');
     }
     function answer(q) {
@@ -315,7 +374,7 @@
       var q = input.value.trim(); if (!q) return;
       input.value = '';
       add('me', q); history.push({ role: 'user', content: q });
-      var wait = add('bot wait', 'Thinking…');
+      var wait = add('bot wait', OwedI18n.t('app.ask.thinking'));
       answer(q).then(function (text) {
         wait.className = 'ask-msg bot'; wait.textContent = text;
         history.push({ role: 'assistant', content: text });
@@ -346,7 +405,7 @@
     // the panel opens at its widest; the handle can only bring it in from there
     app.style.setProperty('--rail-w', (saved >= MIN && saved <= MAX ? saved : MAX) + 'px');
     var h = document.createElement('button');
-    h.type = 'button'; h.className = 'rail-resize'; h.setAttribute('aria-label', 'Resize the side panel'); h.title = 'Drag to resize · double-click to reset';
+    h.type = 'button'; h.className = 'rail-resize'; h.setAttribute('aria-label', OwedI18n.t('app.rail.resizeLabel')); h.title = OwedI18n.t('app.rail.resizeTitle');
     rail.insertBefore(h, rail.firstChild);
     var startX = 0, startW = 0;
     function width() { return rail.getBoundingClientRect().width; }
@@ -383,17 +442,17 @@
     if (title.querySelector('input')) return;
     var old = item.name || '';
     var input = document.createElement('input');
-    input.type = 'text'; input.value = old; input.className = 'res-rename-input'; input.setAttribute('aria-label', 'New name');
+    input.type = 'text'; input.value = old; input.className = 'res-rename-input'; input.setAttribute('aria-label', OwedI18n.t('app.rename.label'));
     title.textContent = ''; title.appendChild(input); input.focus(); input.select();
     var done = false;
     function finish(save) {
       if (done) return; done = true;
       var name = input.value.trim();
       if (save && name && name !== old) {
-        S.updateItem(item.id, { name: name });
+        S.updateItem(item.id, { name: name, autoName: name === itemLabel(item) });
         renderShelf();
         showResults(S.getItem(item.id) || item, true);
-        toast('Renamed.');
+        toast(OwedI18n.t('app.rename.done'));
       } else {
         title.textContent = old;
       }
@@ -405,9 +464,7 @@
   el.signOut.addEventListener('click', function () {
     // the list lives only in this browser; on a shared computer it must not
     // pass to the next person who signs up here
-    var clear = window.confirm('Sign out and remove your things from this device?\n\n' +
-      'Your list lives only in this browser — there is no copy anywhere else.\n' +
-      'Press Cancel to sign out but keep the list here for next time.');
+    var clear = window.confirm(OwedI18n.t('app.signOut.confirm'));
     S.signOut({ clear: clear });
     location.href = 'index.html';
   });
@@ -428,6 +485,19 @@
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+  }
+
+  /* a counted phrase from a plural entry ({ one, other }) that writes its number
+     as {count}. English keeps its plain digits ("1263 days left"), as it always
+     has; another language writes the number its own way. asHtml: into markup. */
+  function counted(key, n, asHtml) {
+    return OwedI18n.plural(key, n, { count: OwedI18n.lang === 'en' ? String(n) : OwedI18n.num(n) }, asHtml);
+  }
+
+  /* English has always written these dates in the browser's own format;
+     another language writes them the page's way */
+  function localDate(d, opts) {
+    return OwedI18n.lang === 'en' ? d.toLocaleDateString(undefined, opts) : OwedI18n.date(d, opts);
   }
 
   var toastTimer = null, toastClear;
@@ -508,7 +578,9 @@
   var corpusFailed = false;
 
   function itemLabel(item) {
-    return [item.brand, C.categoryLabel(item.category)].filter(Boolean).join(' ');
+    var parts = [item.brand, C.categoryLabel(item.category)].filter(Boolean);
+    // brand and kind are one template, so a language can put the noun first
+    return parts.length === 2 ? OwedI18n.t('app.item.brandCategory', { brand: parts[0], category: parts[1] }) : parts.join(' ');
   }
 
   function withRegion(item) {
@@ -542,15 +614,19 @@
     if (!E.loaded) return '<span class="srow-status"></span>';
     if (!n.total) return '<span class="srow-status"></span>';
     // one dot and a number; the word is there for screen readers and the tooltip
-    var dot, count, word;
+    var dot, count, title, word;
     if (n.ask) {
       dot = n.strong ? 'dot-strong' : 'dot-worth';
-      count = n.ask; word = ' to ask';
+      count = n.ask;
+      title = counted('app.shelf.status.ask', count, false);
+      word = counted('app.shelf.status.askAfterNumber', count, true);
     } else {
       dot = 'dot-long';
-      count = n.long; word = n.long === 1 ? ' long shot' : ' long shots';
+      count = n.long;
+      title = counted('app.shelf.status.long', count, false);
+      word = counted('app.shelf.status.longAfterNumber', count, true);
     }
-    return '<span class="srow-status" title="' + count + word + '"><i class="dot ' + dot + '"></i>' +
+    return '<span class="srow-status" title="' + esc(title) + '"><i class="dot ' + dot + '"></i>' +
       '<span class="tnum">' + count + '</span><span class="sr-only">' + word + '</span></span>';
   }
 
@@ -575,8 +651,8 @@
     document.getElementById('railSoon').textContent = dated;
     var next = document.getElementById('railNext');
     next.textContent = soonest
-      ? 'Soonest deadline: ' + fmtDate(soonest.rule.deadline) + ' — ' + (soonest.item.name || itemLabel(soonest.item)) + '.'
-      : 'None of your leads has a fixed deadline.';
+      ? OwedI18n.t('app.rail.soonest', { date: fmtDate(soonest.rule.deadline), name: soonest.item.name || itemLabel(soonest.item) })
+      : OwedI18n.t('app.rail.noDeadline');
     box.hidden = false;
   }
 
@@ -597,12 +673,12 @@
 
     var item = current.item || {};
     var facts = [C.categoryLabel(item.category), item.brand, E.agePhrase(item.ageMonths),
-      item.serial ? 'Serial ' + item.serial : ''].filter(Boolean).join(' · ');
+      item.serial ? OwedI18n.t('app.print.serial', { serial: item.serial }) : ''].filter(Boolean).join(' · ');
 
     var sheet = document.createElement('div');
     sheet.id = 'printSheet';
     sheet.innerHTML =
-      '<h1>' + esc(item.name || itemLabel(item) || 'Your claim') + '</h1>' +
+      '<h1>' + esc(item.name || itemLabel(item) || OwedI18n.t('app.print.untitled')) + '</h1>' +
       (facts ? '<p class="ps-facts">' + esc(facts) + '</p>' : '');
 
     var copy = body.cloneNode(true);
@@ -616,9 +692,8 @@
 
     var note = document.createElement('p');
     note.className = 'ps-note';
-    note.textContent = 'Printed from Owed on ' + new Date().toLocaleDateString(undefined,
-      { day: 'numeric', month: 'long', year: 'numeric' }) +
-      '. Owed points at published rules; it is not legal advice.';
+    note.textContent = OwedI18n.t('app.print.note', { date: localDate(new Date(),
+      { day: 'numeric', month: 'long', year: 'numeric' }) });
     sheet.appendChild(note);
 
     document.body.appendChild(sheet);
@@ -637,7 +712,7 @@
   window.addEventListener('afterprint', clearPrintSheet);
 
   function printClaim() {
-    if (!buildPrintSheet()) { toast('Open a script first.'); return; }
+    if (!buildPrintSheet()) { toast(OwedI18n.t('app.print.noScript')); return; }
     window.print();
     // afterprint does not fire everywhere. The sheet is invisible on screen, so
     // clearing late costs nothing while clearing early prints a blank page.
@@ -648,7 +723,7 @@
   /* ---------- the sidebar's middle four ----------
      Everything here is read from the shelf and the rulebook: no new claims,
      no new numbers. A block with nothing to show hides itself. */
-  var CLAIM_WORD = { asked: 'asked', waiting: 'waiting', won: 'won', refused: 'refused' };
+  var CLAIM_WORD = { asked: OwedI18n.t('app.side.claim.asked'), waiting: OwedI18n.t('app.side.claim.waiting'), won: OwedI18n.t('app.side.claim.won'), refused: OwedI18n.t('app.side.claim.refused') };
 
   function daysUntil(iso) {
     var d = new Date(iso + 'T00:00:00');
@@ -656,11 +731,13 @@
     return Math.round((d - new Date(new Date().toDateString())) / 86400000);
   }
 
-  function sxRow(label, sub, onClick, cls) {
+  // labelLang: the language the label is written in, when it can differ from the page (a rule's title)
+  function sxRow(label, sub, onClick, cls, labelLang) {
     var li = document.createElement('li');
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'sx-row' + (cls ? ' ' + cls : '');
-    b.innerHTML = '<span class="sx-row-main">' + esc(label) + '</span>' +
+    var mainLang = labelLang && labelLang !== OwedI18n.lang ? ' lang="' + esc(labelLang) + '"' : '';
+    b.innerHTML = '<span class="sx-row-main"' + mainLang + '>' + esc(label) + '</span>' +
       (sub ? '<span class="sx-row-sub">' + esc(sub) + '</span>' : '');
     if (onClick) b.addEventListener('click', onClick);
     li.appendChild(b);
@@ -669,7 +746,7 @@
 
   function openRule(itemId, ruleId) {
     var item = S.getItem(itemId);
-    if (!item) { toast('That thing is no longer on your shelf.'); return; }
+    if (!item) { toast(OwedI18n.t('app.shelf.gone')); return; }
     showResults(item);
     var m = findMatch(ruleId);
     if (m && isWide()) selectRule(m, { focus: true });
@@ -699,7 +776,7 @@
     dueList.innerHTML = '';
     soon.slice(0, 2).forEach(function (d) {
       dueList.appendChild(sxRow(d.item.name || itemLabel(d.item),
-        fmtDate(d.rule.deadline) + ' · ' + (d.left === 0 ? 'today' : d.left + (d.left === 1 ? ' day left' : ' days left')),
+        fmtDate(d.rule.deadline) + ' · ' + (d.left === 0 ? OwedI18n.t('app.side.dueToday') : counted('app.side.daysLeft', d.left)),
         function () { openRule(d.item.id, d.rule.id); }, d.left <= 30 ? 'is-soon' : ''));
     });
     due.hidden = !soon.length;
@@ -716,7 +793,7 @@
     clList.innerHTML = '';
     claims.slice(0, 2).forEach(function (c) {
       var word = CLAIM_WORD[c.state] || c.state;
-      var when = c.at ? new Date(c.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '';
+      var when = c.at ? localDate(new Date(c.at), { day: 'numeric', month: 'short' }) : '';
       clList.appendChild(sxRow(c.item.name || itemLabel(c.item),
         word + (when ? ' · ' + when : ''),
         function () { openRule(c.item.id, c.ruleId); }, 'is-' + c.state));
@@ -727,7 +804,8 @@
     var recent = (S.getRecent && S.getRecent()) || [];
     rcList.innerHTML = '';
     recent.slice(0, 2).forEach(function (r) {
-      rcList.appendChild(sxRow(r.title || 'A rule', '', function () { openRule(r.itemId, r.ruleId); }));
+      // entries saved before languages existed have no lang: their titles were English
+      rcList.appendChild(sxRow(r.title || OwedI18n.t('app.side.recentUntitled'), '', function () { openRule(r.itemId, r.ruleId); }, '', r.title ? (r.lang || 'en') : ''));
     });
     rc.hidden = !recent.length;
 
@@ -782,17 +860,17 @@
           statusHTML(summarise(matches)) +
         '</button>' +
         '<button class="srow-x" type="button" data-remove="' + esc(item.id) + '" ' +
-          'aria-label="Remove ' + label + '" title="Remove">' + ico('x') + '</button>';
+          'aria-label="' + esc(OwedI18n.t('app.shelf.remove', { name: item.name || itemLabel(item) })) + '" title="' + esc(OwedI18n.t('app.shelf.removeTitle')) + '">' + ico('x') + '</button>';
       el.shelfList.appendChild(li);
     });
 
     var hiddenCount = shelf.length - limit;
     el.shelfMore.hidden = hiddenCount <= 0;
-    if (hiddenCount > 0) el.shelfMore.textContent = 'Show ' + hiddenCount + ' more';
+    if (hiddenCount > 0) el.shelfMore.textContent = counted('app.shelf.showMore', hiddenCount);
 
     if (totalNew && !renderShelf.announced) {
       renderShelf.announced = true;
-      toast(totalNew + ' new ' + (totalNew === 1 ? 'rule' : 'rules') + ' matched things on your shelf.');
+      toast(counted('app.shelf.newRules', totalNew));
     }
   }
 
@@ -832,7 +910,7 @@
     var fallback = el.addBtn.offsetParent ? el.addBtn : el.shelfToggle;
     (nextRow || fallback).focus();
 
-    toast('Removed ' + (item.name || 'that') + ' from your shelf.');
+    toast(item.name ? OwedI18n.t('app.shelf.removed', { name: item.name }) : OwedI18n.t('app.shelf.removedUnnamed'));
   }
 
   el.shelfList.addEventListener('click', function (e) {
@@ -922,7 +1000,7 @@
       : '';
   }
   var COMMON_BRANDS = ['Apple', 'Samsung', 'Sony', 'Bose', 'Dyson', 'Whirlpool', 'DeWalt'];
-  var CANT_REMEMBER = 'Can’t remember — that’s fine';
+  var CANT_REMEMBER = OwedI18n.t('app.wizard.cantRemember');
   var PAY_ICON = { visa: 'card', mastercard: 'card', amex: 'card', discover: 'card', debit: 'card', cash: 'coins' };
 
   // populate static option lists once
@@ -1001,7 +1079,7 @@
     wizEls.serial.value = wiz.serial || '';
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
-    showPhoto(wiz.photo, wiz.photo ? 'Photo saved with this item.' : '');
+    showPhoto(wiz.photo, wiz.photo ? OwedI18n.th('app.photo.savedWithItem') : '');
     wizEls.err.hidden = true; document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1');
     // the typed answers show only when there is something in them
     setFallback(1, true);   // the model field always shows: specific things get specific rules
@@ -1057,7 +1135,7 @@
     var other = wiz.brandOther || (b && !brandIsCommon(b));
     wizEls.brandChips.innerHTML = COMMON_BRANDS.map(function (x) {
       return optRow('data-brand="' + esc(x) + '"', '', x, !other && x.toLowerCase() === b.toLowerCase());
-    }).join('') + optRow('data-brand=""', '', 'Other brand', !!other);
+    }).join('') + optRow('data-brand=""', '', OwedI18n.t('app.wizard.otherBrand'), !!other);
     roveTabs(wizEls.brandChips);
   }
 
@@ -1197,37 +1275,33 @@
      what was readable — and, when no model was readable, where to find one. */
   function photoNote(r, did) {
     if (!did || !r || !r.name) {
-      return 'Photo saved. <b>I could not tell what this is</b> — type what it is below and I will not guess.';
+      return OwedI18n.th('app.photo.unsure');
     }
     var seen = [r.name];
-    if (r.condition) seen.push(r.condition);
+    if (r.condition) seen.push(OwedI18n.t(CONDITION_KEY[r.condition]));
     (r.features || []).forEach(function (f) { seen.push(f); });
-    var out = '<b>From the photo:</b> ' + esc(seen.join(' · ')) + '.';
-    if (r.serial) out += ' <b>Serial ' + esc(r.serial) + '.</b>';
-    if (!r.model) {
-      out += ' <b>No model number in shot</b> — it is ' + modelHint(r.category) +
-        '. Photograph that and I can match the exact rules, or ' +
-        '<button class="wiz-paste" type="button" data-paste>paste it here</button>.';
-    }
-    return out + ' Change anything below that is wrong.';
+    var out = OwedI18n.th('app.photo.seen', { seen: seen.join(' · ') });
+    if (r.serial) out += ' ' + OwedI18n.th('app.photo.serial', { serial: r.serial });
+    if (!r.model) out += ' ' + OwedI18n.th('app.photo.noModel', { hint: modelHint(r.category) });
+    return out + ' ' + OwedI18n.th('app.photo.changeBelow');
   }
 
   /* where the model number is printed, per kind of thing — the one piece of
      knowledge that turns a photo into an exact product */
   function modelHint(cat) {
     var H = {
-      phone: 'in Settings, under About, or engraved on the back',
-      laptop: 'on the underside, or in About This Mac / System',
-      headphones: 'inside the headband, or under the ear cushion',
-      watch: 'on the back of the case',
-      appliance_large: 'on a sticker inside the door or around the back',
-      appliance_small: 'on a plate underneath',
-      tool: 'on the motor housing, next to the serial number',
-      kitchen: 'stamped on the base',
-      shoes: 'on the tongue label, inside the shoe',
-      furniture: 'on a tag under the seat or behind the frame'
+      phone: 'app.photo.hint.phone',
+      laptop: 'app.photo.hint.laptop',
+      headphones: 'app.photo.hint.headphones',
+      watch: 'app.photo.hint.watch',
+      appliance_large: 'app.photo.hint.applianceLarge',
+      appliance_small: 'app.photo.hint.applianceSmall',
+      tool: 'app.photo.hint.tool',
+      kitchen: 'app.photo.hint.kitchen',
+      shoes: 'app.photo.hint.shoes',
+      furniture: 'app.photo.hint.furniture'
     };
-    return H[cat] || 'on a label, a plate, or the box it came in';
+    return OwedI18n.t(H[cat] || 'app.photo.hint.other');
   }
 
   function applyIdentified(r) {
@@ -1235,8 +1309,13 @@
     if (!r || r.unsure) return false;          // the checks did not agree: say nothing
     // the name says WHAT the thing is — "WH-1000XM4" on its own means nothing
     // with no readable model, a colour still makes the thing recognisable on the shelf
-    var built = [r.brand, r.model, r.kind].filter(Boolean).join(' ').trim();
-    if (!r.brand && !r.model && r.colour) built = (r.colour + ' ' + r.kind).trim();
+    // r.kind stays the English word the checks agreed on; the reader sees it in their language
+    var name = { brand: r.brand, model: r.model, colour: r.colour, kind: r.kind ? OwedI18n.t('app.photo.kind.' + r.kind, null, r.kind) : '' };
+    var built = (r.brand && r.model ? OwedI18n.t('app.photo.name.brandModel', name)
+      : r.brand ? OwedI18n.t('app.photo.name.brand', name)
+      : r.model ? OwedI18n.t('app.photo.name.model', name)
+      : name.kind).trim();
+    if (!r.brand && !r.model && r.colour) built = OwedI18n.t('app.photo.name.colour', name).trim();
     r.name = built;
     if (r.serial && !wiz.serial.trim()) {
       wiz.serial = r.serial; wizEls.serial.value = r.serial; changed = true;
@@ -1265,6 +1344,8 @@
     'pan pot skillet kettle cookware knife ' +
     'shoes boots trainers sneakers jacket coat backpack bag ' +
     'sofa couch chair table bed mattress desk lamp').split(' ');
+  // the model answers these in English and they are checked in English; this is only the word the reader sees
+  var CONDITION_KEY = { 'looks new': 'app.photo.condition.looksNew', used: 'app.photo.condition.used', damaged: 'app.photo.condition.damaged' };
 
   function askModel(session, text, file) {
     return session.prompt([{ role: 'user', content: [{ type: 'text', value: text }, { type: 'image', value: file }] }]);
@@ -1399,13 +1480,13 @@
         return;
       }
       sheet.hidden = false;
-      note.textContent = 'Starting the camera…';
+      note.textContent = OwedI18n.t('app.camera.starting');
       // a dismissed permission prompt never resolves: do not sit here for ever
       var settled = false;
       var giveUp = setTimeout(function () {
         if (settled) return;
         settled = true; stop();
-        toast('The camera did not start — pick a photo instead.');
+        toast(OwedI18n.t('app.camera.timedOut'));
         wizEls.photo.click();
       }, 8000);
       navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
@@ -1413,13 +1494,13 @@
           if (settled) { s.getTracks().forEach(function (t) { t.stop(); }); return; }
           settled = true; clearTimeout(giveUp);
           stream = s; view.srcObject = s; view.play();
-          note.textContent = 'Fill the frame with the label or the model number.';
+          note.textContent = OwedI18n.t('app.camera.fillFrame');
         })
         .catch(function () {
           if (settled) return;
           settled = true; clearTimeout(giveUp);
           stop();
-          toast('The camera is not available — pick a photo instead.');
+          toast(OwedI18n.t('app.camera.unavailable'));
           wizEls.photo.click();
         });
     });
@@ -1440,9 +1521,9 @@
 
   function usePhotoFile(file) {
     shrinkPhoto(file, function (dataUrl) {
-      if (!dataUrl) { toast('That file could not be read as a photo.'); return; }
+      if (!dataUrl) { toast(OwedI18n.t('app.photo.unreadable')); return; }
       wiz.photo = dataUrl;
-      showPhoto(dataUrl, 'Looking at your photo…');
+      showPhoto(dataUrl, OwedI18n.th('app.photo.looking'));
       identifyWithBuiltInAI(file).then(function (r) {
         r = r || {};
         var did = applyIdentified(r);
@@ -1453,15 +1534,13 @@
         return readBarcode(file).then(function (code) {
           if (code) {
             if (!wiz.name.trim()) { wiz.name = code; wizEls.name.value = code; updateContinue(); }
-            showPhoto(dataUrl, '<b>Barcode ' + esc(code) + ' read.</b> That is the product code — put the name beside it if you know it.');
+            showPhoto(dataUrl, OwedI18n.th('app.photo.barcode', { code: code }));
             return;
           }
           // most phones have no on-device model: help the reader get the number
           // off the photo themselves — iOS and Android can both copy text from
           // a picture, and one tap pastes it straight into the name
-          showPhoto(dataUrl, 'Photo saved. <b>Where the model number hides:</b> ' + modelHint(wiz.category) +
-            '. Press and hold the number in your photo to copy it, then ' +
-            '<button class="wiz-paste" type="button" data-paste>paste it here</button>.');
+          showPhoto(dataUrl, OwedI18n.th('app.photo.whereModel', { hint: modelHint(wiz.category) }));
         });
       });
     });
@@ -1475,7 +1554,7 @@
       t = String(t || '').trim().slice(0, 80);
       if (!t) { wizEls.name.focus(); return; }
       wiz.name = t; wizEls.name.value = t; setFallback(1, true); updateContinue();
-      toast('Pasted into the name.');
+      toast(OwedI18n.t('app.photo.pasted'));
     }, function () { wizEls.name.focus(); });
   });
 
@@ -1491,8 +1570,8 @@
       s.classList.toggle('is-on', Number(s.dataset.step) === wiz.step);
     });
     wizEls.bar.style.width = (wiz.step / 4 * 100) + '%';
-    wizEls.count.textContent = 'Question ' + wiz.step + ' of 4';
-    wizEls.next.textContent = wiz.step === 4 ? 'See who owes you' : 'Next';
+    wizEls.count.textContent = OwedI18n.t('app.wizard.count', { step: wiz.step, total: 4 });
+    wizEls.next.textContent = wiz.step === 4 ? OwedI18n.t('app.wizard.finish') : OwedI18n.t('app.wizard.next');
     // skip only where there is no "can't remember" row to do the same job
     wizEls.skip.hidden = wiz.step !== 2;
     // no Back on the start screen; on question 1 it appears only while editing
@@ -1511,7 +1590,7 @@
       if (!wiz.name.trim() && !wiz.category) {
         // said twice on purpose: the toast announces it, the line under the
         // field stays until there is an answer
-        toast('Pick or type something first.');
+        toast(OwedI18n.t('app.wizard.pickFirst'));
         setFallback(1, true);
         wizEls.err.hidden = false;
         document.getElementById('wizName').setAttribute('aria-describedby', 'wizHelp1 wizErr');
@@ -1543,8 +1622,12 @@
   });
 
   function finishWizard() {
+    var madeUp = itemLabel({ brand: wiz.brand, category: wiz.category });
     var payload = {
-      name: wiz.name.trim() || itemLabel({ brand: wiz.brand, category: wiz.category }),
+      name: wiz.name.trim() || madeUp,
+      // true when nobody typed a name (or kept the pre-filled one): the claim message then says
+      // "un téléphone Samsung" rather than quoting the label "Téléphone Samsung"
+      autoName: !wiz.name.trim() || wiz.name.trim() === madeUp,
       brand: wiz.brand.trim(),
       category: wiz.category || 'other',
       ageMonths: wiz.ageMonths,   // null = the user could not remember; never invent an age
@@ -1609,7 +1692,7 @@
       C.categoryLabel(item.category),
       item.brand,
       E.agePhrase(item.ageMonths),
-      item.serial ? 'S/N ' + item.serial : ''
+      item.serial ? OwedI18n.t('app.results.serial', { serial: item.serial }) : ''
     ].filter(Boolean).join(' · ');
 
     // Never say "nothing matched" when the truth is "the rulebook isn't here yet".
@@ -1617,9 +1700,8 @@
       current.matches = [];
       resEls.summary.hidden = false;
       resEls.summary.innerHTML = '<p class="res-state">' + (corpusFailed
-        ? '<b>The rulebook did not load.</b>This is not a result about your item — reload the page. ' +
-          'If you opened the files directly, serve them over http instead.'
-        : '<b>Still opening the rulebook.</b>One moment — this will fill in by itself.') + '</p>';
+        ? OwedI18n.th('app.results.failed')
+        : OwedI18n.th('app.results.loading')) + '</p>';
       resEls.groups.innerHTML = '';
       resEls.none.hidden = true;
       resEls.filter.hidden = true;
@@ -1656,7 +1738,7 @@
       var worths = leads.filter(function (m) { return m.strength !== 'strong'; });
       if (strongs.length) {
         resEls.groups.innerHTML = E.group(strongs).map(renderGroup).join('') +
-          renderFold(worths, false, 'Worth asking', 'Fits, with one thing to check.', 'worth asking') +
+          renderFold(worths, false, STRENGTH['worth asking'].plural, OwedI18n.t('app.results.fold.worthNote'), 'worth asking') +
           renderLongShots(longs, false);
       } else {
         resEls.groups.innerHTML = E.group(leads).map(renderGroup).join('') + renderLongShots(longs, !leads.length);
@@ -1682,10 +1764,9 @@
   function renderSummary(n) {
     // one line; the chips underneath carry the counts by strength
     if (n.ask) {
-      return '<p class="res-line"><b class="res-n tnum">' + n.ask + '</b> ' +
-        (n.ask === 1 ? 'place' : 'places') + ' may owe you a free repair.</p>';
+      return '<p class="res-line">' + counted('app.results.summary.ask', n.ask, true) + '</p>';
     }
-    return '<p class="res-line none">No strong lead' + (n.long ? ' — only long shots.' : '.') + '</p>';
+    return '<p class="res-line none">' + OwedI18n.th(n.long ? 'app.results.summary.onlyLong' : 'app.results.summary.none') + '</p>';
   }
 
   var startMarked = false;
@@ -1709,34 +1790,55 @@
      list of real leads is never broken up by "show more" buttons. When there
      is no real lead, the long shots are the answer and stay open. */
   function renderLongShots(longs, open) {
-    return renderFold(longs, open, 'Long shots', 'Probably not you. Kept so nothing is hidden.', 'long shot');
+    return renderFold(longs, open, STRENGTH['long shot'].plural, OwedI18n.t('app.results.fold.longNote'), 'long shot');
   }
+  /* word is the engine's strength id ('worth asking' | 'long shot'), never shown:
+     the fold's words are whole phrases per strength, counted where they count */
+  var FOLD_WORDS = {
+    'worth asking': { show: 'app.results.fold.showWorth', hide: 'app.results.fold.hideWorth' },
+    'long shot':    { show: 'app.results.fold.showLong',  hide: 'app.results.fold.hideLong' }
+  };
   function renderFold(list, open, title, note, word) {
     if (!list.length) return '';
-    var label = list.length + ' ' + (list.length === 1 ? word : (word === 'long shot' ? 'long shots' : word));
+    var words = FOLD_WORDS[word] || FOLD_WORDS['long shot'];
     return '<section class="rgroup rgroup-long">' +
       '<h2 class="rgroup-head">' +
         '<span class="rgroup-ico" aria-hidden="true">' + ico('box', 18) + '</span>' +
-        '<span class="rgroup-title">' + title + '</span>' +
+        '<span class="rgroup-title">' + esc(title) + '</span>' +
         '<span class="sr-only">, </span>' +
         '<span class="rgroup-count tnum">' + list.length + '</span>' +
       '</h2>' +
       '<div class="rgroup-list">' +
         '<div class="rgroup-more"' + (open ? '' : ' hidden') + '>' + list.map(renderCard).join('') + '</div>' +
-        (open ? '' : '<button class="rgroup-toggle" type="button" data-more data-hide="Hide ' + (word === 'long shot' ? 'long shots' : word) + '" aria-expanded="false">Show ' + label + '</button>') +
+        (open ? '' : '<button class="rgroup-toggle" type="button" data-more data-hide="' + esc(OwedI18n.t(words.hide)) + '" aria-expanded="false">' + counted(words.show, list.length, true) + '</button>') +
       '</div>' +
     '</section>';
   }
 
-  function kv(icon, label, valueHTML) {
-    return '<div><dt>' + ico(icon, 18) + label + '</dt><dd>' + valueHTML + '</dd></div>';
+  /* ddAttr: extra attributes for the value, e.g. ' lang="en"' (empty on an English page) */
+  function kv(icon, label, valueHTML, ddAttr) {
+    return '<div><dt>' + ico(icon, 18) + label + '</dt><dd' + (ddAttr || '') + '>' + valueHTML + '</dd></div>';
   }
 
-  var NEW_TAB = '<span class="sr-only"> (opens in a new tab)</span>';
+  var NEW_TAB = '<span class="sr-only"> ' + OwedI18n.th('app.link.newTab') + '</span>';
 
-  function ruleLink(url, cls) {
+  /* A rule's words are in the rule's own language (rule._lang), which is English
+     wherever data/coverage.<lang>.json has no translation for it. On a page in
+     another language they are marked, so a screen reader reads them as written.
+     Every one of these is empty when the two languages match, as they always do
+     on an English page. */
+  function ruleLang(r) { return (r && r._lang) || 'en'; }
+  function langAttr(r) { return ruleLang(r) !== OwedI18n.lang ? ' lang="' + esc(ruleLang(r)) + '"' : ''; }
+  function inRuleLang(r, html) { return ruleLang(r) !== OwedI18n.lang ? '<span lang="' + esc(ruleLang(r)) + '">' + html + '</span>' : html; }
+  // words no translation file carries (a contact line, an explainer's name) are always English
+  var EN_ATTR = OwedI18n.lang !== 'en' ? ' lang="en"' : '';
+
+  /* pageLang: set only inside an element marked as the rule's language, so the
+     link's own words go back to the page's language */
+  function ruleLink(url, cls, pageLang) {
     if (!/^https?:\/\//i.test(String(url || ''))) return '';
-    return '<a class="' + cls + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">Read the rule ' + ico('out', 16) + NEW_TAB + '</a>';
+    return '<a class="' + cls + '" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"' + (pageLang ? ' lang="' + esc(OwedI18n.lang) + '"' : '') + '>' +
+      OwedI18n.th('app.rule.read') + ' ' + ico('out', 16) + NEW_TAB + '</a>';
   }
 
   /* Someone else's page about the same law — The Repair Association keeps the
@@ -1746,11 +1848,15 @@
     if (!ex || !/^https?:\/\//i.test(String(ex.url || ''))) return '';
     var who = [ex.org, ex.label].filter(Boolean).join(': ');
     return '<a class="' + cls + '" href="' + esc(ex.url) + '" target="_blank" rel="noopener noreferrer">' +
-      esc(who) + ' ' + ico('out', 16) + NEW_TAB + '</a>';
+      (EN_ATTR ? '<span' + EN_ATTR + '>' + esc(who) + '</span>' : esc(who)) + ' ' + ico('out', 16) + NEW_TAB + '</a>';
   }
 
   /* the short source word in a row's first column */
-  var SRC_WORD = { manufacturer: 'The maker', card: 'Your card', settlement: 'A payout', program: 'Free repair', statutory: 'The law', retailer: 'The shop' };
+  var SRC_WORD = {
+    manufacturer: OwedI18n.t('app.card.src.manufacturer'), card: OwedI18n.t('app.card.src.card'),
+    settlement: OwedI18n.t('app.card.src.settlement'), program: OwedI18n.t('app.card.src.program'),
+    statutory: OwedI18n.t('app.card.src.statutory'), retailer: OwedI18n.t('app.card.src.retailer')
+  };
 
   /* one row, Cal.com's bookings geometry: facts · headline + reason + who · action */
   function renderCard(m) {
@@ -1762,12 +1868,12 @@
     if (isStart) startMarked = true;
 
     // facts are built only from fields that exist; nothing is guessed
-    var win = firstClause(r.window_note, 6);
-    var col1 = '<span class="rc-src">' + esc(SRC_WORD[r.source_type] || 'A rule') + '</span>' +
+    var win = firstClause(r.window_note, 6, r._lang);
+    var col1 = '<span class="rc-src">' + esc(SRC_WORD[r.source_type] || OwedI18n.t('app.card.src.other')) + '</span>' +
       (win ? '<span class="rc-when">' + esc(win) + '</span>' : '') +
       // an unknown purchase date on a timed rule: the clock cannot be read yet, and the row says so
-      (m.timing === 'unknown' ? '<span class="rc-deadline">Date: check your receipt</span>' : '') +
-      (r.deadline ? '<span class="rc-deadline">By ' + esc(fmtDate(r.deadline)) + '</span>' : '');
+      (m.timing === 'unknown' ? '<span class="rc-deadline">' + OwedI18n.th('app.card.dateUnknown') + '</span>' : '') +
+      (r.deadline ? '<span class="rc-deadline">' + OwedI18n.th('app.card.by', { date: fmtDate(r.deadline) }) + '</span>' : '');
 
     // the two buttons repeat on every row; the title tells them apart for AT
     var tid = 'rt-' + esc(r.id);
@@ -1777,12 +1883,12 @@
     return '<article class="rcard ' + s.cls + (isStart ? ' is-start' : '') + '" data-rule="' + esc(r.id) + '">' +
       '<div class="rc-row">' +
         '<div class="rc-main">' +
-          (isStart ? '<span class="rc-start">Start here</span>' : '') +
-          '<h3 class="rc-title" id="' + tid + '"><button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') + '>' + esc(r.title) + '</button></h3>' +
-          '<div class="rc-meta"><span class="rc-src">' + esc(SRC_WORD[r.source_type] || 'A rule') + (win ? ' · ' + esc(win) : '') + '</span>' +
-            (r.deadline ? '<span class="rc-deadline">By ' + esc(fmtDate(r.deadline)) + '</span>' : '') + '</div>' +
+          (isStart ? '<span class="rc-start">' + OwedI18n.th('app.card.startHere') + '</span>' : '') +
+          '<h3 class="rc-title" id="' + tid + '"><button class="rc-details" type="button" data-toggle' + (wide ? '' : ' aria-expanded="false"') + langAttr(r) + '>' + esc(r.title) + '</button></h3>' +
+          '<div class="rc-meta"><span class="rc-src">' + esc(SRC_WORD[r.source_type] || OwedI18n.t('app.card.src.other')) + (win ? ' · ' + inRuleLang(r, esc(win)) : '') + '</span>' +
+            (r.deadline ? '<span class="rc-deadline">' + OwedI18n.th('app.card.by', { date: fmtDate(r.deadline) }) + '</span>' : '') + '</div>' +
         '</div>' +
-        '<div class="rc-side">' + pill(m.strength) + '<button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">Get script</button></div>' +
+        '<div class="rc-side">' + pill(m.strength) + '<button class="btn btn-accent" type="button" data-script aria-describedby="' + tid + '">' + OwedI18n.th('app.card.getScript') + '</button></div>' +
       '</div>' +
       '<div class="rc-body" hidden>' + docBody(m) + '</div>' +
     '</article>';
@@ -1795,47 +1901,96 @@
   function docBody(m, h) {
     var r = m.rule;
     h = h || 'h4';   // h4 under a card's h3 title; h3 under the rail's h2
-    return '<p class="rc-get">' + esc(r.what_you_get) + '</p>' +
-      '<' + h + ' class="rc-h">How to claim</' + h + '>' +
-      '<ol class="rc-steps" role="list">' + steps(r.how_to_claim).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' +
+    var L = langAttr(r);
+    // a contact made into a link is a number or an address; one left as words is English
+    var contact = r.contact ? linkify(r.contact) : '';
+    return (L ? '<p class="rc-why"' + (OwedI18n.langOf('app.rule.englishOnly') !== OwedI18n.lang ? ' lang="en"' : '') + '>' + OwedI18n.th('app.rule.englishOnly') + '</p>' : '') +
+      '<p class="rc-get"' + L + '>' + esc(r.what_you_get) + '</p>' +
+      '<' + h + ' class="rc-h">' + OwedI18n.th('app.doc.howToClaim') + '</' + h + '>' +
+      '<ol class="rc-steps" role="list"' + L + '>' + steps(r.how_to_claim, r._lang).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' +
       '<dl class="rc-kv">' +
-        kv('clock', 'Window', esc(r.window_note)) +
-        (r.deadline ? kv('calendar', 'Deadline', esc(fmtDate(r.deadline))) : '') +
-        (r.contact ? kv('phoneCall', 'Contact', linkify(r.contact)) : '') +
-        (r.source_url ? kv('doc', 'Source', ruleLink(r.source_url, 'rc-link')) : '') +
-        (r.explainer && r.explainer.url ? kv('scales', 'Explainer', orgLink(r.explainer, 'rc-link')) : '') +
+        kv('clock', OwedI18n.th('app.doc.window'), esc(r.window_note), L) +
+        (r.deadline ? kv('calendar', OwedI18n.th('app.doc.deadline'), esc(fmtDate(r.deadline))) : '') +
+        (r.contact ? kv('phoneCall', OwedI18n.th('app.doc.contact'), contact, contact.charAt(0) === '<' ? '' : EN_ATTR) : '') +
+        (r.source_url ? kv('doc', OwedI18n.th('app.doc.source'), ruleLink(r.source_url, 'rc-link')) : '') +
+        (r.explainer && r.explainer.url ? kv('scales', OwedI18n.th('app.doc.explainer'), orgLink(r.explainer, 'rc-link')) : '') +
       '</dl>' +
-      (m.reason ? '<p class="rc-why">Why it matched: ' + esc(m.reason) + '.</p>' : '');
+      (m.reason ? '<p class="rc-why">' + OwedI18n.th('app.doc.why', { reason: m.reason }) + '</p>' : '');
   }
 
   /* the first clause of a note, at most `max` words, never ending on a
      dangling little word — the full note is one tap away under Details */
   var DANGLING = /^(a|an|the|and|or|of|from|for|after|if|when|with|on|in|to|at|by|than|but|as|that|which|who|once|until|unless|while|is|are|was|be|you|your|it|its|they|we|this|per|up|any|about)$/i;
-  function firstClause(text, max) {
+  // i18n-data: the same little words in French and Spanish, by the language of the RULE's text
+  // (lowercase; an elided form is written with a straight apostrophe)
+  var DANGLING_WORDS = {
+    fr: ['le', 'la', 'les', "l'", 'un', 'une', 'des', 'du', 'de', "d'", 'au', 'aux', 'à', 'et', 'ou', 'ni', 'mais',
+      'en', 'pour', 'par', 'sur', 'sous', 'dans', 'avec', 'sans', 'chez', 'vers', 'entre', 'contre', 'selon', 'après', 'avant',
+      'depuis', 'dès', "jusqu'", "jusqu'à", 'pendant', 'si', "s'", 'que', "qu'", 'qui', 'dont', 'où', 'quand', 'lorsque', "lorsqu'", 'comme',
+      'ce', 'cet', 'cette', 'ces', "c'", 'son', 'sa', 'ses', 'votre', 'vos', 'leur', 'leurs', 'mon', 'ma', 'mes', 'notre', 'nos',
+      'vous', 'il', 'elle', 'ils', 'elles', 'on', 'nous', 'se', 'ne', "n'", 'y', 'est', 'sont', 'était', 'être', 'a', 'ont',
+      'plus', 'moins', 'tout', 'toute', 'tous', 'toutes', 'chaque', 'environ'],
+    es: ['el', 'la', 'los', 'las', 'lo', 'un', 'una', 'unos', 'unas', 'de', 'del', 'al', 'a', 'y', 'e', 'o', 'u', 'ni', 'pero',
+      'en', 'con', 'sin', 'por', 'para', 'desde', 'hasta', 'hacia', 'entre', 'sobre', 'tras', 'ante', 'bajo', 'según', 'durante',
+      'si', 'que', 'quien', 'quienes', 'cual', 'cuales', 'cuando', 'donde', 'como', 'mientras',
+      'este', 'esta', 'estos', 'estas', 'ese', 'esa', 'esos', 'esas', 'su', 'sus', 'tu', 'tus', 'mi', 'mis', 'nuestro', 'nuestra',
+      'usted', 'ustedes', 'se', 'le', 'les', 'me', 'te', 'nos', 'es', 'son', 'está', 'están', 'fue', 'ser', 'ha', 'han',
+      'más', 'menos', 'cada', 'cualquier', 'todo', 'toda', 'todos', 'todas', 'aproximadamente']
+  };
+  function dangles(word, lang) {
+    var list = DANGLING_WORDS[lang];
+    if (!list) return DANGLING.test(word);
+    return list.indexOf(String(word).toLowerCase().replace(/’/g, "'")) !== -1;
+  }
+  /* lang: the rule's language (rule._lang); English when not given */
+  function firstClause(text, max, lang) {
     var t = String(text || '').trim();
     if (!t) return '';
     var clause = t.split(/\.\s|,\s|;\s|:\s|\s[—–-]\s|\s\(/)[0].replace(/\.+$/, '');
+    // French sets a no-break space before : and ; so the clause can end on one
+    if (DANGLING_WORDS[lang]) clause = clause.replace(/\s+$/, '');
     var words = clause.split(/\s+/);
     if (words.length <= max) return clause;
     words = words.slice(0, max);
-    while (words.length > 2 && DANGLING.test(words[words.length - 1])) words.pop();
+    while (words.length > 2 && dangles(words[words.length - 1], lang)) words.pop();
     return words.join(' ') + '…';
   }
 
   /* how_to_claim as numbered steps: one sentence each, at most four —
      anything past the fourth joins the last so no instruction is dropped */
   var ABBREV = /(^|\s)([A-Z]|St|Ave|Rd|Dr|Mr|Mrs|Ms|No|Inc|Ltd|Co|vs|approx|e\.g|i\.e|etc)\.$/;
-  function steps(text) {
-    var raw = String(text || '').trim().split(/([.!?]+)\s+/);
+  // i18n-data: where a sentence ends, by the language of the RULE's text. English is as it
+  // always was. French and Spanish also end on … and past a closing » ” " ) (French sets a
+  // space before »), take a lowercase start after « “ ( ¿ ¡ as a continuation, accented
+  // letters included, and know their own abbreviations.
+  var SENTENCE = {
+    en: { split: /([.!?]+)\s+/, abbrev: ABBREV, cont: /^[a-z]/ },
+    fr: {
+      split: /([.!?…]+(?:\s?»|[”")\]])*)\s+/,
+      abbrev: /(^|[\s(«])(\p{Lu}|MM|Mme|Mmes|Mlle|Dr|Pr|Me|St|Ste|av|Av|boul|Boul|bd|Bd|ch|app|no|No|tél|env|min|max|etc|ex|cf|Cie|cie|Inc|inc|Ltée|ltée|art|c\.-à-d|J\.-C)\.$/u,
+      cont: /^[«“"(\s]*\p{Ll}/u
+    },
+    es: {
+      split: /([.!?…]+(?:\s?»|[”")\]])*)\s+/,
+      abbrev: /(^|[\s(¿¡«])(\p{Lu}|Sr|Sra|Srta|Sres|Dr|Dra|Ud|Uds|Vd|Vds|Av|av|Avda|avda|núm|Núm|nro|Nro|tel|Tel|aprox|etc|ej|pág|art|Cía|cía|S\.A|S\.L|EE\.UU|dcha|izq)\.$/u,
+      cont: /^[«“"(¿¡\s]*\p{Ll}/u
+    }
+  };
+  /* lang: the rule's language (rule._lang); English when not given */
+  function steps(text, lang) {
+    var rules = SENTENCE[lang] || SENTENCE.en;
+    var raw = String(text || '').trim().split(rules.split);
     var out = [];
     for (var i = 0; i < raw.length; i += 2) {
       var s = (raw[i] || '').trim();
       if (!s) continue;
+      // French keeps the no-break space it sets before ! ? and »
+      if (rules !== SENTENCE.en) s = raw[i].replace(/^\s+/, '');
       s += (raw[i + 1] || '');
       // "805 W. 5th Street" / "e.g. the receipt": an abbreviation or a
       // lowercase continuation is not a sentence break — rejoin
       var prev = out[out.length - 1];
-      if (prev && (ABBREV.test(prev) || /^[a-z]/.test(s))) out[out.length - 1] = prev + ' ' + s;
+      if (prev && (rules.abbrev.test(prev) || rules.cont.test(s))) out[out.length - 1] = prev + ' ' + s;
       else out.push(s);
     }
     if (out.length > 4) out = out.slice(0, 3).concat([out.slice(3).join(' ')]);
@@ -1843,11 +1998,15 @@
   }
 
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  /* "2026-11-02" reads as "2 November 2026"; anything else is shown as is */
+  /* "2026-11-02" reads as "2 November 2026"; anything else is shown as is.
+     English keeps its own spelling-out (it prints what it always printed, even for
+     a day the month does not have); another language asks OwedI18n.date, which
+     shows an impossible day as written */
   function fmtDate(s) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '').trim());
     var d = m ? Number(m[3]) : 0;
     if (!m || !MONTHS[Number(m[2]) - 1] || d < 1 || d > 31) return String(s || '');
+    if (OwedI18n.lang !== 'en') return OwedI18n.date(m[0]);
     return d + ' ' + MONTHS[Number(m[2]) - 1] + ' ' + m[1];
   }
 
@@ -1874,7 +2033,7 @@
         var opening = box.hidden;
         box.hidden = !opening;
         if (!moreBtn.dataset.show) moreBtn.dataset.show = moreBtn.textContent;
-        moreBtn.textContent = opening ? (moreBtn.dataset.hide || 'Hide') : moreBtn.dataset.show;
+        moreBtn.textContent = opening ? (moreBtn.dataset.hide || OwedI18n.t('app.results.fold.hide')) : moreBtn.dataset.show;
         moreBtn.setAttribute('aria-expanded', opening ? 'true' : 'false');
         if (opening) { var firstToggle = box.querySelector('[data-toggle]'); if (firstToggle) firstToggle.focus(); }
         else moreBtn.scrollIntoView({ block: 'nearest' });
@@ -1909,7 +2068,7 @@
 
   /* ---------------- detail panel (>= 1200px) ---------------- */
   function selectRule(m, opts) {
-    if (m && m.rule && S.pushRecent) S.pushRecent({ ruleId: m.rule.id, itemId: current.item && current.item.id, title: m.rule.title });
+    if (m && m.rule && S.pushRecent) S.pushRecent({ ruleId: m.rule.id, itemId: current.item && current.item.id, title: m.rule.title, lang: m.rule._lang || 'en' });
     opts = opts || {};
     selected = m;
     Array.prototype.forEach.call(resEls.groups.querySelectorAll('.rcard'), function (c) {
@@ -1934,15 +2093,15 @@
     var s = STRENGTH[m.strength] || STRENGTH['long shot'];
     return '<div class="doc">' +
       '<div class="doc-top">' + ico(SRC_ICON[r.source_type] || 'box', 18) +
-        '<span class="doc-kicker">The rule</span>' + pill(m.strength) +
+        '<span class="doc-kicker">' + OwedI18n.th('app.doc.kicker') + '</span>' + pill(m.strength) +
       '</div>' +
       '<div class="doc-body">' +
-        '<h2 class="dp-title" id="detailTitle" tabindex="-1">' + esc(r.title) + '</h2>' +
+        '<h2 class="dp-title" id="detailTitle" tabindex="-1"' + langAttr(r) + '>' + esc(r.title) + '</h2>' +
         '<p class="dp-key">' + esc(s.key) + '</p>' +
         docBody(m, 'h3') +
       '</div>' +
       '<div class="doc-foot">' +
-        '<button class="btn btn-accent" type="button" data-script>Get the words to say</button>' +
+        '<button class="btn btn-accent" type="button" data-script>' + OwedI18n.th('app.doc.getWords') + '</button>' +
       '</div>' +
     '</div>';
   }
@@ -1981,22 +2140,25 @@
   var scrCurrent = null;
 
   /* the facts the reader must get right in bold: the rule's name, the item,
-     when it was bought — only where a line actually carries them */
-  function boldPhrases(line, phrases) {
+     when it was bought — only where a line actually carries them. The phrases are
+     the values the engine put into the line (the title, the name, the age phrase), so
+     this finds them in any language. langs[i]: a lang for phrase i when it is not
+     in the page's language (the rule's title), else empty */
+  function boldPhrases(line, phrases, langs) {
     var l = String(line), lower = l.toLowerCase();
     var ranges = [];
-    (phrases || []).forEach(function (p) {
+    (phrases || []).forEach(function (p, n) {
       var t = String(p || '').trim();
       if (t.length < 3) return;
       var i = lower.indexOf(t.toLowerCase());
       if (i === -1) return;
       var overlaps = ranges.some(function (r) { return i < r[1] && i + t.length > r[0]; });
-      if (!overlaps) ranges.push([i, i + t.length]);
+      if (!overlaps) ranges.push([i, i + t.length, (langs && langs[n]) || '']);
     });
     ranges.sort(function (a, b) { return a[0] - b[0]; });
     var out = '', at = 0;
     ranges.forEach(function (r) {
-      out += esc(l.slice(at, r[0])) + '<b>' + esc(l.slice(r[0], r[1])) + '</b>';
+      out += esc(l.slice(at, r[0])) + '<b' + (r[2] ? ' lang="' + esc(r[2]) + '"' : '') + '>' + esc(l.slice(r[0], r[1])) + '</b>';
       at = r[1];
     });
     return out + esc(l.slice(at));
@@ -2009,42 +2171,55 @@
     // three panes: the script takes the panel's place and the list stays put
     var inPanel = isWide() && !el.views.results.hidden;
 
+    var L = langAttr(r);
     var rows = '';
-    if (s.who) rows += kv('phoneCall', 'Who', linkify(s.who));
-    rows += kv('doc', 'Rule', esc(r.title) + ruleLink(r.source_url, 'rc-link'));
-    if (s.deadline) rows += kv('calendar', 'Deadline', esc(fmtDate(s.deadline)));
+    if (s.who) rows += kv('phoneCall', OwedI18n.th('app.script.who'), linkify(s.who));
+    // the title is the rule's language and the link beside it the page's; marked on the dd
+    // and the link, not a span, so `dd:has(> a:first-child)` still lines the row up
+    rows += kv('doc', OwedI18n.th('app.script.rule'), esc(r.title) + ruleLink(r.source_url, 'rc-link', !!L), L);
+    if (s.deadline) rows += kv('calendar', OwedI18n.th('app.doc.deadline'), esc(fmtDate(s.deadline)));
 
     // the facts to get right: the rule's name, the thing, when it was bought
     var keyPhrases = [r.title, current.item && current.item.name, E.agePhrase(current.item && current.item.ageMonths)];
+    var keyLangs = [L ? ruleLang(r) : '', '', ''];
+    // a hint in the rule's language carries the age in that language too; bold it there as well
+    // (the hint paragraph already carries the rule's lang, so the <b> needs none of its own)
+    if ((r._lang || 'en') !== OwedI18n.lang) {
+      keyPhrases.push(E.agePhrase(current.item && current.item.ageMonths, r._lang || 'en'));
+      keyLangs.push('');
+    }
+    // the paragraph from the rule's own hint is in the rule's language. engine.script() writes
+    // hello, bought, rule, [serial], [hint], close: with a hint, it is the one before the last
+    var hintAt = L && typeof s.hintIndex === 'number' ? s.hintIndex : -1;
 
     var top = inPanel
       ? '<div class="doc-top">' +
-          '<button class="btn btn-quiet scr-back" id="scrBack" type="button">' + ico('back', 18) + ' Rule</button>' +
-          '<span class="doc-kicker">Your script</span>' +
+          '<button class="btn btn-quiet scr-back" id="scrBack" type="button">' + ico('back', 18) + ' ' + OwedI18n.th('app.script.backToRule') + '</button>' +
+          '<span class="doc-kicker">' + OwedI18n.th('app.script.kicker') + '</span>' +
           pill(m.strength) +
         '</div>'
       : '<div class="doc-top">' +
-          '<button class="iconbtn scr-back" id="scrBack" type="button" aria-label="Back to results">' + ico('back') + '</button>' +
-          '<span class="doc-kicker">Your script</span>' +
+          '<button class="iconbtn scr-back" id="scrBack" type="button" aria-label="' + esc(OwedI18n.t('app.script.backToResults')) + '">' + ico('back') + '</button>' +
+          '<span class="doc-kicker">' + OwedI18n.th('app.script.kicker') + '</span>' +
           pill(m.strength) +
         '</div>';
 
     var html =
       '<div class="scr-card doc">' + top +
         '<div class="doc-body">' +
-          '<h2 class="scr-for"' + (inPanel ? ' id="detailTitle"' : '') + '>What to say</h2>' +
+          '<h2 class="scr-for"' + (inPanel ? ' id="detailTitle"' : '') + '>' + OwedI18n.th('app.script.heading') + '</h2>' +
           '<dl class="scr-kv">' + rows + '</dl>' +
           '<div class="scr-lines">' +
-            s.lines.map(function (l) { return '<p>' + boldPhrases(l, keyPhrases) + '</p>'; }).join('') +
+            s.lines.map(function (l, i) { return '<p' + (i === hintAt ? L : '') + '>' + boldPhrases(l, keyPhrases, keyLangs) + '</p>'; }).join('') +
           '</div>' +
-          '<p class="scr-help">Say it in store, or paste it into their chat or email.</p>' +
+          '<p class="scr-help">' + OwedI18n.th('app.script.help') + '</p>' +
         '</div>' +
         '<div class="doc-foot">' +
-          '<button class="btn btn-accent" type="button" id="copyScript">Copy script</button>' +
-          '<button class="btn btn-ghost" type="button" id="sendScript">Send it</button>' +
-          '<button class="btn btn-ghost" type="button" id="markAsked">I asked them</button>' +
-          '<button class="btn btn-ghost" type="button" id="markWon">Mark as won</button>' +
-          '<button class="btn btn-ghost" type="button" id="printClaim">Print or save as PDF</button>' +
+          '<button class="btn btn-accent" type="button" id="copyScript">' + OwedI18n.th('app.script.copy') + '</button>' +
+          '<button class="btn btn-ghost" type="button" id="sendScript">' + OwedI18n.th('app.script.send') + '</button>' +
+          '<button class="btn btn-ghost" type="button" id="markAsked">' + OwedI18n.th('app.script.asked') + '</button>' +
+          '<button class="btn btn-ghost" type="button" id="markWon">' + OwedI18n.th('app.script.won') + '</button>' +
+          '<button class="btn btn-ghost" type="button" id="printClaim">' + OwedI18n.th('app.script.print') + '</button>' +
         '</div>' +
       '</div>';
 
@@ -2075,11 +2250,11 @@
     var copy = e.target.closest('#copyScript');
     if (copy) {
       var done = function () {
-        copy.textContent = 'Copied';
-        toast('Copied.');   // the button label alone is not announced
-        setTimeout(function () { copy.textContent = 'Copy script'; }, 1800);
+        copy.textContent = OwedI18n.t('app.script.copied');
+        toast(OwedI18n.t('app.script.copiedToast'));   // the button label alone is not announced
+        setTimeout(function () { copy.textContent = OwedI18n.t('app.script.copy'); }, 1800);
       };
-      var failed = function () { toast('Could not copy — select the words and copy them yourself.'); };
+      var failed = function () { toast(OwedI18n.t('app.script.copyFailed')); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(scrCurrent.script.text).then(done, failed);
       } else { failed(); }
@@ -2090,7 +2265,9 @@
       // there is no server here, so nothing is sent on their behalf or stored
       var rule = scrCurrent.match.rule, text = scrCurrent.script.text;
       var contact = String(rule.contact || '').trim();
-      var subject = 'Claim under ' + rule.title + (current.item && current.item.name ? ' — ' + current.item.name : '');
+      var subject = current.item && current.item.name
+        ? OwedI18n.t('app.script.subjectItem', { title: rule.title, name: current.item.name })
+        : OwedI18n.t('app.script.subject', { title: rule.title });
       var putOnClipboard = function (then) {
         // the clipboard call can hang behind a permission prompt: never let that block the send
         var fired = false, go = function () { if (!fired) { fired = true; then(); } };
@@ -2099,19 +2276,19 @@
       };
       if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
         location.href = 'mailto:' + contact + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
-        toast('Opening your email app with the message ready.');
+        toast(OwedI18n.t('app.script.sentEmail'));
       } else if (/^https?:\/\//i.test(contact)) {
-        putOnClipboard(function () { window.open(contact, '_blank', 'noopener'); toast('Words copied. Paste them into their form or chat.'); });
+        putOnClipboard(function () { window.open(contact, '_blank', 'noopener'); toast(OwedI18n.t('app.script.sentLink')); });
       } else if (/^\+?[\d\s().-]{7,}$/.test(contact)) {
-        putOnClipboard(function () { toast('Words copied. Call ' + contact + ' and read them out.'); if (/Mobi|Android/i.test(navigator.userAgent)) location.href = 'tel:' + contact.replace(/[^\d+]/g, ''); });
+        putOnClipboard(function () { toast(OwedI18n.t('app.script.sentPhone', { phone: contact })); if (/Mobi|Android/i.test(navigator.userAgent)) location.href = 'tel:' + contact.replace(/[^\d+]/g, ''); });
       } else {
-        putOnClipboard(function () { toast('Words copied. Their contact is on the rule’s source page.'); if (rule.source_url) window.open(rule.source_url, '_blank', 'noopener'); });
+        putOnClipboard(function () { toast(OwedI18n.t('app.script.sentOther')); if (rule.source_url) window.open(rule.source_url, '_blank', 'noopener'); });
       }
       return;
     }
     if (e.target.closest('#markAsked')) {
       if (!S.setClaimState(current.item.id, scrCurrent.match.rule.id, 'asked')) { showStart(); return; }
-      toast('Noted. It is in your list of claims sent.');
+      toast(OwedI18n.t('app.script.askedToast'));
       renderShelf();
       return;
     }
@@ -2120,7 +2297,7 @@
       var ruleId = scrCurrent.match.rule.id;
       // null when the item was removed in another tab: nothing to count
       if (!S.setClaimState(current.item.id, ruleId, 'won')) { showStart(); return; }
-      toast('Counted. That is one thing that stays out of the bin.');
+      toast(OwedI18n.t('app.script.wonToast'));
       renderShelf();
       if (inPanel) {
         // stay on this rule in the panel rather than jumping to the top
@@ -2196,7 +2373,10 @@
 
   E.load('data/coverage.json').then(function (n) {
     // a round figure: the book grows, and an exact count reads as a promise
-    el.corpusNote.textContent = (n >= 100 ? Math.floor(n / 100) * 100 + '+' : n) + ' rules in the book';
+    var round = Math.floor(n / 100) * 100;
+    el.corpusNote.textContent = n >= 100
+      ? OwedI18n.t('app.corpus.over', { count: OwedI18n.lang === 'en' ? String(round) : OwedI18n.num(round) })
+      : counted('app.corpus.count', n);
     renderShelf();
     // if the user clicked an item while the rulebook was still loading, redraw it
     if (current.item && !el.views.results.hidden) showResults(current.item, true);
@@ -2212,8 +2392,8 @@
   }).catch(function (err) {
     if (window.console && console.error) console.error('rulebook', err);
     corpusFailed = true;
-    el.corpusNote.textContent = 'Could not load the rulebook — try refreshing.';
-    toast('The rulebook failed to load.');
+    el.corpusNote.textContent = OwedI18n.t('app.corpus.failed');
+    toast(OwedI18n.t('app.corpus.failedToast'));
   });
 
   /* ---------------- result filter chips ----------------
@@ -2232,7 +2412,8 @@
     empty.setAttribute('role', 'status');
     groups.parentNode.insertBefore(empty, groups.nextSibling);
 
-    var LABEL = { strong: 'strong', worth: 'worth asking', longshot: 'long shots' };
+    // one whole sentence per filter id (data-f in app.html), counted by the rows that did match
+    var EMPTY = { strong: 'app.filter.empty.strong', worth: 'app.filter.empty.worth', longshot: 'app.filter.empty.longshot' };
 
     function apply() {
       // a filter is a request to see those rows, so fold-outs open
@@ -2255,10 +2436,9 @@
       var shown = groups.querySelectorAll('.rcard:not(.is-hidden)').length;
       var blank = active !== 'all' && cards.length > 0 && shown === 0;
       empty.hidden = !blank;
-      if (blank) {
-        empty.textContent = 'Nothing here is filed under ' + (LABEL[active] || active) +
-          ' for this one. That is the honest answer, not a bug — try All to see the ' +
-          cards.length + ' that did match.';
+      // (a blank filter is always one of the three: 'all' never filters anything out)
+      if (blank && EMPTY[active]) {
+        empty.textContent = counted(EMPTY[active], cards.length);
       }
     }
 

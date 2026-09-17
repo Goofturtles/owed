@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 25 25">
+  <title>Owed — mark</title>
+  <!-- The mark exactly as base.css draws it: a 25px square, 7px corners, with a
+       14px check centred in it. Authored in those units and shown at 512, so the
+       proportions are the page's, not a redraw. Nothing behind the corners. -->
+  <rect width="25" height="25" rx="7" fill="#000000"/>
+  <path d="M20 7 9.5 17.5 4 12" transform="translate(5.5 5.5) scale(0.58333333)"
+        fill="none" stroke="#ffffff" stroke-width="2.6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

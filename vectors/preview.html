@@ -1,0 +1,29 @@
+<!doctype html><meta charset="utf-8"><title>vector preview</title>
+<!-- Serve the site and open /vectors/preview.html. The checkerboard is there to
+     prove the point: every file is transparent, so nothing carries a white card
+     into After Effects. Each <img> loads its own document, so clip-path ids in
+     one file cannot collide with another's. -->
+<style>
+body{margin:0;background:#333;display:flex;flex-direction:column;gap:18px;padding:18px;font:13px system-ui}
+figcaption{color:#fff;font-weight:600;padding:3px 0}
+.row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+img{display:block;max-width:100%;
+  background-image:linear-gradient(45deg,#555 25%,transparent 25%,transparent 75%,#555 75%),
+                   linear-gradient(45deg,#555 25%,transparent 25%,transparent 75%,#555 75%);
+  background-size:16px 16px;background-position:0 0,8px 8px}
+.parts img{height:56px;width:auto}
+</style>
+<figure><figcaption>app — sidebar · Q1 · Q2 · Q4</figcaption><div class="row">
+<img src="app/02-sidebar.svg"><img src="app/13-question-1-what-broke.svg"><img src="app/14-question-2-who-made-it.svg"><img src="app/16-question-4-how-paid.svg"></div></figure>
+<figure><figcaption>app — side panel · script document · ask</figcaption><div class="row">
+<img src="app/07-side-panel.svg"><img src="app/09-script-document.svg"><img src="app/11-ask-panel.svg"></div></figure>
+<figure><figcaption>landing — film chapter 3 · marquee</figcaption><div class="row">
+<img src="landing/04-film-chapter3.svg"><img src="landing/05-sources-marquee.svg"></div></figure>
+<figure><figcaption>the FAQ, opened</figcaption><div class="row"><img src="landing/animated/faq-open-05-where-does-my-data-go.svg" style="height:220px;width:auto"><img src="logo/owed-mark.svg" style="height:80px;width:auto"></div></figure>
+<figure><figcaption>parts — question 1, one file each</figcaption><div class="row parts">
+<img src="pieces/app/13-question-1-what-broke/008-phone.svg">
+<img src="pieces/app/13-question-1-what-broke/016-big-appliance.svg">
+<img src="pieces/app/13-question-1-what-broke/022-cookware-orkitchen.svg">
+<img src="pieces/app/13-question-1-what-broke/034-next.svg">
+<img src="pieces/app/13-question-1-what-broke/033-back.svg">
+</div></figure>

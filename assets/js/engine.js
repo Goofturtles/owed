@@ -9,23 +9,57 @@
 
   var RULES = [];
   var loaded = false;
+  var i18n = global.OwedI18n;
+
+  // the words of a rule a translation may replace; nothing that decides a match
+  var OVERLAY_FIELDS = ['title', 'what_you_get', 'window_note', 'how_to_claim', 'script_hint', 'verified_against'];
 
   /** Load the corpus. Returns a promise resolving to the rule count. */
   function load(url) {
-    return fetch(url || 'data/coverage.json', { cache: 'no-cache' })
+    var src = url || 'data/coverage.json';
+    var lang = i18n.lang;
+    var corpus = fetch(src, { cache: 'no-cache' })
       .then(function (r) {
         if (!r.ok) throw new Error('corpus ' + r.status);
         return r.json();
-      })
-      .then(function (data) {
+      });
+    // a French or Spanish visitor also gets data/coverage.<lang>.json; a missing or
+    // broken file is the same as no translations, and every rule stays English
+    var overlay = lang === 'en' ? null
+      : fetch(src.replace(/\.json$/, '.' + lang + '.json'), { cache: 'no-cache' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    return Promise.all([corpus, overlay])
+      .then(function (got) {
+        var data = got[0];
         RULES = (data && data.rules) || [];
+        translateRules(RULES, got[1], lang);
         loaded = true;
         return RULES.length;
       });
   }
 
+  /* rule._lang is the language a rule's words are in: 'en', or the visitor's
+     language where the overlay carries that rule. Anything that reads rule text
+     (hint placeholders, sentence splitting) goes by it, not by the page. */
+  function translateRules(rules, overlay, lang) {
+    var byId = overlay && overlay.rules;
+    if (!byId || typeof byId !== 'object' || Array.isArray(byId)) byId = null;
+    rules.forEach(function (rule) {
+      rule._lang = 'en';
+      var o = byId && Object.prototype.hasOwnProperty.call(byId, rule.id) ? byId[rule.id] : null;
+      if (!o || typeof o !== 'object') return;
+      var copied = false;
+      OVERLAY_FIELDS.forEach(function (f) {
+        if (typeof o[f] === 'string' && o[f]) { rule[f] = o[f]; copied = true; }
+      });
+      if (copied) rule._lang = lang;
+    });
+  }
+
   function setRules(rules) {
     RULES = rules || [];
+    RULES.forEach(function (rule) { if (rule && !rule._lang) rule._lang = 'en'; });
     loaded = true;
   }
 
@@ -130,26 +164,28 @@
     else if (score >= 3.2) strength = 'worth asking';
     else strength = 'long shot';
 
-    // plain-words reason
+    // plain-words reason: each clause stands on its own, and the clauses are joined as a list
     var reason = [];
-    if (bm === 'exact' || bm === 'loose') reason.push('it is a ' + (item.brand || 'that brand') + ' item');
+    if (bm === 'exact' || bm === 'loose') {
+      reason.push(item.brand ? i18n.t('engine.reason.brand', { brand: item.brand }) : i18n.t('engine.reason.brandUnnamed'));
+    }
     if (pay === true && at.payment_methods && at.payment_methods.length &&
         at.payment_methods.indexOf('*') === -1) {
-      reason.push('you paid with ' + paymentWord(item.payment));
+      reason.push(i18n.t('engine.reason.paid', { pay: paymentWord(item.payment) }));
     }
-    if (pay === 'maybe') reason.push('it depends on how you paid — worth checking your statement');
+    if (pay === 'maybe') reason.push(i18n.t('engine.reason.payUnknown'));
 
     var timed = isFinite(win) && win < 900;
-    if (timed && timing === 'open') reason.push('you are still inside the window');
-    if (timed && timing === 'closing') reason.push('the window is nearly up');
-    if (timed && timing === 'unknown') reason.push('depends on when you bought it — the receipt or a bank statement will show the date');
+    if (timed && timing === 'open') reason.push(i18n.t('engine.reason.windowOpen'));
+    if (timed && timing === 'closing') reason.push(i18n.t('engine.reason.windowClosing'));
+    if (timed && timing === 'unknown') reason.push(i18n.t('engine.reason.ageUnknown'));
     if (timing === 'closed') {
-      reason.push('the legal minimum has passed, but some places give longer \u2014 worth asking');
+      reason.push(i18n.t('engine.reason.floorPassed'));
     }
     if (!timed && rule.source_type === 'statutory') {
-      reason.push('this is the law where you live, whatever the warranty card says');
+      reason.push(i18n.t('engine.reason.law'));
     }
-    if (!reason.length) reason.push('it covers this kind of item where you live');
+    if (!reason.length) reason.push(i18n.t('engine.reason.covers'));
 
     return {
       rule: rule,
@@ -162,17 +198,21 @@
 
   /** "a, b and c" — reads like a sentence instead of a list. */
   function joinNicely(parts) {
+    if (i18n.lang !== 'en') return i18n.list(parts, 'conjunction');   // "a, b et c"; "a, b y c" ("e" before an i sound)
     if (!parts.length) return '';
     if (parts.length === 1) return parts[0];
     return parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
   }
 
+  /* How the item was paid for, with its preposition: "with a Visa card", "with cash".
+     The preposition travels with the payment because it changes with it in other
+     languages ("avec une carte Visa" but "en espèces"). */
   function paymentWord(id) {
     var map = {
-      visa: 'a Visa card', mastercard: 'a Mastercard', amex: 'an Amex',
-      discover: 'a Discover card', debit: 'a debit card', cash: 'cash'
+      visa: 'engine.pay.visa', mastercard: 'engine.pay.mastercard', amex: 'engine.pay.amex',
+      discover: 'engine.pay.discover', debit: 'engine.pay.debit', cash: 'engine.pay.cash'
     };
-    return map[id] || '';   // unknown: the sentence leaves the payment out entirely
+    return map[id] ? i18n.t(map[id]) : '';   // unknown: the sentence leaves the payment out entirely
   }
 
   /** Run the whole corpus against an item. */
@@ -190,17 +230,17 @@
   function group(matches) {
     var order = ['settlement', 'program', 'card', 'manufacturer', 'statutory', 'retailer'];
     var labels = {
-      settlement: 'Money set aside for this fault',
-      program: 'Free repair programme',
-      card: 'Cover from the card you paid with',
-      manufacturer: "The maker's own warranty",
-      statutory: 'Your legal cover',
-      retailer: 'The shop that sold it'
+      settlement: 'engine.group.settlement',
+      program: 'engine.group.program',
+      card: 'engine.group.card',
+      manufacturer: 'engine.group.manufacturer',
+      statutory: 'engine.group.statutory',
+      retailer: 'engine.group.retailer'
     };
     var buckets = {};
     matches.forEach(function (m) {
       var t = m.rule.source_type;
-      if (!buckets[t]) buckets[t] = { type: t, label: labels[t] || t, items: [] };
+      if (!buckets[t]) buckets[t] = { type: t, label: labels[t] ? i18n.t(labels[t]) : t, items: [] };
       buckets[t].items.push(m);
     });
     // "Start at the top" is only true if the strongest group is on top; the
@@ -221,50 +261,100 @@
   function script(match, item, user) {
     var r = match.rule;
     var name = (user && user.name) || 'I';
-    var thing = thingName(item);
+    var said = forSentence(item);
+    var thing = thingName(said);
+    // a name the visitor typed is quoted as written ("cet article (Casque Sony WH-1000XM4)"); English
+    // has always put the name straight in, so it keeps its own sentence
+    var quoted = i18n.lang !== 'en' && !!said.name;
     var when = agePhrase(item.ageMonths);   // already contains "about"
     var pay = paymentWord(item.payment);
+    var broke = brokeLine(item);
     var lines = [];
 
-    // the words a polite person would actually use on the phone: ask, don't demand
-    lines.push('Hello — I hope you can help me with something.');
-    lines.push('I bought ' + thing + ' ' + when +
-               (pay ? ' and paid with ' + pay : '') + '. ' + brokeLine(item));
-    lines.push('I think this may still be covered. The rule I am going by is: ' + r.title + '.');
+    // the words a polite person would actually use on the phone: ask, don't demand.
+    // The frame is in the visitor's language; the rule's title and hint are in the rule's.
+    lines.push(i18n.t('engine.script.hello'));
+    lines.push(quoted
+      ? (pay
+        ? i18n.t('engine.script.boughtNamedPaid', { thing: thing, when: when, pay: pay, broke: broke })
+        : i18n.t('engine.script.boughtNamed', { thing: thing, when: when, broke: broke }))
+      : (pay
+        ? i18n.t('engine.script.boughtPaid', { thing: thing, when: when, pay: pay, broke: broke })
+        : i18n.t('engine.script.bought', { thing: thing, when: when, broke: broke })));
+    lines.push(i18n.t('engine.script.rule', { title: r.title }));
 
     // 52 rules in the book turn on a serial number: say it when we have one
-    if (item.serial) lines.push('The serial number is ' + String(item.serial).trim() + '.');
+    if (item.serial) lines.push(i18n.t('engine.script.serial', { serial: String(item.serial).trim() }));
 
-    var hint = fillHint(r.script_hint, item, when);
-    if (hint) lines.push(hint);
+    // the hint is the rule's own sentence, so its slots are filled in the rule's language, not the page's
+    var hintLang = r._lang || 'en';
+    var hint = fillHint(r.script_hint, item, hintLang === i18n.lang ? when : agePhrase(item.ageMonths, hintLang), hintLang);
+    var hintIndex = -1;
+    if (hint) { hintIndex = lines.length; lines.push(hint); }
 
-    lines.push('Could you let me know what you need from me, and whether there is a deadline I should keep in mind? Thank you for your help.');
+    lines.push(i18n.t('engine.script.close'));
 
     return {
       lines: lines,
       text: lines.join('\n\n'),
+      hintIndex: hintIndex,   // which line is the rule's own hint (in the rule's language), or -1
       who: r.contact || '',
       deadline: r.deadline || '',
       by: name
     };
   }
 
+  /* What each category is called in the script, as a whole noun phrase with its
+     article and the brand in its place: key "a {brand} laptop", key + '.noBrand'
+     "a laptop". */
+  var THING = {
+    phone: 'engine.thing.phone', laptop: 'engine.thing.laptop', tablet: 'engine.thing.tablet',
+    headphones: 'engine.thing.headphones', tv: 'engine.thing.tv', console: 'engine.thing.console',
+    camera: 'engine.thing.camera', watch: 'engine.thing.watch',
+    'appliance-large': 'engine.thing.applianceLarge', 'appliance-small': 'engine.thing.applianceSmall',
+    vacuum: 'engine.thing.vacuum', kitchen: 'engine.thing.kitchen', 'power-tool': 'engine.thing.powerTool',
+    furniture: 'engine.thing.furniture', mattress: 'engine.thing.mattress', footwear: 'engine.thing.footwear',
+    apparel: 'engine.thing.apparel', bag: 'engine.thing.bag', bike: 'engine.thing.bike',
+    outdoor: 'engine.thing.outdoor', printer: 'engine.thing.printer', toy: 'engine.thing.toy',
+    other: 'engine.thing.other',
+    // ids the wizard does not save, still named as they always were
+    appliance_large: 'engine.thing.oldApplianceLarge', appliance_small: 'engine.thing.oldApplianceSmall',
+    tool: 'engine.thing.oldTool', shoes: 'engine.thing.oldShoes'
+  };
+
   /**
    * What to call the thing on the phone. A typed name wins; otherwise the brand
    * and the category, lower-cased so "Samsung Laptop or computer" (two menu
    * labels stuck together) reads as "a Samsung laptop".
    */
-  function thingName(item) {
+  /**
+   * The item as a sentence should name it. A name the app generated from the brand and category
+   * ("Téléphone Samsung", item.autoName) is a label, not something you say, so outside English it is
+   * dropped and the sentence says "un téléphone Samsung" instead. English is left exactly as it was.
+   */
+  function forSentence(item) {
+    if (i18n.lang === 'en' || !item.autoName) return item;
+    var copy = {};
+    for (var k in item) if (Object.prototype.hasOwnProperty.call(item, k)) copy[k] = item[k];
+    copy.name = '';
+    return copy;
+  }
+
+  function thingName(item, code) {
+    code = code || i18n.lang;
     if (item.name) return item.name;
-    var cat = String(item.category || '').replace(/_/g, ' ');
-    var CAT = {
-      laptop: 'laptop', phone: 'phone', headphones: 'pair of headphones', watch: 'watch',
-      appliance_large: 'appliance', appliance_small: 'small appliance', tool: 'power tool',
-      kitchen: 'pan', shoes: 'pair of shoes', furniture: 'piece of furniture', other: 'item'
-    };
-    var word = CAT[item.category] || cat.split(' or ')[0].toLowerCase() || 'item';
-    if (!item.brand) return 'a ' + word;
-    return (/^[aeiou]/i.test(item.brand) ? 'an ' : 'a ') + item.brand + ' ' + word;
+    var key = THING[item.category];
+    var word = '';
+    if (!key) {
+      // a category Owed has no words for is named by its id
+      word = String(item.category || '').replace(/_/g, ' ').split(' or ')[0].toLowerCase();
+      key = word ? 'engine.thing.unlisted' : 'engine.thing.other';
+    }
+    if (!item.brand) return i18n.tIn(code, key + '.noBrand', { word: word });
+    var out = i18n.tIn(code, key, { brand: item.brand, word: word });
+    // English says "an" before a brand that starts with a vowel letter; other languages write their own article
+    if (i18n.langOf(key, code) === 'en' && /^[aeiou]/i.test(item.brand)) out = out.replace(/^a /, 'an ');
+    return out;
   }
 
   /** "the Chase extended warranty" — keeps proper nouns capitalised. */
@@ -273,42 +363,66 @@
     return /^(the|my|your)\b/i.test(t) ? t : 'the ' + t;
   }
 
+  // i18n-data: prepositions a French or Spanish hint may put before [date] (English's are in
+  // fillHint), picked by the language of the RULE's text. Placeholders stay English tokens
+  // ([date], [item] ...) in every language. No lookbehind: older Safari cannot parse it, and
+  // this file must load for everyone.
+  var DATE_PREPOSITION = {
+    fr: /(^|[^\p{L}])(?:depuis le|depuis|dès le|à partir du|à compter du|le|en|au|du)\s+\[(?:date|purchase date)\]/giu,
+    es: /(^|[^\p{L}])(?:a partir del|el|en|del)\s+\[(?:date|purchase date)\]/giu
+  };
+
   /**
    * Corpus script hints may carry bracketed placeholders such as [item] or
    * [date]. Fill what we can and drop the hint entirely if anything is left
    * over, so raw template text can never reach the user.
    */
-  function fillHint(hint, item, when) {
+  function fillHint(hint, item, when, lang) {
     if (!hint) return '';
-    var thing = thingName(item);
+    var said = forSentence(item);
+    var thing = thingName(said, lang);
+    // an English hint may say "My [item] failed". When the thing is a generated noun phrase that brings its own
+    // article ("a Garmin watch"), that would read "My a Garmin watch", so after a determiner the article goes.
+    // Only on a French or Spanish page: English pages keep the words they always had.
+    if (i18n.lang !== 'en' && (lang || 'en') === 'en' && !said.name) {
+      // corpus hints also put the brand between: "My JBL [product]". The phrase already names the brand, so it goes too.
+      hint = String(hint).replace(/\b([Mm]y|[Tt]he|[Yy]our|[Tt]his|[Oo]ur)\s+(?:([A-Z][\w&'-]*)\s+)?\[(item|product|model|product and model number)\]/g, function (m, det, brandWord) {
+        var bare = thing.replace(/^(a|an)\s+/i, '');
+        var keep = brandWord && bare.toLowerCase().indexOf(brandWord.toLowerCase()) === -1 ? brandWord + ' ' : '';
+        return det + ' ' + keep + bare;
+      });
+    }
     // "about a year ago" already reads as a time phrase, so drop any preposition
     // in front of it — otherwise you get "failed on about a year ago".
-    var out = String(hint)
-      .replace(/\b(on|in)\s+\[(date|purchase date)\]/gi, when)
+    var out = DATE_PREPOSITION[lang]
+      ? String(hint).replace(DATE_PREPOSITION[lang], function (m, before) { return before + when; })
+      : String(hint).replace(/\b(on|in)\s+\[(date|purchase date)\]/gi, when);
+    out = out
       .replace(/\[(date|purchase date)\]/gi, when)
       .replace(/\[(item|product|model|product and model number)\]/gi, thing)
       .replace(/\[brand\]/gi, item.brand || thing)
       .replace(/\[(serial|serial number|serial no)\]/gi, item.serial || '')
-      .replace(/\[amount\]/gi, 'the amount on my statement');
+      .replace(/\[amount\]/gi, i18n.tIn(lang || 'en', 'engine.hint.amount'));
     return /\[[^\]]+\]/.test(out) ? '' : out;
   }
 
   function brokeLine(item) {
     if (item.faultNote) return String(item.faultNote);
     return item.broken
-      ? 'It has stopped working properly.'
-      : 'I would like to check what cover it still has.';
+      ? i18n.t('engine.script.broken')
+      : i18n.t('engine.script.notBroken');
   }
 
-  function agePhrase(months) {
-    if (months == null || months === '') return 'a while ago';
+  /** "about 2 years ago". code: the language to say it in (default: the page's). */
+  function agePhrase(months, code) {
+    code = code || i18n.lang;
+    if (months == null || months === '') return i18n.tIn(code, 'engine.age.aWhileAgo');
     var m = Number(months);
-    if (!isFinite(m)) return 'a while ago';
-    if (m < 4) return 'a couple of months ago';
-    if (m < 13) return 'under a year ago';
-    if (m < 18) return 'about a year ago';
-    var years = Math.round(m / 12);
-    return 'about ' + years + (years === 1 ? ' year' : ' years') + ' ago';
+    if (!isFinite(m)) return i18n.tIn(code, 'engine.age.aWhileAgo');
+    if (m < 4) return i18n.tIn(code, 'engine.age.fewMonths');
+    if (m < 13) return i18n.tIn(code, 'engine.age.underAYear');
+    if (m < 18) return i18n.tIn(code, 'engine.age.aboutAYear');
+    return i18n.pluralIn(code, 'engine.age.aboutYears', Math.round(m / 12));
   }
 
   global.OwedEngine = {

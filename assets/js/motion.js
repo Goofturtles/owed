@@ -46,25 +46,25 @@
       // coverage.json is explicit that the six years is the window to BRING a
       // claim, not a promise the product lasts that long — and that Scotland is
       // five, not six. Say it the way the rule says it.
-      { doc: 'Consumer Rights Act 2015 — s. 9',
-        page: 'statute · verified',
-        item: 'Sony WH-1000XM4 · 2 years old · England',
-        verdict: 'The shop may still owe the repair',
-        meta: 'Consumer Rights Act · 6 years to bring a claim' },
-      { doc: 'Visa Signature — guide to benefits',
-        page: 'guide · check your issuer',
-        item: 'MacBook Air · 14 months · paid by card',
-        verdict: 'One more year of cover',
-        meta: "Card extended warranty · after Apple's ran out" },
+      { doc: OwedI18n.t('motion.finder.ukDoc'),
+        page: OwedI18n.t('motion.finder.statuteVerified'),
+        item: OwedI18n.t('motion.finder.ukItem'),
+        verdict: OwedI18n.t('motion.finder.ukVerdict'),
+        meta: OwedI18n.t('motion.finder.ukMeta') },
+      { doc: OwedI18n.t('motion.finder.cardDoc'),
+        page: OwedI18n.t('motion.finder.cardPage'),
+        item: OwedI18n.t('motion.finder.cardItem'),
+        verdict: OwedI18n.t('motion.finder.cardVerdict'),
+        meta: OwedI18n.t('motion.finder.cardMeta') },
       // NOT the 2026 good-working-order rule: coverage.json says that one
       // "starts 5 October 2026, and only covers new items bought or leased on
       // or after that date", so a three-year-old machine can never use it.
       // The durability warranty has no start date and no fixed end.
-      { doc: 'Quebec Consumer Protection Act — s. 38',
-        page: 'statute · verified',
-        item: 'Whirlpool dishwasher · 3 years · Quebec',
-        verdict: 'It should still be working',
-        meta: 'Quebec legal warranty · must last a reasonable time' }
+      { doc: OwedI18n.t('motion.finder.qcDoc'),
+        page: OwedI18n.t('motion.finder.statuteVerified'),
+        item: OwedI18n.t('motion.finder.qcItem'),
+        verdict: OwedI18n.t('motion.finder.qcVerdict'),
+        meta: OwedI18n.t('motion.finder.qcMeta') }
     ];
 
     var elDoc = document.getElementById('finderDocName');
@@ -221,7 +221,7 @@
       var p = Math.min(1, (ts - start) / dur);
       var eased = 1 - Math.pow(1 - p, 3);
       var v = Math.round(from + (to - from) * eased);
-      el.textContent = prefix + v.toLocaleString() + suffix;
+      el.textContent = prefix + OwedI18n.num(v) + suffix;
       if (p < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
@@ -233,7 +233,7 @@
     if (!els.length) return;
     if (reduce || !('IntersectionObserver' in window)) {
       Array.prototype.forEach.call(els, function (el) {
-        el.textContent = (el.dataset.prefix || '') + Number(el.dataset.countTo).toLocaleString() + (el.dataset.suffix || '');
+        el.textContent = (el.dataset.prefix || '') + OwedI18n.num(Number(el.dataset.countTo)) + (el.dataset.suffix || '');
       });
       return;
     }

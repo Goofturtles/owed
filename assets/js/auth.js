@@ -19,7 +19,8 @@
   var submitLabel = document.getElementById('authSubmitLabel');
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var HELP_DEFAULT = 'Both stay in this browser. Nothing is sent anywhere.';
+  var t = window.OwedI18n.t;
+  var HELP_DEFAULT = t('auth.help.default');
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   /* ---------- returning user ---------- */
@@ -27,8 +28,8 @@
   if (existing && existing.name && existing.name !== 'You') {
     nameInput.value = existing.name;
     if (emailInput && existing.email) emailInput.value = existing.email;
-    submitLabel.textContent = 'Continue as ' + existing.name;
-    help.textContent = 'Not you? Just change the details.';
+    submitLabel.textContent = t('auth.submit.continueAs', { name: existing.name });
+    help.textContent = t('auth.help.notYou');
   }
 
   var emailField = document.getElementById('fieldEmail');
@@ -65,13 +66,13 @@
     e.preventDefault();
     var name = nameInput.value.trim();
     if (!name) {
-      setError('Type a name so we can label your shelf.');
+      setError(t('auth.error.name'));
       nameInput.focus();
       return;
     }
     var email = emailInput ? emailInput.value.trim() : '';
     if (!email || !EMAIL_RE.test(email)) {
-      setError('Add an email that looks right, like you@example.com.', emailField);
+      setError(t('auth.error.email'), emailField);
       if (emailInput) emailInput.focus();
       return;
     }
@@ -96,7 +97,7 @@
     ringBtn.addEventListener('click', function () {
       var p = ring.classList.toggle('is-paused');
       ringBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      ringBtn.setAttribute('aria-label', p ? 'Resume the spinning icons' : 'Pause the spinning icons');
+      ringBtn.setAttribute('aria-label', p ? t('auth.ring.resume') : t('auth.ring.pause'));
     });
   }
 

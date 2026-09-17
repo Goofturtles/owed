@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owed — storyboard of the new landing page</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FFFFFF; color: #000; font-family: Geist, Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .page { width: 1240px; margin: 0 auto; padding: 48px 0 96px; }
+  h1 { font-size: 40px; font-weight: 700; letter-spacing: -.035em; line-height: 1.05; margin: 0 0 8px; }
+  .intro { font-size: 16px; line-height: 24px; color: #666; margin: 0 0 40px; max-width: 760px; }
+  .block { border: 1px solid #EAEAEA; border-radius: 12px; overflow: hidden; margin: 0 0 20px; background: #fff; }
+  .label { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid #EAEAEA; background: #fff; }
+  .n { font-size: 13px; font-weight: 500; color: #8F8F8F; letter-spacing: .02em; }
+  .what { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+  .what small { display: block; font-size: 14px; font-weight: 400; color: #666; margin-top: 2px; }
+  .brand { font-size: 13px; font-weight: 600; padding: 6px 12px; border: 1px solid #000; border-radius: 8px; white-space: nowrap; }
+  .brand.ours { background: #000; color: #fff; }
+  .shot { display: block; width: 100%; height: auto; }
+  .shot.crop { object-fit: cover; object-position: top; }
+  .own { padding: 48px 40px; background: #F5F5F5; }
+  .own p { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; }
+  .own small { display: block; margin-top: 8px; font-size: 14px; color: #666; font-weight: 400; }
+  .rule { font-size: 13px; color: #8F8F8F; margin: 32px 0 0; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Owed — the new landing page, part by part</h1>
+  <p class="intro">Top to bottom, in page order. Each part is copied from one brand's section on Mobbin (one brand per part, none repeated), with only the words and Owed's own app screenshots changed. Everything sits on pure white with black type and black buttons. Swap any part before I build it.</p>
+
+  <div class="block">
+    <div class="label"><span class="n">01</span><span class="what">Navigation<small>Flat white bar, 15px links, outlined "Sign in", solid black "Start free" (40px, radius 8)</small></span><span class="brand">Attio</span></div>
+    <img class="shot crop" src="img/01-attio-nav.webp" alt="" style="height:70px">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">02</span><span class="what">The film<small>Kept as is: scroll-scrubbed footage, three chapters, the "what broke?" field. Now runs on a frame sequence, no more stutter</small></span><span class="brand ours">Owed</span></div>
+    <img class="shot" src="img/02-owed-film.png" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">03</span><span class="what">The paper flythrough<small>Restored: the camera flies into a corridor of fine print, one bold line at a time in the middle, four verdict cards floating past</small></span><span class="brand ours">Owed</span></div>
+    <div class="own"><p>Every warranty. Every card benefit. Every payout nobody collects.<small>→ "318 rules deep, and none of it is written for you." → "One of them says your repair is free." (existing WebGL scene, re-set in the new bold type)</small></p></div>
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">04</span><span class="what">Read from<small>One grey sentence and a row of black names: the real sources in the rulebook (Apple, Samsung, Dyson, Bosch, Visa, American Express, EUR-Lex, legislation.gov.uk)</small></span><span class="brand">Coda</span></div>
+    <img class="shot crop" src="img/04-coda-strip.webp" alt="" style="height:300px; object-position: 0 -300px">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">05</span><span class="what">The script<small>Bold two-line heading, grey body with the key clause in black, one black button; the real script panel in a bordered card with a dark callout and a black pill toolbar</small></span><span class="brand">Vercel</span></div>
+    <img class="shot" src="img/05-vercel-showcase.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">06</span><span class="what">Inside Owed<small>One tall card and two stacked cards, screenshots bleeding off the card edges: the whole app, the ranked result, the words to say</small></span><span class="brand">Notion</span></div>
+    <img class="shot" src="img/06-notion-bento.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">07</span><span class="what">How it works<small>Pill tag, heading, four numbered steps on a connector line, then the app in a bordered screenshot card</small></span><span class="brand">Sequence</span></div>
+    <img class="shot" src="img/07-sequence-how.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">08</span><span class="what">In numbers<small>318 rules · 194 brands · 4 regions · $0, bold black numbers with grey labels, nothing else</small></span><span class="brand">Ramp</span></div>
+    <img class="shot" src="img/08-ramp-stats.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">09</span><span class="what">Five places cover hides<small>Columns with a line icon, one short bold sentence each, a "Learn more" link: maker warranty, card, payouts, repair programmes, the law</small></span><span class="brand">Square</span></div>
+    <img class="shot" src="img/09-square-places.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">10</span><span class="what">Environment<small>One bordered card of four sourced facts (80% charge after 800 cycles, 7 years of parts, +12 months for choosing repair, 3–6 years in Quebec) with a black button row, then a coverage card with a bar</small></span><span class="brand">Norma</span></div>
+    <img class="shot" src="img/10-norma-env.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">11</span><span class="what">Questions<small>Huge bold centred heading, a sub-line, hairline rows with a chevron; the first answer open</small></span><span class="brand">OpenPhone</span></div>
+    <img class="shot" src="img/11-openphone-faq.webp" alt="">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">12</span><span class="what">Closing<small>Mark, heading, one grey line, one black button, a small underlined link — straight into the footer</small></span><span class="brand">Contra</span></div>
+    <img class="shot crop" src="img/12-contra-cta.webp" alt="" style="height:330px; object-position: 0 -120px">
+  </div>
+
+  <div class="block">
+    <div class="label"><span class="n">13</span><span class="what">Footer<small>Wordmark, three link columns, a dashed divider, one copyright line</small></span><span class="brand">Portrait</span></div>
+    <img class="shot" src="img/13-portrait-footer.webp" alt="">
+  </div>
+
+  <p class="rule">Type across all of it: Geist 700 for headings (54px section heads, tracking −0.035em, line-height 1.04, measured live on notion.com), 16/24 grey body (#666), #EAEAEA hairlines, black #000 buttons at radius 8. Nav, showcase and footer references are Attio, Vercel and Portrait so no brand appears twice.</p>
+</div>
+</body>
+</html>
