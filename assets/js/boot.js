@@ -31,12 +31,17 @@
   // a link to a section further down (#faq, #checks) lands off the film, so
   // making it wait for the film's frames buys that visitor nothing
   var hash = location.hash;
-  if (hash && hash !== '#' && hash !== '#main' && hash !== '#film') return;
+  if (hash && hash !== '#main' && hash !== '#film') return;
+  // a search result's text link (#:~:text=) jumps to words further down too
+  var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  if (nav && String(nav.name).indexOf(':~:') >= 0) return;
+  // reduced motion shows the film as three stills, so there is nothing to scrub
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
 
   api.active = true;
   root.classList.add('is-booting');
 
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t0 = performance.now(), last = t0;
   var total = 0, done = 0, domReady = false, finished = false, lifted = false;
   var shown = 0, lastNow = -1;
@@ -45,11 +50,11 @@
   function real() { return total ? Math.min(1, done / total) : 0; }
 
   api.expect = function (n) { if (!finished) total += Math.max(0, n | 0); };
-  api.tick = function () { if (finished) return; done++; if (domReady && done >= total) finish(true); };
+  api.tick = function () { if (finished) return; done++; if (domReady && done >= total) finish(); };
 
   /* The bar follows the real count and never runs backwards; it reads 100%
-     only when everything is in. Until the page has parsed nothing is counted
-     yet, so it creeps a few percent to show it has not stalled. Time-based,
+     only when everything is in. Before the page has parsed little or nothing
+     is counted, so it also creeps toward 8% to show it has not stalled. Time-based,
      so a 60 Hz screen fills as fast as a 240 Hz one. */
   function frame(now) {
     var dt = Math.min(100, now - last); last = now;
@@ -75,15 +80,19 @@
   }
   requestAnimationFrame(frame);
 
-  function finish(complete) {
+  function finish() {
     if (finished) return;
     finished = true;
-    if (complete) { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
+    // warm even after the cap: someone who waited once should not wait again,
+    // and the frames keep downloading after the lift
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    setTimeout(lift, 600);   // the lift must not depend on animation frames alone
   }
 
   function lift() {
     if (lifted) return;
     lifted = true;
+    box = box || document.getElementById('boot');
     // the page comes back first, then the veil fades off the film's first frame
     root.classList.remove('is-booting');
     root.classList.add('is-lifting');
@@ -124,13 +133,16 @@
 
     // the fonts count for a little, so a line never re-sets under the reveal
     api.expect(4);
-    var fontsIn = function () { api.tick(); api.tick(); api.tick(); api.tick(); };
+    // ...but a font request that stalls may hold it for 3 s at most
+    var fontsDone = false;
+    var fontsIn = function () { if (fontsDone) return; fontsDone = true; api.tick(); api.tick(); api.tick(); api.tick(); };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fontsIn, fontsIn);
     else fontsIn();
+    setTimeout(fontsIn, 3000);
 
     domReady = true;
-    if (done >= total) finish(true);
+    if (done >= total) finish();
   });
 
-  setTimeout(function () { finish(false); }, CAP);
+  setTimeout(finish, CAP);
 })();

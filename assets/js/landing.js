@@ -204,15 +204,20 @@
     var boot = window.OwedBoot && window.OwedBoot.active ? window.OwedBoot : null;
     if (boot) boot.expect(small ? N : LO_N);
     /* on a laptop the 1080p bank waits for the fast bank: they shared one pipe
-       and the frames the scroll actually shows came in last. A straggler that
-       never settles must not hold it back for good. */
-    var hiHeld = !small;
-    if (hiHeld) setTimeout(function () { if (hiHeld) { hiHeld = false; pump(); } }, 10000);
+       and the frames the scroll actually shows came in last. If the fast bank
+       stops making progress for 4 s (a straggler that never settles), the
+       1080p bank goes anyway; a slow line that is still moving keeps its pipe. */
+    var hiHeld = !small, hiStall = 0;
+    function hiWatch() {
+      clearTimeout(hiStall);
+      if (hiHeld) hiStall = setTimeout(function () { if (hiHeld) { hiHeld = false; pump(); } }, 4000);
+    }
+    hiWatch();
     function loSrc(i) { return 'assets/film/l/f' + ('00' + (i + 1)).slice(-3) + '.webp'; }   // 1280x720: sharp enough to scrub on a big display, ~8ms to decode
     (function () { var o = [0, LO_N - 1, 60, 30, 90, 15, 45, 75, 105]; var seen = {}; o.forEach(function (i) { seen[i] = 1; loQueue.push(i); }); for (var i = 0; i < LO_N; i++) if (!seen[i]) loQueue.push(i); })();
     function pumpLo() {
       if (small) return;
-      while (loInflight < 6 && loQueue.length) {
+      while (loInflight < (boot ? 12 : 6) && loQueue.length) {   // behind the loading bar order does not matter, round trips do
         (function (i) {
           var img = new Image(); img.decoding = 'async'; loInflight++;
           img.onload = function () { loInflight--; lo[i] = img; loLoaded++; if (loLoaded === 1) filmEl.classList.add('is-live'); drawn = -1; loDone(); };
@@ -223,6 +228,7 @@
     }
     function loDone() {
       loSettled++;
+      hiWatch();
       if (boot) boot.tick();
       if (hiHeld && loSettled >= LO_N) { hiHeld = false; pump(); }
       pumpLo();
@@ -319,7 +325,8 @@
       var settled = (now - lastMotion) > 160;
       var s = Math.max(W / FW, H / FH), dw = FW * s, dh = FH * s;
       var i = nearest(f);
-      if (settled || small) ensureBitmaps(Math.round(f));
+      // nothing sharp is seen under the loading bar; decoding it there only stalls the bar
+      if ((settled || small) && !document.documentElement.classList.contains('is-booting')) ensureBitmaps(Math.round(f));
       // sharp frame: only when settled and already decoded (never a sync 1080p decode mid-scroll)
       var useHi = small || (settled && i >= 0 && (bitmaps[i] || !lo.length));
       if (!useHi) {

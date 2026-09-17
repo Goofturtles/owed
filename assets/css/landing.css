@@ -897,7 +897,10 @@ html.is-booting .boot, html.is-lifting .boot {
   background-color: #C7CCD6;   /* forced colours keeps a colour, never a gradient */
   background-image: linear-gradient(180deg, #CDD2DA 0%, #C6CCD5 48%, #CDD2DB 78%, #D8DCE5 100%);
   color: #1D3045;
+  touch-action: none;   /* older iOS scrolls the page through overflow:hidden */
 }
+/* the scrollbar returns at the lift; its track wears the veil's colour through the fade */
+html.is-lifting { scrollbar-color: rgba(0, 0, 0, .35) #C7CCD6; }
 .boot-inner { display: grid; justify-items: center; gap: 26px; }
 .boot-mark { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: #1D3045; color: #F3F5F7; }
 .boot-bar { position: relative; width: 168px; height: 3px; border-radius: 3px; overflow: hidden; background: rgba(29, 48, 69, .2); }
