@@ -83,7 +83,7 @@ The region picker also has only four values, and it is country-level. Several of
 
 This is the failure mode most likely to waste a real person's time.
 
-Owed matches on five things: brand, category, country, rough age, and payment method. Real coverage rules turn on things Owed never asks: the model, the model year, the serial number, whether the item was bought new or refurbished, whether it came from an authorised seller, whether the fault is a defect or damage, and whether you can produce proof of purchase.
+Owed matches on brand, category, country (and state or province), rough age, payment method and, when you say it, the store. The serial number is read where its maker publishes the format (section 12c), but a rule still cannot be matched on a serial. Real coverage rules turn on things Owed never asks: the model, the model year, the serial number, whether the item was bought new or refurbished, whether it came from an authorised seller, whether the fault is a defect or damage, and whether you can produce proof of purchase.
 
 **64 rules name a model, a model year or a serial range in their title or timing note**, and the engine cannot check any of them. The clearest cases:
 
@@ -264,6 +264,28 @@ A reader who does not pick a state still sees every rule for their country.
 That is deliberate: without a state, hiding state law would hide the very thing
 they came for. The cost is that the list is longer and less precise until they
 choose.
+
+## 12c. A serial number rarely says what the thing is
+
+Most serial numbers are a maker's own stock numbers. Only a few makers publish
+what theirs mean, and Owed reads only those (assets/js/serials.js, each format
+with the maker page that documents it): Nintendo Switch serials name the model;
+GE Appliances, LG and Samsung serials give the month and year made, but the
+code repeats (every 12, 10 and 20 years), so two dates always fit; Apple, HP,
+Lenovo and Dell name the model from a serial on their own sites, which Owed
+links to but cannot query. Samsung's date code is documented on Samsung's own
+community forum, not an official support page. A 15-digit number with a valid
+check digit is treated as an IMEI: it says "a phone or other SIM device", not
+which one. Every other serial gets "this serial does not say", never a guess.
+
+## 12d. Store rules need the store
+
+A store's own return window or guarantee applies only to things bought there,
+so every store-wide rule carries `applies_to.stores` and matches only when the
+reader says where they bought it. Before this, those rules showed for everyone
+(a Costco guarantee for a TV bought anywhere). Brand-specific store rules
+(IKEA, L.L.Bean, Decathlon, Target's own brands) still match on the brand. A
+store Owed has no rules for is kept as typed and named in the claim script.
 
 ## 13. The maintenance burden
 

@@ -177,6 +177,7 @@
     S.updateUser({ region: parts[0], subregion: parts[1] || '' });
     user = S.getUser();
     syncRegionName();
+    if (typeof renderStoreList === 'function') renderStoreList();
     toast(OwedI18n.t('app.region.set', { place: el.regionPick.options[el.regionPick.selectedIndex].text }));
     // the select the user is standing on must not lose focus; the results (and
     // an open script) are redrawn in place, never a wizard mid-edit
@@ -588,6 +589,7 @@
     Object.keys(item).forEach(function (k) { copy[k] = item[k]; });
     copy.region = user.region || item.region || 'US';
     copy.subregion = user.subregion || '';
+    copy.storeId = C.storeId(item.store);
     return copy;
   }
 
@@ -749,7 +751,8 @@
     if (!item) { toast(OwedI18n.t('app.shelf.gone')); return; }
     showResults(item);
     var m = findMatch(ruleId);
-    if (m && isWide()) selectRule(m, { focus: true });
+    if (!m) { toast(OwedI18n.t('app.shelf.ruleGone')); return; }
+    if (isWide()) selectRule(m, { focus: true });
   }
 
   function renderSideExtras(shelf) {
@@ -928,8 +931,11 @@
 
   /* ---------------- wizard ---------------- */
   var wiz = {};
+  // the serial note: its debounce, what it last showed and said, and what it filled in
+  var serialTimer = 0, serialShown = '', serialSaid = '', serialFilled = null;
   function resetWiz() {
-    wiz = { step: 1, name: '', serial: '', category: null, brand: '', brandOther: false,
+    serialShown = ''; serialSaid = ''; serialFilled = null;
+    wiz = { step: 1, name: '', serial: '', store: '', category: null, brand: '', brandOther: false,
             ageMonths: null, ageUnknown: false, payment: null, broken: true, editingId: null, photo: null };
   }
   resetWiz();
@@ -943,6 +949,11 @@
     skip: document.getElementById('wizSkip'),
     name: document.getElementById('wizName'),
     serial: document.getElementById('wizSerial'),
+    serialNote: document.getElementById('wizSerialNote'),
+    serialLive: document.getElementById('wizSerialLive'),
+    ageHint: document.getElementById('wizAgeHint'),
+    store: document.getElementById('wizStore'),
+    storeList: document.getElementById('storeList'),
     err: document.getElementById('wizErr'),
     brand: document.getElementById('wizBrand'),
     brandList: document.getElementById('brandList'),
@@ -1009,6 +1020,17 @@
     o.value = b;
     wizEls.brandList.appendChild(o);
   });
+  function renderStoreList() {
+    var here = user.region || 'US';
+    wizEls.storeList.innerHTML = '';
+    C.STORES.forEach(function (s) {
+      if (s.regions && s.regions.indexOf(here) === -1) return;
+      var o = document.createElement('option');
+      o.value = s.name;
+      wizEls.storeList.appendChild(o);
+    });
+  }
+  renderStoreList();
 
   /* one option row: icon · label · radio on the right. Each tile group is a
      radiogroup: role=radio + aria-checked, one tab stop (the checked tile, or
@@ -1063,6 +1085,7 @@
       wiz.editingId = editItem.id;
       wiz.name = editItem.name || '';
       wiz.serial = editItem.serial || '';
+      wiz.store = editItem.store || '';
       wiz.category = editItem.category;
       wiz.brand = editItem.brand || '';
       wiz.ageMonths = editItem.ageMonths == null ? null : editItem.ageMonths;
@@ -1077,6 +1100,8 @@
 
     wizEls.name.value = wiz.name;
     wizEls.serial.value = wiz.serial || '';
+    wizEls.store.value = wiz.store || '';
+    renderSerialNote();
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
     showPhoto(wiz.photo, wiz.photo ? OwedI18n.th('app.photo.savedWithItem') : '');
@@ -1182,6 +1207,7 @@
       wiz.brandOther = false;
       wizEls.brand.value = b;
       renderBrandRows();
+      renderSerialNote();
       var again = wizEls.brandChips.querySelector('[data-brand="' + CSS.escape(b) + '"]');
       if (again) again.focus();
       return;
@@ -1196,9 +1222,113 @@
   });
 
   wizEls.serial.addEventListener('input', function () {
-    // serials are printed in caps and read back over the phone: keep them tidy
-    wiz.serial = wizEls.serial.value.toUpperCase().replace(/\s+/g, '');
-    if (wizEls.serial.value !== wiz.serial) wizEls.serial.value = wiz.serial;
+    // serials are printed in caps and read back over the phone: keep them tidy,
+    // without throwing the caret to the end when fixing a character in the middle
+    var el = wizEls.serial, caret = el.selectionStart, before = el.value;
+    wiz.serial = before.toUpperCase().replace(/\s+/g, '');
+    if (before !== wiz.serial) {
+      var spaces = before.slice(0, caret == null ? before.length : caret).replace(/\S+/g, '').length;
+      el.value = wiz.serial;
+      if (caret != null) { try { el.setSelectionRange(caret - spaces, caret - spaces); } catch (e) {} }
+    }
+    clearTimeout(serialTimer);
+    serialTimer = setTimeout(function () { renderSerialNote(true); }, 350);
+  });
+
+  wizEls.store.addEventListener('input', function () { wiz.store = wizEls.store.value; });
+
+  /* What the serial actually says (serials.js): a model only where the maker
+     publishes one, a date where the maker prints it, the maker's own lookup
+     page otherwise, and "I can't tell" rather than a guess. The visible note
+     is not a live region: typing a serial pauses after most characters, so
+     only a short line is announced, and only when it changes. */
+  function renderSerialNote(fill) {
+    clearTimeout(serialTimer); serialTimer = 0;
+    var note = wizEls.serialNote;
+    // read the serial as if nothing had been filled in from it, so its own guess cannot steer it
+    var sf = serialFilled || {};
+    var r = OwedSerials.decode(wiz.serial,
+      sf.brand && wiz.brand === sf.brand ? '' : wiz.brand,
+      sf.name && wiz.name === sf.name ? '' : wiz.name,
+      sf.category && wiz.category === sf.category ? null : wiz.category);
+
+    // what an earlier match filled in goes again if the serial no longer says it
+    if (serialFilled && (!r || r.kind !== 'model')) {
+      if (serialFilled.name && wiz.name === serialFilled.name) { wiz.name = ''; wizEls.name.value = ''; }
+      if (serialFilled.brand && wiz.brand === serialFilled.brand) { wiz.brand = ''; wizEls.brand.value = ''; }
+      if (serialFilled.category && wiz.category === serialFilled.category) wiz.category = null;
+      serialFilled = null;
+      renderCatRows(); renderBrandRows();
+    }
+
+    var html = '', said = '', src = '';
+    if (!r) {
+      html = '';
+    } else if (r.kind === 'model') {
+      var fields = [];
+      if (fill) {
+        // only what is still empty: never overwrite what the reader typed
+        serialFilled = serialFilled || {};
+        if (!wiz.name.trim()) { wiz.name = r.model; wizEls.name.value = r.model; serialFilled.name = r.model; fields.push(OwedI18n.t('app.serial.field.name')); }
+        if (!wiz.brand.trim()) { wiz.brand = r.maker; wizEls.brand.value = r.maker; serialFilled.brand = r.maker; fields.push(OwedI18n.t('app.serial.field.brand')); }
+        if (!wiz.category) { wiz.category = r.category; serialFilled.category = r.category; fields.push(OwedI18n.t('app.serial.field.category')); }
+        if (fields.length) { renderCatRows(); renderBrandRows(); }
+      }
+      html = OwedI18n.th('app.serial.model', { model: r.model, code: r.code, maker: r.maker,
+        filled: fields.length ? OwedI18n.t('app.serial.filled', { fields: OwedI18n.list(fields) }) : '' });
+      said = OwedI18n.t('app.serial.announceModel', { model: r.model, maker: r.maker });
+      src = r;
+    } else if (r.kind === 'date') {
+      html = serialDateLine(r);
+      said = OwedI18n.t('app.serial.announceDate', { date: monthYear(r.month, r.years[0]) });
+      src = r;
+    } else if (r.kind === 'lookup') {
+      html = OwedI18n.th('app.serial.lookup', { maker: r.maker }) +
+        ' <a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer" data-serial-copy>' +
+        OwedI18n.th('app.serial.lookupLink', { maker: r.maker }) + ' ' + ico('out', 16) + NEW_TAB + '</a>';
+      said = OwedI18n.t('app.serial.announceLookup', { maker: r.maker });
+    } else if (r.kind === 'imei') {
+      html = OwedI18n.th('app.serial.imei');
+      said = OwedI18n.t('app.serial.announceImei');
+    } else {
+      html = String(wiz.brand || '').trim() ? OwedI18n.th('app.serial.none')
+        : OwedI18n.th('app.serial.noneBrand', { makers: OwedI18n.list(r.datedMakers, 'disjunction') });
+    }
+    if (src) {
+      html += ' <a class="wiz-serial-src" href="' + esc(src.source) + '" target="_blank" rel="noopener noreferrer">' +
+        OwedI18n.th('app.serial.source', { source: src.sourceLabel }) + ' ' + ico('out', 16) + NEW_TAB + '</a>';
+    }
+    if (html !== serialShown) {
+      note.innerHTML = html;
+      note.hidden = !html;
+      serialShown = html;
+    }
+    if (said !== serialSaid) { wizEls.serialLive.textContent = said; serialSaid = said; }
+
+    // the date matters most on the "when did you get it?" question, so it shows there too
+    var ageHint = r && r.kind === 'date' ? serialDateLine(r) : '';
+    wizEls.ageHint.innerHTML = ageHint;
+    wizEls.ageHint.hidden = !ageHint;
+  }
+
+  function monthYear(month, year) {
+    return OwedI18n.date(new Date(year, month - 1, 1), { month: 'long', year: 'numeric' });
+  }
+  function serialDateLine(r) {
+    return r.years.length > 1
+      ? OwedI18n.th('app.serial.date', { date: monthYear(r.month, r.years[0]), older: monthYear(r.month, r.years[1]) })
+      : OwedI18n.th('app.serial.dateOne', { date: monthYear(r.month, r.years[0]) });
+  }
+
+  // "look it up on their site": the page cannot be filled in from here, so the serial goes on the clipboard
+  wizEls.serialNote.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-serial-copy]') || !wiz.serial) return;
+    var failed = function () { toast(OwedI18n.t('app.serial.copyFailed', { serial: wiz.serial })); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(wiz.serial).then(function () { toast(OwedI18n.t('app.serial.copied')); }, failed);
+    } else {
+      failed();
+    }
   });
 
   wizEls.name.addEventListener('input', function () {
@@ -1206,13 +1336,14 @@
     var guess = C.guessCategory(wiz.name);
     if (guess) wiz.category = guess;
     var gb = guessBrandWord(wiz.name);
-    if (gb && !wiz.brand) { wiz.brand = gb; wizEls.brand.value = gb; renderBrandRows(); }
+    if (gb && !wiz.brand) { wiz.brand = gb; wizEls.brand.value = gb; renderBrandRows(); renderSerialNote(); }
     renderCatRows();
   });
 
   wizEls.brand.addEventListener('input', function () {
     wiz.brand = wizEls.brand.value;
     wiz.brandOther = false;
+    renderSerialNote();
     renderBrandRows();
   });
 
@@ -1565,7 +1696,11 @@
   });
 
   function goStep(n) {
+    if (serialTimer) renderSerialNote(true);   // a quick Next must not race the typing pause
     wiz.step = Math.max(1, Math.min(4, n));
+    // a brand that is not one of the tiles (one the serial filled in, say) shows in its field
+    if (wiz.step === 2 && wiz.brand && !brandIsCommon(wiz.brand)) setFallback(2, true);
+    if (wiz.step === 3) renderSerialNote();
     Array.prototype.forEach.call(document.querySelectorAll('.wiz-step'), function (s) {
       s.classList.toggle('is-on', Number(s.dataset.step) === wiz.step);
     });
@@ -1615,7 +1750,7 @@
   });
 
   // Enter advances
-  [wizEls.name, wizEls.brand].forEach(function (input) {
+  [wizEls.name, wizEls.brand, wizEls.serial, wizEls.store].forEach(function (input) {
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); wizEls.next.click(); }
     });
@@ -1634,6 +1769,8 @@
       payment: wiz.payment || 'unknown',
       broken: wiz.broken,
       serial: wiz.serial.trim(),
+      store: wiz.store.trim(),
+      storeId: C.storeId(wiz.store),   // '' for a shop we have no rules for; the name is still used in the script
       region: user.region || 'US',
       subregion: user.subregion || '',
       photo: wiz.photo || null    // a small JPEG data URL; lives only in this browser
@@ -1692,7 +1829,8 @@
       C.categoryLabel(item.category),
       item.brand,
       E.agePhrase(item.ageMonths),
-      item.serial ? OwedI18n.t('app.results.serial', { serial: item.serial }) : ''
+      item.serial ? OwedI18n.t('app.results.serial', { serial: item.serial }) : '',
+      item.store ? OwedI18n.t('app.results.store', { store: item.store }) : ''
     ].filter(Boolean).join(' · ');
 
     // Never say "nothing matched" when the truth is "the rulebook isn't here yet".
@@ -2189,7 +2327,7 @@
       keyLangs.push('');
     }
     // the paragraph from the rule's own hint is in the rule's language. engine.script() writes
-    // hello, bought, rule, [serial], [hint], close: with a hint, it is the one before the last
+    // hello, bought, [store], rule, [serial], [hint], close: with a hint, it is the one before the last
     var hintAt = L && typeof s.hintIndex === 'number' ? s.hintIndex : -1;
 
     var top = inPanel

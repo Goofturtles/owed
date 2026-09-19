@@ -172,6 +172,7 @@
       it.id = String(it.id);
       if (it.name != null) it.name = String(it.name);
       if (it.brand != null) it.brand = String(it.brand);
+      if (it.store != null) it.store = String(it.store);
       if (!it.claims || typeof it.claims !== 'object' || Array.isArray(it.claims)) it.claims = {};
       Object.keys(it.claims).forEach(function (k) {
         var cl = it.claims[k];

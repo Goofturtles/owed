@@ -1196,6 +1196,7 @@
           "kia"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -1224,6 +1225,7 @@
           "bmw"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -1252,6 +1254,7 @@
           "hyundai"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -1280,6 +1283,7 @@
           "kia"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -1392,7 +1396,7 @@
           "*"
         ],
         "categories": [
-          "other"
+          "vehicle"
         ],
         "regions": [
           "US"
@@ -1420,7 +1424,7 @@
           "*"
         ],
         "categories": [
-          "other"
+          "vehicle"
         ],
         "regions": [
           "US"
@@ -1486,7 +1490,7 @@
           "*"
         ],
         "categories": [
-          "other"
+          "vehicle"
         ],
         "regions": [
           "US"
@@ -4262,7 +4266,8 @@
           "*"
         ],
         "categories": [
-          "other"
+          "vehicle",
+          "toy"
         ],
         "regions": [
           "US"
@@ -4789,6 +4794,7 @@
           "bob gear"
         ],
         "categories": [
+          "toy",
           "other"
         ],
         "regions": [
@@ -4817,6 +4823,7 @@
           "graco"
         ],
         "categories": [
+          "toy",
           "other"
         ],
         "regions": [
@@ -4846,7 +4853,7 @@
           "*"
         ],
         "categories": [
-          "other"
+          "toy"
         ],
         "regions": [
           "US"
@@ -6251,6 +6258,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "costco"
         ]
       },
       "window_months": 24.0,
@@ -6284,6 +6294,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "rei"
         ]
       },
       "window_months": 999.0,
@@ -6317,7 +6330,11 @@
         ],
         "payment_methods": [
           "*"
-        ]
+        ],
+        "stores": [
+          "rei"
+        ],
+        "requires": "membership"
       },
       "window_months": 12.0,
       "window_note": "365 days if you are an REI Co-op member. 90 days if you are not. Outdoor electronics - watches, GPS units, bike trainers, emergency beacons, cameras - are 90 days for everyone. Used gear bought in store is final sale.",
@@ -6383,6 +6400,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "nordstrom"
         ]
       },
       "window_months": 999.0,
@@ -6454,7 +6474,11 @@
         "payment_methods": [
           "any-credit",
           "debit"
-        ]
+        ],
+        "stores": [
+          "target"
+        ],
+        "requires": "store-card"
       },
       "window_months": 4.0,
       "window_note": "Most things get 90 days at Target. Pay with the Target Circle credit or debit card, or be a Circle 360 member, and you get 30 days on top - so 120 days. It does not stack on Target's own brands, which already get a year.",
@@ -6578,7 +6602,11 @@
         ],
         "payment_methods": [
           "any-credit"
-        ]
+        ],
+        "stores": [
+          "homedepot"
+        ],
+        "requires": "store-card"
       },
       "window_months": 12.0,
       "window_note": "A full year instead of 90 days, if you paid with a Home Depot Consumer Credit Card, a Pro Xtra Credit Card, or a Home Depot Commercial Account. It does not rescue the short-window stuff: big appliances are 48 hours, dehumidifiers and generators and air conditioners are 7 days, and furniture, TVs, computers and gas-powered garden kit are 30 days.",
@@ -6606,6 +6634,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "homedepot"
         ]
       },
       "window_months": 12.0,
@@ -6646,7 +6677,11 @@
         ],
         "payment_methods": [
           "*"
-        ]
+        ],
+        "stores": [
+          "bestbuy"
+        ],
+        "requires": "membership"
       },
       "window_months": 2.0,
       "window_note": "60 days if you pay for My Best Buy Plus or My Best Buy Total. Everyone else gets 15 days. Anything you activate - phones, cellular tablets, hotspots, cellular watches - is 14 days no matter what, except Verizon devices which get 30. The membership window does not apply to things sold by other sellers on the Best Buy site. These terms took effect on 23 February 2026, so check anything you read that is older.",
@@ -6682,6 +6717,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "johnlewis"
         ]
       },
       "window_months": 60.0,
@@ -6753,6 +6791,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "mec"
         ]
       },
       "window_months": 999.0,
@@ -6995,7 +7036,8 @@
           "*"
         ],
         "categories": [
-          "other"
+          "vehicle",
+          "toy"
         ],
         "regions": [
           "US"
@@ -7246,6 +7288,7 @@
           "maxi-cosi"
         ],
         "categories": [
+          "toy",
           "other"
         ],
         "regions": [
@@ -7275,6 +7318,7 @@
           "uppababy"
         ],
         "categories": [
+          "toy",
           "other"
         ],
         "regions": [
@@ -7304,6 +7348,7 @@
           "bugaboo"
         ],
         "categories": [
+          "toy",
           "other"
         ],
         "regions": [
@@ -9195,6 +9240,7 @@
           "toyota"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -9223,6 +9269,7 @@
           "kia"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -9252,6 +9299,7 @@
           "acura"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -9280,6 +9328,7 @@
           "subaru"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -9309,6 +9358,7 @@
           "vw"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -9545,6 +9595,7 @@
           "lexus"
         ],
         "categories": [
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -10468,6 +10519,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "costco"
         ]
       },
       "window_months": 3.0,
@@ -10508,6 +10562,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "costco"
         ]
       },
       "window_months": 999.0,
@@ -10539,6 +10596,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "costco"
         ]
       },
       "window_months": 24.0,
@@ -10635,6 +10695,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "rei"
         ]
       },
       "window_months": 3.0,
@@ -10668,6 +10731,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "mec"
         ]
       },
       "window_months": 999.0,
@@ -10696,6 +10762,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "johnlewis"
         ]
       },
       "window_months": 60.0,
@@ -10744,6 +10813,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "amazon"
         ]
       },
       "window_months": 3.0,
@@ -10774,6 +10846,9 @@
         ],
         "payment_methods": [
           "*"
+        ],
+        "stores": [
+          "zappos"
         ]
       },
       "window_months": 2.0,

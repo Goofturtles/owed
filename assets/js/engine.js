@@ -110,6 +110,17 @@
     var bm = brandMatches(rule, item.brand);
     if (bm === false) return null;
 
+    // a store's own policy needs that store: a Costco guarantee does nothing for a TV bought elsewhere.
+    // A rule the reader has already claimed stays, whatever was (or was not) typed as the store.
+    var atStore = false;
+    var claimed = !!(item.claims && item.claims[rule.id]);
+    if (at.stores && at.stores.length && !claimed) {
+      if (!item.storeId || at.stores.indexOf(item.storeId) === -1) return null;
+      atStore = true;
+    }
+    // a law written for your own state or province, not just your country
+    var local = !!(at.subregions && at.subregions.length && item.subregion && at.subregions.indexOf(item.subregion) !== -1);
+
     var pay = paymentMatches(rule, item.payment);
     if (pay === false) return null;
 
@@ -149,6 +160,10 @@
     var score = CONFIDENCE_WEIGHT[rule.confidence] || 1;
     if (bm === 'exact') score += 2;
     else if (bm === 'loose') score += 1;
+    if (atStore) score += 2;          // as specific as the brand: it is where you bought it
+    // a store's member or card-holder perk: Owed never asks, so it is one thing to check
+    if (at.requires) score -= 1.5;
+    if (local) score += 1.5;          // your own state's law, named for it
     if (pay === true && at.payment_methods && at.payment_methods.length &&
         at.payment_methods.indexOf('*') === -1) score += 1.5;
     if (pay === 'maybe') score -= 0.5;
@@ -169,6 +184,10 @@
     if (bm === 'exact' || bm === 'loose') {
       reason.push(item.brand ? i18n.t('engine.reason.brand', { brand: item.brand }) : i18n.t('engine.reason.brandUnnamed'));
     }
+    if (atStore) reason.push(i18n.t('engine.reason.store', { store: storeLabel(item) }));
+    if (at.requires === 'membership') reason.push(i18n.t('engine.reason.requiresMembership'));
+    if (at.requires === 'store-card') reason.push(i18n.t('engine.reason.requiresStoreCard'));
+    if (local) reason.push(i18n.t('engine.reason.localLaw'));
     if (pay === true && at.payment_methods && at.payment_methods.length &&
         at.payment_methods.indexOf('*') === -1) {
       reason.push(i18n.t('engine.reason.paid', { pay: paymentWord(item.payment) }));
@@ -182,7 +201,7 @@
     if (timing === 'closed') {
       reason.push(i18n.t('engine.reason.floorPassed'));
     }
-    if (!timed && rule.source_type === 'statutory') {
+    if (!timed && rule.source_type === 'statutory' && !local) {
       reason.push(i18n.t('engine.reason.law'));
     }
     if (!reason.length) reason.push(i18n.t('engine.reason.covers'));
@@ -213,6 +232,13 @@
       discover: 'engine.pay.discover', debit: 'engine.pay.debit', cash: 'engine.pay.cash'
     };
     return map[id] ? i18n.t(map[id]) : '';   // unknown: the sentence leaves the payment out entirely
+  }
+
+  /* the store as a person names it: the chain's own name when we know it
+     ("bought it at costco" -> "Costco"), otherwise what was typed */
+  function storeLabel(item) {
+    var C = global.OwedCatalog;
+    return (item.storeId && C && C.storeName && C.storeName(item.storeId)) || String(item.store || '').trim();
   }
 
   /** Run the whole corpus against an item. */
@@ -281,6 +307,10 @@
       : (pay
         ? i18n.t('engine.script.boughtPaid', { thing: thing, when: when, pay: pay, broke: broke })
         : i18n.t('engine.script.bought', { thing: thing, when: when, broke: broke })));
+    // the store is who owes you under its own policy, and under the law the seller answers for it
+    if (item.store && (r.source_type === 'retailer' || r.source_type === 'statutory')) {
+      lines.push(i18n.t('engine.script.store', { store: storeLabel(item) }));
+    }
     lines.push(i18n.t('engine.script.rule', { title: r.title }));
 
     // 52 rules in the book turn on a serial number: say it when we have one

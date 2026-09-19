@@ -1255,3 +1255,14 @@
   #printSheet .ps-note { margin: 16pt 0 0; padding-top: 8pt; border-top: 1px solid #CCC; font-size: 8.5pt; }
   #printSheet .ps-facts, #printSheet .ps-note, #printSheet .scr-kv dt { color: #555 !important; }
 }
+
+/* ---------- what the serial says, and where it was bought ---------- */
+.wiz-serial-note { grid-column: 1 / -1; margin: 2px 2px 4px; font-size: 15px; line-height: 1.45; color: var(--ink-2); text-align: left; }
+.wiz-serial-note b { color: var(--ink); font-weight: 600; }
+.wiz-serial-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.wiz-serial-src { margin-left: 4px; white-space: nowrap; }
+.wiz-store { display: grid; gap: 6px; width: 100%; margin: 18px auto 0; text-align: left; }
+.wiz-store-label { font-size: 15px; font-weight: 600; color: var(--ink); }
+.wiz-store-help { margin: 0; font-size: 14px; line-height: 1.4; color: var(--ink-3); }
+.wiz-age-hint { text-align: center; max-width: 44ch; margin: -14px auto 18px; }
+.wiz-serial-note a svg { display: inline-block; vertical-align: -2px; margin-left: 2px; }
