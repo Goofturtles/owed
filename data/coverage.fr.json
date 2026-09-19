@@ -6,14 +6,12 @@
    "title": "Nouveau-Brunswick : vous pouvez réclamer auprès du fabricant, pas seulement du magasin",
    "what_you_get": "La loi du Nouveau-Brunswick prévoit que les produits doivent être d'une qualité à laquelle on peut raisonnablement s'attendre et avoir une durée de vie raisonnable, que les vendeurs ne peuvent pas exclure ces garanties par contrat, et que vous pouvez faire une réclamation contre une entreprise auprès de laquelle vous n'avez jamais acheté directement, y compris le fabricant.",
    "window_note": "Aucun délai fixe. La durée de vie qu'un produit devrait avoir s'apprécie notamment d'après sa nature, le fait qu'il était neuf ou usagé, et la façon dont vous l'avez réellement utilisé et entretenu.",
-   "how_to_claim": "Écrivez au magasin et au fabricant en même temps. Indiquez que la Loi sur la responsabilité et les garanties relatives aux produits de consommation du Nouveau-Brunswick vous accorde une garantie relative à la durée de vie du produit qui ne peut pas être exclue, et que l'article 23 vous permet de faire une réclamation même si vous n'avez pas de contrat avec eux. Demandez une réparation, un remplacement ou un remboursement.",
    "script_hint": "En vertu de la Loi sur la responsabilité et les garanties relatives aux produits de consommation du Nouveau-Brunswick, ce produit devait avoir une durée de vie raisonnable, et je n'ai pas besoin d'avoir un contrat avec vous pour faire cette réclamation.",
    "verified_against": "https://lois.gnb.ca/fr/document/cs/C-18.1"
   },
   "programs-eu-safety-gate-search": {
    "title": "UE : cherchez dans Safety Gate les alertes sur les produits dangereux",
    "what_you_get": "La confirmation que votre produit a été signalé comme dangereux quelque part dans l'UE, avec la marque, le modèle et le risque : une preuve utile quand vous demandez au vendeur ou au fabricant une réparation gratuite ou un remboursement.",
-   "window_note": "Aucune date limite. De nouvelles alertes sont ajoutées chaque semaine, pour tous les pays de l'UE.",
    "how_to_claim": "Cherchez votre marque et votre modèle sur le site des alertes Safety Gate de la Commission européenne. Si votre modèle y figure, montrez l'alerte au vendeur et demandez-lui ce qu'il fait pour les propriétaires.",
    "script_hint": "Mon modèle figure dans les alertes Safety Gate de l'UE. Que proposez-vous aux propriétaires de ce produit?",
    "verified_against": "https://ec.europa.eu/safety-gate-alerts/screen/search?lang=fr"
