@@ -73,9 +73,11 @@
     var brands = rule.applies_to && rule.applies_to.brands;
     if (!brands || !brands.length || brands.indexOf('*') !== -1) return 'any';
     if (!brand) return false;
-    var b = String(brand).toLowerCase();
+    // "De’Longhi" from the picker and "de'longhi" in a rule are the same brand
+    var apos = /[‘’ʼ`]/g;
+    var b = String(brand).toLowerCase().replace(apos, "'");
     for (var i = 0; i < brands.length; i++) {
-      var rb = String(brands[i]).toLowerCase();
+      var rb = String(brands[i]).toLowerCase().replace(apos, "'");
       if (rb === b) return 'exact';
       // "bosch tools" should still match an item branded "bosch"
       if (b.indexOf(rb) !== -1 || rb.indexOf(b) !== -1) return 'loose';
@@ -118,6 +120,16 @@
       if (!item.storeId || at.stores.indexOf(item.storeId) === -1) return null;
       atStore = true;
     }
+    // card cover is the bank's: a known other bank drops the rule; an unknown bank keeps
+    // it as one thing to check. Amex and Discover issue their own cards.
+    // (Discover cards are issued by Capital One now, so a Discover payment names no bank by itself)
+    var fromPayment = item.payment === 'amex';
+    var issuer = fromPayment ? 'amex' : (item.issuer || '');
+    var bankHit = false, bankUnknown = false;
+    if (at.issuers && at.issuers.length && !claimed) {
+      if (issuer && at.issuers.indexOf(issuer) === -1) return null;
+      if (issuer) bankHit = true; else bankUnknown = true;
+    }
     // a law written for your own state or province, not just your country
     var local = !!(at.subregions && at.subregions.length && item.subregion && at.subregions.indexOf(item.subregion) !== -1);
 
@@ -143,6 +155,16 @@
       timing = 'unknown';
     }
 
+    // a law that has not started yet, or covers only things bought after it started
+    // (Quebec's good-working-order warranty: purchases from 5 October 2026)
+    if (rule.starts) {
+      var begins = Date.parse(rule.starts);
+      if (isFinite(begins)) {
+        if (Date.now() < begins) return null;
+        if (isFinite(age) && Date.now() - age * 30.4 * 86400000 < begins - 15 * 86400000) return null;
+      }
+    }
+
     // hard deadline (settlements)
     var deadlinePassed = false;
     if (rule.deadline) {
@@ -161,8 +183,10 @@
     if (bm === 'exact') score += 2;
     else if (bm === 'loose') score += 1;
     if (atStore) score += 2;          // as specific as the brand: it is where you bought it
-    // a store's member or card-holder perk: Owed never asks, so it is one thing to check
-    if (at.requires) score -= 1.5;
+    // a store's member or card-holder perk, or one named card: Owed never asks, so it is one thing to check
+    if (at.requires) score -= (at.requires === 'card-tier' ? 1 : 1.5);
+    if (bankHit && !fromPayment) score += 1;          // Amex was already counted as the payment
+    if (bankUnknown) score -= 1.5;
     if (local) score += 1.5;          // your own state's law, named for it
     if (pay === true && at.payment_methods && at.payment_methods.length &&
         at.payment_methods.indexOf('*') === -1) score += 1.5;
@@ -187,6 +211,9 @@
     if (atStore) reason.push(i18n.t('engine.reason.store', { store: storeLabel(item) }));
     if (at.requires === 'membership') reason.push(i18n.t('engine.reason.requiresMembership'));
     if (at.requires === 'store-card') reason.push(i18n.t('engine.reason.requiresStoreCard'));
+    if (at.requires === 'card-tier') reason.push(i18n.t('engine.reason.requiresCardTier'));
+    if (bankHit && !fromPayment) reason.push(i18n.t('engine.reason.bank', { bank: bankLabel(issuer) }));
+    if (bankUnknown) reason.push(i18n.t('engine.reason.bankUnknown', { bank: bankLabel(at.issuers[0]) }));
     if (local) reason.push(i18n.t('engine.reason.localLaw'));
     if (pay === true && at.payment_methods && at.payment_methods.length &&
         at.payment_methods.indexOf('*') === -1) {
@@ -232,6 +259,13 @@
       discover: 'engine.pay.discover', debit: 'engine.pay.debit', cash: 'engine.pay.cash'
     };
     return map[id] ? i18n.t(map[id]) : '';   // unknown: the sentence leaves the payment out entirely
+  }
+
+  function bankLabel(id) {
+    var C = global.OwedCatalog;
+    if (id === 'amex') return 'American Express';
+    if (id === 'discover') return 'Discover';
+    return (C && C.issuerName && C.issuerName(id)) || id;
   }
 
   /* the store as a person names it: the chain's own name when we know it

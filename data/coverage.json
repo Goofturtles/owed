@@ -643,7 +643,8 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "requires": "card-tier"
       },
       "window_months": 3,
       "window_note": "Covers the first 90 days after you buy something. If it is stolen or broken in that time, you then have 60 days from the day it happened to phone in, and 90 days to send the paperwork. Most people find out too late. It even covers the deductible your home insurance would make you pay. If you have home or renters insurance, you have to file with them first and send Visa a copy of what they paid.",
@@ -742,6 +743,9 @@
         ],
         "payment_methods": [
           "amex"
+        ],
+        "issuers": [
+          "amex"
         ]
       },
       "window_months": 72,
@@ -792,6 +796,9 @@
           "US"
         ],
         "payment_methods": [
+          "amex"
+        ],
+        "issuers": [
           "amex"
         ]
       },
@@ -845,6 +852,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "chase"
         ]
       },
       "window_months": 4,
@@ -894,6 +904,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "chase"
         ]
       },
       "window_months": 48,
@@ -1041,6 +1054,9 @@
         ],
         "payment_methods": [
           "amex"
+        ],
+        "issuers": [
+          "amex"
         ]
       },
       "window_months": 72,
@@ -1090,6 +1106,9 @@
           "CA"
         ],
         "payment_methods": [
+          "amex"
+        ],
+        "issuers": [
           "amex"
         ]
       },
@@ -1141,7 +1160,8 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "requires": "card-tier"
       },
       "window_months": 72,
       "window_note": "Two separate benefits on one certificate. Purchase security covers loss, theft or damage for 90 days after you buy. Extended warranty doubles the maker's warranty by up to one extra year, on warranties of 5 years or less. Report either one within 90 days of it happening, and return the claim form within 30 days of getting it.",
@@ -5142,7 +5162,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "chase"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 3.0,
       "window_note": "You must call within 90 days of buying it, and only after the store has already said no to your return. Then you have 60 days to send the paperwork. The item has to still work and look new. Be ready to show the shop's return policy or that they turned you down.",
@@ -5170,7 +5194,11 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "issuers": [
+          "chase"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "This has nothing to do with when you bought the phone. You just have to have paid your whole phone bill with the card the month before the damage. Report it within 60 days of the damage and send papers within 90 days. If it was stolen, file a police report within 48 hours.",
@@ -5199,7 +5227,11 @@
         "payment_methods": [
           "mastercard",
           "visa"
-        ]
+        ],
+        "issuers": [
+          "chase"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "Not tied to when you bought the phone. You just have to be paying your monthly phone bill with the Chase card. Report a break or theft quickly - these phone benefits normally give you 60 to 90 days.",
@@ -5250,7 +5282,11 @@
         ],
         "payment_methods": [
           "amex"
-        ]
+        ],
+        "issuers": [
+          "amex"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 4.0,
       "window_note": "Same 90-day cover and same tight 30-day reporting window as the premium Amex cards, but the payout cap is ten times smaller. Send proof within 60 days.",
@@ -5298,6 +5334,9 @@
         ],
         "payment_methods": [
           "amex"
+        ],
+        "issuers": [
+          "amex"
         ]
       },
       "window_months": 3.0,
@@ -5326,7 +5365,11 @@
         ],
         "payment_methods": [
           "amex"
-        ]
+        ],
+        "issuers": [
+          "amex"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "Nothing to do with when you bought the phone. You must have paid last month's whole phone bill with the card. Report within 90 days of the damage and send written proof within 120 days. For theft, file a police report within 48 hours.",
@@ -5370,7 +5413,11 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "issuers": [
+          "citi"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 50.0,
       "window_note": "Works on maker or store warranties of 24 months or less, and it doubles them, so a 2-year warranty becomes 4 years. Tell them within 60 days of the item breaking and send written proof within 180 days.",
@@ -5421,7 +5468,11 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "issuers": [
+          "citi"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 6.0,
       "window_note": "The damage or theft has to happen within 120 days of buying it (90 days in New York). You then have 60 days to report it.",
@@ -5449,7 +5500,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "Nothing to do with when you bought the phone. Pay your monthly phone bill with the card. Report within 60 days of the damage. For theft, file a police report within 48 hours.",
@@ -5495,7 +5550,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 3.0,
       "window_note": "Call within 90 days of buying it, and only after the store has already said no to your return.",
@@ -5546,7 +5605,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 5.0,
       "window_note": "The damage or theft has to happen within 90 days of buying it. Then call within 60 days and send documents within 90 days of the damage.",
@@ -5597,7 +5660,11 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 6.0,
       "window_note": "You have 120 days from buying it to spot a printed or online ad with a lower price for the exact same make and model. Then report it within 60 days. Price protection is rare now, so this one is easy to miss.",
@@ -5989,6 +6056,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "rbc"
         ]
       },
       "window_months": 999.0,
@@ -6039,6 +6109,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "td"
         ]
       },
       "window_months": 999.0,
@@ -6090,6 +6163,9 @@
           "visa",
           "mastercard",
           "amex"
+        ],
+        "issuers": [
+          "scotiabank"
         ]
       },
       "window_months": 999.0,
@@ -6139,6 +6215,9 @@
         ],
         "payment_methods": [
           "mastercard"
+        ],
+        "issuers": [
+          "bmo"
         ]
       },
       "window_months": 999.0,
@@ -6188,6 +6267,9 @@
         ],
         "payment_methods": [
           "visa"
+        ],
+        "issuers": [
+          "cibc"
         ]
       },
       "window_months": 999.0,
@@ -7955,7 +8037,8 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "requires": "card-tier"
       },
       "window_months": 48.0,
       "window_note": "Kicks in the day the maker's warranty runs out. Only works if that warranty was 3 years or less, so the latest it can help you is about 4 years after you bought the thing. The clock that really matters is after it breaks: call within 60 days or they can say no. Once the item breaks you have only 60 days to phone, and 90 days to send the paperwork. Banks pick which Visa benefits to switch on, so check your own card's Guide to Benefits before you count on it.",
@@ -8048,7 +8131,8 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "requires": "card-tier"
       },
       "window_months": 48.0,
       "window_note": "Works on maker's warranties of 24 months or less, and doubles them - so a 2-year warranty becomes 4 years. Report the failure within 60 days and get your paperwork in within 180 days of the failure.",
@@ -8076,7 +8160,8 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "Nothing to do with when you bought the phone. You are covered from the first day of the month after you pay a phone bill with the card, and you stay covered every month you keep paying that bill with it. Report a break or theft within 90 days, and send proof within 120 days.",
@@ -8122,6 +8207,9 @@
         "payment_methods": [
           "mastercard",
           "visa"
+        ],
+        "issuers": [
+          "citi"
         ]
       },
       "window_months": 84.0,
@@ -8172,6 +8260,9 @@
           "mastercard",
           "visa",
           "amex"
+        ],
+        "issuers": [
+          "citi"
         ]
       },
       "window_months": 84,
@@ -8220,6 +8311,9 @@
         "payment_methods": [
           "mastercard",
           "visa"
+        ],
+        "issuers": [
+          "citi"
         ]
       },
       "window_months": 3.0,
@@ -8248,6 +8342,9 @@
         ],
         "payment_methods": [
           "mastercard"
+        ],
+        "issuers": [
+          "citi"
         ]
       },
       "window_months": 999.0,
@@ -8294,6 +8391,9 @@
           "visa",
           "mastercard",
           "discover"
+        ],
+        "issuers": [
+          "capitalone"
         ]
       },
       "window_months": 48.0,
@@ -8338,7 +8438,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 51.0,
       "window_note": "Only works if the maker's warranty was 3 years or shorter. It adds 1 more year on top. Call within 60 days of the item breaking and send the signed form within 90 days.",
@@ -8382,7 +8486,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 51.0,
       "window_note": "Covers Capital One Visa Signature cards like Venture, VentureOne, Savor and Quicksilver. Only works on maker warranties of 3 years or less. Call within 60 days of the breakdown and send the form within 90 days.",
@@ -8426,7 +8534,11 @@
         ],
         "payment_methods": [
           "mastercard"
-        ]
+        ],
+        "issuers": [
+          "capitalone"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 50.0,
       "window_note": "Works on maker or store warranties of 24 months or less and doubles them, so a 2-year warranty becomes 4 years. Report within 60 days of the breakdown and send written proof within 180 days.",
@@ -8455,6 +8567,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "wellsfargo"
         ]
       },
       "window_months": 999.0,
@@ -8501,6 +8616,9 @@
         "payment_methods": [
           "visa",
           "mastercard"
+        ],
+        "issuers": [
+          "wellsfargo"
         ]
       },
       "window_months": 48.0,
@@ -8529,7 +8647,11 @@
         ],
         "payment_methods": [
           "visa"
-        ]
+        ],
+        "issuers": [
+          "usbank"
+        ],
+        "requires": "card-tier"
       },
       "window_months": 999.0,
       "window_note": "You must have charged your monthly phone bill to the U.S. Bank Visa Platinum in the calendar month before the phone broke or was stolen. Report it quickly - these benefits usually allow 60 to 90 days.",
@@ -9828,6 +9950,9 @@
         ],
         "payment_methods": [
           "any-credit"
+        ],
+        "issuers": [
+          "cibc"
         ]
       },
       "window_months": 60.0,

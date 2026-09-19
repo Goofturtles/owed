@@ -287,6 +287,34 @@ reader says where they bought it. Before this, those rules showed for everyone
 (IKEA, L.L.Bean, Decathlon, Target's own brands) still match on the brand. A
 store Owed has no rules for is kept as typed and named in the claim script.
 
+## 12e. North America: every place, but not every product
+
+The picker lists all 50 states and DC, all 13 provinces and territories, and
+Mexico. That does not mean every product has a rule: it means every kind of
+product, anywhere in North America, is at least matched against the law of the
+place (the floor every seller owes), plus maker, store and card rules where
+they exist. Mexico's rules are written in English from Spanish sources, and
+Spanish is not yet offered to visitors. The first guess of where you live comes
+only from time zones that mean one place (Alberta, Arizona, Hawaii...); a zone
+shared by many states (New York's, Chicago's) guesses no state at all rather
+than the wrong one.
+
+Where it is thin: Mexico has its federal consumer law (14 to 17 rules for every
+kind of product), its big stores and a dozen makers, but most makers' Mexican
+warranties are not in the book yet; the law's floor still applies to them.
+Prince Edward Island and Newfoundland have the fewest provincial rules (3 and
+4), because their statutes say the least. A few picker brands have no maker rule
+in Canada or the US (section 3's list); a product from them gets the law, the
+store and the card, not the maker.
+
+## 12f. Card cover belongs to the bank
+
+A Visa or Mastercard benefit is the issuing bank's to give. Owed asks which
+bank gave you the card (optional). Named: only that bank's rules show. Not
+named: every bank's rule stays as a long shot marked "only if your card is from
+Chase". Rules for one named card (Sapphire Reserve, Venture X, World Elite)
+say "only on the card it names". Amex and Discover issue their own cards.
+
 ## 13. The maintenance burden
 
 A hand-collected rulebook is a promise to keep reading. This is the part that does not scale on its own.

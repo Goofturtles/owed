@@ -123,8 +123,6 @@
  "appShell.rail.worthDesc": "Explains the 'Worth asking' tag shown just before it. The subject is the rule.",
  "appShell.region.loading": "Short note under the region pill while Owed loads its rules. 'Rulebook' = Owed's collection of warranty and repair rules; use the same word everywhere.",
  "appShell.region.newYork": "The US state, not the city.",
- "appShell.region.otherProvince": "Dropdown option under Canada: a Canadian province not in the list.",
- "appShell.region.otherState": "Dropdown option under United States: a US state not in the list.",
  "appShell.region.us": "Group label for US states in the 'Where you live' dropdown, and the first-paint text of the region pill. The app may show it after a state name, as in 'California, United States'.",
  "appShell.results.edit": "Button that reopens the four questions to change the answers for this item.",
  "appShell.results.filterAll": "Filter tab showing all matching rules. A count is shown right after it.",

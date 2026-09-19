@@ -162,7 +162,11 @@
     user = S.getUser();
   }
   el.regionPick.value = (user.region || 'US') + (user.subregion ? '|' + user.subregion : '');
-  if (el.regionPick.selectedIndex < 0) el.regionPick.value = user.region || 'US';
+  if (el.regionPick.selectedIndex < 0) {
+    // an old "another state" pick: say "any state" and mean it, so no state's rules are hidden
+    el.regionPick.value = user.region || 'US';
+    if (user.subregion) { S.updateUser({ subregion: '' }); user = S.getUser(); }
+  }
 
   /* the select sits invisibly over the region pill; the pill shows its label */
   function syncRegionName() {
@@ -177,7 +181,7 @@
     S.updateUser({ region: parts[0], subregion: parts[1] || '' });
     user = S.getUser();
     syncRegionName();
-    if (typeof renderStoreList === 'function') renderStoreList();
+    if (typeof renderStoreList === 'function') { renderStoreList(); renderIssuerList(); }
     toast(OwedI18n.t('app.region.set', { place: el.regionPick.options[el.regionPick.selectedIndex].text }));
     // the select the user is standing on must not lose focus; the results (and
     // an open script) are redrawn in place, never a wizard mid-edit
@@ -935,7 +939,7 @@
   var serialTimer = 0, serialShown = '', serialSaid = '', serialFilled = null;
   function resetWiz() {
     serialShown = ''; serialSaid = ''; serialFilled = null;
-    wiz = { step: 1, name: '', serial: '', store: '', category: null, brand: '', brandOther: false,
+    wiz = { step: 1, name: '', serial: '', store: '', issuer: '', category: null, brand: '', brandOther: false,
             ageMonths: null, ageUnknown: false, payment: null, broken: true, editingId: null, photo: null };
   }
   resetWiz();
@@ -953,6 +957,8 @@
     serialLive: document.getElementById('wizSerialLive'),
     ageHint: document.getElementById('wizAgeHint'),
     store: document.getElementById('wizStore'),
+    issuer: document.getElementById('wizIssuer'),
+    issuerWrap: document.getElementById('wizIssuerWrap'),
     storeList: document.getElementById('storeList'),
     err: document.getElementById('wizErr'),
     brand: document.getElementById('wizBrand'),
@@ -1032,6 +1038,21 @@
   }
   renderStoreList();
 
+  // the banks that issue cards where the reader lives; "not sure" keeps every bank's rule as a maybe
+  function renderIssuerList() {
+    var here = user.region || 'US';
+    var html = '<option value="">' + OwedI18n.th('app.wizard.issuerUnknown') + '</option>';
+    C.ISSUERS.forEach(function (b) {
+      if (b.regions.indexOf(here) === -1) return;
+      html += '<option value="' + esc(b.id) + '">' + esc(b.name) + '</option>';
+    });
+    wizEls.issuer.innerHTML = html;
+    wizEls.issuer.value = wiz.issuer || '';
+    if (wizEls.issuer.value !== (wiz.issuer || '')) wiz.issuer = '';
+  }
+  renderIssuerList();
+  wizEls.issuer.addEventListener('change', function () { wiz.issuer = wizEls.issuer.value; });
+
   /* one option row: icon · label · radio on the right. Each tile group is a
      radiogroup: role=radio + aria-checked, one tab stop (the checked tile, or
      the first), arrows move between tiles, Space/Enter picks one. */
@@ -1086,6 +1107,7 @@
       wiz.name = editItem.name || '';
       wiz.serial = editItem.serial || '';
       wiz.store = editItem.store || '';
+      wiz.issuer = editItem.issuer || '';
       wiz.category = editItem.category;
       wiz.brand = editItem.brand || '';
       wiz.ageMonths = editItem.ageMonths == null ? null : editItem.ageMonths;
@@ -1101,6 +1123,7 @@
     wizEls.name.value = wiz.name;
     wizEls.serial.value = wiz.serial || '';
     wizEls.store.value = wiz.store || '';
+    renderIssuerList();
     renderSerialNote();
     wizEls.brand.value = wiz.brand;
     wizEls.broken.checked = wiz.broken;
@@ -1179,6 +1202,7 @@
       b.setAttribute('aria-checked', String(on));
     });
     roveTabs(wizEls.payOpts);
+    wizEls.issuerWrap.hidden = !(wiz.payment === 'visa' || wiz.payment === 'mastercard');
   }
 
   /* Continue is dimmed, not disabled, until question 1 has an answer */
@@ -1771,6 +1795,8 @@
       serial: wiz.serial.trim(),
       store: wiz.store.trim(),
       storeId: C.storeId(wiz.store),   // '' for a shop we have no rules for; the name is still used in the script
+      // only a Visa or Mastercard asks for the bank; Amex issues its own, Discover's is Capital One
+      issuer: (wiz.payment === 'visa' || wiz.payment === 'mastercard') ? wiz.issuer : '',
       region: user.region || 'US',
       subregion: user.subregion || '',
       photo: wiz.photo || null    // a small JPEG data URL; lives only in this browser

@@ -13,7 +13,7 @@
     { id: 'laptop',          key: 'catalog.category.laptop', label: i18n.t('catalog.category.laptop'),         keywords: ['laptop', 'macbook', 'notebook', 'computer', 'pc', 'desktop', 'chromebook'] },
     { id: 'tablet',          key: 'catalog.category.tablet', label: i18n.t('catalog.category.tablet'),         keywords: ['tablet', 'ipad', 'kindle', 'e-reader', 'surface'] },
     { id: 'headphones',      key: 'catalog.category.headphones', label: i18n.t('catalog.category.headphones'),     keywords: ['headphone', 'headphones', 'earbud', 'earbuds', 'airpod', 'airpods', 'earphone', 'buds', 'headset'] },
-    { id: 'tv',              key: 'catalog.category.tv', label: i18n.t('catalog.category.tv'),             keywords: ['tv', 'television', 'monitor', 'display', 'screen'] },
+    { id: 'tv',              key: 'catalog.category.tv', label: i18n.t('catalog.category.tv'),             keywords: ['tv', 'television', 'display', 'screen'] },
     { id: 'console',         key: 'catalog.category.console', label: i18n.t('catalog.category.console'),        keywords: ['console', 'playstation', 'ps5', 'xbox', 'switch', 'controller'] },
     { id: 'camera',          key: 'catalog.category.camera', label: i18n.t('catalog.category.camera'),         keywords: ['camera', 'lens', 'dslr', 'mirrorless', 'gopro'] },
     { id: 'watch',           key: 'catalog.category.watch', label: i18n.t('catalog.category.watch'),          keywords: ['watch', 'smartwatch', 'fitbit', 'tracker', 'garmin'] },
@@ -31,7 +31,9 @@
     { id: 'outdoor',         key: 'catalog.category.outdoor', label: i18n.t('catalog.category.outdoor'),        keywords: ['tent', 'sleeping bag', 'stove', 'backpacking', 'camping', 'kayak', 'ski', 'snowboard'] },
     { id: 'printer',         key: 'catalog.category.printer', label: i18n.t('catalog.category.printer'),        keywords: ['printer', 'scanner', 'ink'] },
     { id: 'toy',             key: 'catalog.category.toy', label: i18n.t('catalog.category.toy'),            keywords: ['toy', 'stroller', 'pushchair', 'car seat', 'crib', 'lego'] },
-    // not a tile: only picked from the words ("my car", "Honda truck"), so car recalls stop showing for everything else
+    // not tiles: only picked from the words. A monitor has its own warranties, and a TV's are not its
+    { id: 'monitor',         key: 'catalog.category.monitor', label: i18n.t('catalog.category.monitor'),        keywords: ['monitor', 'computer screen', 'gaming screen'] },
+    // ("my car", "Honda truck"), so car recalls stop showing for everything else
     { id: 'vehicle',         key: 'catalog.category.vehicle', label: i18n.t('catalog.category.vehicle'),        keywords: ['car ', 'my car', 'vehicle', 'truck', 'suv', 'minivan', 'tyre', 'tyres', 'tires', 'motorcycle', 'airbag', 'trailer'] },
     { id: 'other',           key: 'catalog.category.other', label: i18n.t('catalog.category.other'),          keywords: [] }
   ];
@@ -145,6 +147,7 @@
   var REGIONS = [
     { id: 'US', label: i18n.t('catalog.region.us') },
     { id: 'CA', label: i18n.t('catalog.region.ca') },
+    { id: 'MX', label: i18n.t('catalog.region.mx') },
     { id: 'UK', label: i18n.t('catalog.region.uk') },
     { id: 'EU', label: i18n.t('catalog.region.eu') }
   ];
@@ -271,15 +274,15 @@
      regions: where the chain sells, for the suggestions only (matching does not care).
      exact: short or everyday names that only count when typed on their own. */
   var STORES = [
-    { id: 'amazon', regions: ['US', 'CA', 'UK'], name: 'Amazon', aliases: ['amazon.com', 'amazon.ca', 'amazon.co.uk', 'amazon uk', 'amazon canada'] },
+    { id: 'amazon', regions: ['US', 'CA', 'UK', 'MX'], name: 'Amazon', aliases: ['amazon.com', 'amazon.ca', 'amazon.co.uk', 'amazon uk', 'amazon canada', 'amazon.com.mx', 'amazon mexico', 'amazon méxico'] },
     { id: 'apple', regions: ['US', 'CA', 'UK'], name: 'Apple Store', aliases: ['apple', 'apple.com', 'the apple store'], exact: true },
     { id: 'bestbuy', regions: ['US', 'CA'], name: 'Best Buy', aliases: ['bestbuy', 'bestbuy.com', 'best buy canada'] },
-    { id: 'costco', regions: ['US', 'CA', 'UK'], name: 'Costco', aliases: ['costco wholesale', 'costco.com', 'costco.ca'] },
-    { id: 'walmart', regions: ['US', 'CA'], name: 'Walmart', aliases: ['wal-mart', 'walmart.com', 'walmart canada', 'walmart.ca'] },
+    { id: 'costco', regions: ['US', 'CA', 'UK', 'MX'], name: 'Costco', aliases: ['costco wholesale', 'costco.com', 'costco.ca'] },
+    { id: 'walmart', regions: ['US', 'CA', 'MX'], name: 'Walmart', aliases: ['wal-mart', 'walmart.com', 'walmart canada', 'walmart.ca'] },
     { id: 'target', regions: ['US'], name: 'Target', aliases: ['target.com'] },
     { id: 'staples', regions: ['US', 'CA'], name: 'Staples', aliases: ['staples.com', 'staples.ca', 'staples canada'] },
-    { id: 'officedepot', regions: ['US'], name: 'Office Depot', aliases: ['officemax', 'office max', 'office depot officemax'] },
-    { id: 'homedepot', regions: ['US', 'CA'], name: 'The Home Depot', aliases: ['home depot', 'homedepot', 'homedepot.com'] },
+    { id: 'officedepot', regions: ['US', 'MX'], name: 'Office Depot', aliases: ['officemax', 'office max', 'office depot officemax'] },
+    { id: 'homedepot', regions: ['US', 'CA', 'MX'], name: 'The Home Depot', aliases: ['home depot', 'homedepot', 'homedepot.com'] },
     { id: 'lowes', regions: ['US'], name: "Lowe's", aliases: ['lowes', 'lowes.com'] },
     { id: 'microcenter', regions: ['US'], name: 'Micro Center', aliases: ['microcenter'] },
     { id: 'gamestop', regions: ['US', 'CA'], name: 'GameStop', aliases: ['game stop'] },
@@ -297,6 +300,12 @@
     { id: 'johnlewis', regions: ['UK'], name: 'John Lewis', aliases: ['john lewis & partners', 'john lewis and partners'] },
     { id: 'very', regions: ['UK'], name: 'Very', aliases: ['very.co.uk'], exact: true },
     { id: 'decathlon', regions: ['US', 'CA', 'UK'], name: 'Decathlon', aliases: [] },
+    { id: 'liverpool', regions: ['MX'], name: 'Liverpool', aliases: ['liverpool.com.mx'] },
+    { id: 'coppel', regions: ['MX'], name: 'Coppel', aliases: ['coppel.com'] },
+    { id: 'elektra', regions: ['MX'], name: 'Elektra', aliases: ['elektra.mx', 'elektra.com.mx'] },
+    { id: 'sanborns', regions: ['MX'], name: 'Sanborns', aliases: ['sanborns.com.mx'] },
+    { id: 'palaciodehierro', regions: ['MX'], name: 'El Palacio de Hierro', aliases: ['palacio de hierro', 'elpalaciodehierro.com'] },
+    { id: 'soriana', regions: ['MX'], name: 'Soriana', aliases: ['soriana.com'] },
     { id: 'llbean', regions: ['US', 'CA'], name: 'L.L.Bean', aliases: ['ll bean', 'llbean', 'l.l. bean', 'l l bean'] }
   ];
 
@@ -324,6 +333,34 @@
     return '';
   }
 
+  /* The bank behind a credit card: card cover is the bank's to give, so a Chase rule
+     does nothing for a Citi card. Amex and Discover issue their own cards. */
+  var ISSUERS = [
+    { id: 'chase', name: 'Chase', regions: ['US'] },
+    { id: 'citi', name: 'Citi', regions: ['US'] },
+    { id: 'capitalone', name: 'Capital One', regions: ['US', 'CA'] },
+    { id: 'wellsfargo', name: 'Wells Fargo', regions: ['US'] },
+    { id: 'usbank', name: 'U.S. Bank', regions: ['US'] },
+    { id: 'bankofamerica', name: 'Bank of America', regions: ['US'] },
+    { id: 'barclays', name: 'Barclays', regions: ['US', 'UK'] },
+    { id: 'rbc', name: 'RBC', regions: ['CA'] },
+    { id: 'td', name: 'TD', regions: ['US', 'CA'] },
+    { id: 'scotiabank', name: 'Scotiabank', regions: ['CA', 'MX'] },
+    { id: 'bmo', name: 'BMO', regions: ['CA'] },
+    { id: 'cibc', name: 'CIBC', regions: ['CA'] },
+    { id: 'nationalbank', name: 'National Bank', regions: ['CA'] },
+    { id: 'desjardins', name: 'Desjardins', regions: ['CA'] },
+    { id: 'bbva', name: 'BBVA', regions: ['MX'] },
+    { id: 'banamex', name: 'Banamex', regions: ['MX'] },
+    { id: 'santander', name: 'Santander', regions: ['MX', 'UK'] },
+    { id: 'banorte', name: 'Banorte', regions: ['MX'] },
+    { id: 'hsbc', name: 'HSBC', regions: ['MX', 'UK'] }
+  ];
+  function issuerName(id) {
+    for (var i = 0; i < ISSUERS.length; i++) if (ISSUERS[i].id === id) return ISSUERS[i].name;
+    return '';
+  }
+
   function storeName(id) {
     for (var i = 0; i < STORES.length; i++) if (STORES[i].id === id) return STORES[i].name;
     return '';
@@ -341,6 +378,8 @@
     paymentLabel: paymentLabel,
     STORES: STORES,
     storeId: storeId,
-    storeName: storeName
+    storeName: storeName,
+    ISSUERS: ISSUERS,
+    issuerName: issuerName
   };
 })(window);

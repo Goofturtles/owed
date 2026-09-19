@@ -22,12 +22,24 @@
   /* Where you are, from the clock and the language the browser already has.
      Nothing is asked for and nothing is sent anywhere; it is only a first
      guess, and the picker in the app overrules it for good. */
+  // Only zones that mean one province or state: America/New_York or /Chicago span
+  // a dozen states, and guessing one of them would show another state's laws.
   var TZ_SUB = {
-    'America/Toronto': 'CA-ON', 'America/Vancouver': 'CA-BC', 'America/Edmonton': 'CA-AB',
-    'America/Regina': 'CA-SK', 'America/Moncton': 'CA-NB', 'America/Winnipeg': 'CA-XX',
-    'America/Halifax': 'CA-XX', 'America/St_Johns': 'CA-XX', 'America/Whitehorse': 'CA-XX',
-    'America/Los_Angeles': 'US-CA', 'America/New_York': 'US-NY', 'America/Detroit': 'US-NY'
+    'America/Toronto': 'CA-ON', 'America/Thunder_Bay': 'CA-ON', 'America/Nipigon': 'CA-ON', 'America/Atikokan': 'CA-ON',
+    'America/Montreal': 'CA-QC', 'America/Blanc-Sablon': 'CA-QC',
+    'America/Vancouver': 'CA-BC', 'America/Creston': 'CA-BC', 'America/Fort_Nelson': 'CA-BC', 'America/Dawson_Creek': 'CA-BC',
+    'America/Edmonton': 'CA-AB', 'America/Regina': 'CA-SK', 'America/Swift_Current': 'CA-SK',
+    // America/Halifax is left out: Prince Edward Island keeps the same clock as Nova Scotia
+    'America/Winnipeg': 'CA-MB', 'America/Moncton': 'CA-NB', 'America/Glace_Bay': 'CA-NS',
+    'America/St_Johns': 'CA-NL', 'America/Goose_Bay': 'CA-NL',
+    'America/Whitehorse': 'CA-YT', 'America/Dawson': 'CA-YT', 'America/Yellowknife': 'CA-NT', 'America/Inuvik': 'CA-NT',
+    'America/Iqaluit': 'CA-NU', 'America/Rankin_Inlet': 'CA-NU', 'America/Resolute': 'CA-NU', 'America/Cambridge_Bay': 'CA-NU',
+    'America/Detroit': 'US-MI', 'America/Menominee': 'US-MI',
+    'America/Indianapolis': 'US-IN', 'America/Fort_Wayne': 'US-IN', 'America/Knox_IN': 'US-IN', 'America/Louisville': 'US-KY', 'America/Phoenix': 'US-AZ', 'America/Boise': 'US-ID',
+    'America/Anchorage': 'US-AK', 'America/Juneau': 'US-AK', 'America/Sitka': 'US-AK', 'America/Nome': 'US-AK',
+    'America/Yakutat': 'US-AK', 'America/Metlakatla': 'US-AK', 'Pacific/Honolulu': 'US-HI'
   };
+  var MX_ZONE = /^America\/(Mexico_City|Cancun|Merida|Monterrey|Matamoros|Chihuahua|Ciudad_Juarez|Ojinaga|Mazatlan|Bahia_Banderas|Hermosillo|Tijuana)$/;
   var EU_ZONE = /^Europe\/(Amsterdam|Andorra|Athens|Berlin|Bratislava|Brussels|Bucharest|Budapest|Copenhagen|Dublin|Helsinki|Lisbon|Ljubljana|Luxembourg|Madrid|Malta|Nicosia|Oslo|Paris|Prague|Riga|Rome|Sofia|Stockholm|Tallinn|Vienna|Vilnius|Warsaw|Zagreb|Zurich)$/;
 
   function guessWhere() {
@@ -35,14 +47,22 @@
     try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
     var lang = String((navigator.languages && navigator.languages[0]) || navigator.language || '');
     var country = (lang.split('-')[1] || '').toUpperCase();
-    var sub = TZ_SUB[tz] || '';
+    var sub = TZ_SUB[tz] || (/^America\/(Indiana|Kentucky|North_Dakota)\//.test(tz)
+      ? { Indiana: 'US-IN', Kentucky: 'US-KY', North_Dakota: 'US-ND' }[tz.split('/')[1]] : '');
+    // Montreal keeps Toronto's clock: French on that clock is a better guess for Quebec
+    if (sub === 'CA-ON' && /^fr\b/i.test(lang)) sub = 'CA-QC';
     var region = '';
 
+    // the clock first: plenty of people in New York or Toronto set their browser to British English
     if (sub) region = sub.slice(0, 2);
-    else if (tz === 'Europe/London' || country === 'GB') region = 'UK';
+    else if (tz === 'Europe/London') region = 'UK';
     else if (EU_ZONE.test(tz)) region = 'EU';
-    else if (/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|Moncton|St_Johns|Whitehorse|Yellowknife|Iqaluit|Dawson|Inuvik|Glace_Bay|Goose_Bay|Rankin_Inlet|Resolute|Swift_Current|Fort_Nelson|Creston|Blanc-Sablon)$/.test(tz) || country === 'CA') region = 'CA';
-    else if (/^(America|US|Pacific\/Honolulu)/.test(tz) || country === 'US') region = 'US';
+    else if (MX_ZONE.test(tz)) region = 'MX';
+    else if (/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|Moncton|St_Johns|Whitehorse|Yellowknife|Iqaluit|Dawson|Inuvik|Glace_Bay|Goose_Bay|Rankin_Inlet|Resolute|Swift_Current|Fort_Nelson|Creston|Blanc-Sablon)$/.test(tz)) region = 'CA';
+    else if (/^(America|US|Pacific\/Honolulu)/.test(tz)) region = 'US';
+    // no useful clock: the language's country is the only clue left
+    else if (country === 'GB') region = 'UK';
+    else if (country === 'CA' || country === 'MX' || country === 'US') region = country;
 
     if (!region) region = 'US';                       // the rulebook's largest set
     if (sub && sub.slice(0, 2) !== region) sub = '';
@@ -54,7 +74,7 @@
     if (!k) return;
     var all = read(KEY_PROFILES, {}) || {};
     var p = all[k] || {};
-    PROFILE_KEYS.forEach(function (f) { if (user[f]) p[f] = user[f]; });
+    PROFILE_KEYS.forEach(function (f) { if (user[f] || (f === 'subregion' && user[f] === '')) p[f] = user[f]; });
     all[k] = p;
     write(KEY_PROFILES, all);
   }
@@ -109,7 +129,7 @@
     };
     // anything this email set before on this computer comes back with them
     var known = getProfile(user.email);
-    if (known) PROFILE_KEYS.forEach(function (f) { if (known[f] && f !== 'name') user[f] = known[f]; });
+    if (known) PROFILE_KEYS.forEach(function (f) { if ((known[f] || (f === 'subregion' && known[f] === '')) && f !== 'name') user[f] = known[f]; });
     write(KEY_USER, user);
     saveProfile(user);
     return user;
@@ -173,6 +193,7 @@
       if (it.name != null) it.name = String(it.name);
       if (it.brand != null) it.brand = String(it.brand);
       if (it.store != null) it.store = String(it.store);
+      if (it.issuer != null) it.issuer = String(it.issuer);
       if (!it.claims || typeof it.claims !== 'object' || Array.isArray(it.claims)) it.claims = {};
       Object.keys(it.claims).forEach(function (k) {
         var cl = it.claims[k];
