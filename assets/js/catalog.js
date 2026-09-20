@@ -43,6 +43,32 @@
      ignored, and each must stand as a whole word, so "panne" is never a "pan". A French or
      Spanish visitor is matched on their language's words first, then on the English ones
      (whole words too: "iPhone", "AirPods" and "laptop" are typed in every language). */
+  /* A phrase has to be in the list to win. guessCategory keeps the LONGEST keyword that matches, so
+     "siège pour bébé dans la voiture" only reads as a child seat if that whole phrase is a keyword:
+     a bare "siège" (6 letters) loses to "voiture" (7). Rather than write every phrasing out, these
+     build the two families where a short word would otherwise steal the item: a seat plus a car
+     word, and a screen plus a computer word. A join ending in an apostrophe takes no space. */
+  function phrases(heads, joins, tails) {
+    var out = [];
+    heads.forEach(function (h) {
+      joins.forEach(function (j) {
+        tails.forEach(function (t) {
+          out.push(h + (j ? ' ' + j : '') + (/['’]$/.test(j) ? '' : ' ') + t);
+        });
+      });
+    });
+    return out;
+  }
+  var SEATS_FR = phrases(['siège', 'rehausseur'],
+    ['', 'de', 'd’', 'du', 'de la', 'pour', 'pour le', 'pour la', 'dans le', 'dans la'],
+    ['auto', 'voiture', 'char', 'bébé', 'enfant']);
+  var SEATS_ES = phrases(['silla', 'sillita', 'asiento', 'butaca'],
+    ['de', 'del', 'de la', 'para', 'para el', 'para la'],
+    ['auto', 'carro', 'coche', 'vehículo', 'bebé', 'niño', 'seguridad']);
+  var SCREENS_FR = phrases(['écran'], ['de', 'd’', 'du', 'de mon', 'de l’', 'pour'], ['ordinateur', 'ordi', 'pc']);
+  var SCREENS_ES = phrases(['pantalla', 'monitor'], ['de', 'del', 'de mi', 'de la', 'para'],
+    ['computadora', 'computador', 'ordenador', 'pc']);
+
   var KEYWORDS = {
     fr: {
       'phone':           ['téléphone', 'téléphone portable', 'téléphone intelligent', 'cellulaire', 'cell'],
@@ -76,13 +102,10 @@
       'bike':            ['vélo', 'vélo électrique', 'bicyclette', 'trottinette', 'trottinette électrique', 'casque de vélo'],
       'outdoor':         ['tente', 'sac de couchage', 'réchaud', 'camping', 'planche à neige', 'casque de ski'],
       'printer':         ['imprimante', 'numériseur', 'scanneur', 'encre', 'cartouche'],
-      // the child-seat words have to be longer than the car words below, or "siège bébé pour la
-      // voiture" is read as a car: longest keyword wins
-      'toy':             ['jouet', 'jouets', 'poussette', 'siège auto', 'siège d’auto', 'siège bébé', 'siège de bébé',
-                          'siège pour bébé', 'siège enfant', 'siège pour enfant', 'siège de voiture pour bébé',
-                          'rehausseur', 'lit de bébé', 'berceau', 'table à langer'],
-      'monitor':         ['moniteur', 'écran d’ordinateur', 'écran de jeu'],
-      'vehicle':         ['voiture', 'auto', 'automobile', 'véhicule', 'camion', 'camionnette', 'fourgonnette', 'vus',
+      'toy':             ['jouet', 'jouets', 'poussette', 'rehausseur', 'porte-bébé', 'lit de bébé', 'berceau',
+                          'table à langer'].concat(SEATS_FR),
+      'monitor':         ['moniteur', 'écran de jeu'].concat(SCREENS_FR),
+      'vehicle':         ['voiture', 'auto', 'char', 'automobile', 'véhicule', 'camion', 'camionnette', 'fourgonnette', 'vus',
                           'moto', 'motocyclette', 'pneu', 'pneus', 'coussin gonflable', 'remorque']
     },
     es: {
@@ -117,13 +140,9 @@
       'bike':            ['bici', 'bicicleta', 'bicicleta eléctrica', 'patinete', 'patinete eléctrico', 'monopatín'],
       'outdoor':         ['tienda de campaña', 'carpa', 'saco de dormir', 'bolsa de dormir', 'hornillo', 'esquí', 'tabla de snowboard'],
       'printer':         ['impresora', 'escáner', 'tinta', 'cartucho'],
-      // the child-seat words have to be longer than the car words below, or "asiento para el coche"
-      // is read as a car: longest keyword wins
-      'toy':             ['juguete', 'juguetes', 'carriola', 'cochecito', 'silla de auto', 'silla de coche',
-                          'silla para auto', 'silla para el auto', 'silla para carro', 'silla de bebé',
-                          'silla para bebé', 'silla infantil', 'asiento de coche', 'asiento para el coche',
-                          'asiento para bebé', 'asiento infantil', 'autoasiento', 'cuna', 'portabebés'],
-      'monitor':         ['monitor de computadora', 'pantalla de computadora', 'pantalla de ordenador', 'monitor gamer'],
+      'toy':             ['juguete', 'juguetes', 'carriola', 'cochecito', 'silla infantil', 'asiento infantil',
+                          'autoasiento', 'cuna', 'portabebés', 'portabebé'].concat(SEATS_ES),
+      'monitor':         ['monitor gamer'].concat(SCREENS_ES),
       'vehicle':         ['coche', 'carro', 'auto', 'automóvil', 'vehículo', 'camioneta', 'camión', 'moto', 'motocicleta',
                           'neumático', 'neumáticos', 'llanta', 'llantas', 'bolsa de aire', 'remolque']
     }
