@@ -1593,15 +1593,15 @@
         ]
       },
       "window_months": 72,
-      "window_note": "Starts 5 October 2026, and only for new goods bought or leased from a business on or after that date. Anything bought earlier is not covered. From then: 6 years on stoves, fridges, freezers, air conditioners and heat pumps; 5 years on dishwashers, washing machines and dryers; 4 years on TVs; 3 years on computers, tablets, phones and game consoles, counted from delivery. It passes to the next owner if you sell it.",
-      "what_you_get": "A free repair with no argument about what \"reasonable\" means: parts, labour and reasonable shipping. You only have to show it stopped working inside those years, and you can go to the shop or the maker, your choice. It doesn't cover abuse or normal upkeep, and the older legal warranties still apply on top.",
+      "window_note": "Starts 5 October 2026. It only covers these items bought new, or leased new on a long-term lease, from a business on or after that date. Anything bought earlier is not covered by this warranty, but the other legal warranties can still apply. The clock starts on the day the item is delivered: 6 years for stoves, fridges, freezers, air conditioners and heat pumps; 5 years for dishwashers, washing machines and dryers; 4 years for TVs; 3 years for desktop and laptop computers, tablets, cell phones and game consoles. If the item is sold on, the next owner gets the time that is left.",
+      "what_you_get": "A free repair if it stops working properly inside its years. That includes parts, labour and reasonable shipping costs. Every kind of item has its own number of years, listed in the note below, so check yours first: this card can still show up after your item's years have run out. You only have to show it stopped working properly in that time. You don't have to prove it should have lasted longer. The shop or maker either repairs it or lets someone else repair it and pays for it. It does not cover damage from misuse, normal upkeep and the parts replaced during upkeep, or accessories unless the government lists them. Your other legal warranties can still apply during and after these years.",
       "confidence": "certain",
-      "how_to_claim": "Find your product in the list above and check you are still inside its years. Then ask the shop or the maker (your choice) for the free repair under the warranty of good working order, section 38.1 of Quebec's Consumer Protection Act. If they won't do it, ask them to agree in writing that you can have it fixed elsewhere at their cost.",
+      "how_to_claim": "Check that your item is on the list and still inside its years, counted from delivery. Ask the shop, the maker or both for a free repair under the warranty of good working order in section 38.1 of Quebec's Consumer Protection Act. The shop can't make you go to the maker instead. Ask them first. Don't get it fixed and then send them the bill: they either repair it or agree to let someone else repair it at their cost. If they refuse, you can send them a formal notice (mise en demeure), complain to Quebec's consumer office (OPC) and, as a last step, go to court.",
       "contact": "1 888 672-2556",
-      "script_hint": "This is covered by Quebec's legal warranty of good working order, which runs several years from delivery for this kind of product. It stopped working inside that period, so I'm asking for a free repair.",
+      "script_hint": "This is covered by the warranty of good working order in section 38.1 of Quebec's Consumer Protection Act, which runs a set number of years from delivery. It stopped working properly inside that time, so I'm asking you to repair it for free, including parts, labour and shipping.",
       "source_url": "https://www.opc.gouv.qc.ca/en/consommateur/sujet/garanties/bon-fonctionnement/electromenager-electronique",
       "deadline": "",
-      "source_quote": "Les biens suivants sont couverts s'ils ont été achetés ou loués à l'état neuf auprès d'un commerçant à compter du 5 octobre 2026.",
+      "source_quote": "Les biens suivants sont couverts s’ils ont été achetés ou loués à l’état neuf auprès d’un commerçant à compter du 5 octobre 2026.",
       "starts": "2026-10-05"
     },
     {
@@ -1651,55 +1651,21 @@
         ]
       },
       "window_months": 24,
-      "window_note": "At least two years everywhere in the EU, counted from the day it was delivered. In the first year the seller has to prove the fault wasn't there from the start; some countries stretch that to two years, and some give more than two years overall, so check your own country on the EU's Your Europe site. A few countries also expect you to tell the seller within two months of spotting the fault, so don't sit on it. Second-hand goods from a business are covered too, though some countries let the seller cut that to one year if they tell you when you buy. Things bought from a private person are not covered. If the manufacturer tells you that you're out of warranty, stop there and go back to the shop instead.",
-      "what_you_get": "A free repair or replacement from the seller, and they pay to take back the faulty one and to take out and refit anything that was installed. If they can't do it in a reasonable time and without a lot of hassle for you, a price cut or your money back. It costs nothing, and the brand's own \"commercial guarantee\" sits on top of it and can never shrink it.",
+      "window_note": "At least two years everywhere in the EU, counted from the day you got the item. Some countries give you longer, so check your own country on the EU's Your Europe site. If the fault shows up within one year, the law assumes it was there from the start, unless the seller proves otherwise or that cannot fit the kind of item or fault. Some countries make that two years. Some countries say you must tell the seller within a set time after you spot the fault. That time is at least two months, so tell them quickly. Second-hand goods from a business are covered too, but some countries let you and the seller agree to a shorter time when you buy, never under one year. Some countries leave out second-hand goods sold at a public auction. Things bought from a private person are not covered.",
+      "what_you_get": "A free repair or replacement from the seller. You choose which, unless your choice is impossible or would cost the seller far more than the other. The seller pays to take back a replaced item. If the item had been installed, the seller also takes out the faulty one and puts in the fixed or new one, or pays for that. If the seller refuses, does not fix it in a reasonable time or without big hassle for you, or the fault comes back after they tried, you can get a price cut or your money back. For a minor fault you can get a price cut but not your money back. The brand's own guarantee comes on top and can never cut these rights.",
       "confidence": "certain",
-      "how_to_claim": "Go to the seller you bought from, not the manufacturer — even if the brand's own guarantee has expired. If you bought from a shop in another EU country, your national European Consumer Centre will chase it for you for free, in your language.",
+      "how_to_claim": "Go to the seller you bought from, not the maker. The seller owes you this even if the brand's own guarantee has run out. If you bought from a seller in another EU country, the European Consumer Centre in your own country can help, for free.",
       "contact": "https://www.eccnet.eu/",
-      "script_hint": "Under the EU legal guarantee (Directive 2019/771) you as the seller are liable for a lack of conformity that appears within two years of delivery. I'm asking for a free repair or replacement.",
+      "script_hint": "Under the EU legal guarantee (Directive (EU) 2019/771, as it applies in our national law), you as the seller are liable for a fault that was there when I got the item and shows up within two years. I am asking for a free repair or replacement.",
       "source_url": "https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_en.htm",
       "deadline": "",
       "window_kind": "floor",
       "source_quote": "You always have the right to a minimum 2-year guarantee from the moment you received the goods."
     },
     {
-      "id": "eu-right-to-repair-directive",
-      "source_type": "statutory",
-      "title": "EU: makers must repair it, even after the guarantee has ended",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "tablet",
-          "appliance-large",
-          "vacuum",
-          "monitor",
-          "tv",
-          "bike"
-        ],
-        "regions": [
-          "EU"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 999,
-      "window_note": "Applies from 31 July 2026, the date every EU country had to have it in their own law — a few were still catching up, so it may not have landed in yours yet. It covers washing machines, dishwashers, fridges, vacuum cleaners, phones, tablets, screens and e-bikes, and it works years after the guarantee is gone.",
-      "what_you_get": "Two separate things. One: the maker has to repair these products when you ask, at a reasonable price and in a reasonable time, even out of guarantee. Two: if you choose repair instead of replacement while still inside the legal guarantee, you get an extra 12 months of guarantee added on — once.",
-      "confidence": "likely",
-      "how_to_claim": "Ask the manufacturer directly for the repair and ask for the European Repair Information Form, which puts the price and conditions in writing before you commit to anything. Your national European Consumer Centre can chase it if they stall.",
-      "contact": "https://www.eccnet.eu/",
-      "script_hint": "Directive (EU) 2024/1799 requires you as the producer to repair this product on request at a reasonable price. Please send me a European Repair Information Form with the price and how long it will take.",
-      "source_url": "https://eur-lex.europa.eu/EN/legal-content/summary/common-rules-promoting-the-repair-of-goods-and-amending-related-eu-legislation.html",
-      "deadline": ""
-    },
-    {
       "id": "eu-phone-tablet-spare-parts",
       "source_type": "statutory",
-      "title": "EU: phone and tablet parts must stay on sale for seven years",
+      "title": "EU: phone and tablet parts must stay on sale for at least seven years",
       "applies_to": {
         "brands": [
           "*"
@@ -1716,15 +1682,16 @@
         ]
       },
       "window_months": 999,
-      "window_note": "Covers phones and tablets put on the EU market from 20 June 2025 onwards. Parts must stay available for at least 7 years after that model stops being sold, delivered within 5 working days (10 in the last 2 years). Screens, SIM trays, the protective film on folding screens, back covers that have to come off to change the battery, and usually batteries must be sold to owners. Repair shops can also get cameras, charging ports, audio sockets, speakers, microphones, buttons and hinges. The maker's free website must list the parts, how to order them, and rough prices.",
-      "what_you_get": "The spare part you need to keep the phone alive instead of binning it. Makers also have to provide at least 5 years of operating system updates after the model stops being sold, and batteries must still hold 80% of their charge after 800 full charge cycles.",
+      "window_note": "These rules cover phones and tablets put on the EU market from 20 June 2025. Parts have to stay on sale until at least 7 years after the last unit of your model is put on the EU market, and the maker must deliver a part within 5 working days of the order for the first 5 years, then within 10 working days. Left out: phones and tablets with a screen you can roll up, high-security phones, and phones and tablets built for explosive areas. A tablet only counts if its screen is 7 inches or bigger and under 17.4 inches, it has no built-in keyboard and it runs a phone operating system, so a Windows tablet is not covered. Separately, for at least 5 years after the last unit is sold, any operating system updates the maker puts out for your model must be free for every unit.",
+      "what_you_get": "You can buy these parts for your own phone or slate tablet: the battery, the screen, the SIM and memory card trays, the back cover if it must come off for the battery, the film on a folding screen, and the charger unless the phone uses standard USB-C. The maker must build the phone so you can change those at home with basic tools. Two exceptions: the screen only has to be changeable in a workshop by a person with basic repair skills, and the battery can be repair-shop only if it keeps 83% of its capacity after 500 full charges, 80% after 1,000, and it meets the dust and water rating the law sets. Home cordless phones are different: battery, battery cover, charger and cradle only, and the screen is repair-shop only.",
       "confidence": "certain",
-      "how_to_claim": "Ask the maker's support or their parts store for the part by name. If they claim it's discontinued and the model went off sale less than seven years ago, name the ecodesign rules and escalate to your country's market surveillance authority or your European Consumer Centre.",
-      "contact": "https://www.eccnet.eu/",
-      "script_hint": "Regulation (EU) 2023/1670 requires you to keep spare parts for this model available for at least seven years after end of sales and to deliver them within 5 to 10 working days. Please tell me how to order the part.",
-      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R1670",
+      "how_to_claim": "Start on the maker's free website. The law says it must list the parts you can buy, how to order them and their prices before tax, and give free repair instructions for those parts. Order the part yourself, or ask a repair shop to order a repair-shop-only part. If a part has to be paired to your phone by software, the maker must give you that software within 3 working days of your asking. If the maker says the part is not available, or takes longer than the law allows, report the model to your country's market surveillance authority.",
+      "contact": "https://single-market-economy.ec.europa.eu/single-market/goods/building-blocks/market-surveillance/organisation_en",
+      "script_hint": "Under Regulation (EU) 2023/1670 you have to make the [part] for my [model] available to me as the owner, and deliver it within 5 working days of the order. Please tell me how to order it and what it costs.",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02023R1670-20250620",
       "deadline": "",
-      "source_quote": "manufacturers, importers or authorised representatives shall make available to professional repairers and end-users at least the following spare parts, including required fasteners, if not reusable, until at least 7 years after the date of end of placement on the market"
+      "source_quote": "manufacturers, importers or authorised representatives shall make available to professional repairers and end-users at least the following spare parts, including required fasteners, if not reusable, until at least 7 years after the date of end of placement on the market:",
+      "starts": "2025-06-20"
     },
     {
       "id": "elec-anker-18-month-warranty",
@@ -3652,21 +3619,21 @@
           "CA-QC"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "No fixed cut-off. How long is 'long enough' depends on the price you paid, the contract and how you used it. Quebec's consumer office says an $850 TV can't be expected to last as long as a similar $1,500 one. It covers used items bought from a store too (their age and wear are taken into account), and it still applies if the seller says there's no warranty. You can call Quebec's consumer office (OPC) for free help.",
-      "what_you_get": "A free repair, a swap for a working one, or your money back — even after the maker's own warranty has run out. This legal warranty is automatic and costs nothing.",
+      "window_months": 999,
+      "window_note": "No fixed cut-off. How long is long enough depends on the price you paid, the contract and how you used it. Quebec's consumer office says an $850 TV can't be expected to last as long as a similar $1,500 one. It covers used items bought from a business too, taking their age and wear into account. It still applies if the seller says the item comes with no warranty.",
+      "what_you_get": "The item must work for what it is normally used for, and keep working in normal use for a reasonable time. If it doesn't, you can ask for a free repair, a swap or your money back. This legal warranty is automatic and free.",
       "confidence": "certain",
-      "how_to_claim": "Tell the store in writing that the item stopped working too soon and that you are using the legal warranty. You can go to the store OR straight to the manufacturer. A store is not allowed to make you deal with the manufacturer. Ask for a free repair, a swap or your money back; the store or maker picks which one. Keep your receipt. If they say no, send a formal demand letter with a deadline, then file at Quebec's Small Claims Court.",
+      "how_to_claim": "Tell the store in writing that the item stopped working too soon and that you are using the legal warranty. You can deal with the store, the manufacturer or both, and the store can't make you deal with the manufacturer. Ask for a free repair, a swap or a refund. Quebec's consumer office says the store or maker can choose which of these to offer. Keep your receipt. If they refuse, send a formal notice. As a last step you can go to small claims court (for $15,000 or less). There you can ask the court to make them fix it, to let you have it fixed at their cost, to lower what you pay or to cancel the sale, and to pay damages. Quebec's consumer office (OPC) can explain your rights and options, but you have to deal with the store yourself.",
       "contact": "1-888-672-2556",
-      "script_hint": "Sections 37 and 38 of Quebec's Consumer Protection Act say this should still be working for a reasonable time. I'm asking you to repair, replace or refund it at no cost to me.",
+      "script_hint": "Sections 37 and 38 of Quebec's Consumer Protection Act say goods must be fit for their normal use and last a reasonable time in normal use. This stopped working too soon, so I'm asking you to repair, replace or refund it at no cost to me.",
       "source_url": "https://www.opc.gouv.qc.ca/en/consumer/topic/warranties/applying-warranty/application-legal-warranties",
       "deadline": "",
-      "source_quote": "a TV set worth $850 cannot be expected to last as long as another TV set with similar characteristics, but that is worth $1,500"
+      "source_quote": "Thus, a TV set worth $850 cannot be expected to last as long as another TV set with similar characteristics, but that is worth $1,500."
     },
     {
       "id": "law-intl-ca-qc-repair-three-months",
       "source_type": "statutory",
-      "title": "Quebec: every repair comes with 3 months of free re-repair",
+      "title": "Quebec: repairs on phones, computers, TVs, fridges and washers are guaranteed for 3 months",
       "applies_to": {
         "brands": [
           "*"
@@ -3675,12 +3642,13 @@
           "phone",
           "laptop",
           "tablet",
+          "monitor",
+          "printer",
           "tv",
+          "headphones",
+          "console",
           "appliance-large",
           "appliance-small",
-          "vacuum",
-          "monitor",
-          "console",
           "other"
         ],
         "regions": [
@@ -3694,15 +3662,15 @@
         ]
       },
       "window_months": 999,
-      "window_note": "The 3 months run from the day the repair was finished — not from when you bought the item. So a repair done years after purchase still gets its own fresh 3 months.",
-      "what_you_get": "If the same problem comes back within 3 months of a repair, whoever did the repair has to do it again for free. Parts and labour both included.",
+      "window_note": "This clock does not start when you bought the item. The 3 months start on the day the repaired item is given back to you. So a repair done years after you bought it still gets its own 3 months.",
+      "what_you_get": "In Quebec, a repair is guaranteed for 3 months, parts and labour included. If the problem comes back in that time, the person who did the repair has to fix it again for free. The law gives the list of items this covers: a stove, a fridge, a freezer, a dishwasher, a microwave oven, a washer, a dryer, an audio device, an audio-video device such as a TV, a computer or tablet and the equipment you plug into it like a monitor or printer, a cell phone, an air conditioner, a dehumidifier and a heat pump. The law does not name headphones, speakers or game consoles one by one, so ask the repair shop whether your item counts as an audio device or an audio-video device. Other small appliances, like a kettle, a toaster or a coffee maker, are not on the list, and neither is a vacuum, a furnace or a water heater. The repair must have cost more than $50 in total, counting parts, labour and shipping. The guarantee does not cover damage from misusing the item after the repair.",
       "confidence": "certain",
-      "how_to_claim": "Go back to the same repair shop with the repair invoice and say the same fault has returned inside the 3-month repair warranty. Do not pay again.",
+      "how_to_claim": "Go back to the person or shop that did the repair, with your repair bill. Say the problem came back within the 3-month repair guarantee in Quebec's Consumer Protection Act. You should not be charged for parts or labour. If they refuse, you can call Quebec's consumer protection office, the Office de la protection du consommateur.",
       "contact": "1-888-672-2556",
-      "script_hint": "You repaired this less than three months ago and the exact same fault is back, so under Quebec law the re-repair is free — parts and labour.",
-      "source_url": "https://www.opc.gouv.qc.ca/en/consumer/topic/warranties/repair-warranty",
+      "script_hint": "You repaired this less than three months ago and the problem is back. Under section 186 of Quebec's Consumer Protection Act, the repair is guaranteed for three months, parts and labour included, so please fix it again at no charge.",
+      "source_url": "https://www.legisquebec.gouv.qc.ca/en/document/cs/P-40.1#se:186",
       "deadline": "",
-      "source_quote": "the person who did the repairs must repair the device or appliance once again, free of charge. This warranty includes parts and labour."
+      "source_quote": "Every repair is guaranteed for three months."
     },
     {
       "id": "law-intl-ca-nb-manufacturer-direct",
@@ -3762,7 +3730,7 @@
     {
       "id": "law-intl-ca-on-implied-warranty",
       "source_type": "statutory",
-      "title": "Ontario: 'no refunds, no warranty' small print doesn't beat the law",
+      "title": "Ontario: small print can't cancel the law's quality promises",
       "applies_to": {
         "brands": [
           "*"
@@ -3803,16 +3771,16 @@
           "CA-ON"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "No fixed cut-off. Ontario's promises are that goods are of sellable quality and fit for what you bought them for — judged case by case, not by a set number of months.",
-      "what_you_get": "The quality promises in Ontario's Sale of Goods Act automatically apply to anything you buy, lease or trade as a consumer. Any term or notice that tries to cancel or change those promises is void, even if it's not part of your contract.",
+      "window_months": 999,
+      "window_note": "The Sale of Goods Act does not give these promises a set number of months. Section 9 of the Consumer Protection Act, 2002 applies if you or the business was in Ontario when the deal took place. In Ontario you generally have two years from the day you found the problem, or should have found it, to start a court case.",
+      "what_you_get": "Ontario's Sale of Goods Act builds promises into a sale. If you bought the goods by description, so by what they were said to be, they have to match that description. If you bought them by description from a business that deals in that kind of goods, they also have to be of merchantable (sellable) quality. But if you examined the goods first, faults that check should have shown don't count. When you deal with a business for personal, family or household use, section 9 of Ontario's Consumer Protection Act, 2002 applies these promises to things you lease or trade for as well. It also makes any term or statement, in your contract or not, that tries to cancel or change them void, so it has no effect. If such a term is in your contract, it is cut out and can't be used as proof that the promises were not meant to apply.",
       "confidence": "certain",
-      "how_to_claim": "Write to the seller. Say section 9 of Ontario's Consumer Protection Act, 2002 makes the Sale of Goods Act conditions and warranties apply to your purchase, and that any term that cancels or changes them is void. Ask for repair, replacement or refund. Small claims court if they refuse.",
+      "how_to_claim": "Write to the seller and say what is wrong with the item. Say you bought it by description from a business that sells that kind of thing, so the Sale of Goods Act's implied conditions apply, and that section 9 of Ontario's Consumer Protection Act, 2002 makes any term that cancels or changes them void. Ask them to put it right. If they refuse, you can sue the business in Small Claims Court for $50,000 or less, and you don't need a lawyer to do it.",
       "contact": "",
-      "script_hint": "Section 9 of Ontario's Consumer Protection Act, 2002 says the Sale of Goods Act warranties apply here, and any term that cancels or changes them is void.",
+      "script_hint": "I bought this by description from a business that sells that kind of thing, so Ontario's Sale of Goods Act says it had to be of merchantable quality. I bought it for personal use, so section 9 of the Consumer Protection Act, 2002 makes any term that cancels or changes that promise void, and I'm asking you to put it right.",
       "source_url": "https://www.ontario.ca/laws/statute/02c30",
       "deadline": "",
-      "source_quote": "that purports to negate or vary any implied condition or warranty under the Sale of Goods Act or any deemed condition or warranty under this Act is void"
+      "source_quote": "Any term or acknowledgement, whether part of the consumer agreement or not, that purports to negate or vary any implied condition or warranty under the Sale of Goods Act or any deemed condition or warranty under this Act is void."
     },
     {
       "id": "law-intl-uk-30-day-reject",
@@ -3954,30 +3922,7 @@
           "*"
         ],
         "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "footwear",
-          "apparel",
-          "bag",
-          "watch",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "bike",
-          "outdoor",
-          "toy",
-          "other"
+          "*"
         ],
         "regions": [
           "EU"
@@ -3986,34 +3931,36 @@
           "*"
         ]
       },
-      "window_months": 36.0,
-      "window_note": "Applies to goods bought on or after 31 July 2026. The extra year is added once only, even if the item gets repaired several times, and it covers the whole product, not just the bit that was fixed. Each country is allowed to give you longer.",
-      "what_you_get": "If you pick repair instead of replacement under the legal guarantee, your guarantee gets 12 more months. A 2-year guarantee becomes 3. The seller also has to tell you about this choice before they fix anything.",
-      "confidence": "certain",
+      "window_months": 36,
+      "window_note": "For things bought on or after 31 July 2026. It is an EU directive, so it works through your own country's law. Every country had to bring it in by 31 July 2026, but not all had done so: in September 2026 France's law still gave six months after a repair, not twelve. Check your own country's rules. The extra year is added once only, even if the item is repaired more than once, and it covers the whole item, not just the part that was fixed. During the extra year the seller can ask you to show the fault was there when you got the item. Your country can give you more, such as a longer extension or a new one after each repair.",
+      "what_you_get": "If you choose repair instead of replacement under the legal guarantee, your guarantee gets 12 more months. Where it is two years, it becomes three. Countries without a fixed guarantee period must still give you at least three years when the item is repaired. Before fixing anything, the seller has to tell you that you can choose repair or replacement, and about the extra year. The seller can refuse a repair that would cost far more than a replacement, and then there is no extra year.",
+      "confidence": "likely",
       "how_to_claim": "When the seller offers you repair or replacement, say you want it repaired, and ask them to confirm in writing that your legal guarantee now runs 12 months longer and to give you the new end date.",
-      "contact": "https://commission.europa.eu/law/law-topic/consumer-protection-law/directive-repair-goods_en",
-      "script_hint": "I'm choosing repair rather than replacement, which extends my legal guarantee by another 12 months. Please confirm the new end date in writing.",
+      "contact": "",
+      "script_hint": "I am choosing repair rather than replacement. Under Directive (EU) 2019/771 as amended by Directive (EU) 2024/1799, as it applies in our national law, that extends my legal guarantee by 12 months, so please confirm my new end date in writing.",
       "source_url": "https://commission.europa.eu/document/download/2d443b31-dc2a-4e54-a9ec-5fbb61c895e9_en?filename=2024_07_18_QA_Right2repair_FINAL.pdf",
       "deadline": "",
       "window_kind": "floor",
-      "source_quote": "When transposing the Directive, Member States may decide to introduce a longer time period for the extension of the legal guarantee."
+      "source_quote": "The Directive amends the Directive on Sale of Goods giving consumers a new right to an extra year of the legal guarantee if they choose to repair a defective product instead of replacing it.",
+      "starts": "2026-07-31"
     },
     {
       "id": "law-intl-eu-manufacturer-must-repair",
       "source_type": "statutory",
-      "title": "EU: makers must repair, even after the guarantee ends",
+      "title": "EU: makers must repair some products, even after the guarantee ends",
       "applies_to": {
         "brands": [
           "*"
         ],
         "categories": [
-          "appliance-large",
-          "tv",
-          "vacuum",
-          "power-tool",
           "phone",
           "tablet",
-          "bike",
+          "tv",
+          "monitor",
+          "appliance-large",
+          "appliance-small",
+          "vacuum",
+          "power-tool",
           "other"
         ],
         "regions": [
@@ -4023,15 +3970,16 @@
           "*"
         ]
       },
-      "window_months": 120.0,
-      "window_note": "Runs for as long as the maker still has to supply spare parts for that product — in practice 5 to 10 years depending on the item and the part. Since 31 July 2026 it applies even to things you bought before that date.",
-      "what_you_get": "For washing machines, washer-dryers, fridges, dishwashers, tumble dryers, TVs, vacuum cleaners, welding equipment, smartphones, tablets, cordless phones, servers and data storage, and anything with an e-bike or e-scooter battery in it: the maker must repair it within a reasonable time and at a reasonable price, even though the guarantee has run out. They cannot refuse just because parts are pricey, or because someone else repaired it before.",
-      "confidence": "certain",
-      "how_to_claim": "Look on the maker's website for their repair service and their published typical repair prices — the law makes them publish both. Contact them and ask for a repair under the EU obligation to repair. If the maker is outside the EU, ask their EU importer or the shop instead.",
+      "window_months": 999,
+      "window_note": "There is no set number of years from the day you bought it. The maker only has to repair your product for as long as, and as far as, EU repair rules still apply to it. Those rules are not only about spare parts. They can also be about how easily the product comes apart, and about getting repair information and tools. The European Commission says that in practice this means faults in parts the maker has to keep as spare parts, and that it runs 5 to 10 years depending on the product and the part, counted from when the last one of your model was put on the market, not from the day you bought it. That is the Commission's view, not a court ruling. For vacuum cleaners and for servers and data storage there is no spare-parts rule at all, so how far the duty goes for those two is not settled. Things bought before 31 July 2026 are covered too, but only items that had to follow these rules when they were put on the market: for example washing machines, dishwashers, fridges, TVs and monitors from 1 March 2021, phones and tablets from 20 June 2025, and tumble dryers and room heaters from 1 July 2025. Every EU country had to apply this in its own law from 31 July 2026, but many had not yet told the EU they had done it, so it may not apply in your country yet.",
+      "what_you_get": "For washing machines and washer-dryers, dishwashers, fridges and freezers, tumble dryers, TVs and monitors, phones, cordless phones and tablets, room heaters, welding equipment, vacuum cleaners, and servers and data storage: when you ask, the maker must repair it, even after your guarantee has ended, as far as the EU repair rules for your product go. The repair can be free or cost a reasonable price, and it must be done in a reasonable time. The maker can refuse only if repair is impossible. It cannot refuse just because parts cost a lot, or because someone else repaired it before. It may lend you a replacement while it repairs yours, or offer you a refurbished one if repair is impossible. It also cannot use contract terms, hardware or software to block repairs, unless it has a legitimate and objective reason. Vacuum cleaners and servers are a weaker case than the rest. For them the EU rules set no time for keeping spare parts. They only cover taking the product apart, handing out repair information, and, for servers, firmware updates. So you can still ask for a repair, but the maker may say it cannot get the part, and how far it has to go for those two is not settled.",
+      "confidence": "likely",
+      "how_to_claim": "If the seller's legal guarantee still covers the fault, go to the seller instead, because that repair is free. Otherwise ask the maker to repair it. The maker has to give you free information about its repair service and show its typical repair prices on a free website, so check its site first. If the maker is based outside the EU, ask its authorised representative in the EU. If it has none, ask the importer, and if there is no importer, the distributor, such as the shop. You can ask for a European Repair Information Form. They do not have to give you one, but if they do, it is free and its price and terms stay fixed for 30 days. They may charge for a check that is needed to find the fault, but they must tell you the cost first.",
       "contact": "",
-      "script_hint": "This product is covered by the EU obligation to repair under Directive 2024/1799. Please repair it within a reasonable time at a reasonable price.",
-      "source_url": "https://commission.europa.eu/document/download/2d443b31-dc2a-4e54-a9ec-5fbb61c895e9_en?filename=2024_07_18_QA_Right2repair_FINAL.pdf",
-      "deadline": ""
+      "script_hint": "I am asking you to repair this under your obligation to repair in Directive (EU) 2024/1799, because it is one of the products listed in its Annex II. Please tell me the price and how long the repair will take.",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32024L1799",
+      "deadline": "",
+      "source_quote": "Member States shall ensure that upon the consumer’s request, the manufacturer shall repair goods for which, and to the extent that, repairability requirements are provided for by Union legal acts listed in Annex II."
     },
     {
       "id": "programs-apple-service-programs-check",
@@ -4418,7 +4366,7 @@
     {
       "id": "batteries-eu-800-cycles-ecodesign",
       "source_type": "statutory",
-      "title": "EU phones sold since June 2025 must survive 800 charges at 80%",
+      "title": "EU: smartphone and tablet batteries must pass an 800-charge test",
       "applies_to": {
         "brands": [
           "*"
@@ -4434,15 +4382,18 @@
           "*"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "Applies to smartphones and tablets put on the EU market from 20 June 2025 onwards. Spare parts must stay available for at least 7 years after the model stops being sold.",
-      "what_you_get": "A strong argument, not an automatic payout. EU law now says the battery must still hold 80% of its capacity after 800 full charges. If yours is far below that after far fewer charges, it falls short of what the law requires, which supports a repair or replacement claim against the seller.",
-      "confidence": "certain",
-      "how_to_claim": "Write to the shop that sold you the phone (not the manufacturer), say the battery does not meet the EU ecodesign endurance requirement, and ask for a free repair or replacement.",
+      "window_months": 24,
+      "window_note": "Covers smartphones and slate tablets put on the EU market from 20 June 2025, so a phone sold to you after that date can still be older stock. Home cordless phones have no charge test at all. The claim below goes to the shop that sold it, under the EU legal guarantee, which runs at least 2 years from delivery. Some countries give longer, so it is worth asking even after 2 years.",
+      "what_you_get": "This is not a promise about your own battery. It is a test the model has to pass: a smartphone or slate tablet battery must last at least 800 full charges and still hold 80% of its rated capacity. A basic mobile phone has to reach 500. The tested number is on the model's EU energy label. Your smartphone or tablet must also record how many full charges the battery has done and its health in %, in the settings or somewhere else you can get to. If your battery is far below 80% after far fewer charges than the label says, those numbers help you argue to the seller that it is not as durable as you could expect. The seller can disagree. Heat and fast charging wear a battery out too, and the maker's manual has to say so.",
+      "confidence": "likely",
+      "how_to_claim": "Find the full charge count and battery health on your device, in the settings or wherever your maker put them, and take a screenshot. For a smartphone or slate tablet the model's charge number is on its EU energy label, and the label's QR code opens the EU product database. A basic mobile phone has neither, so name the 500-charge rule instead. Then write to the shop that sold it to you, not the maker, while you are inside the legal guarantee, and ask for a free repair or replacement. You can report a model you think fails the test to your country's market surveillance authority.",
       "contact": "",
-      "script_hint": "Under EU ecodesign rules this phone's battery should still hold 80% capacity after 800 full charges. Mine is well below that after far fewer, so the goods are not as they should be.",
-      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R1670",
-      "deadline": ""
+      "script_hint": "My [phone] is still inside its legal guarantee. Its battery shows [X]% health after only [Y] full charges, while the EU energy label for this model says [Z] charges. Under Directive (EU) 2019/771 that is not the durability I could reasonably expect, so please repair or replace it free of charge.",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02023R1670-20250620",
+      "deadline": "",
+      "window_kind": "floor",
+      "source_quote": "Manufacturers, importers or authorised representatives shall ensure that the devices achieve at least 800 cycles at 80 % remaining capacity, to be tested under charging conditions where the charging rate is limited by the battery management system and not by the power delivery capabilities of the power supply.",
+      "starts": "2025-06-20"
     },
     {
       "id": "batteries-wear-parts-usually-excluded",
@@ -5756,36 +5707,13 @@
     {
       "id": "cards-intl-eu-first-year-no-proof-needed",
       "source_type": "statutory",
-      "title": "EU: in the first year you don't have to prove a thing",
+      "title": "EU: a fault in the first year counts as there from the start",
       "applies_to": {
         "brands": [
           "*"
         ],
         "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "footwear",
-          "apparel",
-          "bag",
-          "watch",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "bike",
-          "outdoor",
-          "toy",
-          "other"
+          "*"
         ],
         "regions": [
           "EU"
@@ -5794,56 +5722,17 @@
           "*"
         ]
       },
-      "window_months": 12.0,
-      "window_note": "Runs for one year from the day the goods were delivered. Some EU countries stretch it to two years. After it runs out you can still claim under the two-year guarantee, but then you have to show the fault was there from the beginning. If the seller says you must have broken it, or asks you to pay for a report proving the fault, tell them that within the first year the burden of proof is on them, not you. Countries are allowed to make it 24 months and some have - France is one of them.",
-      "what_you_get": "If a fault shows up in the first year, the law simply assumes it was already there when you got the item. You don't have to prove anything, take it to a technician, or argue about it. The seller has to prove it was fine when it left them — which is hard and expensive for them, so most just fix it. Several EU countries stretch this to a full two years.",
+      "window_months": 12,
+      "window_note": "Runs for one year from the day you got the item. Some EU countries make it two years. France does for new goods, and keeps one year for second-hand goods. After that you can still claim under the two-year guarantee, but the seller can ask you to show the fault was there when you got the item.",
+      "what_you_get": "If a fault shows up within a year of getting the item, the law assumes it was already there on the day you got it, so you don't have to prove that part. The seller can still try to prove the item was fine. The rule also does not apply when it cannot fit the kind of item or the kind of fault. When it applies, you get the free repair or replacement the legal guarantee gives you.",
       "confidence": "certain",
-      "how_to_claim": "Tell the seller the fault appeared within a year of delivery, so the law treats it as having been there all along, and it is on them to prove otherwise. Then ask for the free repair or replacement. Put it in writing so there's a record of the date.",
+      "how_to_claim": "Tell the seller in writing that the fault showed up within a year of delivery, so the law presumes it was there from the start and it is up to them to prove otherwise. Then ask for a free repair or replacement. Writing it down gives you a record of the date.",
       "contact": "",
-      "script_hint": "The fault appeared within one year of delivery, so under Article 11 of Directive (EU) 2019/771 it is presumed to have existed at delivery. Please repair or replace it free of charge.",
+      "script_hint": "The fault appeared within one year of delivery, so under Article 11 of Directive (EU) 2019/771, as it applies in our national law, it is presumed to have existed at delivery unless you prove otherwise. Please repair or replace it free of charge.",
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019L0771",
       "deadline": "",
-      "window_kind": "floor"
-    },
-    {
-      "id": "cards-intl-eu-maker-durability-promise",
-      "source_type": "statutory",
-      "title": "EU: if the maker promised it would last, chase the maker directly",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "tv",
-          "monitor",
-          "laptop",
-          "bike",
-          "outdoor",
-          "other"
-        ],
-        "regions": [
-          "EU"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 999.0,
-      "window_note": "Lasts as long as the maker's own durability promise lasts — often five, ten or twenty years. Your normal two-year cover from the shop keeps running alongside it, so you can use whichever is better.",
-      "what_you_get": "If the manufacturer advertised that the product would last — '10-year motor guarantee', 'built to last 20 years', that kind of claim — EU law makes the manufacturer itself directly responsible to you for repairing or replacing it for the whole length of that promise. You get to skip the shop entirely and go straight to the maker. And they are not allowed to use that promise to shrink your normal legal rights.",
-      "confidence": "certain",
-      "how_to_claim": "Find where the maker made the promise — the box, the website, the manual, an old advert — and screenshot it before it disappears. Then contact the manufacturer directly with the screenshot and proof of purchase and ask for the repair or replacement under their guarantee of durability.",
-      "contact": "",
-      "script_hint": "You advertise a guarantee of durability of [X] years for this product. Under Article 17 of Directive (EU) 2019/771 you are directly liable to me for repair or replacement for that entire period. Here is my proof of purchase.",
-      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019L0771",
-      "deadline": ""
+      "window_kind": "floor",
+      "source_quote": "Any lack of conformity which becomes apparent within one year of the time when the goods were delivered shall be presumed to have existed at the time when the goods were delivered, unless proved otherwise or unless this presumption is incompatible with the nature of the goods or with the nature of the lack of conformity."
     },
     {
       "id": "cards-intl-ca-90-day-purchase-protection",
@@ -6985,7 +6874,7 @@
     {
       "id": "programs-health-canada-recall-lookup",
       "source_type": "statutory",
-      "title": "Check any Canadian product for a recall - free fix or refund",
+      "title": "Canada: check if your product has been recalled",
       "applies_to": {
         "brands": [
           "*"
@@ -7000,16 +6889,16 @@
           "*"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "Recalls have no expiry date. If your item was recalled and never dealt with, you can still claim. The database is updated every day and holds thousands of active alerts, so it's worth re-checking. Match the model number on your product to the one in the notice. You can also sign up for email alerts.",
-      "what_you_get": "Whatever the recall notice offers - usually a free repair, a free replacement, or a refund from the maker.",
+      "window_months": 999,
+      "window_note": "Make sure your product is the exact one in the notice, for example by the model, UPC or code it lists. Older recalls are archived, so tick \"Include archived\" when you search. The site's data is updated daily, so it is worth checking again later. You can also sign up for emails about new and updated recalls.",
+      "what_you_get": "If your product is on a recall notice, the notice says what to do. Some notices offer a refund or a free repair kit. Others tell you to stop using the product, or to throw it out or return it to where you bought it.",
       "confidence": "certain",
-      "how_to_claim": "Search recalls-rappels.canada.ca by brand name or product type. It covers Health Canada, the Canadian Food Inspection Agency and Transport Canada in one place. Then follow the instructions in the notice, or ring the company listed on it.",
+      "how_to_claim": "Search recalls-rappels.canada.ca by brand or product type. It has recalls from Health Canada, the Canadian Food Inspection Agency and Transport Canada. If your product matches, follow the instructions in the notice. If there are none, or you have questions, call the company or visit its website. Don't give the product to someone else, and don't throw it out without following the instructions.",
       "contact": "https://recalls-rappels.canada.ca/en",
-      "script_hint": "My product matches your recall notice and it was never fixed, so I would like the free remedy you promised in that notice.",
+      "script_hint": "My product matches a recall notice on the Government of Canada's Recalls and Safety Alerts site. Please tell me what that notice says I should do next.",
       "source_url": "https://recalls-rappels.canada.ca/en",
       "deadline": "",
-      "source_quote": "official Government of Canada centralized website providing information on recalls and safety alerts related to food, consumer products, health products, medical devices, cannabis and vehicles sold in Canada."
+      "source_quote": "Find recalls, advisories and safety alerts"
     },
     {
       "id": "programs-uk-opss-recall-lookup",
@@ -7415,44 +7304,9 @@
       "source_quote": "so far as the claim relates to any single item to which the supplier has attached a cash price not exceeding £100 or more than £30,000"
     },
     {
-      "id": "law-intl-eu-producer-must-repair",
-      "source_type": "statutory",
-      "title": "EU: the manufacturer has to repair it even after the guarantee runs out",
-      "applies_to": {
-        "brands": [
-          "*"
-        ],
-        "categories": [
-          "phone",
-          "tablet",
-          "appliance-large",
-          "vacuum",
-          "tv",
-          "monitor",
-          "bike"
-        ],
-        "regions": [
-          "EU"
-        ],
-        "payment_methods": [
-          "*"
-        ]
-      },
-      "window_months": 999.0,
-      "window_note": "Applies from 31 July 2026. It only covers products EU law sets repair rules for: washing machines and washer-dryers, dishwashers, fridges and freezers, tumble dryers, TVs and monitors, vacuum cleaners, phones and tablets, and e-bikes and e-scooters (for the battery). How old your item is does not matter.",
-      "what_you_get": "A repair from the maker itself, free or at a fair price, done in a reasonable time - even years after any guarantee has ended. They are not allowed to use contract terms, hardware locks or software tricks to block the repair.",
-      "confidence": "certain",
-      "how_to_claim": "Contact the manufacturer directly, not the shop, and ask for a repair under the EU repair obligation. Ask them for a European Repair Information Form first - it is a standard form with the price and timing on it, and once they give it to you the price is held for 30 days so you can shop around.",
-      "contact": "https://commission.europa.eu/law/law-topic/consumer-protection-law/directive-repair-goods_en",
-      "script_hint": "I am asking you to repair this under the EU Right to Repair Directive. Please send me a European Repair Information Form with the price and how long it will take.",
-      "source_url": "https://commission.europa.eu/law/law-topic/consumer-protection-law/directive-repair-goods_en",
-      "deadline": "",
-      "source_quote": "the manufacturer shall repair goods for which, and to the extent that, repairability requirements are provided for by Union legal acts listed in Annex II"
-    },
-    {
       "id": "law-intl-eu-producer-durability-guarantee",
       "source_type": "statutory",
-      "title": "EU: if the maker advertised a long guarantee, go straight to the maker",
+      "title": "EU: if the maker gave a durability guarantee, go straight to the maker",
       "applies_to": {
         "brands": [
           "*"
@@ -7490,21 +7344,22 @@
           "*"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "Lasts for the whole time the maker's durability guarantee runs. It matters most when that is longer than the seller's 2-year legal guarantee - a '10 year guarantee' sticker or a lifetime promise on the box. If the advert promised better terms than the guarantee leaflet, the advert's terms count.",
-      "what_you_get": "A free repair or replacement from the manufacturer directly. You do not have to go back through the shop, and you do not have to argue about who is responsible.",
+      "window_months": 999,
+      "window_note": "Lasts for the whole period of the maker's durability guarantee, for whatever that guarantee covers. This EU rule covers things bought from 1 January 2022. Your legal guarantee from the seller still applies alongside it. If the advertising for the guarantee promised better terms than the guarantee statement, the advertising's terms count, unless the advert was corrected before you bought.",
+      "what_you_get": "If the maker offered you a guarantee that the product will keep working normally for a set time, it has to repair or replace it for you directly for that whole time. What you can ask for is what the guarantee says. It binds the maker on the terms written in the guarantee statement and in the advertising for it, so read those terms and check what they cover. A 10 year guarantee on the motor covers the motor, not the whole machine, and a guarantee can set conditions, such as registering the product. Here \"the maker\" also means the company that brought it into the EU, or a company that put its own brand name on it. The repair or replacement must be free, done in a reasonable time, and without major hassle for you.",
       "confidence": "certain",
-      "how_to_claim": "Find the advertised promise - the box, the advert, the product page, the guarantee leaflet. Screenshot it. Then contact the manufacturer, not the shop, and ask them to honour it.",
+      "how_to_claim": "Find where the maker gave the guarantee: the box, the guarantee leaflet, the product page or an advert. Take a photo or screenshot of it, and read what it covers and what it asks you to do. Then contact the maker, not the shop, with that and your proof of purchase, and ask for a repair or replacement under its durability guarantee.",
       "contact": "",
-      "script_hint": "You advertise a durability guarantee on this product. Under Article 17 of the EU Sale of Goods Directive you are directly liable to me for repair or replacement for that whole period.",
+      "script_hint": "You gave a durability guarantee of [X] years on this product, and this fault is in what that guarantee covers. Under Article 17 of Directive (EU) 2019/771 you are directly liable to me for a free repair or replacement for that whole period.",
       "source_url": "https://eur-lex.europa.eu/eli/dir/2019/771/oj/eng",
       "deadline": "",
-      "source_quote": "where a producer offers to the consumer a commercial guarantee of durability for certain goods for a certain period of time, the producer shall be liable directly to the consumer"
+      "source_quote": "Under the conditions laid down in this Article and without prejudice to any other applicable provisions of Union or national law, where a producer offers to the consumer a commercial guarantee of durability for certain goods for a certain period of time, the producer shall be liable directly to the consumer, during the entire period of the commercial guarantee of durability for repair or replacement of the goods in accordance with Article 14.",
+      "starts": "2022-01-01"
     },
     {
       "id": "law-intl-fr-repair-extends-guarantee",
       "source_type": "statutory",
-      "title": "France: two years of no-proof-needed, plus 12 months for choosing a repair",
+      "title": "France: the seller's 2-year guarantee, plus 6 months after a repair",
       "applies_to": {
         "brands": [
           "*"
@@ -7533,6 +7388,7 @@
           "bike",
           "outdoor",
           "toy",
+          "vehicle",
           "other"
         ],
         "regions": [
@@ -7542,16 +7398,17 @@
           "*"
         ]
       },
-      "window_months": 24.0,
-      "window_note": "Two years from delivery for new, refurbished and second-hand goods alike. For new goods you get the full 24 months of not having to prove anything; for second-hand and refurbished it is 12 months.",
-      "what_you_get": "A free repair or replacement. If you pick the repair, your guarantee is extended by 12 months. If the seller insists on replacing it instead, a fresh two-year guarantee starts from the day you get the replacement.",
+      "window_months": 24,
+      "window_note": "Two years from the day the item was delivered, for new and second-hand items bought from a business. For a new item, a fault that shows up in the first 24 months is taken to have been there from the start, unless the seller proves otherwise. For second-hand and refurbished items that period is 12 months. After it, you have to prove the fault was there when you bought it.",
+      "what_you_get": "A free repair or replacement from the seller, done within 30 days of your request. You choose which one, but if one clearly costs more, the seller can pick the cheaper one. If the item is repaired under this guarantee, the guarantee gets 6 more months. If you chose repair but the seller replaced the item instead, a new two-year guarantee starts on the day you get the replacement. An EU law says that for items bought from 31 July 2026, choosing repair must add 12 months, but the government says France has not finished putting this into French law yet.",
       "confidence": "certain",
-      "how_to_claim": "Ask the seller (not the maker) for the garantie legale de conformite, and say you are choosing the repair. Get the 12-month extension confirmed on paper.",
-      "contact": "https://www.service-public.gouv.fr/particuliers/vosdroits/F11094",
-      "script_hint": "Je fais jouer la garantie legale de conformite. Je choisis la reparation, ce qui prolonge ma garantie de 12 mois. (I am using the legal guarantee of conformity. I choose repair, which extends my guarantee by 12 months.)",
-      "source_url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F11094",
+      "how_to_claim": "Go to the seller, not the maker. Say you are using the garantie legale de conformite and that you choose repair. Take the item back with your receipt, invoice or delivery note, or write to the seller, ideally by registered letter with acknowledgement of receipt. After the repair, ask for the new end date of your guarantee in writing. If the seller will not help, you can report the problem to the consumer fraud office on SignalConso.",
+      "contact": "https://signal.conso.gouv.fr/",
+      "script_hint": "Je fais jouer la garantie légale de conformité et je choisis la réparation. Merci de me confirmer par écrit la nouvelle date de fin de garantie, prolongée de six mois selon l'article L217-13 du Code de la consommation. (I am using the legal guarantee of conformity and I choose repair. Please confirm in writing the new end date of my guarantee, extended by six months under article L217-13 of the Consumer Code.)",
+      "source_url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044142545",
       "deadline": "",
-      "window_kind": "floor"
+      "window_kind": "floor",
+      "source_quote": "Tout bien réparé dans le cadre de la garantie légale de conformité bénéficie d'une extension de cette garantie de six mois."
     },
     {
       "id": "law-intl-fr-repair-bonus",
@@ -7577,7 +7434,9 @@
           "monitor",
           "printer",
           "console",
-          "toy",
+          "camera",
+          "bike",
+          "bag",
           "outdoor",
           "other"
         ],
@@ -7588,15 +7447,16 @@
           "*"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "Nothing to do with when you bought the item. It is tied to the repair you are having done now, so an old out-of-warranty item still qualifies.",
-      "what_you_get": "A discount taken straight off the repair invoice, paid for by a government-backed repair fund. Covers electrical and electronic goods, clothes, household linen, shoes, furniture, sports and leisure gear, DIY and garden tools, and toys.",
+      "window_months": 999,
+      "window_note": "No age limit, so an old item still qualifies. But the item must not be under a guarantee, legal or commercial, and must not be covered by an insurance policy. The law says the bonus is not paid on a repair done under the legal guarantee (2 years from delivery in France) or a shop or maker's guarantee. The schemes for electrical items, bikes, sports gear, garden tools and furniture go further: the item itself must be out of guarantee, including extended warranties. The government's bonus page also says the item must have been bought in France.",
+      "what_you_get": "Money taken off the bill when a labelled repairer fixes your item. It is paid from repair funds that the makers of these products finance. It covers electrical and electronic items, clothes, household linen and shoes, furniture, sports and leisure gear such as bikes, backpacks and tents, and DIY and garden tools. Clothes made of leather or real fur are not covered. The amount is set for each type of item and repair, for example 25 euros off a mobile phone repair. The repair has to cost more than the bonus, so a bill smaller than the bonus gets you nothing, and some items have a minimum bill: at least 12 euros for clothes and shoes, and 100 or 150 euros for computers, printers, scanners and monitors. Labelled repairers must also guarantee their repair for at least 3 months.",
       "confidence": "certain",
-      "how_to_claim": "Book the repair with a repairer that carries the QualiRepar label (or the matching label for clothes or furniture). The discount is applied to your bill automatically - there is no form to fill in and no money to claim back afterwards.",
+      "how_to_claim": "Find a labelled repairer on the official site of the scheme for your item. The government page links to each one, and QualiRepar is the label for electrical and electronic items. The discount comes off your bill when you pay. There is no form to fill in and nothing to claim back, because the fund pays the repairer.",
       "contact": "https://www.ecologie.gouv.fr/politiques-publiques/bonus-reparation-quest-ce-que-cest",
-      "script_hint": "Est-ce que vous etes labellise QualiRepar ? Je voudrais le bonus reparation deduit de la facture. (Are you QualiRepar labelled? I would like the repair bonus taken off the bill.)",
+      "script_hint": "Êtes-vous labellisé pour le bonus réparation ? Mon article n'est plus sous garantie et n'est pas couvert par une assurance, et je voudrais que le bonus réparation instauré par la loi AGEC soit déduit de ma facture. (Are you labelled for the repair bonus? My item is out of guarantee and is not covered by insurance, and I would like the repair bonus set up by the AGEC law taken off my bill.)",
       "source_url": "https://www.ecologie.gouv.fr/politiques-publiques/bonus-reparation-quest-ce-que-cest",
-      "deadline": ""
+      "deadline": "",
+      "source_quote": "Le bonus réparation est un dispositif instauré par la loi AGEC permettant la déduction d’un montant directement sur la facture du consommateur qui se rend chez un réparateur labellisé pour faire réparer son produit."
     },
     {
       "id": "law-intl-ie-six-year-remedy",
@@ -7658,30 +7518,7 @@
           "*"
         ],
         "categories": [
-          "phone",
-          "laptop",
-          "tablet",
-          "headphones",
-          "tv",
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "vacuum",
-          "power-tool",
-          "furniture",
-          "mattress",
-          "footwear",
-          "apparel",
-          "bag",
-          "watch",
-          "camera",
-          "console",
-          "monitor",
-          "printer",
-          "bike",
-          "outdoor",
-          "toy",
-          "other"
+          "*"
         ],
         "regions": [
           "CA"
@@ -7693,20 +7530,21 @@
           "CA-QC"
         ]
       },
-      "window_months": 999.0,
+      "window_months": 999,
       "window_note": "Applies the whole time the legal warranty applies. It is about who you are allowed to chase, not about how old the item is.",
-      "what_you_get": "You get to pick. You can chase the shop, the manufacturer, or both at the same time - and the shop is not allowed to bounce you to the manufacturer's helpline instead of dealing with you.",
+      "what_you_get": "You get to pick. You can deal with the store, the manufacturer, or both at the same time. The store is not allowed to send you to the manufacturer instead of dealing with you itself. This works when the item isn't fit for normal use, didn't last a reasonable time, has a hidden defect, or has no parts or repairs available.",
       "confidence": "certain",
-      "how_to_claim": "If a store says 'that's a manufacturer issue, call them', say no and quote this rule. Then keep dealing with the store. Chasing both at once is allowed and often faster.",
+      "how_to_claim": "If a store says 'that's a manufacturer issue, call them', say no and point to this rule. Then keep dealing with the store. You can also contact the manufacturer at the same time if you want.",
       "contact": "https://www.opc.gouv.qc.ca/en/consumer/topic/warranties/applying-warranty/application-legal-warranties",
-      "script_hint": "Quebec's consumer protection office says a merchant may not require me to deal with the manufacturer. I am claiming the legal warranty from you, the merchant.",
+      "script_hint": "Section 54 of Quebec's Consumer Protection Act lets me claim directly from you, the merchant, and Quebec's consumer office says a merchant may not require me to deal with the manufacturer. I am claiming the legal warranty from you.",
       "source_url": "https://www.opc.gouv.qc.ca/en/consumer/topic/warranties/applying-warranty/application-legal-warranties",
-      "deadline": ""
+      "deadline": "",
+      "source_quote": "A merchant may not require that you deal with the manufacturer."
     },
     {
       "id": "law-intl-qc-parts-availability",
       "source_type": "statutory",
-      "title": "Quebec: no parts, no repair service? Then they replace it or refund you",
+      "title": "Quebec: parts, repairs and repair info must stay available for a reasonable time",
       "applies_to": {
         "brands": [
           "*"
@@ -7715,7 +7553,10 @@
           "phone",
           "laptop",
           "tablet",
+          "headphones",
           "tv",
+          "camera",
+          "watch",
           "appliance-large",
           "appliance-small",
           "kitchen",
@@ -7740,16 +7581,16 @@
           "CA-QC"
         ]
       },
-      "window_months": 999.0,
-      "window_note": "In force since 5 October 2025. Covers anything bought or leased from a business, new or used, that needs upkeep - from a toaster to a car. The shop or maker can only opt out by telling you in writing before you buy.",
-      "what_you_get": "Spare parts, a repair service, and the information needed to fix it - all at prices that are not set high enough to put you off repairing. Repair information posted on the maker's own platform has to be free. If they cannot deliver, you can demand a replacement or your money back instead.",
+      "window_months": 999,
+      "window_note": "In force since 5 October 2025. No fixed cut-off: parts, repair services and repair information must stay available for a reasonable time after you buy. It covers things bought or rented from a business, new or used, whose use may need a part replaced, cleaned or updated, such as a toaster, a cell phone, a bike or a car. The shop or maker can only get out of it by warning you in writing, before you buy, that it doesn't supply them. A car maker can never opt out of giving access to the car's repair data.",
+      "what_you_get": "Replacement parts, repair services and the information needed to maintain or repair it (instructions, software and so on), in French. Prices must be reasonable, meaning not so high that they put you off. Repair information must be free when it is available online, in software or in an app, but a car's data can cost a reasonable fee. Parts must go in with commonly available tools and without damaging the item for good. If they don't supply these, you can ask them to repair it at their cost. If that fails, they must replace it with a new or reconditioned one that does the same things, or refund the price.",
       "confidence": "certain",
-      "how_to_claim": "Ask the merchant or manufacturer in writing to repair the item. From that request they have 10 days to come back with a written repair proposal. If they do not reply, or they miss their own promised repair deadline, you can then demand a replacement or a refund.",
-      "contact": "https://www.opc.gouv.qc.ca/en/consumer/new-protections",
-      "script_hint": "I am asking you to repair this under Quebec's warranty of availability of parts and repair services. You have 10 days to send me a written repair proposal, or I will be asking for a replacement or a refund.",
-      "source_url": "https://www.opc.gouv.qc.ca/en/consumer/new-protections",
+      "how_to_claim": "This is for when you can't get what you need to fix the item. If the shop or maker won't give you the replacement part, the repair service or the repair information, start here. If those are available and you can get them, this rule is not the one you want. First check whether it warned you in writing, before you bought it, that it doesn't supply parts, repairs or repair information. If it did, it doesn't have to supply them. If it didn't, ask it in writing to repair the item at its cost. It then has 10 days to tell you in writing when it will do the repair. You can accept or refuse that date. If you refuse, you can have someone else fix it and it pays the reasonable cost. If it gives no proper answer within 10 days, or misses the date it gave, you can demand a replacement or a refund. It picks which one, and you give back the broken item. If it still refuses, send a formal notice and, as a last step, go to court.",
+      "contact": "1 888 672-2556",
+      "script_hint": "I can't get the replacement part, the repair service or the repair information I need for this item, and you never warned me in writing before I bought it that you don't supply them. Section 39 of Quebec's Consumer Protection Act says they have to stay available for a reasonable time, so under section 39.5 I'm asking you to repair it at your cost and to tell me in writing within 10 days when you will do it.",
+      "source_url": "https://www.opc.gouv.qc.ca/en/consumer/topic/warranties/applying-warranty/parts-services-information",
       "deadline": "",
-      "source_quote": "Ces obligations bonifiées sont en vigueur à compter du 5 octobre 2025."
+      "source_quote": "The availability warranty applies when the use of an item may require the replacement, cleaning or updating of one of its components."
     },
     {
       "id": "law-intl-ca-durability-provinces",
@@ -9599,44 +9440,32 @@
     {
       "id": "cards-intl-eu-linked-credit",
       "source_type": "statutory",
-      "title": "EU: shop finance means the lender owes you as well",
+      "title": "EU: shop finance can make the lender your back-up",
       "applies_to": {
         "brands": [
           "*"
         ],
         "categories": [
-          "appliance-large",
-          "appliance-small",
-          "kitchen",
-          "furniture",
-          "mattress",
-          "tv",
-          "monitor",
-          "laptop",
-          "phone",
-          "bike",
-          "outdoor",
-          "power-tool",
-          "other"
+          "*"
         ],
         "regions": [
           "EU"
         ],
         "payment_methods": [
-          "any-credit"
+          "*"
         ]
       },
-      "window_months": 24.0,
-      "window_note": "Only for credit that paid for that one specific purchase, such as store finance set up at the till. Ordinary credit card spending does not count. The EU rule also leaves out loans under €200 or over €75,000, and credit with no interest and no other charges, though your own country's law may cover more. You must chase the seller first and fail before you can turn to the lender. How long you have follows your own country's rules.",
-      "what_you_get": "If you bought something using a loan the shop arranged for that exact purchase, and the goods never arrived, only partly arrived, or are faulty, you can chase the finance company for a fix once the shop has failed to sort it out. It is the EU's version of the UK's Section 75, with the extra step that you have to try the shop first.",
+      "window_months": 24,
+      "window_note": "Only for credit that paid for this one purchase and is tied to the shop: the shop gave you the credit itself, the lender used the shop to set it up, or the credit agreement names the item. Under the EU rule a normal credit card you can use for anything does not count, because it is not only for this purchase. The EU rule also leaves out credit under €200 or over €75,000, credit with no interest and no other charges, and credit you must pay back within three months with only tiny charges. You must try the seller first and fail before you can turn to the lender. Your own country's law sets the details, such as how long you have, and may give you more. For credit taken out from 20 November 2026, newer EU rules also cover amounts under €200 or up to €100,000, and interest-free plans from a separate lender.",
+      "what_you_get": "If a shop-linked loan paid for your item and it never arrived, only partly arrived, or is faulty, you can take your claim to the lender once the seller has failed to give you what the law or your contract says you are owed.",
       "confidence": "likely",
       "how_to_claim": "Contact the shop first and keep proof they did not put it right. Then write to the finance company, explain that the credit was a linked credit agreement for that purchase, and ask them to put things right.",
       "contact": "",
-      "script_hint": "This was a linked credit agreement for these goods. The supplier has not given me the remedy I am entitled to, so I am pursuing my claim against you as the creditor.",
+      "script_hint": "This was a linked credit agreement for these goods, and the seller has not given me the remedy I am entitled to. Under Article 15(2) of the Consumer Credit Directive (2008/48/EC), as it applies in our national law, I am now pursuing my claim against you as the lender.",
       "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32008L0048",
       "deadline": "",
       "window_kind": "floor",
-      "source_quote": "the consumer shall have the right to pursue remedies against the creditor if the consumer has pursued his remedies against the supplier but has failed to obtain the satisfaction to which he is entitled"
+      "source_quote": "Where the goods or services covered by a linked credit agreement are not supplied, or are supplied only in part, or are not in conformity with the contract for the supply thereof, the consumer shall have the right to pursue remedies against the creditor if the consumer has pursued his remedies against the supplier but has failed to obtain the satisfaction to which he is entitled according to the law or the contract for the supply of goods or services."
     },
     {
       "id": "cards-intl-eu-ecc-net",
@@ -9693,7 +9522,7 @@
     {
       "id": "cards-intl-ca-qc-statutory-chargeback",
       "source_type": "statutory",
-      "title": "Quebec: your card issuer must reverse it, by law",
+      "title": "Quebec: cancelled an online order for a reason the law allows and got no refund? Your card issuer must reverse the charge",
       "applies_to": {
         "brands": [
           "*"
@@ -9734,16 +9563,16 @@
           "CA-QC"
         ]
       },
-      "window_months": 6.0,
-      "window_note": "Cancel with the merchant first, within the deadline for your reason, for example within 30 days of the delivery date they promised. They then have 15 days to refund you. If they do not, you have 60 days after that to ask your card issuer.",
-      "what_you_get": "In Quebec, a chargeback is a legal right, not a favour. For anything bought online, by phone or by mail, if you cancelled properly and the merchant does not refund you within 15 days, your credit card issuer must credit your account. They must acknowledge your request within 30 days and put the money back within 90 days, or within two statement periods, whichever comes first.",
+      "window_months": 6,
+      "window_note": "Each step has its own clock. First, cancel with the seller. If the item has not come 30 days after the delivery date in the contract, or 30 days after you bought it when no date was set, you can cancel any time before it arrives. If you agreed in writing to a later date, count the 30 days from that later date. If the seller tried to deliver on the agreed date and could not because of something you did or did not do, the law treats the delivery as done, so you cannot cancel for late delivery. If the seller left out required information before you bought, did not let you check and fix your order, or sent a contract copy that is missing things or hard to save and print, you have 7 days after you get the copy. If you only notice the missing information when the item or your card statement arrives, the 7 days start then. If no copy came within 15 days of buying, you have 30 days from the purchase. Next, the seller has 15 days to refund you. If they do not, you have 60 days after that to ask your card issuer.",
+      "what_you_get": "This covers things you bought at a distance, for example online or by phone, and paid for by credit card. If you cancelled for one of the reasons the law allows and the seller does not refund you within 15 days, your card issuer must take the charge back when you ask in writing. The issuer must confirm it got your request within 30 days. It must put the money back within 90 days or within two full statement periods, whichever comes first. Some purchases are left out, such as food or other goods that spoil quickly and things bought at an auction.",
       "confidence": "certain",
-      "how_to_claim": "Send your card issuer a written chargeback request naming section 54.14 of Quebec's Consumer Protection Act. Quebec's consumer office publishes a free template letter you can copy. Send it so you can prove it arrived, and keep a copy.",
+      "how_to_claim": "First check that your reason is one the law gives, then send the seller a cancellation notice, for example by email or registered mail, and keep proof you sent it. If you already have the item, send it back within 15 days of cancelling, or of getting it if it arrives after you cancel. The seller pays reasonable return costs. If no refund comes within 15 days, send your card issuer a written chargeback request naming section 54.14 of Quebec's Consumer Protection Act. Include your name, card number and expiry date, the seller's name, the purchase date, the amount, what you bought, why you cancelled, and the date and way you sent the cancellation. Quebec's consumer protection office has a sample letter you can copy. Send it in a way you can prove, and keep a copy.",
       "contact": "https://opc.gouv.qc.ca/en/consumer/topic/purchase/online-purchase/cancelling/",
-      "script_hint": "Under section 54.14 of Quebec's Consumer Protection Act I am requesting that you charge back all amounts paid to this merchant and cancel all related charges on my account.",
-      "source_url": "https://opc.gouv.qc.ca/en/consumer/topic/purchase/online-purchase/cancelling/sample-request-credit-card",
+      "script_hint": "I cancelled this distance purchase under Quebec's Consumer Protection Act and the seller did not refund me within 15 days. Under section 54.14, please charge back all amounts I paid under this contract and cancel all related charges on my account.",
+      "source_url": "https://www.legisquebec.gouv.qc.ca/en/document/cs/P-40.1#se:54_14",
       "deadline": "",
-      "source_quote": "Section 54.14 of Québec's Consumer Protection Act provides that I can file a request that you chargeback all amounts paid by credit card in relation to the purchase described below."
+      "source_quote": "If the merchant defaults on the obligation to make a refund under section 54.13 and the consumer has paid by credit card, the consumer may, within 60 days following the default, request the card issuer to chargeback all amounts paid under the contract and any accessory contract, and to cancel all charges made to the consumer’s account in relation to those contracts."
     },
     {
       "id": "cards-intl-ca-cibc-extended-warranty",

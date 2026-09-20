@@ -973,6 +973,28 @@
       ],
       "reason": "16 CFR 700.10 is the FTC's reading of 15 USC 2302(c); what_you_get near-verbatim (re-audit)",
       "notes": []
+    },
+    {
+      "survivor": "law-intl-eu-manufacturer-must-repair",
+      "merged": [
+        "eu-right-to-repair-directive",
+        "law-intl-eu-producer-must-repair"
+      ],
+      "reason": "All three described the same duty, the obligation to repair in Directive (EU) 2024/1799, and they contradicted each other on the window (120 months vs 999), on price (free vs reasonable) and on scope. Re-checked against the directive itself on 19 Sept 2026: the survivor now carries Annex II's product list, the chain when the maker is outside the EU (authorised representative, importer, distributor), the European Repair Information Form as optional, and the Commission Q&A points marked as the Commission's view. Confidence dropped to likely.",
+      "notes": [
+        "This merge was refuted once before (see refuted_by_review, entry for the same survivor); the stored reason did not survive in the log. Re-done after a fresh read of the primary text plus an adversarial review.",
+        "'bike' was dropped: the e-bike and e-scooter battery duty comes from the Batteries Regulation Art 11, which applies from 18 February 2027. Re-add it then."
+      ]
+    },
+    {
+      "survivor": "law-intl-eu-producer-durability-guarantee",
+      "merged": [
+        "cards-intl-eu-maker-durability-promise"
+      ],
+      "reason": "Both described Article 17 of Directive (EU) 2019/771, the maker's commercial guarantee of durability. The survivor keeps the wider category list, so no cover is lost, and now says plainly that what you can ask for is what the guarantee says, that a motor guarantee covers the motor, and that a guarantee may set conditions. starts 2022-01-01 was added because the directive applies to contracts from that date.",
+      "notes": [
+        "Unsettled: the directive does not define 'commercial guarantee of durability', so whether an ordinary maker's warranty counts is open. The rule is written conditionally."
+      ]
     }
   ],
   "skipped": [],
@@ -1112,5 +1134,13 @@
       "programs-nhtsa-vehicle-recall-vin",
       "us-vehicle-safety-recall-free-repair"
     ]
-  }
+  },
+  "later_rounds": [
+    {
+      "date": "2026-09-19",
+      "before": 672,
+      "after": 669,
+      "what": "Re-checked the rules flagged in the language pass against their official texts: 18 rules corrected, 3 merged away (2 merges above)."
+    }
+  ]
 }

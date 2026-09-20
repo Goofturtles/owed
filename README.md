@@ -292,24 +292,27 @@ The engine is written to run in Node with only a `global.window` shim, which mak
 
 ## What is in the rulebook today
 
-317 rules, every one with a source URL.
+669 rules, every one with a source URL.
 
 | By where the cover comes from | Count |
 |---|---|
-| Manufacturer warranties, service programmes and recalls | 29 |
-| Consumer law | 19 |
-| Credit card benefits | 15 |
-| Class-action settlements | 5 |
+| Manufacturer warranties, service programmes and recalls | 325 |
+| Consumer law | 159 |
+| Credit card benefits | 46 |
+| Shop policies | 121 |
+| Class-action settlements | 15 |
+| Government and repair programmes | 3 |
 
 | By region (rules list more than one, so these overlap) | Count |
 |---|---|
-| United States | 50 |
-| Canada | 14 |
-| United Kingdom | 3 |
-| European Union | 3 |
-| Region-agnostic | 3 |
+| United States | 332 |
+| Canada | 296 |
+| Mexico | 57 |
+| United Kingdom | 67 |
+| European Union | 27 |
+| Region-agnostic | 13 |
 
-Confidence: 49 `certain`, 19 `likely`. Three rules carry a hard filing deadline. Seven are service programmes or recalls.
+Confidence: 567 `certain`, 101 `likely`, 1 `possible`. 14 rules carry a hard filing deadline.
 
 ---
 
@@ -336,7 +339,7 @@ The re-match loop uses `owed:seen`: when the rulebook grows, an item's fresh mat
 
 Stated plainly, because a tool about fine print should not have any.
 
-- **The rulebook is hand-collected, so it is deep rather than complete.** 317 rules is a real corpus, not a stub, but it is not the world. Unusual brands or models can return nothing. When that happens the app says so plainly and keeps the item on your shelf for re-matching. It does not invent a match to fill the screen.
+- **The rulebook is hand-collected, so it is deep rather than complete.** 669 rules is a real corpus, not a stub, but it is not the world. Unusual brands or models can return nothing. When that happens the app says so plainly and keeps the item on your shelf for re-matching. It does not invent a match to fill the screen.
 - **Coverage is strongest for the US and Canada.** UK and EU rules are present but thin. A UK user with an unusual item will often see only the two or three statutory rules.
 - **This is an information tool, not legal advice.** Every rule links to its published source so you can read it yourself and decide.
 - **Card benefits changed a lot between 2018 and 2025.** Many issuers removed extended warranty entirely. A card rule is a prompt to check your own benefit guide, not a guarantee that your specific card still has it. This is why almost all card rules are marked `likely` rather than `certain`.

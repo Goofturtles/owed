@@ -17,7 +17,7 @@
     { id: 'console',         key: 'catalog.category.console', label: i18n.t('catalog.category.console'),        keywords: ['console', 'playstation', 'ps5', 'xbox', 'switch', 'controller'] },
     { id: 'camera',          key: 'catalog.category.camera', label: i18n.t('catalog.category.camera'),         keywords: ['camera', 'lens', 'dslr', 'mirrorless', 'gopro'] },
     { id: 'watch',           key: 'catalog.category.watch', label: i18n.t('catalog.category.watch'),          keywords: ['watch', 'smartwatch', 'fitbit', 'tracker', 'garmin'] },
-    { id: 'appliance-large', key: 'catalog.category.applianceLarge', label: i18n.t('catalog.category.applianceLarge'), keywords: ['fridge', 'refrigerator', 'freezer', 'washer', 'washing machine', 'dryer', 'dishwasher', 'oven', 'stove', 'range', 'furnace', 'water heater'] },
+    { id: 'appliance-large', key: 'catalog.category.applianceLarge', label: i18n.t('catalog.category.applianceLarge'), keywords: ['fridge', 'refrigerator', 'freezer', 'washer', 'washing machine', 'dryer', 'dishwasher', 'oven', 'stove', 'range', 'furnace', 'water heater', 'air conditioner', 'air conditioning', 'heat pump', 'dehumidifier'] },
     { id: 'appliance-small', key: 'catalog.category.applianceSmall', label: i18n.t('catalog.category.applianceSmall'), keywords: ['kettle', 'toaster', 'microwave', 'blender', 'coffee', 'espresso', 'mixer', 'air fryer', 'fryer', 'iron', 'humidifier', 'fan', 'heater'] },
     { id: 'vacuum',          key: 'catalog.category.vacuum', label: i18n.t('catalog.category.vacuum'),         keywords: ['vacuum', 'hoover', 'roomba', 'dyson'] },
     { id: 'kitchen',         key: 'catalog.category.kitchen', label: i18n.t('catalog.category.kitchen'),        keywords: ['pan', 'pot', 'cookware', 'skillet', 'cast iron', 'knife', 'knives', 'cutlery', 'bakeware'] },
@@ -49,13 +49,14 @@
       'laptop':          ['ordinateur', 'ordinateur portable', 'ordinateur de bureau', 'ordi'],
       'tablet':          ['tablette', 'tablette tactile', 'liseuse'],
       'headphones':      ['casque', 'casque audio', 'casque d’écoute', 'écouteur', 'écouteurs', 'oreillette', 'oreillettes'],
-      'tv':              ['télé', 'téléviseur', 'télévision', 'écran', 'moniteur'],
+      'tv':              ['télé', 'téléviseur', 'télévision', 'écran'],
       'console':         ['console de jeux', 'console de jeu', 'manette'],
       'camera':          ['appareil photo', 'caméra', 'caméscope', 'reflex'],
       'watch':           ['montre', 'montre connectée', 'bracelet connecté'],
       'appliance-large': ['réfrigérateur', 'frigo', 'frigidaire', 'congélateur', 'lave-linge', 'machine à laver', 'laveuse',
                           'sèche-linge', 'sécheuse', 'lave-vaisselle', 'four', 'cuisinière', 'table de cuisson',
-                          'plaque de cuisson', 'chauffe-eau', 'fournaise', 'chaudière'],
+                          'plaque de cuisson', 'chauffe-eau', 'fournaise', 'chaudière', 'climatiseur',
+                          'thermopompe', 'pompe à chaleur', 'déshumidificateur'],
       'appliance-small': ['bouilloire', 'grille-pain', 'micro-ondes', 'mélangeur', 'mixeur', 'cafetière', 'machine à café',
                           'machine à espresso', 'friteuse', 'friteuse à air', 'fer à repasser', 'humidificateur',
                           'ventilateur', 'radiateur', 'chaufferette', 'robot culinaire', 'robot de cuisine', 'mijoteuse'],
@@ -75,7 +76,10 @@
       'bike':            ['vélo', 'vélo électrique', 'bicyclette', 'trottinette', 'trottinette électrique', 'casque de vélo'],
       'outdoor':         ['tente', 'sac de couchage', 'réchaud', 'camping', 'planche à neige', 'casque de ski'],
       'printer':         ['imprimante', 'numériseur', 'scanneur', 'encre', 'cartouche'],
-      'toy':             ['jouet', 'jouets', 'poussette', 'siège auto', 'siège d’auto', 'lit de bébé', 'berceau', 'table à langer']
+      'toy':             ['jouet', 'jouets', 'poussette', 'siège auto', 'siège d’auto', 'lit de bébé', 'berceau', 'table à langer'],
+      'monitor':         ['moniteur', 'écran d’ordinateur', "écran d'ordinateur", 'écran de jeu'],
+      'vehicle':         ['voiture', 'auto', 'automobile', 'véhicule', 'camion', 'camionnette', 'fourgonnette', 'vus',
+                          'moto', 'motocyclette', 'pneu', 'pneus', 'coussin gonflable', 'remorque']
     },
     es: {
       'phone':           ['teléfono', 'teléfono móvil', 'móvil', 'celular'],
@@ -87,7 +91,8 @@
       'camera':          ['cámara', 'cámara de fotos', 'videocámara', 'réflex'],
       'watch':           ['reloj', 'reloj inteligente', 'pulsera de actividad', 'pulsera inteligente'],
       'appliance-large': ['nevera', 'refrigerador', 'refrigeradora', 'frigorífico', 'heladera', 'congelador', 'lavadora',
-                          'secadora', 'lavavajillas', 'lavaplatos', 'horno', 'vitrocerámica', 'calentador de agua', 'caldera'],
+                          'secadora', 'lavavajillas', 'lavaplatos', 'horno', 'vitrocerámica', 'calentador de agua', 'caldera',
+                          'aire acondicionado', 'bomba de calor', 'deshumidificador'],
       'appliance-small': ['hervidor', 'hervidor de agua', 'tostadora', 'tostador', 'microondas', 'licuadora', 'batidora',
                           'cafetera', 'máquina de café', 'freidora', 'freidora de aire', 'plancha', 'humidificador',
                           'ventilador', 'calefactor', 'robot de cocina', 'olla eléctrica'],
@@ -109,7 +114,10 @@
       'outdoor':         ['tienda de campaña', 'carpa', 'saco de dormir', 'bolsa de dormir', 'hornillo', 'esquí', 'tabla de snowboard'],
       'printer':         ['impresora', 'escáner', 'tinta', 'cartucho'],
       'toy':             ['juguete', 'juguetes', 'carriola', 'cochecito', 'silla de auto', 'silla de coche',
-                          'asiento de coche', 'cuna', 'portabebés']
+                          'asiento de coche', 'cuna', 'portabebés'],
+      'monitor':         ['monitor de computadora', 'pantalla de computadora', 'pantalla de ordenador', 'monitor gamer'],
+      'vehicle':         ['coche', 'carro', 'auto', 'automóvil', 'vehículo', 'camioneta', 'camión', 'moto', 'motocicleta',
+                          'neumático', 'neumáticos', 'llanta', 'llantas', 'bolsa de aire', 'remolque']
     }
   };
 
