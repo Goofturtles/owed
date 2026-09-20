@@ -66,11 +66,16 @@
     ['auto', 'carro', 'coche', 'vehículo', 'bebé', 'niño', 'seguridad']);
   var SCREENS_FR = phrases(['écran', 'écrans'], JOIN_FR, ['ordinateur', 'ordi', 'pc']);
   var SCREENS_ES = phrases(['pantalla', 'pantallas', 'monitor'], JOIN_ES, ['computadora', 'computador', 'ordenador', 'pc']);
-  // a laptop's own screen is a laptop, so these have to be longer than the screen phrases above
-  var LAPTOP_SCREENS_FR = phrases(['écran', 'écrans'], JOIN_FR,
-    ['ordinateur portable', 'pc portable', 'portable', 'macbook', 'laptop']);
-  var LAPTOP_SCREENS_ES = phrases(['pantalla', 'pantallas', 'monitor'], JOIN_ES,
-    ['computadora portátil', 'computador portátil', 'ordenador portátil', 'portátil', 'laptop', 'macbook']);
+  // "the screen OF my laptop" is the laptop; "a screen FOR my laptop" is a monitor. Both have to be
+  // longer than the screen phrases above, so each is built from its own joining words.
+  var LAPTOPS_FR = ['ordinateur portable', 'pc portable', 'portable', 'macbook', 'laptop'];
+  var LAPTOPS_ES = ['computadora portátil', 'computador portátil', 'ordenador portátil', 'portátil', 'laptop', 'macbook'];
+  var LAPTOP_SCREENS_FR = phrases(['écran', 'écrans'], ['de', 'd’', 'du', 'de la', 'de mon', 'de l’'], LAPTOPS_FR);
+  var LAPTOP_SCREENS_ES = phrases(['pantalla', 'pantallas', 'monitor'], ['de', 'del', 'de la', 'de mi'], LAPTOPS_ES);
+  var SCREENS_FOR_FR = phrases(['écran', 'écrans', 'moniteur'], ['pour', 'pour le', 'pour la', 'pour mon'], LAPTOPS_FR)
+    .concat(['écran portable', 'moniteur portable']);
+  var SCREENS_FOR_ES = phrases(['pantalla', 'pantallas', 'monitor'], ['para', 'para el', 'para la', 'para mi'], LAPTOPS_ES)
+    .concat(['monitor portátil', 'pantalla portátil']);
 
   var KEYWORDS = {
     fr: {
@@ -107,7 +112,7 @@
       'printer':         ['imprimante', 'numériseur', 'scanneur', 'encre', 'cartouche'],
       'toy':             ['jouet', 'jouets', 'poussette', 'rehausseur', 'porte-bébé', 'lit de bébé', 'berceau',
                           'table à langer'].concat(SEATS_FR),
-      'monitor':         ['moniteur', 'écran de jeu'].concat(SCREENS_FR),
+      'monitor':         ['moniteur', 'écran de jeu'].concat(SCREENS_FR, SCREENS_FOR_FR),
       'vehicle':         ['voiture', 'auto', 'char', 'automobile', 'véhicule', 'camion', 'camionnette', 'fourgonnette', 'vus',
                           'moto', 'motocyclette', 'pneu', 'pneus', 'coussin gonflable', 'remorque']
     },
@@ -146,7 +151,7 @@
       'printer':         ['impresora', 'escáner', 'tinta', 'cartucho'],
       'toy':             ['juguete', 'juguetes', 'carriola', 'cochecito', 'silla infantil', 'asiento infantil',
                           'autoasiento', 'cuna', 'portabebés', 'portabebé'].concat(SEATS_ES),
-      'monitor':         ['monitor gamer'].concat(SCREENS_ES),
+      'monitor':         ['monitor gamer'].concat(SCREENS_ES, SCREENS_FOR_ES),
       'vehicle':         ['coche', 'carro', 'auto', 'automóvil', 'vehículo', 'camioneta', 'camión', 'moto', 'motocicleta',
                           'neumático', 'neumáticos', 'llanta', 'llantas', 'bolsa de aire', 'remolque']
     }
