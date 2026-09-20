@@ -56,7 +56,7 @@
       'appliance-large': ['réfrigérateur', 'frigo', 'frigidaire', 'congélateur', 'lave-linge', 'machine à laver', 'laveuse',
                           'sèche-linge', 'sécheuse', 'lave-vaisselle', 'four', 'cuisinière', 'table de cuisson',
                           'plaque de cuisson', 'chauffe-eau', 'fournaise', 'chaudière', 'climatiseur',
-                          'thermopompe', 'pompe à chaleur', 'déshumidificateur'],
+                          'climatisation', 'air climatisé', 'thermopompe', 'pompe à chaleur', 'déshumidificateur'],
       'appliance-small': ['bouilloire', 'grille-pain', 'micro-ondes', 'mélangeur', 'mixeur', 'cafetière', 'machine à café',
                           'machine à espresso', 'friteuse', 'friteuse à air', 'fer à repasser', 'humidificateur',
                           'ventilateur', 'radiateur', 'chaufferette', 'robot culinaire', 'robot de cuisine', 'mijoteuse'],
@@ -76,8 +76,12 @@
       'bike':            ['vélo', 'vélo électrique', 'bicyclette', 'trottinette', 'trottinette électrique', 'casque de vélo'],
       'outdoor':         ['tente', 'sac de couchage', 'réchaud', 'camping', 'planche à neige', 'casque de ski'],
       'printer':         ['imprimante', 'numériseur', 'scanneur', 'encre', 'cartouche'],
-      'toy':             ['jouet', 'jouets', 'poussette', 'siège auto', 'siège d’auto', 'lit de bébé', 'berceau', 'table à langer'],
-      'monitor':         ['moniteur', 'écran d’ordinateur', "écran d'ordinateur", 'écran de jeu'],
+      // the child-seat words have to be longer than the car words below, or "siège bébé pour la
+      // voiture" is read as a car: longest keyword wins
+      'toy':             ['jouet', 'jouets', 'poussette', 'siège auto', 'siège d’auto', 'siège bébé', 'siège de bébé',
+                          'siège pour bébé', 'siège enfant', 'siège pour enfant', 'siège de voiture pour bébé',
+                          'rehausseur', 'lit de bébé', 'berceau', 'table à langer'],
+      'monitor':         ['moniteur', 'écran d’ordinateur', 'écran de jeu'],
       'vehicle':         ['voiture', 'auto', 'automobile', 'véhicule', 'camion', 'camionnette', 'fourgonnette', 'vus',
                           'moto', 'motocyclette', 'pneu', 'pneus', 'coussin gonflable', 'remorque']
     },
@@ -86,13 +90,13 @@
       'laptop':          ['portátil', 'ordenador', 'ordenador portátil', 'computadora', 'computadora portátil', 'computador'],
       'tablet':          ['tableta', 'libro electrónico', 'lector de libros electrónicos'],
       'headphones':      ['auricular', 'auriculares', 'audífono', 'audífonos', 'cascos'],
-      'tv':              ['tele', 'televisor', 'televisión'],
+      'tv':              ['tele', 'televisor', 'televisión', 'pantalla'],
       'console':         ['consola', 'videoconsola'],
       'camera':          ['cámara', 'cámara de fotos', 'videocámara', 'réflex'],
       'watch':           ['reloj', 'reloj inteligente', 'pulsera de actividad', 'pulsera inteligente'],
       'appliance-large': ['nevera', 'refrigerador', 'refrigeradora', 'frigorífico', 'heladera', 'congelador', 'lavadora',
                           'secadora', 'lavavajillas', 'lavaplatos', 'horno', 'vitrocerámica', 'calentador de agua', 'caldera',
-                          'aire acondicionado', 'bomba de calor', 'deshumidificador'],
+                          'aire acondicionado', 'minisplit', 'mini split', 'bomba de calor', 'deshumidificador'],
       'appliance-small': ['hervidor', 'hervidor de agua', 'tostadora', 'tostador', 'microondas', 'licuadora', 'batidora',
                           'cafetera', 'máquina de café', 'freidora', 'freidora de aire', 'plancha', 'humidificador',
                           'ventilador', 'calefactor', 'robot de cocina', 'olla eléctrica'],
@@ -113,8 +117,12 @@
       'bike':            ['bici', 'bicicleta', 'bicicleta eléctrica', 'patinete', 'patinete eléctrico', 'monopatín'],
       'outdoor':         ['tienda de campaña', 'carpa', 'saco de dormir', 'bolsa de dormir', 'hornillo', 'esquí', 'tabla de snowboard'],
       'printer':         ['impresora', 'escáner', 'tinta', 'cartucho'],
+      // the child-seat words have to be longer than the car words below, or "asiento para el coche"
+      // is read as a car: longest keyword wins
       'toy':             ['juguete', 'juguetes', 'carriola', 'cochecito', 'silla de auto', 'silla de coche',
-                          'asiento de coche', 'cuna', 'portabebés'],
+                          'silla para auto', 'silla para el auto', 'silla para carro', 'silla de bebé',
+                          'silla para bebé', 'silla infantil', 'asiento de coche', 'asiento para el coche',
+                          'asiento para bebé', 'asiento infantil', 'autoasiento', 'cuna', 'portabebés'],
       'monitor':         ['monitor de computadora', 'pantalla de computadora', 'pantalla de ordenador', 'monitor gamer'],
       'vehicle':         ['coche', 'carro', 'auto', 'automóvil', 'vehículo', 'camioneta', 'camión', 'moto', 'motocicleta',
                           'neumático', 'neumáticos', 'llanta', 'llantas', 'bolsa de aire', 'remolque']
