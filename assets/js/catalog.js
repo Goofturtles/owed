@@ -59,20 +59,23 @@
     });
     return out;
   }
-  var SEATS_FR = phrases(['siège', 'rehausseur'],
-    ['', 'de', 'd’', 'du', 'de la', 'pour', 'pour le', 'pour la', 'dans le', 'dans la'],
-    ['auto', 'voiture', 'char', 'bébé', 'enfant']);
-  var SEATS_ES = phrases(['silla', 'sillita', 'asiento', 'butaca'],
-    ['de', 'del', 'de la', 'para', 'para el', 'para la'],
+  var JOIN_FR = ['', 'de', 'd’', 'du', 'de la', 'de mon', 'de l’', 'pour', 'pour le', 'pour la', 'dans le', 'dans la'];
+  var JOIN_ES = ['', 'de', 'del', 'de la', 'de mi', 'para', 'para el', 'para la'];
+  var SEATS_FR = phrases(['siège', 'sièges', 'rehausseur'], JOIN_FR, ['auto', 'voiture', 'char', 'bébé', 'enfant']);
+  var SEATS_ES = phrases(['silla', 'sillas', 'sillita', 'asiento', 'asientos'], JOIN_ES,
     ['auto', 'carro', 'coche', 'vehículo', 'bebé', 'niño', 'seguridad']);
-  var SCREENS_FR = phrases(['écran'], ['de', 'd’', 'du', 'de mon', 'de l’', 'pour'], ['ordinateur', 'ordi', 'pc']);
-  var SCREENS_ES = phrases(['pantalla', 'monitor'], ['de', 'del', 'de mi', 'de la', 'para'],
-    ['computadora', 'computador', 'ordenador', 'pc']);
+  var SCREENS_FR = phrases(['écran', 'écrans'], JOIN_FR, ['ordinateur', 'ordi', 'pc']);
+  var SCREENS_ES = phrases(['pantalla', 'pantallas', 'monitor'], JOIN_ES, ['computadora', 'computador', 'ordenador', 'pc']);
+  // a laptop's own screen is a laptop, so these have to be longer than the screen phrases above
+  var LAPTOP_SCREENS_FR = phrases(['écran', 'écrans'], JOIN_FR,
+    ['ordinateur portable', 'pc portable', 'portable', 'macbook', 'laptop']);
+  var LAPTOP_SCREENS_ES = phrases(['pantalla', 'pantallas', 'monitor'], JOIN_ES,
+    ['computadora portátil', 'computador portátil', 'ordenador portátil', 'portátil', 'laptop', 'macbook']);
 
   var KEYWORDS = {
     fr: {
       'phone':           ['téléphone', 'téléphone portable', 'téléphone intelligent', 'cellulaire', 'cell'],
-      'laptop':          ['ordinateur', 'ordinateur portable', 'ordinateur de bureau', 'ordi'],
+      'laptop':          ['ordinateur', 'ordinateur portable', 'ordinateur de bureau', 'ordi'].concat(LAPTOP_SCREENS_FR),
       'tablet':          ['tablette', 'tablette tactile', 'liseuse'],
       'headphones':      ['casque', 'casque audio', 'casque d’écoute', 'écouteur', 'écouteurs', 'oreillette', 'oreillettes'],
       'tv':              ['télé', 'téléviseur', 'télévision', 'écran'],
@@ -110,7 +113,8 @@
     },
     es: {
       'phone':           ['teléfono', 'teléfono móvil', 'móvil', 'celular'],
-      'laptop':          ['portátil', 'ordenador', 'ordenador portátil', 'computadora', 'computadora portátil', 'computador'],
+      'laptop':          ['portátil', 'ordenador', 'ordenador portátil', 'computadora', 'computadora portátil',
+                          'computador'].concat(LAPTOP_SCREENS_ES),
       'tablet':          ['tableta', 'libro electrónico', 'lector de libros electrónicos'],
       'headphones':      ['auricular', 'auriculares', 'audífono', 'audífonos', 'cascos'],
       'tv':              ['tele', 'televisor', 'televisión', 'pantalla'],
